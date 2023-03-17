@@ -23,7 +23,11 @@
     "@typescript-eslint/parser": "latest",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
+    "next": "^13.2.4",
     "release-it": "^15.9.0",
     "typescript": "^5.0.2"
+  },
+  "peerDependencies": {
+    "next": "^13"
   }
 }
