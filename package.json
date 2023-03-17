@@ -1,0 +1,11 @@
+{
+  "name": "monorepo",
+  "packageManager": "yarn@3.5.0",
+  "workspaces": [
+    "package",
+    "examples/*"
+  ],
+  "dependencies": {
+    "prettier": "^2.8.4"
+  }
+}

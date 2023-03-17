@@ -1,0 +1,29 @@
+{
+  "name": "@apollo/experimental-next",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "author": "packages@apollographql.com",
+  "license": "MIT",
+  "files": [
+    "lib/",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "packageManager": "yarn@3.5.0",
+  "dependencies": {
+    "@apollo/client": "^3.7.10"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "eslint-plugin-react": "latest",
+    "release-it": "^15.9.0",
+    "typescript": "^5.0.2"
+  }
+}

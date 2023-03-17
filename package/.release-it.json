@@ -1,0 +1,12 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "requireCommits": true,
+    "changelog": "git log -- package"
+  },
+  "github": {
+    "autoGenerate": true,
+    "release": true,
+    "releaseName": "v${version}"
+  }
+}
