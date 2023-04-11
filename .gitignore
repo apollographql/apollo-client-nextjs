@@ -7,3 +7,5 @@
 node_modules/
 tsconfig.tsbuildinfo
 dist/
+.yalc
+yalc.lock

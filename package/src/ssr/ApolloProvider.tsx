@@ -7,6 +7,14 @@ import {
 } from "@apollo/client";
 import { RehydrationContextProvider } from "./RehydrationContext";
 
+const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
+const SuspenseCacheSingleton = Symbol.for("ApolloSuspenseCacheSingleton");
+declare global {
+  interface Window {
+    [ApolloClientSingleton]?: ApolloClient<any>;
+    [SuspenseCacheSingleton]?: SuspenseCache;
+  }
+}
 export const ApolloProvider = ({
   makeClient,
   children,
@@ -16,12 +24,19 @@ export const ApolloProvider = ({
   makeSuspenseCache?: () => SuspenseCache;
 }>) => {
   const clientRef = React.useRef<ApolloClient<any>>();
-  if (!clientRef.current) {
-    clientRef.current = makeClient();
-  }
   const suspenseCacheRef = React.useRef<SuspenseCache>();
-  if (!suspenseCacheRef.current && makeSuspenseCache) {
-    suspenseCacheRef.current = makeSuspenseCache();
+
+  if (typeof window !== "undefined") {
+    clientRef.current = window[ApolloClientSingleton] ??= makeClient();
+    suspenseCacheRef.current = window[SuspenseCacheSingleton] ??=
+      makeSuspenseCache?.();
+  } else {
+    if (!clientRef.current) {
+      clientRef.current = makeClient();
+    }
+    if (!suspenseCacheRef.current && makeSuspenseCache) {
+      suspenseCacheRef.current = makeSuspenseCache();
+    }
   }
 
   return (

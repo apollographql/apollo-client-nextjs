@@ -8,3 +8,4 @@ declare global {
 }
 export const ApolloRehydrationCache = Symbol.for("ApolloRehydrationCache");
 export const ApolloResultCache = Symbol.for("ApolloResultCache");
+export const Deserialize = Symbol.for("SuperJSON-Deserialize");

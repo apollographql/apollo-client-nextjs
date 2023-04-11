@@ -7,6 +7,9 @@ import {
 } from "next/dist/client/components/request-async-storage";
 import React from "react";
 
+import { detectEnvironment } from "./detectEnvironment";
+export { detectEnvironment };
+
 const apolloSymbol = Symbol.for("ApolloClient");
 
 interface ApolloSingletons {
