@@ -1,10 +1,9 @@
 import { Cache } from "@apollo/client";
 import React from "react";
+import { DataTransport } from "./dataTransport";
 
 export type RehydrationCache = Record<string, unknown>;
-export type ResultsCache =
-  | Cache.WriteOptions[]
-  | { push(...args: Cache.WriteOptions[]): void };
+export type ResultsCache = DataTransport<Cache.WriteOptions>;
 
 export interface RehydrationContextValue {
   /**
@@ -33,7 +32,7 @@ export interface RehydrationContextValue {
    * Contains results that came in from a link that should
    * be replayed on the client.
    */
-  incomingResults: ResultsCache;
+  incomingResults: Cache.WriteOptions[];
   /**
    * Tracks if the `RehydrateOnClient` component is currently
    * injected into the `ServerInsertedHTMLHook`.

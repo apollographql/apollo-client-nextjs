@@ -6,6 +6,19 @@ import {
 } from "@apollo/client";
 import { useTransportValue } from "./useTransportValue";
 
+export const useFragment = wrap(useFragment_experimental, [
+  "data",
+  "complete",
+  "missing",
+]);
+export const useQuery = wrap(orig_useQuery, [
+  "data",
+  "loading",
+  "networkStatus",
+  "called",
+]);
+export const useSuspenseQuery = wrap(useSuspenseQuery_experimental, ["data"]);
+
 function wrap<T extends (...args: any[]) => any>(
   useFn: T,
   transportKeys: (keyof ReturnType<T>)[]
@@ -19,16 +32,3 @@ function wrap<T extends (...args: any[]) => any>(
     return { ...result, ...useTransportValue(transported) };
   }) as T;
 }
-
-export const useFragment = wrap(useFragment_experimental, [
-  "data",
-  "complete",
-  "missing",
-]);
-export const useQuery = wrap(orig_useQuery, [
-  "data",
-  "loading",
-  "networkStatus",
-  "called",
-]);
-export const useSuspenseQuery = wrap(useSuspenseQuery_experimental, ["data"]);

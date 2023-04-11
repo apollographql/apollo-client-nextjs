@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloClient, SuspenseCache } from "@apollo/client";
+import { ApolloClient, HttpLink, SuspenseCache } from "@apollo/client";
 import {
   ApolloProvider,
   NextSSRInMemoryCache,
@@ -8,8 +8,11 @@ import {
 
 function makeClient() {
   return new ApolloClient({
-    uri: "http://localhost:3000/api/graphql",
     cache: new NextSSRInMemoryCache(),
+    link: new HttpLink({
+      uri: "http://localhost:3000/api/graphql",
+      fetchOptions: { cache: "no-store" },
+    }),
   });
 }
 

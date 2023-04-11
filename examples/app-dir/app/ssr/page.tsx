@@ -20,6 +20,13 @@ export default function Page() {
           <QueryUser />
         </SuspenseQueryUser>
         <FragmentUser />
+        <QueryUser />
+      </Suspense>
+      <Suspense>
+        <SuspenseQueryPosts>
+          <QueryUser />
+        </SuspenseQueryPosts>
+        <QueryUser />
       </Suspense>
     </HtmlChangesObserver>
   );
@@ -28,8 +35,11 @@ export default function Page() {
 function Result({ source, data }: { source: string; data: unknown }) {
   return (
     <div>
-      <span>{source}</span>
-      <span>{JSON.stringify(data)}</span>
+      <span>Source: {source}</span>
+      <span>
+        Data:
+        {JSON.stringify(data)}
+      </span>
     </div>
   );
 }
@@ -50,12 +60,31 @@ const userQuery = gql`
   ${userFragment}
 `;
 
+const postsQuery = gql`
+  query {
+    getPosts {
+      id
+      title
+    }
+  }
+`;
+
 function SuspenseQueryUser({ children }: React.PropsWithChildren) {
-  const result = useSuspenseQuery(userQuery);
+  const result = useSuspenseQuery(userQuery, { fetchPolicy: "cache-first" });
   return (
     <>
       <Result source="useSuspenseQuery(userQuery)" data={result.data} />
-      {children}
+      <React.Fragment key="children">{children}</React.Fragment>
+    </>
+  );
+}
+
+function SuspenseQueryPosts({ children }: React.PropsWithChildren) {
+  const result = useSuspenseQuery(postsQuery, { fetchPolicy: "cache-first" });
+  return (
+    <>
+      <Result source="useSuspenseQuery(postsQuery)" data={result.data} />
+      <React.Fragment key="children">{children}</React.Fragment>
     </>
   );
 }
@@ -67,18 +96,18 @@ function FragmentUser({ children }: React.PropsWithChildren) {
   });
   return (
     <>
-      <Result source="useFragment(userQuery)" data={result.data} />
-      {children}
+      <Result source="useFragment(userFragment)" data={result.data} />
+      <React.Fragment key="children">{children}</React.Fragment>
     </>
   );
 }
 
 function QueryUser({ children }: React.PropsWithChildren) {
-  const result = useQuery(userQuery);
+  const result = useQuery(userQuery, { fetchPolicy: "cache-first" });
   return (
     <>
       <Result source="useQuery(userQuery)" data={result.data} />
-      {children}
+      <React.Fragment key="children">{children}</React.Fragment>
     </>
   );
 }

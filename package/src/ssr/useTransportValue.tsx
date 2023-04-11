@@ -13,12 +13,6 @@ import { useRehydrationContext } from "./RehydrationContext";
  * the component can change to client-side values instead.
  */
 export function useTransportValue<T>(value: T): T {
-  if (typeof window !== "undefined")
-    console.log(
-      performance.now() + "ms rendering - cache contents:",
-      window[ApolloRehydrationCache]
-    );
-
   const id = useId();
 
   const [isClient, setIsClient] = useState(false);

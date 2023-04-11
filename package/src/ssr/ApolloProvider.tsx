@@ -9,6 +9,7 @@ import { RehydrationContextProvider } from "./RehydrationContext";
 
 const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
 const SuspenseCacheSingleton = Symbol.for("ApolloSuspenseCacheSingleton");
+
 declare global {
   interface Window {
     [ApolloClientSingleton]?: ApolloClient<any>;
