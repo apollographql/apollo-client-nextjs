@@ -14,20 +14,21 @@
     "build": "tsc"
   },
   "packageManager": "yarn@3.5.0",
-  "dependencies": {
-    "@apollo/client": "^3.7.10"
-  },
   "devDependencies": {
+    "@apollo/client": ">= 3.8.0-alpha.10",
     "@tsconfig/recommended": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
     "next": "^13.2.4",
+    "react": "^18.2.0",
     "release-it": "^15.9.0",
     "typescript": "^5.0.2"
   },
   "peerDependencies": {
-    "next": "^13"
+    "@apollo/client": ">= 3.8.0-alpha.10",
+    "next": "^13",
+    "react": "^18"
   }
 }
