@@ -1,7 +1,10 @@
 import React, { cache } from "react";
 
+import { staticGenerationAsyncStorage } from "next/dist/client/components/static-generation-async-storage";
+
 enum Env {
-  RSC = "RSC",
+  RSC_static = "rscStatic",
+  RSC_dynamic = "rscDynamic",
   SSR = "SSR",
   Browser = "Browser",
 }
@@ -23,10 +26,17 @@ function hasCreateContext() {
   return "createContext" in React;
 }
 
+function isStaticGeneration() {
+  const staticGenerationStore = staticGenerationAsyncStorage.getStore();
+  return staticGenerationStore?.isStaticGeneration;
+}
+
 export function detectEnvironment(where?: string) {
   const detectedEnviroment =
     cacheAvailable() && !hasCreateContext()
-      ? Env.RSC
+      ? isStaticGeneration()
+        ? Env.RSC_static
+        : Env.RSC_dynamic
       : isServer()
       ? Env.SSR
       : Env.Browser;
@@ -34,6 +44,7 @@ export function detectEnvironment(where?: string) {
     cacheAvailable: cacheAvailable(),
     hasCreateContext: hasCreateContext(),
     isServer: isServer(),
+    staticGenerationStore: isStaticGeneration(),
     detectedEnviroment,
     where,
   });
