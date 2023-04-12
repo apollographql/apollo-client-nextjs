@@ -2,13 +2,12 @@ import React, { cache } from "react";
 
 import { staticGenerationAsyncStorage } from "next/dist/client/components/static-generation-async-storage";
 
-enum Env {
-  static_RSC = "staticRSC",
-  dynamic_RSC = "dynamicRSC",
-  static_SSR = "staticSSR",
-  dynamic_SSR = "dynamicSSR",
-  Browser = "Browser",
-}
+export type SpecificEnv =
+  | "staticRSC"
+  | "dynamicRSC"
+  | "staticSSR"
+  | "dynamicSSR"
+  | "Browser";
 
 export function isServer() {
   return typeof window === "undefined";
@@ -32,17 +31,17 @@ export function isStaticGeneration() {
   return staticGenerationStore?.isStaticGeneration;
 }
 
-export function detectEnvironment(logWhere?: string) {
+export function detectEnvironment(logWhere?: string): SpecificEnv {
   const detectedEnviroment =
     cacheAvailable() && !hasCreateContext()
       ? isStaticGeneration()
-        ? Env.static_RSC
-        : Env.dynamic_RSC
+        ? "staticRSC"
+        : "dynamicRSC"
       : isServer()
       ? isStaticGeneration()
-        ? Env.static_SSR
-        : Env.dynamic_SSR
-      : Env.Browser;
+        ? "staticSSR"
+        : "dynamicSSR"
+      : "Browser";
   if (logWhere)
     console.log({
       cacheAvailable: cacheAvailable(),
