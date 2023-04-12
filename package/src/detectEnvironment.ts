@@ -3,17 +3,18 @@ import React, { cache } from "react";
 import { staticGenerationAsyncStorage } from "next/dist/client/components/static-generation-async-storage";
 
 enum Env {
-  RSC_static = "rscStatic",
-  RSC_dynamic = "rscDynamic",
-  SSR = "SSR",
+  static_RSC = "staticRSC",
+  dynamic_RSC = "dynamicRSC",
+  static_SSR = "staticSSR",
+  dynamic_SSR = "dynamicSSR",
   Browser = "Browser",
 }
 
-function isServer() {
+export function isServer() {
   return typeof window === "undefined";
 }
 
-function cacheAvailable() {
+export function cacheAvailable() {
   try {
     cache(() => void 0)();
   } catch {
@@ -22,31 +23,34 @@ function cacheAvailable() {
   return true;
 }
 
-function hasCreateContext() {
+export function hasCreateContext() {
   return "createContext" in React;
 }
 
-function isStaticGeneration() {
+export function isStaticGeneration() {
   const staticGenerationStore = staticGenerationAsyncStorage.getStore();
   return staticGenerationStore?.isStaticGeneration;
 }
 
-export function detectEnvironment(where?: string) {
+export function detectEnvironment(logWhere?: string) {
   const detectedEnviroment =
     cacheAvailable() && !hasCreateContext()
       ? isStaticGeneration()
-        ? Env.RSC_static
-        : Env.RSC_dynamic
+        ? Env.static_RSC
+        : Env.dynamic_RSC
       : isServer()
-      ? Env.SSR
+      ? isStaticGeneration()
+        ? Env.static_SSR
+        : Env.dynamic_SSR
       : Env.Browser;
-  console.log({
-    cacheAvailable: cacheAvailable(),
-    hasCreateContext: hasCreateContext(),
-    isServer: isServer(),
-    staticGenerationStore: isStaticGeneration(),
-    detectedEnviroment,
-    where,
-  });
+  if (logWhere)
+    console.log({
+      cacheAvailable: cacheAvailable(),
+      hasCreateContext: hasCreateContext(),
+      isServer: isServer(),
+      isstaticGeneration: isStaticGeneration(),
+      detectedEnviroment,
+      where: logWhere,
+    });
   return detectedEnviroment;
 }

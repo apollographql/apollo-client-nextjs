@@ -1,5 +1,4 @@
-import { Suspense } from "react";
-import { Providers } from "./Providers";
+import { ApolloWrapper } from "./ApolloWrapper";
 export default function Layout({ children }: React.PropsWithChildren) {
-  return <Providers>{children}</Providers>;
+  return <ApolloWrapper>{children}</ApolloWrapper>;
 }

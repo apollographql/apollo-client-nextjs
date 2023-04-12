@@ -20,7 +20,7 @@ function makeSuspenseCache() {
   return new SuspenseCache();
 }
 
-export function Providers({ children }: React.PropsWithChildren) {
+export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return (
     <ApolloProvider
       makeClient={makeClient}

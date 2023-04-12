@@ -9,6 +9,9 @@ import {
 import { gql } from "@apollo/client";
 import { HtmlChangesObserver } from "@/components/HtmlChangesObserver";
 
+export const dynamic = "force-dynamic";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+
 export default function Page() {
   detectEnvironment("Page");
 
