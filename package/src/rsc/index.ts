@@ -1,0 +1,1 @@
+export { registerApolloClient } from "./registerApolloClient";

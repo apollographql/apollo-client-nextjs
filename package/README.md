@@ -47,7 +47,7 @@ So decide for yourself, which queries you want to make in RSC and which in SSR, 
 Create an `ApolloClient.js` file:
 ```js
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-next";
+import { registerApolloClient } from "@apollo/experimental-next/rsc";
 
 export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({

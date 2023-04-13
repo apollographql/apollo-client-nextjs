@@ -3,9 +3,9 @@ import {
   RequestStore,
   requestAsyncStorage,
 } from "next/dist/client/components/request-async-storage";
-import { hasCreateContext } from "./detectEnvironment";
+import { hasCreateContext } from "../detectEnvironment";
 
-export const ApolloClients = new WeakMap<RequestStore, ApolloClient<any>>();
+const ApolloClients = new WeakMap<RequestStore, ApolloClient<any>>();
 export function registerApolloClient(makeClient: () => ApolloClient<any>) {
   return {
     getClient() {
