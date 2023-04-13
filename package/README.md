@@ -1,6 +1,20 @@
 # Apollo Client for Next.js
 
-## What does this do?
+> ❗️ This package is experimental, and just like the NextJS `app` directory itself, it is not yet ready for production use.
+
+## Why do you need this?
+
+### React Server Components
+
+If you want to use Apollo Client in your Next.js app with React Server Components, you will need a way of creating a client instance that is shared between all your server components for one request, to prevent making duplicate requests.
+
+### React Client Components
+
+When using the `app` directory, all your "client components" will not only run in the browser. They will also be rendered on the server - in a "SSR" run that will execute after React Server Components have been rendered.
+
+If you want to make the most of your application, you probably already want to make your GraphQL requests on the server, so that the page is already fully rendered when it reaches the browser.
+
+This package provides the tools necessary to execute your GraphQL queries on the server, and to use the results to hydrate your browser-side cache and components.
 
 ### How does rendering in the `app` directory work?
 
@@ -16,6 +30,8 @@ Here is a list of features that are supported in each phase:
 
 | Feature | static RSC | static SSR | dynamic RSC | dynamic SSR | browser |
 | ------- | ---------- | ---------- | ----------- | ----------- | ------- |
+| "use client" | ❌ | ✅ | ❌ | ✅ | ✅ |
+| "use server" | ✅ | ❌ | ✅ | ❌ | ❌ |
 | Context | ❌ | ✅ | ❌ | ✅ | ✅ |
 | Hooks | ❌ | ✅ | ❌ | ✅ | ✅ |
 | cookies/headers | ❌ | ❌ | ✅ | ❌ | ❌ |
@@ -152,6 +168,6 @@ Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `use
 * [x] rehydrate the exact hook status on the browser
 * [x] forward incoming query responses to the browser (works, but not optimal: see [React RFC: injectToStream](https://github.com/reactjs/rfcs/pull/219#issuecomment-1505084590) )
 
-## Support for Apollo in Next `getServerSideProps` and `getStaticProps`
+## Support for Apollo in legacy SSR in Next with `getServerSideProps` and `getStaticProps`
 
 * [ ] evaluate if we still add this at this point or concentrate on app dir RSC & SSR
