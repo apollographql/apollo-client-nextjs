@@ -65,7 +65,7 @@ import { ApolloClient, HttpLink, SuspenseCache } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
-} from "@apollo/experimental-next/dist/ssr";
+} from "@apollo/experimental-next/ssr";
 
 // have a function to create a client for you
 function makeClient() {
@@ -125,7 +125,7 @@ export default function RootLayout({
 > ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
 It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
-Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` in your Client components like you are used to.
+Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-next/ssr"` in your Client components like you are used to.
 
 ## Roadmap
 

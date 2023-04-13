@@ -5,7 +5,8 @@
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
-    "lib/",
+    "dist/",
+    "ssr/",
     "package.json",
     "LICENSE.md",
     "README.md"

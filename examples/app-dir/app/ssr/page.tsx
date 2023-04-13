@@ -5,7 +5,7 @@ import {
   useFragment,
   useQuery,
   useSuspenseQuery,
-} from "@/../../package/dist/ssr";
+} from "@apollo/experimental-next/ssr";
 import { gql } from "@apollo/client";
 import { HtmlChangesObserver } from "@/components/HtmlChangesObserver";
 

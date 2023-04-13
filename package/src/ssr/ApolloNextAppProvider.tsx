@@ -16,7 +16,7 @@ declare global {
     [SuspenseCacheSingleton]?: SuspenseCache;
   }
 }
-export const ApolloProvider = ({
+export const ApolloNextAppProvider = ({
   makeClient,
   children,
   makeSuspenseCache,

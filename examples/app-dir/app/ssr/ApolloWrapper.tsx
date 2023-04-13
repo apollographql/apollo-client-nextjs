@@ -2,9 +2,9 @@
 
 import { ApolloClient, HttpLink, SuspenseCache } from "@apollo/client";
 import {
-  ApolloProvider,
+  ApolloNextAppProvider,
   NextSSRInMemoryCache,
-} from "@apollo/experimental-next/dist/ssr";
+} from "@apollo/experimental-next/ssr";
 
 function makeClient() {
   return new ApolloClient({
@@ -22,11 +22,11 @@ function makeSuspenseCache() {
 
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return (
-    <ApolloProvider
+    <ApolloNextAppProvider
       makeClient={makeClient}
       makeSuspenseCache={makeSuspenseCache}
     >
       {children}
-    </ApolloProvider>
+    </ApolloNextAppProvider>
   );
 }
