@@ -150,7 +150,9 @@ Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `use
 
 - `detectEnvironment`  
   Signature:  
-  `function detectEnvironment(log?: string): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser"`  
+  ```ts
+  function detectEnvironment(log?: string): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser"
+  ```
   This function can be used to detect the current environment your code is being executed in.
   If you pass in a string argument, it will also output more information about the environment to the console.
 
