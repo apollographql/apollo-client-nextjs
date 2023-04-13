@@ -28,23 +28,24 @@ Rendering in the `app` directory goes through a bunch of phases:
 
 Here is a list of features that are supported in each phase:
 
-| Feature | static RSC | static SSR | dynamic RSC | dynamic SSR | browser |
-| ------- | ---------- | ---------- | ----------- | ----------- | ------- |
-| "use client" | ❌ | ✅ | ❌ | ✅ | ✅ |
-| "use server" | ✅ | ❌ | ✅ | ❌ | ❌ |
-| Context | ❌ | ✅ | ❌ | ✅ | ✅ |
-| Hooks | ❌ | ✅ | ❌ | ✅ | ✅ |
-| cookies/headers | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Feature         | static RSC | static SSR | dynamic RSC | dynamic SSR | browser |
+| --------------- | ---------- | ---------- | ----------- | ----------- | ------- |
+| "use client"    | ❌         | ✅         | ❌          | ✅          | ✅      |
+| "use server"    | ✅         | ❌         | ✅          | ❌          | ❌      |
+| Context         | ❌         | ✅         | ❌          | ✅          | ✅      |
+| Hooks           | ❌         | ✅         | ❌          | ✅          | ✅      |
+| cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
 
 ## Usage
 
 > ❗️ **We do handle "RSC" and "SSR" use cases as completely separate.**  
-You should generally try not to have overlapping queries between the two, as all queries made in SSR can dynamically update in the browser as the cache updates (e.g. from a mutation or another query), but queries made in RSC will not be updated in the browser - for that purpose, the full page would need to rerender. As a result, any overlapping data would result in inconsistencies in your UI.  
-So decide for yourself, which queries you want to make in RSC and which in SSR, and don't have them overlap.
+> You should generally try not to have overlapping queries between the two, as all queries made in SSR can dynamically update in the browser as the cache updates (e.g. from a mutation or another query), but queries made in RSC will not be updated in the browser - for that purpose, the full page would need to rerender. As a result, any overlapping data would result in inconsistencies in your UI.  
+> So decide for yourself, which queries you want to make in RSC and which in SSR, and don't have them overlap.
 
 ### In RSC
- 
+
 Create an `ApolloClient.js` file:
+
 ```js
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { registerApolloClient } from "@apollo/experimental-next/rsc";
@@ -64,15 +65,17 @@ export const { getClient } = registerApolloClient(() => {
 ```
 
 You can then use that `getClient` function in your server components:
+
 ```js
 const { data } = await getClient().query({ query: userQuery });
 ```
 
 ### In SSR
 
-If you use the `app` directory, every of your components *will* be SSR-rendered. So you will need to use this package.
+If you use the `app` directory, every of your components _will_ be SSR-rendered. So you will need to use this package.
 
 First, create a new file `app/ApolloWrapper.js`:
+
 ```js
 "use client";
 // ^ this file needs the "use client" pragma
@@ -117,6 +120,7 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
 ```
 
 Now you can wrap your `RootLayout` in this wrapper component:
+
 ```js
 import { ApolloWrapper } from "./ApolloWrapper";
 
@@ -125,49 +129,83 @@ import { ApolloWrapper } from "./ApolloWrapper";
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>
-            {children}
-        </ApolloWrapper>
+        <ApolloWrapper>{children}</ApolloWrapper>
       </body>
     </html>
   );
 }
 ```
+
 > ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
-It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
+> It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
 Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-next/ssr"` in your Client components like you are used to.
+
+### other APIs
+
+- `detectEnvironment`  
+  Signature:  
+  `function detectEnvironment(log?: string): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser"`  
+  This function can be used to detect the current environment your code is being executed in.
+  If you pass in a string argument, it will also output more information about the environment to the console.
+
+- `byEnv`  
+  Signature:  
+  ```ts
+  function byEnv<T>(options: {
+    staticRSC?: T;
+    dynamicRSC?: T;
+    RSC?: T;
+    staticSSR?: T;
+    dynamicSSR?: T;
+    SSR?: T;
+    Browser?: T;
+    default?: T;
+  }): T;
+  ```
+  This function can be used to select different values depending on the environment your code is being executed in.  
+  More specific values will take precedence over less specific ones.  
+  Example:
+  ```js
+  const value = byEnv({
+    RSC: "I'm running in a React Server Component - static or dynamic!",
+    staticSSR: "This client component is currently rendering in static SSR!",
+    SSR: "I'm running in SSR. Since the static case is already covered explicitly, it's gonna be dynamic SSR.",
+    Browser: "I'm running in the browser",
+    default: "Will be returned if the matching case has been omitted",
+  });
+  ```
 
 ## Roadmap
 
 ## Support for Apollo in Next app dir React Server Components
 
-* [ ] share client instance between multiple requests made in the same render
+- [ ] share client instance between multiple requests made in the same render
 
 ## Support for Apollo in Next app dir SSR
 
-* [x] enable use of React hooks in SSR
-  * [x] `useApolloClient` (no changes needed)
-  * [x] `useSuspenseQuery`
-  * [x] `useFragment`
-  * [x] `useQuery` (will not make requests on server, but will use cache values that have been added by `useSuspenseQuery`)
-  * [ ] `useBackgroundQuery`
-  * [ ] useSubscription (what would support look like?)
-  * [ ] ~~useMutation~~ (not going to support this)
-  * [ ] ~~useLazyQuery~~ (not going to support this)
-* [ ] support `@defer`
-  * [ ] stage 1: add a link that will stop requests immediately after the non-deferred data is received
-  * [ ] stage 2: allow configuration of a "timeout" so "fast" deferred responses will be forwarded to the client
-    * [ ] implementation on link level
-    * [ ] implementation on cache level
-* [x] rehydrate the exact hook status on the browser
-* [x] forward incoming query responses to the browser (works, but not optimal: see [React RFC: injectToStream](https://github.com/reactjs/rfcs/pull/219#issuecomment-1505084590) )
+- [x] enable use of React hooks in SSR
+  - [x] `useApolloClient` (no changes needed)
+  - [x] `useSuspenseQuery`
+  - [x] `useFragment`
+  - [x] `useQuery` (will not make requests on server, but will use cache values that have been added by `useSuspenseQuery`)
+  - [ ] `useBackgroundQuery`
+  - [ ] useSubscription (what would support look like?)
+  - [ ] ~~useMutation~~ (not going to support this)
+  - [ ] ~~useLazyQuery~~ (not going to support this)
+- [ ] support `@defer`
+  - [ ] stage 1: add a link that will stop requests immediately after the non-deferred data is received
+  - [ ] stage 2: allow configuration of a "timeout" so "fast" deferred responses will be forwarded to the client
+    - [ ] implementation on link level
+    - [ ] implementation on cache level
+- [x] rehydrate the exact hook status on the browser
+- [x] forward incoming query responses to the browser (works, but not optimal: see [React RFC: injectToStream](https://github.com/reactjs/rfcs/pull/219#issuecomment-1505084590) )
 
 ## Support for Apollo in legacy SSR in Next with `getServerSideProps` and `getStaticProps`
 
-* [ ] evaluate if we still add this at this point or concentrate on app dir RSC & SSR
+- [ ] evaluate if we still add this at this point or concentrate on app dir RSC & SSR
