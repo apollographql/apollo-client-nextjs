@@ -17,7 +17,10 @@ export const useQuery = wrap(orig_useQuery, [
   "networkStatus",
   "called",
 ]);
-export const useSuspenseQuery = wrap(useSuspenseQuery_experimental, ["data"]);
+export const useSuspenseQuery = wrap(useSuspenseQuery_experimental, [
+  "data",
+  "networkStatus",
+]);
 
 function wrap<T extends (...args: any[]) => any>(
   useFn: T,
