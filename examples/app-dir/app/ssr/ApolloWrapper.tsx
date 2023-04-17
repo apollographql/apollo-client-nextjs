@@ -1,17 +1,35 @@
 "use client";
 
-import { ApolloClient, HttpLink, SuspenseCache } from "@apollo/client";
+import { byEnv } from "@apollo/experimental-next";
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  SuspenseCache,
+} from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
+  SSRMultipartLink,
 } from "@apollo/experimental-next/ssr";
 
 function makeClient() {
+  const httpLink = new HttpLink({
+    uri: "http://localhost:3000/api/graphql",
+    fetchOptions: { cache: "no-store" },
+  });
+
   return new ApolloClient({
     cache: new NextSSRInMemoryCache(),
-    link: new HttpLink({
-      uri: "http://localhost:3000/api/graphql",
-      fetchOptions: { cache: "no-store" },
+    link: byEnv({
+      SSR: () =>
+        ApolloLink.from([
+          new SSRMultipartLink({
+            stripDefer: true,
+          }),
+          httpLink,
+        ]),
+      default: () => httpLink,
     }),
   });
 }

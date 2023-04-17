@@ -80,23 +80,44 @@ First, create a new file `app/ApolloWrapper.js`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import { ApolloClient, HttpLink, SuspenseCache } from "@apollo/client";
+import { byEnv } from "@apollo/experimental-next";
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  SuspenseCache,
+} from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
+  SSRMultipartLink,
 } from "@apollo/experimental-next/ssr";
 
 // have a function to create a client for you
 function makeClient() {
-  return new ApolloClient({
-    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
-    cache: new NextSSRInMemoryCache(),
-    link: new HttpLink({
+  const httpLink = new HttpLink({
       // this needs to be an absolute url, as relative urls cannot be used in SSR
       uri: "https://example.com/api/graphql",
       // you can disable result caching here if you want to
       // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
       fetchOptions: { cache: "no-store" },
+    });
+
+  return new ApolloClient({
+    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
+    cache: new NextSSRInMemoryCache(),
+    link: byEnv({
+      SSR: () =>
+        ApolloLink.from([
+          // in a SSR environment, if you use multipart features like
+          // @defer, you need to decide how to handle these.
+          // This strips all `@defer` directives from your queries.
+          new SSRMultipartLink({
+            stripDefer: true,
+          }),
+          httpLink,
+        ]),
+      default: () => httpLink,
     }),
   });
 }
@@ -146,6 +167,74 @@ export default function RootLayout({
 
 Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-next/ssr"` in your Client components like you are used to.
 
+## Handling Multipart responses in SSR
+
+Generally, `useSuspenseQuery` will always only suspense until the initial response is received.
+In mosty cases that means that you get a full response, but if you are using multipart response features like the `@defer` directive, you will only get a partial response.  
+Without further handling, at that point your the component will now render with partial data - but the request itself will still keep running in the background. This is a worst-case scenario, because your server will have to bear the load of that request, but the client will not get the full data anyways.  
+For handling this, you can apply one of two different strategies:
+* remove `@defer` fragments from your query
+* wait for deferred data to be received
+
+For this, we ship the two links `RemoveMultipartDirectivesLink` and `DebounceMultipartResponsesLink`, as well as the `SSRMultipartLink` which combines both of them into a more convenient-to-use Link.
+
+### Removing `@defer` fragments from your query with `RemoveMultipartDirectivesLink`
+
+Usage example:
+```ts
+new RemoveMultipartDirectivesLink({
+  stripDefer: true, // defaults to `true`
+})
+```
+
+This link will (if called with `stripDefer: true`) strip all `@defer` fragments from your query.
+
+You can exclude certain fragments from this behaviour by giving them a label starting with `"SSRdontStrip"`.
+
+Example:
+```graphql
+ query myQuery {
+   fastField
+   ... @defer(label: "SSRdontStrip1") {
+     slowField1 
+   }
+   ... @defer(label: "SSRdontStrip2") {
+     slowField2 
+   }
+ }
+ ```
+
+You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SSRstrip"`.
+
+### Waiting for deferred data to be received with `DebounceMultipartResponsesLink`
+
+Usage example:
+
+```ts
+new DebounceMultipartResponsesLink({
+    maxDelay: 100, // in ms, required
+  })
+```
+
+This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `maxDelay` time will be merged into the initial response.
+
+After `maxDelay`, the link will return the initial response, even if there is still incremental data pending, and close the network connection.
+
+If `maxDelay` is `0`, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.
+
+### Combining both: `SSRMultipartLink`
+
+Usage example:
+
+```ts
+new SSRMultipartLink({
+  stripDefer: true, // defaults to `true`
+  maxDelay: 100, // in ms, defaults to 0
+})
+```
+
+This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `DebounceMultipartResponsesLink` into a single link.
+
 ### other APIs
 
 - `detectEnvironment`  
@@ -160,14 +249,14 @@ Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `use
   Signature:  
   ```ts
   function byEnv<T>(options: {
-    staticRSC?: T;
-    dynamicRSC?: T;
-    RSC?: T;
-    staticSSR?: T;
-    dynamicSSR?: T;
-    SSR?: T;
-    Browser?: T;
-    default?: T;
+    staticRSC?: () => T;
+    dynamicRSC?: () => T;
+    RSC?: () => T;
+    staticSSR?: () => T;
+    dynamicSSR?: () => T;
+    SSR?: () => T;
+    Browser?: () => T;
+    default?: () => T;
   }): T;
   ```
   This function can be used to select different values depending on the environment your code is being executed in.  
@@ -175,13 +264,14 @@ Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `use
   Example:
   ```js
   const value = byEnv({
-    RSC: "I'm running in a React Server Component - static or dynamic!",
-    staticSSR: "This client component is currently rendering in static SSR!",
-    SSR: "I'm running in SSR. Since the static case is already covered explicitly, it's gonna be dynamic SSR.",
-    Browser: "I'm running in the browser",
-    default: "Will be returned if the matching case has been omitted",
+    RSC: () => "I'm running in a React Server Component - static or dynamic!",
+    staticSSR: () => "This client component is currently rendering in static SSR!",
+    SSR: () => "I'm running in SSR. Since the static case is already covered explicitly, it's gonna be dynamic SSR.",
+    Browser: () => "I'm running in the browser",
+    default: () => "Will be returned if the matching case has been omitted",
   });
   ```
+
 
 ## Roadmap
 
