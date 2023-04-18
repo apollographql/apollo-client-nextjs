@@ -72,7 +72,10 @@ export class DebounceMultipartResponsesLink extends ApolloLink {
           subscriber.error(error);
         },
         complete: () => {
-          if (maxDelayTimeout) clearTimeout(maxDelayTimeout);
+          if (maxDelayTimeout) {
+            clearTimeout(maxDelayTimeout);
+            cleanUp();
+          }
           subscriber.complete();
         },
       });
