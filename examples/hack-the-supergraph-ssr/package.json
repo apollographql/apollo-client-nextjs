@@ -1,0 +1,37 @@
+{
+  "name": "hack-the-supergraph-ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": ">= 3.8.0-alpha.10",
+    "@apollo/experimental-next": "workspace:^",
+    "@apollo/space-kit": "^9.11.0",
+    "@chakra-ui/next-js": "^2.1.2",
+    "@chakra-ui/react": "^2.5.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.35",
+    "@types/react-dom": "18.0.11",
+    "eslint": "8.38.0",
+    "eslint-config-next": "13.3.0",
+    "framer-motion": "^10.12.2",
+    "graphql": "^16.6.0",
+    "js-cookie": "^3.0.1",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
+    "react-rating-stars-component": "^2.2.0",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.3"
+  }
+}
