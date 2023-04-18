@@ -33,7 +33,9 @@ export function byEnv<T>(
   options: PartialEnvCombo<() => T> & { default: () => T }
 ): T;
 export function byEnv<T>(options: PartialEnvCombo<() => T>): T | undefined;
-export function byEnv<T>(options: PartialEnvCombo<() => T>): T | undefined {
+export function byEnv<T>(
+  options: PartialEnvCombo<() => T> & { default?: () => T }
+): T | undefined {
   const env = detectEnvironment();
   const value = options[env];
   return (
@@ -42,6 +44,8 @@ export function byEnv<T>(options: PartialEnvCombo<() => T>): T | undefined {
         ? options["RSC"]
         : env == "dynamicSSR" || env == "staticSSR"
         ? options["SSR"]
+        : "default" in options
+        ? options["default"]
         : value
       : value
   )?.();
