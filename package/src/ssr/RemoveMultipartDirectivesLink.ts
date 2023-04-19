@@ -19,17 +19,17 @@ function getDirectiveArgumentValue(directive: DirectiveNode, argument: string) {
  * This is used to prevent the server from doing additional work in SSR scenarios where multipart responses cannot be handled anyways.
  * This stripping behaviour can be configured per-directive.
  * It be overridden by adding a label to the directive.
- * In the case this link is configured to strip a directive, but the directive has a label starting with "SSRdontStrip", the directive will not be stripped.
- * In the case this link is configured to not strip a directive, but the directive has a label starting with "SSRstrip", the directive will be stripped.
+ * In the case this link is configured to strip a directive, but the directive has a label starting with "SsrDontStrip", the directive will not be stripped.
+ * In the case this link is configured to not strip a directive, but the directive has a label starting with "SsrStrip", the directive will be stripped.
  * The "starting with" is important, because labels have to be unique per operation. So if you have multiple directives where you want to override the default stipping behaviour,
  * you can do this by annotating them like
  * ```gql
  * query myQuery {
  *   fastField
- *   ... @defer(label: "SSRdontStrip1") {
+ *   ... @defer(label: "SsrDontStrip1") {
  *     slowField1 
  *   }
- *   ... @defer(label: "SSRdontStrip2") {
+ *   ... @defer(label: "SsrDontStrip2") {
  *     slowField2 
  *   }
  * }
@@ -61,7 +61,7 @@ export class RemoveMultipartDirectivesLink extends ApolloLink {
             const label = getDirectiveArgumentValue(node, "label");
             if (
               label?.kind === "StringValue" &&
-              label.value.startsWith("SSRdontStrip")
+              label.value.startsWith("SsrDontStrip")
             ) {
               shouldStrip = false;
             }
@@ -75,7 +75,7 @@ export class RemoveMultipartDirectivesLink extends ApolloLink {
             const label = getDirectiveArgumentValue(node, "label");
             return (
               label?.kind === "StringValue" &&
-              label.value.startsWith("SSRstrip")
+              label.value.startsWith("SsrStrip")
             );
           },
           remove: true,

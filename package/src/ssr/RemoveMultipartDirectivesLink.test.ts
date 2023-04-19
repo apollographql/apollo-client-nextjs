@@ -19,10 +19,10 @@ const queryWithDefer = gql`
 const queryWithDeferAndDontStripAnnotation = gql`
   query myQuery {
     fastField
-    ... @defer(label: "SSRdontStrip1") {
+    ... @defer(label: "SsrDontStrip1") {
       slowField1
     }
-    ... @defer(label: "SSRdontStrip2") {
+    ... @defer(label: "SsrDontStrip2") {
       slowField2
     }
     ... @defer {
@@ -33,10 +33,10 @@ const queryWithDeferAndDontStripAnnotation = gql`
 const queryWithDeferAndStripAnnotation = gql`
   query myQuery {
     fastField
-    ... @defer(label: "SSRstrip1") {
+    ... @defer(label: "SsrStrip1") {
       slowField1
     }
-    ... @defer(label: "SSRstrip2") {
+    ... @defer(label: "SsrStrip2") {
       slowField2
     }
     ... @defer {
@@ -77,7 +77,7 @@ it("`stripDefer` defaults to `true`", () => {
     `);
 });
 
-it("preserves @defer fields with a `SSRdontStrip` label", () => {
+it("preserves @defer fields with a `SsrDontStrip` label", () => {
   const link = new RemoveMultipartDirectivesLink({
     stripDefer: true,
   });
@@ -92,10 +92,10 @@ it("preserves @defer fields with a `SSRdontStrip` label", () => {
   expect(print(resultingQuery!)).toMatchInlineSnapshot(`
     "query myQuery {
       fastField
-      ... @defer(label: \\"SSRdontStrip1\\") {
+      ... @defer(label: \\"SsrDontStrip1\\") {
         slowField1
       }
-      ... @defer(label: \\"SSRdontStrip2\\") {
+      ... @defer(label: \\"SsrDontStrip2\\") {
         slowField2
       }
     }"
