@@ -189,22 +189,22 @@ new RemoveMultipartDirectivesLink({
 
 This link will (if called with `stripDefer: true`) strip all `@defer` fragments from your query.
 
-You can exclude certain fragments from this behaviour by giving them a label starting with `"SSRdontStrip"`.
+You can exclude certain fragments from this behaviour by giving them a label starting with `"SsrDontStrip"`.
 
 Example:
 ```graphql
  query myQuery {
    fastField
-   ... @defer(label: "SSRdontStrip1") {
+   ... @defer(label: "SsrDontStrip1") {
      slowField1 
    }
-   ... @defer(label: "SSRdontStrip2") {
+   ... @defer(label: "SsrDontStrip2") {
      slowField2 
    }
  }
  ```
 
-You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SSRstrip"`.
+You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SsrStrip"`.
 
 ### Waiting for deferred data to be received with `DebounceMultipartResponsesLink`
 

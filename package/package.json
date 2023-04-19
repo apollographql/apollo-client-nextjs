@@ -7,13 +7,14 @@
   "files": [
     "dist/",
     "ssr/",
+    "rsc/",
     "package.json",
     "LICENSE.md",
     "README.md"
   ],
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "vitest"
   },
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
