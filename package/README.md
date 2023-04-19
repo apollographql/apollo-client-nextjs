@@ -169,8 +169,8 @@ Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `use
 
 ## Handling Multipart responses in SSR
 
-Generally, `useSuspenseQuery` will always only suspense until the initial response is received.
-In mosty cases that means that you get a full response, but if you are using multipart response features like the `@defer` directive, you will only get a partial response.  
+Generally, `useSuspenseQuery` will only suspend until the initial response is received.
+In most cases that means that you get a full response, but if you are using multipart response features like the `@defer` directive, you will only get a partial response.  
 Without further handling, at that point your the component will now render with partial data - but the request itself will still keep running in the background. This is a worst-case scenario, because your server will have to bear the load of that request, but the client will not get the full data anyways.  
 For handling this, you can apply one of two different strategies:
 * remove `@defer` fragments from your query
@@ -212,8 +212,8 @@ Usage example:
 
 ```ts
 new DebounceMultipartResponsesLink({
-    maxDelay: 100, // in ms, required
-  })
+  maxDelay: 100, // in ms, required
+})
 ```
 
 This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `maxDelay` time will be merged into the initial response.

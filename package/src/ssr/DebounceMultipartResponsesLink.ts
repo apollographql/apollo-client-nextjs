@@ -46,11 +46,12 @@ export class DebounceMultipartResponsesLink extends ApolloLink {
               accumulatedData.data = result.data;
             }
 
-            if (result.errors)
+            if (result.errors) {
               accumulatedData.errors = [
                 ...(accumulatedData.errors || []),
                 ...(result.errors || []),
               ];
+            }
 
             // the spec is not mentioning on how to merge these, so we just do a shallow merge?
             if (result.extensions)
