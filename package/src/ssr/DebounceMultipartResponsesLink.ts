@@ -63,9 +63,9 @@ export class DebounceMultipartResponsesLink extends ApolloLink {
             accumulatedData = result;
           }
           if (!maxDelay) {
-            cleanUp();
+            flushAccumulatedData();
           } else if (!maxDelayTimeout) {
-            maxDelayTimeout = setTimeout(cleanUp, maxDelay);
+            maxDelayTimeout = setTimeout(flushAccumulatedData, maxDelay);
           }
         },
         error: (error) => {
@@ -75,17 +75,22 @@ export class DebounceMultipartResponsesLink extends ApolloLink {
         complete: () => {
           if (maxDelayTimeout) {
             clearTimeout(maxDelayTimeout);
-            cleanUp();
+            flushAccumulatedData();
           }
           subscriber.complete();
         },
       });
 
-      function cleanUp() {
+      function flushAccumulatedData() {
         subscriber.next(accumulatedData);
         subscriber.complete();
         upstreamSubscription.unsubscribe();
       }
+
+      return function cleanUp() {
+        clearTimeout(maxDelayTimeout);
+        upstreamSubscription.unsubscribe();
+      };
     });
   }
 }
