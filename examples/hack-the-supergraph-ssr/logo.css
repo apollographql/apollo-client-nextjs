@@ -1,0 +1,110 @@
+.planet {
+  opacity: 0%;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 1.5s ease-in forwards;
+  animation-delay: 0.75s;
+}
+
+.star {
+  opacity: 0%;
+  fill: #fcfdff;
+  animation: popAndVanish 3s forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.s1 {
+  animation-delay: 3s;
+}
+
+.s2 {
+  animation-delay: 2.5s;
+}
+
+.s3 {
+  animation-delay: 3.5s;
+}
+
+.s4 {
+  animation-delay: 2.75s;
+}
+
+.ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(90deg) translate(-5px, -5px);
+  animation: wobble 2s ease-in-out forwards;
+  animation-delay: 1.75s;
+  opacity: 0%;
+}
+
+.rect {
+  opacity: 20%;
+  transform: translate(-10px, 0) skew(0deg, -35deg) rotate(30deg);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: move 2s 3s forwards;
+}
+
+@keyframes move {
+  90% {
+    opacity: 100%;
+    transform: translate(100px, 0) skew(0deg, -20deg);
+  }
+  100% {
+    opacity: 0%;
+    transform: translate(100px, 0) skew(0deg, -20deg);
+  }
+}
+
+@keyframes wobble {
+  40% {
+    opacity: 20%;
+    transform: rotate(0deg);
+  }
+  60% {
+    opacity: 90%;
+    transform: rotate(20deg);
+  }
+  100% {
+    opacity: 100%;
+    transform: rotate(0deg) translate(0, 0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0%;
+    transform: scale(0);
+  }
+  80% {
+    opacity: 100%;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 100%;
+    transform: scale(1);
+  }
+}
+
+@keyframes popAndVanish {
+  0% {
+    opacity: 0%;
+    transform: scale(0);
+  }
+  40% {
+    opacity: 100%;
+    transform: scale(1.1);
+  }
+  60% {
+    opacity: 90%;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0%;
+    transform: scale(0);
+  }
+}

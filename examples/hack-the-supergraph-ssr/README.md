@@ -1,0 +1,1 @@
+This is based on the [Hack the supergraph demo app](https://github.com/apollographql/hack-the-supergraph)
