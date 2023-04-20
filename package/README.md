@@ -96,12 +96,12 @@ import {
 // have a function to create a client for you
 function makeClient() {
   const httpLink = new HttpLink({
-      // this needs to be an absolute url, as relative urls cannot be used in SSR
-      uri: "https://example.com/api/graphql",
-      // you can disable result caching here if you want to
-      // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
-      fetchOptions: { cache: "no-store" },
-    });
+    // this needs to be an absolute url, as relative urls cannot be used in SSR
+    uri: "https://example.com/api/graphql",
+    // you can disable result caching here if you want to
+    // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
+    fetchOptions: { cache: "no-store" },
+  });
 
   return new ApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
@@ -173,14 +173,16 @@ Generally, `useSuspenseQuery` will only suspend until the initial response is re
 In most cases that means that you get a full response, but if you are using multipart response features like the `@defer` directive, you will only get a partial response.  
 Without further handling, at that point your the component will now render with partial data - but the request itself will still keep running in the background. This is a worst-case scenario, because your server will have to bear the load of that request, but the client will not get the full data anyways.  
 For handling this, you can apply one of two different strategies:
-* remove `@defer` fragments from your query
-* wait for deferred data to be received
+
+- remove `@defer` fragments from your query
+- wait for deferred data to be received
 
 For this, we ship the two links `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`, as well as the `SSRMultipartLink` which combines both of them into a more convenient-to-use Link.
 
 ### Removing `@defer` fragments from your query with `RemoveMultipartDirectivesLink`
 
 Usage example:
+
 ```ts
 new RemoveMultipartDirectivesLink({
   /**
@@ -194,7 +196,7 @@ new RemoveMultipartDirectivesLink({
    * directive.
    */
   stripDefer: true,
-})
+});
 ```
 
 This link will (if called with `stripDefer: true`) strip all `@defer` fragments from your query.
@@ -202,17 +204,18 @@ This link will (if called with `stripDefer: true`) strip all `@defer` fragments 
 You can exclude certain fragments from this behaviour by giving them a label starting with `"SsrDontStrip"`.
 
 Example:
+
 ```graphql
- query myQuery {
-   fastField
-   ... @defer(label: "SsrDontStrip1") {
-     slowField1 
-   }
-   ... @defer(label: "SsrDontStrip2") {
-     slowField2 
-   }
- }
- ```
+query myQuery {
+  fastField
+  ... @defer(label: "SsrDontStrip1") {
+    slowField1
+  }
+  ... @defer(label: "SsrDontStrip2") {
+    slowField2
+  }
+}
+```
 
 You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SsrStrip"`.
 
@@ -222,14 +225,14 @@ Usage example:
 
 ```ts
 new AccumulateMultipartResponsesLink({
-   /**
+  /**
    * The maximum delay in milliseconds
    * from receiving the first response
    * until the accumulated data will be flushed
    * and the connection will be closed.
    */
   cutoffDelay: 100,
-})
+});
 ```
 
 This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `cutoffDelay` time will be merged into the initial response.
@@ -264,7 +267,7 @@ new SSRMultipartLink({
    * Defaults to `0`.
    */
   cutoffDelay: 100,
-})
+});
 ```
 
 This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink` into a single link.
@@ -272,15 +275,19 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
 ### other APIs
 
 - `detectEnvironment`  
-  Signature:  
+  Signature:
+
   ```ts
-  function detectEnvironment(log?: string): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser"
+  function detectEnvironment(
+    log?: string
+  ): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser";
   ```
+
   This function can be used to detect the current environment your code is being executed in.
   If you pass in a string argument, it will also output more information about the environment to the console.
 
 - `byEnv`  
-  Signature:  
+  Signature:
   ```ts
   function byEnv<T>(options: {
     staticRSC?: () => T;
@@ -299,13 +306,14 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
   ```js
   const value = byEnv({
     RSC: () => "I'm running in a React Server Component - static or dynamic!",
-    staticSSR: () => "This client component is currently rendering in static SSR!",
-    SSR: () => "I'm running in SSR. Since the static case is already covered explicitly, it's gonna be dynamic SSR.",
+    staticSSR: () =>
+      "This client component is currently rendering in static SSR!",
+    SSR: () =>
+      "I'm running in SSR. Since the static case is already covered explicitly, it's gonna be dynamic SSR.",
     Browser: () => "I'm running in the browser",
     default: () => "Will be returned if the matching case has been omitted",
   });
   ```
-
 
 ## Roadmap
 
