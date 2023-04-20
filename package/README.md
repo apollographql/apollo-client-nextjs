@@ -35,6 +35,7 @@ Here is a list of features that are supported in each phase:
 | Context         | ❌         | ✅         | ❌          | ✅          | ✅      |
 | Hooks           | ❌         | ✅         | ❌          | ✅          | ✅      |
 | cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
+| can rerender    | ❌         | ❌         | ❌          | ❌          | ✅      |
 
 ## Usage
 
@@ -319,7 +320,7 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
 
 ## Support for Apollo in Next app dir React Server Components
 
-- [ ] share client instance between multiple requests made in the same render
+- [x] share client instance between multiple requests made in the same render
 
 ## Support for Apollo in Next app dir SSR
 
@@ -332,13 +333,16 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
   - [ ] useSubscription (what would support look like?)
   - [ ] ~~useMutation~~ (not going to support this)
   - [ ] ~~useLazyQuery~~ (not going to support this)
-- [ ] support `@defer`
-  - [ ] stage 1: add a link that will stop requests immediately after the non-deferred data is received
-  - [ ] stage 2: allow configuration of a "timeout" so "fast" deferred responses will be forwarded to the client
-    - [ ] implementation on link level
-    - [ ] implementation on cache level
+- [x] support `@defer`/Multipart requests
+  - [x] remove `@defer` fragments from query
+  - [x] wait for deferred data to be received, then return initial response (with deferred data merged in)
 - [x] rehydrate the exact hook status on the browser
 - [x] forward incoming query responses to the browser (works, but not optimal: see [React RFC: injectToStream](https://github.com/reactjs/rfcs/pull/219#issuecomment-1505084590) )
+
+## Specific advice for Reactive Variables
+
+- [ ] Specific advice for Reactive Variables
+
 
 ## Support for Apollo in legacy SSR in Next with `getServerSideProps` and `getStaticProps`
 
