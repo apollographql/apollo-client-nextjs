@@ -232,11 +232,11 @@ new AccumulateMultipartResponsesLink({
 })
 ```
 
-This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `maxDelay` time will be merged into the initial response.
+This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `cutoffDelay` time will be merged into the initial response.
 
-After `maxDelay`, the link will return the initial response, even if there is still incremental data pending, and close the network connection.
+After `cutoffDelay`, the link will return the initial response, even if there is still incremental data pending, and close the network connection.
 
-If `maxDelay` is `0`, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.
+If `cutoffDelay` is `0`, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.
 
 ### Combining both: `SSRMultipartLink`
 
