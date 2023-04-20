@@ -7,6 +7,16 @@ import {
 import { DirectiveNode } from "graphql";
 
 interface RemoveMultipartDirectivesConfig {
+  /**
+   * Whether to strip fragments with `@defer` directives
+   * from queries before sending them to the server.
+   *
+   * Defaults to `true`.
+   *
+   * Can be overwritten by adding a label starting
+   * with either `"SsrDontStrip"` or `"SsrStrip"` to the
+   * directive.
+   */
   stripDefer?: boolean;
 }
 

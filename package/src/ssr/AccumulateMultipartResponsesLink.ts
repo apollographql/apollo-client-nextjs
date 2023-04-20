@@ -5,16 +5,22 @@ import {
   mergeIncrementalData,
 } from "@apollo/client/utilities";
 
-export interface DebounceMultipartResponsesConfig {
-  maxDelay: number;
+export interface AccumulateMultipartResponsesConfig {
+  /**
+   * The maximum delay in milliseconds
+   * from receiving the first response
+   * until the accumulated data will be flushed
+   * and the connection will be closed.
+   */
+  cutoffDelay: number;
 }
 
-export class DebounceMultipartResponsesLink extends ApolloLink {
+export class AccumulateMultipartResponsesLink extends ApolloLink {
   private maxDelay: number;
 
-  constructor(config: DebounceMultipartResponsesConfig) {
+  constructor(config: AccumulateMultipartResponsesConfig) {
     super();
-    this.maxDelay = config.maxDelay;
+    this.maxDelay = config.cutoffDelay;
   }
   request(operation: Operation, forward?: NextLink) {
     if (!forward) {
@@ -29,7 +35,7 @@ export class DebounceMultipartResponsesLink extends ApolloLink {
     const upstream = forward(operation);
     if (!operationContainsMultipartDirectives) return upstream;
 
-    // TODO: this could be overwritten with a `@DebounceMultipartResponsesConfig(maxDelay: 1000)` directive on the operation
+    // TODO: this could be overwritten with a `@AccumulateMultipartResponsesConfig(maxDelay: 1000)` directive on the operation
     const maxDelay = this.maxDelay;
     let accumulatedData: FetchResult, maxDelayTimeout: NodeJS.Timeout;
 

@@ -8,7 +8,7 @@ import {
   Observable,
   gql,
 } from "@apollo/client";
-import { DebounceMultipartResponsesLink } from "./DebounceMultipartResponsesLink";
+import { AccumulateMultipartResponsesLink } from "./AccumulateMultipartResponsesLink";
 import { test, expect, assert, beforeEach, afterEach, vi } from "vitest";
 import { fromPartial } from "@total-typescript/shoehorn";
 import { SubscriptionObserver } from "zen-observable-ts";
@@ -27,8 +27,8 @@ test("normal queries can resolve synchronously", () => {
     }
   `;
 
-  const link = new DebounceMultipartResponsesLink({
-    maxDelay: 1000,
+  const link = new AccumulateMultipartResponsesLink({
+    cutoffDelay: 1000,
   });
   const nextLink = getFinalLinkWithExposedObserver();
 
@@ -61,8 +61,8 @@ test("deferred query will complete synchonously if maxDelay is 0", () => {
       }
     }
   `;
-  const link = new DebounceMultipartResponsesLink({
-    maxDelay: 0,
+  const link = new AccumulateMultipartResponsesLink({
+    cutoffDelay: 0,
   });
   const nextLink = getFinalLinkWithExposedObserver();
 
@@ -99,8 +99,8 @@ test("`next` call will be debounced and results will be merged together", () => 
       }
     }
   `;
-  const link = new DebounceMultipartResponsesLink({
-    maxDelay: 1000,
+  const link = new AccumulateMultipartResponsesLink({
+    cutoffDelay: 1000,
   });
   const nextLink = getFinalLinkWithExposedObserver();
 
