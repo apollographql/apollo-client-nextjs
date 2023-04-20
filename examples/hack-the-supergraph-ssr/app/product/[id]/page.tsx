@@ -61,8 +61,8 @@ export default function Product({
     fetchPolicy: "cache-first",
   });
   if (error) {
-    // TODO
-    // workaround for now - not sure if it is intended that deferred errors don't throw
+    // we want not only the initial error to throw towards a suspense boundary,
+    // but also errors coming in later to trigger the same boundary
     throw error;
   }
 
