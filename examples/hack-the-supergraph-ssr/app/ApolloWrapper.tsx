@@ -61,7 +61,7 @@ export function ApolloWrapper({
         ApolloLink.from([
           new SSRMultipartLink({
             stripDefer: false,
-            maxDelay: 100,
+            cutoffDelay: 100,
           }),
           delayLink,
           httpLink,

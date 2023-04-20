@@ -176,14 +176,24 @@ For handling this, you can apply one of two different strategies:
 * remove `@defer` fragments from your query
 * wait for deferred data to be received
 
-For this, we ship the two links `RemoveMultipartDirectivesLink` and `DebounceMultipartResponsesLink`, as well as the `SSRMultipartLink` which combines both of them into a more convenient-to-use Link.
+For this, we ship the two links `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`, as well as the `SSRMultipartLink` which combines both of them into a more convenient-to-use Link.
 
 ### Removing `@defer` fragments from your query with `RemoveMultipartDirectivesLink`
 
 Usage example:
 ```ts
 new RemoveMultipartDirectivesLink({
-  stripDefer: true, // defaults to `true`
+  /**
+   * Whether to strip fragments with `@defer` directives
+   * from queries before sending them to the server.
+   *
+   * Defaults to `true`.
+   *
+   * Can be overwritten by adding a label starting
+   * with either `"SsrDontStrip"` or `"SsrStrip"` to the
+   * directive.
+   */
+  stripDefer: true,
 })
 ```
 
@@ -206,13 +216,19 @@ Example:
 
 You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SsrStrip"`.
 
-### Waiting for deferred data to be received with `DebounceMultipartResponsesLink`
+### Waiting for deferred data to be received with `AccumulateMultipartResponsesLink`
 
 Usage example:
 
 ```ts
-new DebounceMultipartResponsesLink({
-  maxDelay: 100, // in ms, required
+new AccumulateMultipartResponsesLink({
+   /**
+   * The maximum delay in milliseconds
+   * from receiving the first response
+   * until the accumulated data will be flushed
+   * and the connection will be closed.
+   */
+  cutoffDelay: 100,
 })
 ```
 
@@ -228,12 +244,30 @@ Usage example:
 
 ```ts
 new SSRMultipartLink({
-  stripDefer: true, // defaults to `true`
-  maxDelay: 100, // in ms, defaults to 0
+  /**
+   * Whether to strip fragments with `@defer` directives
+   * from queries before sending them to the server.
+   *
+   * Defaults to `true`.
+   *
+   * Can be overwritten by adding a label starting
+   * with either `"SsrDontStrip"` or `"SsrStrip"` to the
+   * directive.
+   */
+  stripDefer: true,
+  /**
+   * The maximum delay in milliseconds
+   * from receiving the first response
+   * until the accumulated data will be flushed
+   * and the connection will be closed.
+   *
+   * Defaults to `0`.
+   */
+  cutoffDelay: 100,
 })
 ```
 
-This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `DebounceMultipartResponsesLink` into a single link.
+This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink` into a single link.
 
 ### other APIs
 
