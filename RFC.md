@@ -9,7 +9,7 @@ React Server Components (RSC) are a new technology that is currently landing in 
 
 In this RFC, I'll be referring to RSC in the context of Next.js, as that is the most mature implementation of RSC we are seeing so far and the one likely to be adopted by users first, given the messaging around the Next.js `app` directory.
 
-In a RSC environment, the root component is a "server component". 
+In an RSC environment, the root component is a "server component". 
 
 Server components are marked with a `"use server"` pragma at the top of the file. Client components are marked with a `"use client"` pragma.
 These pragmas are only necessary for components that designate a "boundary". Children of server components will be rendered as server components, and children of client components will be rendered as client components, even if they are imported from other files that don't contain a pragma.
@@ -114,8 +114,8 @@ Once hydrated, client components are fully executable and interactive, while ser
 
 We expect one of the most common usages of interweaving will be to use React's Context in a client component high up in the React tree.
 
-While RSC do not have Context, our hooks need Context, and we want to "open" that context as far up the tree as possible.
-So, we need to remember that this pattern is possible:
+While Apollo Client usage in RSCs does not use Context, we still need a Context Provider for our hooks that will be used in Client components. 
+The most convenient way to provide that is to create a Client Component that "weaves" itself into the Server Component tree inside the Layout:
 ```jsx
 // Apollo.js
 "use client"
@@ -191,7 +191,7 @@ We want to make sure that the Apollo Client does not have to be recreated for ev
 
 As React Server Components cannot access Context, we need another way of creating this "scoped shared client" and passing it around.
 There is no support for anything like this in React, however Next.js internally uses `AsyncLocalStorage` to pass the `headers` down scoped per request. 
-[We can use that](https://github.com/apollographql/apollo-client-nextjs/blob/c622586533e0f2ac96b692a5106642373c3c45c6/package/src/rsc/registerApolloClient.tsx#L12) to achieve this goal in NextJs. 
+We currently [use this](https://github.com/apollographql/apollo-client-nextjs/blob/c622586533e0f2ac96b692a5106642373c3c45c6/package/src/rsc/registerApolloClient.tsx#L12) to achieve this goal. 
 This however is a Next.js internal and might not be stable.
 
 ### Getting data from RSC into the SSR pass
@@ -431,11 +431,12 @@ Using this approach, we'd export a custom wrapped `<Suspense>` component and hav
 Discussing this approach with [@gaearon](https://github.com/gaearon), he pointed out that he hopes that libraries don't have to wrap Suspense boundaries.  
 Suspense boundaries should stay a "React primitive". If libraries started wrapping them, there would be the risk is that users would end up with multiple different libraries, each with their own "Suspense wrapper", and that users would have to choose the "right" one for each use case, making things a lot more complicated and error-prone.
 
-### Problems of a client-side cache in a "streaming SSR" scenario
+### Challenges of a client-side cache in streaming SSR
 
-The general problem we have is that the client-side cache can change in the browser while the server is still rendering a Suspense Boundary. In the worst case, the server would render based on "past data" while the client already received an update and will try to render rehydrated data that is different from what the server rendered. We encounter a hydration mismatch.
+The general problem we have is that the client-side cache can change in the browser while the server is still rendering a Suspense Boundary. Some possible reasons for that could be overlapping results coming in from other suspense boundaries on the server, or user interaction with already-rehydrated parts of the application in the Browser.
+In the worst case, the server would render based on "past data" while the client already received an update and will try to render rehydrated data that is different from what the server rendered. We encounter a hydration mismatch.
 
-If we had the ability to write directly to stream, this might look like this:
+If we had the ability to write directly to stream (using `injectIntoStream`), this might look like this:
 
 ```mermaid
 sequenceDiagram
@@ -475,7 +476,7 @@ sequenceDiagram
   BA ->> BA: rehydration render
   Note over BA: ⚠️ rehydration mismatch, data changed in the meantime
 ```
-In our "we can only move data over from the server when the suspense boundary resolves" scenario, that would look like this. 
+In our `useServerInsertedHTML` scenario, where we can only move data over from the server when a suspense boundary resolves, that would look like this:
 Note that here we will likely not get a hydration mismatch, but the stale data from the server now overwrites the updated cache. 
 
 ```mermaid
