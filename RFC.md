@@ -2,46 +2,55 @@
 
 ## Introduction: What are React Server Components?
 
-RSC are a new technology that is currently landing in frameworks like Nextjs and Gatsby. Remix is currently experimenting with it, Dai-Shi Kato is currently building the experimental Framework [`wakuwork`](https://github.com/dai-shi/wakuwork) with it. (This one could be the best way to read into internals.)
+React Server Components (RSC) are a new technology that is currently landing in frameworks like [Next.js](https://nextjs.org/docs/advanced-features/react-18/server-components) and [Gatsby](https://www.gatsbyjs.com/docs/how-to/performance/partial-hydration/). Remix is currently experimenting with it, Dai-Shi Kato is currently building the experimental Framework [`wakuwork`](https://github.com/dai-shi/wakuwork) with it. (This one could be the best way to read into internals.)
 
-Here I'll be mostly talking about NextJs, as that is the most mature implementation of RSC we are seeing so far (and also the one what will probably be adopted by users first, given the messaging around the NextJS `app` directory).
+In this RFC, I'll be referring to RSC in the context of Next.js, as that is the most mature implementation of RSC we are seeing so far and the one likely to be adopted by users first, given the messaging around the Next.js `app` directory.
 
 In a RSC environment, the root component is a "server component". 
 
-Server components are marked with a `"use server"` pragma at the top of the file, while client components are marked with a `"use client"` pragma.
-This is only strictly necessary for components that designate "boundaries" - so children of server components will be rendered as server components, and children of client components will be rendered as client components - even if they are imported from other files that don't have any pragma.
+Server components are marked with a `"use server"` pragma at the top of the file. Client components are marked with a `"use client"` pragma.
+These pragmas are only necessary for components that designate a "boundary". Children of server components will be rendered as server components, and children of client components will be rendered as client components, even if they are imported from other files that don't contain a pragma.
 
-A server component can have server components and client components as children. This can be used to pass props from server components to client components, while it is a strict rule that these "over the boundary" props must be serializable. 
-The only exception to this rule is that server components can pass JSX elements as props to client components (as `children`, but also as other props - think "named slots").
+A server component can render a mix of server components and client components as children, allowing server components to pass props to client components. It's important to note that any "over the boundary" props passed from server to client components **must** be serializable. However, there is one exception to this rule. Server components can pass JSX elements as props to client components, either as `children` or other props that accept JSX elements (i.e. "named slots").
 
 It is important to note that most hooks do not work in server components: `useContext`, `useState`, `useEffect` and the likes will throw.  
-On the other hand, server components can be `async` functions and can `await` promises. This is the preferred way to do data fetching in server components.
+On the other hand, server components can be `async` functions that can `await` promises. This is the preferred way to fetch data in server components.
 
-Client components cannot have server components as children, but they can make JSX Elements passed in by server components part of their own output. Those elements will be rendered on the server and are the rendered output of the server component will be inserted at the right place when rendering the client components. This allows some level of "interweaving" of server and client components. 
-This makes it possible to have a client component high up in the tree that makes use of a client-only feature like a Context Provider, while still having multiple additional levels of server components before the real "client level" is reached.
+In contrast, client components cannot directly import and render server components. Instead, they can use props to accept "server component JSX" from a parent server component (e.g. the `children` prop). This allows some level of "interweaving" between server and client components since server components can inject other server components as children to client components.
+This makes it possible to have a client component high up in the component tree that makes use of a client-only feature, like a context provider, while allowing for multiple levels of server components before additional client components are rendered.
 
 > Notable exception: this is hackable - as presented [here by Dai-Shi](https://twitter.com/dai_shi/status/1631989295866347520) CC can contain RSC, but these hacks should be left reserved for routing libraries, not for everyday usage.
 
-### How this could look like in a real render
+### An example with interweaving client and server components
 
 Let's assume we have this tree.
 
 ```jsx
-// Layout:
+// Layout.js
 "use server"
+
+// inside the component
 <html lang="en">
   <body>
     {children} // Page will be inserted here by the router
   </body>
 </html>
-// Page
+
+// Page.js
 "use server"
+
+// inside the component
 <main>
   <h1>Hello World</h1>
-  <ClientC foo={"test"}><SomeServerComponent>lalala</SomeServerComponent></ClientC>
+  <ClientComponent foo="test">
+    <SomeServerComponent>lalala</SomeServerComponent>
+  </ClientComponent>
 </main>
-// ClientC
+
+// ClientComponent.js
 "use client"
+
+// inside the component
 <article>
   Foo {foo}
   {children}
@@ -71,21 +80,22 @@ This will lead to two React trees being rendered on the server:
 </article>
 ```
 
-Both trees can "see" boundaries of the other tree, but have no idea what is going on inside of that.
+Both trees can "see" boundaries of the other tree, but treat them as a black box.
 
-It is important to see that we have a unidirectional dataflow here: (serializable) props can flow from the RSC layer, but nothing can flow back from CC into RSC.
+It is important to note that we have a unidirectional dataflow here: (serializable) props can flow from the RSC layer, but nothing can flow from client components back into RSC.
 
 
-Those two trees will then be stitched back into "one" tree and be sent back to the client. Note that for these examples, I'm ignoring Suspense.
+Those two trees will then be stitched back into a single tree and be sent to the client.  
+Note that for the sake of simplicity, the example did not contain suspense boundaries, which add another layer of complication. 
 
-So this is the final HTML that will be sent to the browser:
+This is the final HTML that will be sent to the browser:
 ```jsx
 <html lang="en">
   <body>
     <main>
       <h1>Hello World</h1>
       <article>
-        Foo {"test"}
+        Foo test
         lalala
       </article>
     </main>
@@ -93,27 +103,34 @@ So this is the final HTML that will be sent to the browser:
 </html>
 ```
 
-That "stitched-together" tree will then be streamed to the client, rendered out and then rehydrated:
+This will be streamed to the client, rendered out, then hydrated:
 
-Client components will start "running" on the client, while server components remain "static" html. It is possible to request a rerender of RSC from the client - in that case, the client sends a request to the server, which can then either rerender the full tree, or in the future also selectively rerender parts of it.
+Once hydrated, client components are fully executable and interactive, while server components remain static HTML. It is possible to request a rerender of RSC from the client. To do so, the client sends a request to the server, which can then either rerender the full RSC tree, or in the future, selectively rerender parts of it.
 
-### "interweaving" and context
+### Interweaving client and server components when using React Context
 
-This is just the most common example of "interweaving" users will face, so I want to point it out separately.
+We expect one of the most common usages of interweaving will be to use React's Context in a client component high up in the React tree.
 
 While RSC do not have Context, our hooks need Context, and we want to "open" that context as far up the tree as possible.
 So, we need to remember that this pattern is possible:
 ```jsx
 // Apollo.js
 "use client"
+
 export function Apollo(props) {
   const clientRef = useRef()
   if (!clientRef) clientRef.current = buildApolloClient()
 
-  return <ApolloProvider client={clientRef.current}>{props.children}</ApolloProvider>
+  return (
+    <ApolloProvider client={clientRef.current}>
+      {props.children}
+    </ApolloProvider>
+  );
 }
-// Layout
+
+// Layout.js
 "use server"
+
 <html lang="en">
   <body>
     <Apollo>
@@ -123,27 +140,27 @@ export function Apollo(props) {
 </html>
 ```
 
-This way, `{children}` can still be a server component, but all CC further down the tree can still access the context.
+This way, `{children}` can still be a server component, but all client components further down the tree are able to access the context.
 
-Note that doing `<ApolloProvider client={...}>` in a `"use server"` Layout is not possible, as `client` is non-serializable and cannot pass the RSC-SSR boundary (let alone the SSR-Browser boundary). It has to be created in a "client-only" file.
+Note that using `<ApolloProvider client={...}>` in a `"use server"` enabled component is not possible, as `client` is non-serializable and cannot pass the RSC-SSR boundary (let alone the SSR-Browser boundary). The Apollo Client will need to be created in a "client-only" file, as it cannot pass the Server-Client-Boundary.
 
 
 ### The terms "client" and "server".
 
-"Client" and "Server" are not very fitting terms here. 
-* "Server components" could also already be rendered during build, locally or in CI, and not on a server.
-* "Client components" also execute on the server (or wherever RSC are rendered), but differently than on the client (no execution of effects, no ability to rerender). 
+We should note that the terms "Client" and "Server" are a bit of a misnomer.
+* "Server components" aren't strictly rendered on a running server. While this is one case, these components can also be rendered during a build (such as static generation), in a local dev environment, or in CI.
+* "Client components" aren't strictly run in the browser. These are also executed in an SSR pass on the server, albeit with different behavior. Effects are not executed and there is no ability to rerender. 
 
-So I'll use different words here:
+In an effort to provide some clarity, I'll use the following terms:
 
-* RSC - these are React Server components
-* SSR pass: this is rendering of client components on the server
-* browser rendering: this is rendering of client components on the browser
+* RSC - React Server components run on the server (either on a running server, or during a build)
+* SSR pass - The render phase of client components on the server before the result is sent and hydrated in the browser
+* Browser rendering - The rendering of client components in the browser
 
-### NextJS specifics: "static" and "dynamic" renders.
+### Next.js specifics: "static" and "dynamic" renders.
 
-Also, keep in mind that RSC can happen in different stages.
-RSC renders in NextJS can either happen "statically" or "dynamically". Per default, NextJS will render all RSC (and the following SSR pass) statically at build time, but if you use "dynamic" features like `cache`, they will be skipped during the build and be rendered dynamically on the running server instead.
+RSC within Next.js can happen in different stages: either "statically" or "dynamically".
+Per default, Next.js will render RSC and the SSR pass statically at build time. If you use "dynamic" features like `cache`, they will be skipped during the build and instead be rendered on the running server.
 
 At this point, we see either "static" or "dynamic" RSC/SSR passes, but I assume that in the future, there is a possibility to have a "static" RSC outer layout, while a child page is rendered as "dynamic" RSC.
 
@@ -157,48 +174,46 @@ This leaves us with these five different stages, all which have different capabi
 | "use server"    | ✅         | ❌         | ✅          | ❌          | ❌      |
 | Context         | ❌         | ✅         | ❌          | ✅          | ✅      |
 | Hooks           | ❌         | ✅         | ❌          | ✅          | ✅      |
-| cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
-| can rerender    | ❌         | ❌         | ❌          | ❌          | ✅      |
+| Cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
+| Can render    | ❌         | ❌         | ❌          | ❌          | ✅      |
 
-## Supporting RSC
+## Apollo Client and RSC
 
-The best way of using Apollo Client in RSC is to create an Apollo Client instance and call `await client.query` inside of an `async` React Server Component.
+The best way to use Apollo Client in RSC is to create an Apollo Client instance and call `await client.query` inside of an `async` React Server Components.
 
-We want to make sure that the Apollo Client does not have to be recreated for every request, but we also don't necessarily want to share it between different requests, as the client could be accessing cookies in a dynamic render.
+We want to make sure that the Apollo Client does not have to be recreated for every query, but we also don't necessarily want to share it between different requests, as the client could be accessing cookies in a dynamic render, so potentially sensitive data could be shared between multiple users on accident.
 
 ### Sharing the client between components
 
-As RSC do not have access to Context, we need another way of creating this "scoped shared client" and passing it around.
-There is no support for anything like this on the React side, but NextJS internally uses `AsyncLocalStorage` to pass the `headers` down scoped per request. 
+As React Server Components cannot access Context, we need another way of creating this "scoped shared client" and passing it around.
+There is no support for anything like this in React, however Next.js internally uses `AsyncLocalStorage` to pass the `headers` down scoped per request. 
 [We can use that](https://github.com/apollographql/apollo-client-nextjs/blob/c622586533e0f2ac96b692a5106642373c3c45c6/package/src/rsc/registerApolloClient.tsx#L12) to achieve this goal in NextJs. 
-But this is a NextJS internal and might not stay around in that form.
+This however is a Next.js internal and might not be stable.
 
-### getting data from RSC into the SSR layer
+### Getting data from RSC into the SSR pass
 
-I've discussed this with Dan, and we agree that using the RSC cache to rehydrate the SSR cache mostly doesn't make sense:
-The base assumption would be that there is something in the RSC cache that would be valuable for the SSR pass. If that were the case, the same data would be rendered by RSC and SSR/Browser components. But while the latter could update dynamically on cache updates, the former could not update without the client manually triggering a server-rerender.
+I've discussed the possibility of using the RSC cache to rehydrate the SSR cache with [@gaearon](https://github.com/gaearon) and we agree that it mostly doesn't make sense.
+The base assumption was that something in the RSC cache would be valuable for the SSR pass. If this were the case, the same data could be rendered by RSC and SSR/Browser components. But while the latter could update dynamically on cache updates, the former could not update without the client manually triggering a server-rerender.
 
-**Instead, we should document and encourage that RSC and SSR/Browser components should not use overlapping data. If it is expected that data regularly changes during an application lifetime, it makes more sense for it to live solely in client components.**
+**Instead, we should document and encourage that RSC and SSR/Browser components (i.e. client components) should not use overlapping data. If data is expected to change often during an application lifetime, it makes more sense for it to live solely in client components.**
 
 #### Possible exception: statically priming the cache without rendering anything
 
-In this case, a root component could prefetch data, snapshot it and pass a serialized version of it as a prop into the `Provider` component or something similar. But this is a very edge-case scenario.
 
-## Usage scenario: streamed SSR & Suspense
+## Usage scenario: Streamed SSR & Suspense
 
-As mentioned before, there is no isolated RSC run - RSC are always part of a larger SSR pass. The second half of that SSR pass renders the client components, and users expect to be able to use all features as they could in the Browser. Most users will likely not even be aware that their client components render on the server.
+As mentioned, there is no isolated RSC run. RSC renders are always part of a larger SSR pass. The second half of that SSR pass renders client components, where users expect normal browser features to be available. In fact, most users will likely be unaware that their client components render on the server.
 
-That means that we need to transparently move data from the server to the client while the server-side Apollo Client gets filled up during the SSR pass - and to inject that data into the browser-side Apollo Client before the rehydration happens.
+That means that we need to transparently move data from the server to the client while the server-side Apollo Client receives query responses during the SSR pass - and to inject that data into the browser-side Apollo Client before the rehydration happens.
 
-This "data transport" problem has been solved in the past, and there are various strategies around that, but it was always centered around a "single-pass hydration" - rendering the full React tree (usually, multiple times until all data has been fetched in the background), then extracting cache data, moving it over, priming the browser cache and kicking off rehydration.
+With prior React versions that used synchronous rendering, the "data transport" problem has typically been solved using a "single-pass hydration" technique. In the case of [Apollo](https://www.apollographql.com/docs/react/performance/server-side-rendering), we would render the full React tree one or more times until all queries had successfully been fetched. Once fetched, we would extract all cache data then output that data with the final HTML. This would allow the browser to prime the client-side cache with the server data during hydration.
 
-This doesn't work any more: when using RSC in a SSR scenario and with Suspense in the picture, we are talking about [Steaming SSR](https://beta.nextjs.org/docs/data-fetching/streaming-and-suspense). Content up to the next suspense boundary will be rendered, then moved over to the client and rehydrated.  
+This technique is no longer optimal and does not work with RSC. React 18 enables [Steaming SSR](https://beta.nextjs.org/docs/data-fetching/streaming-and-suspense) with Suspense, which allows parts of your app to be streamed to the browser while React works on rendering other parts of your app on the server. Content up to the next suspense boundary will be rendered, then moved over to the client and rehydrated.  
 Once a suspense boundary resolves, the next chunk will me moved over and rehydrated, and so on.
 
-We can no longer wait for Apollo Cache to get "full", but need to move data over as soon as it is available.
+In this model, we can no longer wait for all queries to finish execution before we extract data from the Apollo Cache. Instead, we need to stream data to the client as soon as it is available.
 
-This diagram shows a simplified version of this with two components that each are in a suspense boundaries that (for whatever reason) do not have overlapping timing.  
-In reality, these will overlap.
+To illustrate this, here is a diagram that represents two components with their own suspense boundaries that do not have overlapping timing (though in practice, these will likely overlap).
 
 ```mermaid
 sequenceDiagram
@@ -256,7 +271,7 @@ sequenceDiagram
   BB ->> BB: rehydration render
 ```
 
-So, the same diagram with more realistic overlapping (this is still a pretty optimal case!):
+Here is the same diagram with overlapping (this is still a pretty optimal case!):
 
 
 ```mermaid
@@ -319,21 +334,21 @@ sequenceDiagram
   BB ->> BB: rehydration render
 ```
 
-Note that in both of these scenarios, all we *maybe* have control over on the SSR side is when to send data from the SSR Apollo Client instance to the stream/to the Apollo Client instance in the Browser.  
-We could have the choice of either moving data over immediately when we receive it, or when the suspense boundary resolves.  
-At this point in time, we can only do the latter, as React does not provide means of injecting into the stream at arbitrary points in time.
+In both of these scenarios, about the only control we have during the SSR pass is when to stream data from the SSR Apollo Client instance to the browser.  
+Ideally we'd have the choice to either move data to the client immediately as we receive it, or as the suspense boundary resolves.
+Unfortunately we can only do the latter, as React does not a mechanism of injecting data into the stream at arbitrary points in time.
 
-### How to get data over
+### Approaches for transferring data from the server to the client
 
-#### NextJs option: `useServerInsertedHTML` (which is meant for CSS)
+#### Option: Use Next.js `useServerInsertedHTML` hook (meant for CSS)
 
-NextJS has the `useServerInsertedHTML` hook that allows components to dump HTML out, which will then be inserted into the DOM by `getServerInsertedHTML`. That code will be dumped out right before React starts rehydrating a suspense boundary.  
+Next.js has a [`useServerInsertedHTML`](https://beta.nextjs.org/docs/styling/css-in-js#configuring-css-in-js-in-app) hook that allows components to dump arbitrary HTML into the stream, which will then be inserted into the DOM by `getServerInsertedHTML`. That code will be dumped out right before React starts rehydrating a suspense boundary.  
 
-We are currently [using this mechanism](https://github.com/apollographql/apollo-client-nextjs/blob/c622586533e0f2ac96b692a5106642373c3c45c6/package/src/ssr/RehydrationContext.tsx#L52), although we use the inner `ServerInsertedHTMLContext` directly, as it gives us more control over how we inject data.
+This is the [mechanism we're using](https://github.com/apollographql/apollo-client-nextjs/blob/c622586533e0f2ac96b692a5106642373c3c45c6/package/src/ssr/RehydrationContext.tsx#L52), though we use the inner `ServerInsertedHTMLContext` directly as it gives us more control over how we inject data.
 
-#### Generic option: pipe into the stream
+#### Option: Pipe directly into the stream
 
-This was Dans initial suggestion.
+This was [@gaearon](https://github.com/gaearon)'s initial suggestion.
 
 If we would get access to the `ReadableStream/PipeableStream` instance that is used to transfer data to the server, we could use that to inject data into the stream directly.
 
@@ -349,17 +364,19 @@ Also, once we have the stream we have the problem of identifying the "right mome
 
 Prior art to that is aparently somewhere in [unstubbable/mfng](https://github.com/unstubbable/mfng), but given the option of NextJS `ServerInsertedHTMLContext`, I didn't investigate this further. In the end, we want so offer our users a solution that doesn't need them to patch their framework.
 
-#### What TanStack React Query does: wrapping the `Suspense` component.
+#### Option: Wrap the `Suspense` component.
+
+This is a technique currently used by TanStack React Query.
 
 *This is actually the solution that Dan liked the least of all possible options - he doesn't want libraries to wrap Suspense boundaries, and I get why.*
 
-We could wrap the `<Suspense>` component into our own wrapper and tell users to use that one. Data that would need to be transported over the wire would then be rendered out into a `<script dangerouslySetInnerHTML={{ __html: "restore logic here" }} />` tag. The nice thing here is that we have a good synchronization to the component tree that we otherwise won't have.
+Using this approach, we'd export a custom wrapped `<Suspense>` component and have users to use that one. Data transported over the wire would then be rendered out into a `<script dangerouslySetInnerHTML={{ __html: "restore logic here" }} />` tag. The benefit here is that we have good synchronization with the component tree that we otherwise wouldn't have.
 
 ### Problems of a client-side cache in a "streaming SSR" scenario
 
 The general problem we have is that the client-side cache can change in the browser while the server is still rendering a Suspense Boundary. In the worst case, the server would render based on "past data" while the client already received an update and will try to render rehydrated data that is different from what the server rendered. We encounter a hydration mismatch.
 
-In a "we can move data from SSR to the client" scenario, that would look like this
+If we had the ability to write directly to stream, this might look like this:
 
 ```mermaid
 sequenceDiagram
@@ -400,7 +417,7 @@ sequenceDiagram
   Note over BA: ⚠️ rehydration mismatch, data changed in the meantime
 ```
 In our "we can only move data over from the server when the suspense boundary resolves" scenario, that would look like this. 
-Note that here we do not only get a hydration mismatch, but we even have a "response from the past" overwrite "data from the future" in the cache. 
+Note that here we will likely not get a hydration mismatch, but the stale data from the server now overwrites the updated cache. 
 
 ```mermaid
 sequenceDiagram
