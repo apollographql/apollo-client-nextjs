@@ -175,7 +175,8 @@ This leaves us with these five different stages, all which have different capabi
 | Context         | ❌         | ✅         | ❌          | ✅          | ✅      |
 | Hooks           | ❌         | ✅         | ❌          | ✅          | ✅      |
 | Cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
-| Can render    | ❌         | ❌         | ❌          | ❌          | ✅      |
+| Executes effects| ❌         | ❌         | ❌          | ❌          | ✅      |
+| Can rerender    | ❌         | ❌         | ❌          | ❌          | ✅      |
 
 ## Apollo Client and RSC
 
@@ -368,9 +369,10 @@ Prior art to that is aparently somewhere in [unstubbable/mfng](https://github.co
 
 This is a technique currently used by TanStack React Query.
 
-*This is actually the solution that Dan liked the least of all possible options - he doesn't want libraries to wrap Suspense boundaries, and I get why.*
-
 Using this approach, we'd export a custom wrapped `<Suspense>` component and have users to use that one. Data transported over the wire would then be rendered out into a `<script dangerouslySetInnerHTML={{ __html: "restore logic here" }} />` tag. The benefit here is that we have good synchronization with the component tree that we otherwise wouldn't have.
+
+Discussing this approach with [@gaearon](https://github.com/gaearon), he pointed out that he hopes that libraries don't have to wrap Suspense boundaries.  
+Suspense boundaries should stay a "React primitive". If libraries started wrapping them, there would be the risk is that users would end up with multiple different libraries, each with their own "Suspense wrapper", and that users would have to choose the "right" one for each use case, making things a lot more complicated and error-prone.
 
 ### Problems of a client-side cache in a "streaming SSR" scenario
 
