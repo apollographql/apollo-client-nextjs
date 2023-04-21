@@ -1,5 +1,8 @@
 # The React Server Component & "SSR with Suspense" story
 
+> This RFC accompanies the release of a `@apollo/experimental-nextjs-app-support` package, which is created to supplement the `@apollo/client` package and add primitives to support Reach Server Components and SSR in the Next.js `app` directory.  
+Please also see the full package README at the [repository](https://github.com/apollographql/apollo-client-nextjs).
+
 ## Introduction: What are React Server Components?
 
 React Server Components (RSC) are a new technology that is currently landing in frameworks like [Next.js](https://nextjs.org/docs/advanced-features/react-18/server-components) and [Gatsby](https://www.gatsbyjs.com/docs/how-to/performance/partial-hydration/). Remix is currently experimenting with it, Dai-Shi Kato is currently building the experimental Framework [`wakuwork`](https://github.com/dai-shi/wakuwork) with it. (This one could be the best way to read into internals.)
@@ -198,8 +201,37 @@ The base assumption was that something in the RSC cache would be valuable for th
 
 **Instead, we should document and encourage that RSC and SSR/Browser components (i.e. client components) should not use overlapping data. If data is expected to change often during an application lifetime, it makes more sense for it to live solely in client components.**
 
-#### Possible exception: statically priming the cache without rendering anything
+### Library design regarding React Server Components
 
+We will export a `registerApolloClient` function to be called in a global scope. This function will return a `getClient` function that can be used to get the correct client instance for the current request, or create a new one.
+
+In the future, this could be configurable, so the client would be created per-request in dynamic rendering, but shared between pages in static rendering.
+
+<details><summary>Toggle example usage:</summary>
+
+```js
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+
+export const { getClient } = registerApolloClient(() => {
+  return new ApolloClient({
+    cache: new InMemoryCache(),
+    link: new HttpLink({
+      // this needs to be an absolute url, as relative urls cannot be used in SSR
+      uri: "http://example.com/api/graphql",
+      // you can disable result caching here if you want to
+      // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
+      // fetchOptions: { cache: "no-store" },
+    }),
+  });
+});
+```
+
+You can then use that getClient function in your server components:
+```jsx
+const { data } = await getClient().query({ query: userQuery });
+```
+</details>
 
 ## Usage scenario: Streamed SSR & Suspense
 
@@ -509,6 +541,74 @@ This is not something we realistically can do in the near future, but we should 
 * Users that want to completely eliminate 2., could use a `fetchPolicy` of `cache-and-network`, which would cause the query to be refetched in the browser, and the browser cache would then overwrite data from the past that in the meantime might have ended up in the cache. This is not a nice solution, but the nice thing is that it can be used as a "targeted workaround" for specific queries, where our users expect this to be a problem.
 
 So, at this point we can eliminate problem 1., and we can reduce problem 2. to the point where it becomes unlikely. A future implementation of `injectIntoStream` on React or NextJs side would help us make it even more unlikely. (And users can overwhelm the problem with additional network requests if they deem it really necessary.) 
+
+### Library design regarding SSR
+
+This has multiple building blocks:
+
+We will provide a `ApolloNextAppProvider` component that would be used instead of the classic `ApolloProvider`, and a `NextSSRInMemoryCache` that would be used instead of the classic `InMemoryCache`.
+
+* The purpose of the `ApolloNextAppProvider` is to create an Apollo Client in a safe way inside a component render - as opposed to classic "Client-Only" scenarios, where a client would be created as a global variable.  
+* The job of the `NextSSRInMemoryCache` is two-fold: 
+  * On the server, it will register all cache-writes and queue those in a local queue that will be transported over to the client.
+  * In the browser, it will restore the cache from the queue and then replay all writes to the cache.
+
+We will also provide `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` hooks that should be used instead of their `@apollo/client` counterparts.  
+In addition to calling the original implementation, they wrap it in a way that will transport the current return value over to the browser, so that it is ensured that the browser rehydrates with the same DOM as the server. Immediately after rehydration, those hooks will trigger a re-render to make sure that any updates the client-side cache would have received in the meantime are applied.
+
+Those hooks would be used exactly as their `@apollo/client` counterparts.
+
+<details><summary>Toggle example setup:</summary>
+
+```jsx
+"use client";
+// ^ this file needs the "use client" pragma
+
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  SuspenseCache,
+} from "@apollo/client";
+import {
+  ApolloNextAppProvider,
+  NextSSRInMemoryCache,
+  SSRMultipartLink,
+} from "@apollo/experimental-nextjs-app-support/ssr";
+
+// have a function to create a client for you
+function makeClient() {
+  return new ApolloClient({
+    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
+    cache: new NextSSRInMemoryCache(),
+      link: new HttpLink({
+      // this needs to be an absolute url, as relative urls cannot be used in SSR
+      uri: "https://example.com/api/graphql",
+      // you can disable result caching here if you want to
+      // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
+      fetchOptions: { cache: "no-store" },
+    });
+  });
+}
+
+// also have a function to create a suspense cache
+function makeSuspenseCache() {
+  return new SuspenseCache();
+}
+
+// you need to create a component to wrap your app in
+export function ApolloWrapper({ children }: React.PropsWithChildren) {
+  return (
+    <ApolloNextAppProvider
+      makeClient={makeClient}
+      makeSuspenseCache={makeSuspenseCache}
+    >
+      {children}
+    </ApolloNextAppProvider>
+  );
+}
+```
+</details>
 
 ## Usage scenario: multipart queries
 

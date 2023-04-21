@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import { byEnv } from "@apollo/experimental-next";
+import { byEnv } from "@apollo/experimental-nextjs-app-support";
 import {
   ApolloClient,
   ApolloLink,
@@ -13,7 +13,7 @@ import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   SSRMultipartLink,
-} from "@apollo/experimental-next/ssr";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 
 export function ApolloWrapper({
   children,

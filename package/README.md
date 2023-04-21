@@ -49,7 +49,7 @@ Create an `ApolloClient.js` file:
 
 ```js
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-next/rsc";
+import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
 
 export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
@@ -81,7 +81,7 @@ First, create a new file `app/ApolloWrapper.js`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import { byEnv } from "@apollo/experimental-next";
+import { byEnv } from "@apollo/experimental-nextjs-app-support";
 import {
   ApolloClient,
   ApolloLink,
@@ -92,7 +92,7 @@ import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   SSRMultipartLink,
-} from "@apollo/experimental-next/ssr";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 
 // have a function to create a client for you
 function makeClient() {
@@ -166,7 +166,7 @@ export default function RootLayout({
 > ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
-Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-next/ssr"` in your Client components like you are used to.
+Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-nextjs-app-support/ssr"` in your Client components like you are used to.
 
 ## Handling Multipart responses in SSR
 

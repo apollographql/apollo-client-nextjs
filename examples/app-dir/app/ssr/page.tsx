@@ -1,11 +1,11 @@
 "use client";
 import React, { Suspense } from "react";
-import { detectEnvironment } from "@apollo/experimental-next";
+import { detectEnvironment } from "@apollo/experimental-nextjs-app-support";
 import {
   useFragment,
   useQuery,
   useSuspenseQuery,
-} from "@apollo/experimental-next/ssr";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
 import { HtmlChangesObserver } from "@/components/HtmlChangesObserver";
 

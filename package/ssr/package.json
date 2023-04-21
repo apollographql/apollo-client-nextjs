@@ -1,5 +1,5 @@
 {
-  "name": "@apollo/experimental-next/ssr",
+  "name": "@apollo/experimental-nextjs-app-support/ssr",
   "version": "0.0.1",
   "main": "../dist/ssr/index.js",
   "author": "packages@apollographql.com",
