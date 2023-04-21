@@ -426,8 +426,6 @@ Prior art to that is aparently somewhere in [unstubbable/mfng](https://github.co
 
 #### Option: Wrap the `Suspense` component.
 
-This is a technique currently used by TanStack React Query.
-
 Using this approach, we'd export a custom wrapped `<Suspense>` component and have users to use that one. Data transported over the wire would then be rendered out into a `<script dangerouslySetInnerHTML={{ __html: "restore logic here" }} />` tag. The benefit here is that we have good synchronization with the component tree that we otherwise wouldn't have.
 
 Discussing this approach with [@gaearon](https://github.com/gaearon), he pointed out that he hopes that libraries don't have to wrap Suspense boundaries.  
