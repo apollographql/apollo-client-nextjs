@@ -1,6 +1,6 @@
 # The React Server Component & "SSR with Suspense" story
 
-> This RFC accompanies the release of a `@apollo/experimental-nextjs-app-support` package, which is created to supplement the `@apollo/client` package and add primitives to support Reach Server Components and SSR in the Next.js `app` directory.  
+> This RFC accompanies the release of a `@apollo/experimental-nextjs-app-support` package, which is created to supplement the `@apollo/client` package and add primitives to support React Server Components and SSR in the Next.js `app` directory.  
 Please also see the full package README at the [repository](https://github.com/apollographql/apollo-client-nextjs).
 
 ## Introduction: What are React Server Components?
