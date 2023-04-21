@@ -214,7 +214,22 @@ Once a suspense boundary resolves, the next chunk will me moved over and rehydra
 
 In this model, we can no longer wait for all queries to finish execution before we extract data from the Apollo Cache. Instead, we need to stream data to the client as soon as it is available.
 
-To illustrate this, here is a diagram that represents two components with their own suspense boundaries that do not have overlapping timing (though in practice, these will likely overlap).
+To illustrate this, here is a diagram that represents two components with their own suspense boundaries that do not have overlapping timing - usually indicated by a waterfall situation.
+
+JSX for that could be:
+
+```jsx
+// page.js
+<Suspense>
+  <ComponentA />
+<Suspense>
+
+// ComponentA.js
+<Suspense>
+  <ComponentB />
+<Suspense>
+```
+
 
 ```mermaid
 sequenceDiagram
@@ -274,6 +289,18 @@ sequenceDiagram
 
 Here is the same diagram with overlapping (this is still a pretty optimal case!):
 
+The JSX for that could be:
+
+```jsx
+// page.js
+
+<Suspense>
+  <ComponentA />
+<Suspense>
+<Suspense>
+  <ComponentB />
+<Suspense>
+```
 
 ```mermaid
 sequenceDiagram
