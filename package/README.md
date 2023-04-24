@@ -279,13 +279,10 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
   Signature:
 
   ```ts
-  function detectEnvironment(
-    log?: string
-  ): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser";
+  function detectEnvironment(): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser";
   ```
 
   This function can be used to detect the current environment your code is being executed in.
-  If you pass in a string argument, it will also output more information about the environment to the console.
 
 - `byEnv`  
   Signature:
@@ -316,13 +313,28 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
   });
   ```
 
+
+#### `logEnvironmentInfo`
+Signature: 
+```ts
+export function logEnvironmentInfo(logWhere?: string): void
+```
+This function will log out some information we internally use to detect the environment.
+
+### Debugging
+If you want more information on what data is sent over the wire, enable logging in tour `app/ApolloWrapper.ts`:
+```ts
+import { setVerbosity } from "ts-invariant";
+setVerbosity("debug");
+```
+
 ## Roadmap
 
-## Support for Apollo in Next app dir React Server Components
+### Support for Apollo in Next app dir React Server Components
 
 - [x] share client instance between multiple requests made in the same render
 
-## Support for Apollo in Next app dir SSR
+### Support for Apollo in Next app dir SSR
 
 - [x] enable use of React hooks in SSR
   - [x] `useApolloClient` (no changes needed)
@@ -330,20 +342,20 @@ This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `Ac
   - [x] `useFragment`
   - [x] `useQuery` (will not make requests on server, but will use cache values that have been added by `useSuspenseQuery`)
   - [ ] `useBackgroundQuery`
-  - [ ] useSubscription (what would support look like?)
-  - [ ] ~~useMutation~~ (not going to support this)
-  - [ ] ~~useLazyQuery~~ (not going to support this)
+  - [ ] `useSubscription` (what would support look like?)
+  - [ ] ~~`useMutation`~~ (not going to support this)
+  - [ ] ~~`useLazyQuery`~~ (not going to support this)
 - [x] support `@defer`/Multipart requests
   - [x] remove `@defer` fragments from query
   - [x] wait for deferred data to be received, then return initial response (with deferred data merged in)
 - [x] rehydrate the exact hook status on the browser
 - [x] forward incoming query responses to the browser (works, but not optimal: see [React RFC: injectToStream](https://github.com/reactjs/rfcs/pull/219#issuecomment-1505084590) )
 
-## Specific advice for Reactive Variables
+### Specific advice for Reactive Variables
 
 - [ ] Specific advice for Reactive Variables
 
 
-## Support for Apollo in legacy SSR in Next with `getServerSideProps` and `getStaticProps`
+### Support for Apollo in legacy SSR in Next with `getServerSideProps` and `getStaticProps`
 
 - [ ] evaluate if we still add this at this point or concentrate on app dir RSC & SSR

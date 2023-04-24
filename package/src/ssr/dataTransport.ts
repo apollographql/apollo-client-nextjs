@@ -7,6 +7,7 @@ import {
 import { RehydrationCache } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
 import { Cache } from "@apollo/client";
+import invariant from "ts-invariant";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 
@@ -32,7 +33,7 @@ export function transportDataToJS(data: DataToTransport) {
 export function registerDataTransport() {
   registerLateInitializingQueue(ApolloSSRDataTransport, (data) => {
     const parsed = SuperJSON.deserialize<DataToTransport>(data);
-    console.log(`received data from the server:`, parsed);
+    invariant.debug(`received data from the server:`, parsed);
     Object.assign((window[ApolloRehydrationCache] ??= {}), parsed.rehydrate);
     (window[ApolloResultCache] ??= []).push(...parsed.results);
   });

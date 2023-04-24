@@ -38,6 +38,7 @@
     "react": "^18"
   },
   "dependencies": {
-    "superjson": "^1.12.2"
+    "superjson": "^1.12.2",
+    "ts-invariant": "^0.10.3"
   }
 }

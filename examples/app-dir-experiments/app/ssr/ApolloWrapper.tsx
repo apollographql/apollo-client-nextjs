@@ -12,6 +12,9 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { setVerbosity } from "ts-invariant";
+
+setVerbosity("debug");
 
 function makeClient() {
   const httpLink = new HttpLink({

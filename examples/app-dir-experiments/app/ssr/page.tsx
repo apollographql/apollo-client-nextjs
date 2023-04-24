@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import { detectEnvironment } from "@apollo/experimental-nextjs-app-support";
+import { logEnvironmentInfo } from "@apollo/experimental-nextjs-app-support";
 import {
   useFragment,
   useQuery,
@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
 
 export default function Page() {
-  detectEnvironment("Page");
+  logEnvironmentInfo("Page");
 
   return (
     <HtmlChangesObserver>

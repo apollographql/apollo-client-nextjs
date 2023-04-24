@@ -4,6 +4,7 @@ import { NextSSRInMemoryCache } from "./NextSSRInMemoryCache";
 import { ServerInsertedHTMLContext } from "next/navigation";
 import { RehydrationContextValue } from "./types";
 import { registerDataTransport, transportDataToJS } from "./dataTransport";
+import invariant from "ts-invariant";
 
 const ApolloRehydrationContext = React.createContext<
   RehydrationContextValue | undefined
@@ -67,11 +68,22 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
         !Object.keys(rehydrationContext.incomingResults).length
       )
         return <></>;
-      console.log("transporting data", rehydrationContext.transportValueData);
-      console.log("transporting results", rehydrationContext.incomingResults);
+      invariant.debug(
+        "transporting data",
+        rehydrationContext.transportValueData
+      );
+      invariant.debug(
+        "transporting results",
+        rehydrationContext.incomingResults
+      );
 
       const __html = transportDataToJS({
-        rehydrate: rehydrationContext.transportValueData,
+        rehydrate: Object.fromEntries(
+          Object.entries(rehydrationContext.transportValueData).filter(
+            ([key, value]) =>
+              rehydrationContext.transportedValues[key] !== value
+          )
+        ),
         results: rehydrationContext.incomingResults,
       });
       Object.assign(

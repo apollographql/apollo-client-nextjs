@@ -65,6 +65,7 @@ __metadata:
     react: ^18.2.0
     release-it: ^15.9.0
     superjson: ^1.12.2
+    ts-invariant: ^0.10.3
     ts-node: ^10.9.1
     typescript: ^5.0.2
     vitest: ^0.30.1

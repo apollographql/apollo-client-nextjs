@@ -1,6 +1,7 @@
 import React, { cache } from "react";
 
 import { staticGenerationAsyncStorage } from "next/dist/client/components/static-generation-async-storage";
+import invariant from "ts-invariant";
 
 export type SpecificEnv =
   | "staticRSC"
@@ -31,7 +32,18 @@ export function isStaticGeneration() {
   return staticGenerationStore?.isStaticGeneration;
 }
 
-export function detectEnvironment(logWhere?: string): SpecificEnv {
+export function logEnvironmentInfo(logWhere?: string) {
+  invariant.log({
+    cacheAvailable: cacheAvailable(),
+    hasCreateContext: hasCreateContext(),
+    isServer: isServer(),
+    isStaticGeneration: isStaticGeneration(),
+    detectedEnviroment: detectEnvironment(),
+    where: logWhere,
+  });
+}
+
+export function detectEnvironment(): SpecificEnv {
   const detectedEnviroment =
     cacheAvailable() && !hasCreateContext()
       ? isStaticGeneration()
@@ -42,14 +54,5 @@ export function detectEnvironment(logWhere?: string): SpecificEnv {
         ? "staticSSR"
         : "dynamicSSR"
       : "Browser";
-  if (logWhere)
-    console.log({
-      cacheAvailable: cacheAvailable(),
-      hasCreateContext: hasCreateContext(),
-      isServer: isServer(),
-      isstaticGeneration: isStaticGeneration(),
-      detectedEnviroment,
-      where: logWhere,
-    });
   return detectedEnviroment;
 }
