@@ -1,5 +1,5 @@
 {
-  "name": "@apollo/experimental-next",
+  "name": "@apollo/experimental-nextjs-app-support",
   "version": "0.0.1",
   "main": "dist/index.js",
   "author": "packages@apollographql.com",

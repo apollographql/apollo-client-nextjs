@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": ">= 3.8.0-alpha.10",
-    "@apollo/experimental-next": "workspace:^",
+    "@apollo/experimental-nextjs-app-support": "workspace:^",
     "@apollo/space-kit": "^9.11.0",
     "@chakra-ui/next-js": "^2.1.2",
     "@chakra-ui/react": "^2.5.5",
