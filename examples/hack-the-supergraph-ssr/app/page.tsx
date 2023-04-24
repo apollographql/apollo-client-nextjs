@@ -6,21 +6,15 @@ import { gql, TypedDocumentNode } from "@apollo/client";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
 const GET_LATEST_PRODUCTS: TypedDocumentNode<{
-  products: {
-    id: string;
-    title: string;
-    description: string;
-    mediaUrl: string;
-  }[];
+  products: { id: string }[];
 }> = gql`
   query HomepageProducts {
     products {
       id
-      title
-      description
-      mediaUrl
+      ...ProductCardProductFragment
     }
   }
+  ${ProductCard.fragments.ProductCardProductFragment}
 `;
 export default function HomePage() {
   const { data } = useSuspenseQuery(GET_LATEST_PRODUCTS, {
@@ -42,7 +36,7 @@ export default function HomePage() {
 
         <SimpleGrid columns={[1, null, 2]} spacing={4}>
           {data?.products.map((product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard key={product.id} id={product.id} />
           ))}
         </SimpleGrid>
       </Stack>

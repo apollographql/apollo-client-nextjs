@@ -3,13 +3,6 @@ import { cookies } from "next/headers";
 import { ClientLayout } from "./ClientLayout";
 
 import { ApolloWrapper } from "./ApolloWrapper";
-/*
-export const metadata = {
-  title: "Hack the Supergraph",
-  description:
-    'Based on the "Hack the Supergraph" app found on https://github.com/apollographql/hack-the-supergraph',
-};
-*/
 
 export default async function RootLayout({
   children,

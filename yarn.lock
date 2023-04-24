@@ -3420,9 +3420,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app-dir@workspace:examples/app-dir":
+"app-dir@workspace:examples/app-dir-experiments":
   version: 0.0.0-use.local
-  resolution: "app-dir@workspace:examples/app-dir"
+  resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
     "@apollo/client": ">= 3.8.0-alpha.10"
     "@apollo/experimental-nextjs-app-support": "workspace:^"

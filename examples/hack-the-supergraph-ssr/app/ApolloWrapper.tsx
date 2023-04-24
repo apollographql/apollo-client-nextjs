@@ -1,12 +1,11 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import { byEnv } from "@apollo/experimental-nextjs-app-support";
 import {
   ApolloClient,
   ApolloLink,
   HttpLink,
   SuspenseCache,
-  InMemoryCache,
 } from "@apollo/client";
 import clientCookies from "js-cookie";
 import {

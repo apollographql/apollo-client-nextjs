@@ -12,16 +12,16 @@ import { byEnv } from "@/../../package/dist";
 
 export default function DelaySlider() {
   const [delay, setDelay] = useState(
-    byEnv({
+    byEnv<number>({
       Browser: () => Number(clientCookies.get("apollo-x-custom-delay") ?? 1000),
-      default: null,
+      default: () => 1000,
     })
   );
+
   useEffect(() => {
-    clientCookies.set("apollo-x-custom-delay", delay);
+    if (delay) clientCookies.set("apollo-x-custom-delay", String(delay));
   }, [delay]);
-  // render only on the client
-  if (delay === null) return null;
+
   return (
     <Box>
       <Heading fontSize="md">

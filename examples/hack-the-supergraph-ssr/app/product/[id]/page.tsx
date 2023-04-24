@@ -84,7 +84,7 @@ export default function Product({
         <Image
           src={mediaUrl}
           alt={title}
-          objectFit="cover"
+          objectFit="contain"
           width="100%"
           height="500px"
           borderRadius="12"
