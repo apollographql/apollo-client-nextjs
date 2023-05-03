@@ -1,6 +1,5 @@
 "use client";
 
-import { byEnv } from "@apollo/experimental-nextjs-app-support";
 import {
   ApolloClient,
   ApolloLink,
@@ -24,16 +23,15 @@ function makeClient() {
 
   return new ApolloClient({
     cache: new NextSSRInMemoryCache(),
-    link: byEnv({
-      SSR: () =>
-        ApolloLink.from([
-          new SSRMultipartLink({
-            stripDefer: true,
-          }),
-          httpLink,
-        ]),
-      default: () => httpLink,
-    }),
+    link:
+      typeof window === "undefined"
+        ? ApolloLink.from([
+            new SSRMultipartLink({
+              stripDefer: true,
+            }),
+            httpLink,
+          ])
+        : httpLink,
   });
 }
 

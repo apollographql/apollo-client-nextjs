@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { byEnv } from "@apollo/experimental-nextjs-app-support";
 import {
   ApolloClient,
   ApolloLink,
@@ -43,10 +42,10 @@ export function ApolloWrapper({
     });
 
     const delayLink = new ApolloLink((operation, forward) => {
-      const delay = byEnv({
-        SSR: () => delayProp,
-        Browser: () => clientCookies.get("apollo-x-custom-delay") ?? delayProp,
-      });
+      const delay =
+        typeof window === "undefined"
+          ? delayProp
+          : clientCookies.get("apollo-x-custom-delay") ?? delayProp;
       operation.setContext(({ headers = {} }) => {
         return {
           headers: {
@@ -58,18 +57,17 @@ export function ApolloWrapper({
 
       return forward(operation);
     });
-    const link = byEnv({
-      SSR: () =>
-        ApolloLink.from([
-          new SSRMultipartLink({
-            stripDefer: false,
-            cutoffDelay: 100,
-          }),
-          delayLink,
-          httpLink,
-        ]),
-      default: () => ApolloLink.from([delayLink, httpLink]),
-    });
+    const link =
+      typeof window === "undefined"
+        ? ApolloLink.from([
+            new SSRMultipartLink({
+              stripDefer: false,
+              cutoffDelay: 100,
+            }),
+            delayLink,
+            httpLink,
+          ])
+        : ApolloLink.from([delayLink, httpLink]);
 
     return new ApolloClient({
       cache: new NextSSRInMemoryCache(),
