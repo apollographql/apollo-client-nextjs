@@ -6,12 +6,20 @@
     "./rsc": "./dist/rsc/index.js",
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "ssr": [
+        "./dist/ssr/index.d.ts"
+      ],
+      "rsc": [
+        "./dist/ssr/index.d.ts"
+      ]
+    }
+  },
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
     "dist/",
-    "ssr/",
-    "rsc/",
     "package.json",
     "LICENSE.md",
     "README.md"
