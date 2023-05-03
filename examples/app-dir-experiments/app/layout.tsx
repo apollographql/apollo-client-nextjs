@@ -1,4 +1,3 @@
-import { logEnvironmentInfo } from "@/../../package/src/detectEnvironment";
 import "./globals.css";
 
 export const metadata = {
@@ -11,7 +10,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  logEnvironmentInfo("RootLayout");
   return (
     <html lang="en">
       <body>{children}</body>

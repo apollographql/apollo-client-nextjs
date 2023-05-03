@@ -81,7 +81,6 @@ First, create a new file `app/ApolloWrapper.js`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import { byEnv } from "@apollo/experimental-nextjs-app-support";
 import {
   ApolloClient,
   ApolloLink,
@@ -107,19 +106,18 @@ function makeClient() {
   return new ApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
     cache: new NextSSRInMemoryCache(),
-    link: byEnv({
-      SSR: () =>
-        ApolloLink.from([
-          // in a SSR environment, if you use multipart features like
-          // @defer, you need to decide how to handle these.
-          // This strips all `@defer` directives from your queries.
-          new SSRMultipartLink({
-            stripDefer: true,
-          }),
-          httpLink,
-        ]),
-      default: () => httpLink,
-    }),
+    link:
+      typeof window === "undefined"
+        ? ApolloLink.from([
+            // in a SSR environment, if you use multipart features like
+            // @defer, you need to decide how to handle these.
+            // This strips all `@defer` directives from your queries.
+            new SSRMultipartLink({
+              stripDefer: true,
+            }),
+            httpLink,
+          ])
+        : httpLink,
   });
 }
 
@@ -273,56 +271,10 @@ new SSRMultipartLink({
 
 This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink` into a single link.
 
-### other APIs
-
-- `detectEnvironment`  
-  Signature:
-
-  ```ts
-  function detectEnvironment(): "staticRSC" | "dynamicRSC" | "staticSSR" | "dynamicSSR" | "Browser";
-  ```
-
-  This function can be used to detect the current environment your code is being executed in.
-
-- `byEnv`  
-  Signature:
-  ```ts
-  function byEnv<T>(options: {
-    staticRSC?: () => T;
-    dynamicRSC?: () => T;
-    RSC?: () => T;
-    staticSSR?: () => T;
-    dynamicSSR?: () => T;
-    SSR?: () => T;
-    Browser?: () => T;
-    default?: () => T;
-  }): T;
-  ```
-  This function can be used to select different values depending on the environment your code is being executed in.  
-  More specific values will take precedence over less specific ones.  
-  Example:
-  ```js
-  const value = byEnv({
-    RSC: () => "I'm running in a React Server Component - static or dynamic!",
-    staticSSR: () =>
-      "This client component is currently rendering in static SSR!",
-    SSR: () =>
-      "I'm running in SSR. Since the static case is already covered explicitly, it's gonna be dynamic SSR.",
-    Browser: () => "I'm running in the browser",
-    default: () => "Will be returned if the matching case has been omitted",
-  });
-  ```
-
-
-#### `logEnvironmentInfo`
-Signature: 
-```ts
-export function logEnvironmentInfo(logWhere?: string): void
-```
-This function will log out some information we internally use to detect the environment.
-
 ### Debugging
-If you want more information on what data is sent over the wire, enable logging in tour `app/ApolloWrapper.ts`:
+
+If you want more information on what data is sent over the wire, enable logging in your `app/ApolloWrapper.ts`:
+
 ```ts
 import { setVerbosity } from "ts-invariant";
 setVerbosity("debug");
