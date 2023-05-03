@@ -1,27 +1,20 @@
 import type { ApolloClient } from "@apollo/client";
-import {
-  RequestStore,
-  requestAsyncStorage,
-} from "next/dist/client/components/request-async-storage";
-import { hasCreateContext } from "../detectEnvironment";
+import * as React from "react";
 
-const ApolloClients = new WeakMap<RequestStore, ApolloClient<any>>();
+function assertRSC(
+  reactImport: typeof import("react")
+): asserts reactImport is typeof import("react") & { cache<T>(x: () => T): T } {
+  if ("createContext" in React) {
+    throw new Error(
+      "`registerApolloClient` should only be used in a React Server Component context - in Client Components, use the `ApolloNextAppProvider`!"
+    );
+  }
+}
+
 export function registerApolloClient(makeClient: () => ApolloClient<any>) {
+  assertRSC(React);
+  const getClient = React.cache(makeClient);
   return {
-    getClient() {
-      const requestStore = requestAsyncStorage.getStore();
-      if (hasCreateContext() || !requestStore) {
-        throw new Error(
-          "`getClient` cannot be used in this environment. Please use the `useApolloClient` hook instead."
-        );
-      }
-      let client = ApolloClients.get(requestStore);
-      if (!client) {
-        client = makeClient();
-        ApolloClients.set(requestStore, client);
-      }
-
-      return client;
-    },
+    getClient,
   };
 }
