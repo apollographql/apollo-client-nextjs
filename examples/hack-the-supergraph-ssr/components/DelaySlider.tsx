@@ -8,14 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import clientCookies from "js-cookie";
-import { byEnv } from "@/../../package/dist";
 
 export default function DelaySlider() {
   const [delay, setDelay] = useState(
-    byEnv<number>({
-      Browser: () => Number(clientCookies.get("apollo-x-custom-delay") ?? 1000),
-      default: () => 1000,
-    })
+    typeof window === "undefined"
+      ? 1000
+      : Number(clientCookies.get("apollo-x-custom-delay") ?? 1000)
   );
 
   useEffect(() => {
