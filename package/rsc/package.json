@@ -1,7 +1,0 @@
-{
-  "name": "@apollo/experimental-nextjs-app-support/rsc",
-  "version": "0.0.1",
-  "main": "../dist/rsc/index.js",
-  "author": "packages@apollographql.com",
-  "license": "MIT"
-}
