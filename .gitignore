@@ -9,3 +9,5 @@ tsconfig.tsbuildinfo
 dist/
 .yalc
 yalc.lock
+.DS_Store
+.vscode/
