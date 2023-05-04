@@ -1,0 +1,20 @@
+type Poll {
+  id: ID!
+  question: String!
+  answers: [Answer!]
+}
+
+type Answer {
+  id: ID!
+  text: String!
+  votes: Int!
+  percentage: Float!
+}
+
+type Query {
+  poll(id: ID!): Poll
+}
+
+type Mutation {
+  answerPoll(id: ID!, answerId: ID!): Poll
+}
