@@ -237,9 +237,11 @@ const { data } = await getClient().query({ query: userQuery });
 
 ## Usage scenario: Streamed SSR & Suspense
 
-As mentioned, there is no isolated RSC run. RSC renders are always part of a larger SSR pass. The second half of that SSR pass renders client components, where users expect normal browser features to be available. In fact, most users will likely be unaware that their client components render on the server.
-
-That means that we need to transparently move data from the server to the client while the server-side Apollo Client receives query responses during the SSR pass - and to inject that data into the browser-side Apollo Client before the rehydration happens.
+As mentioned Client Components in Next.js will have a render pass on the server on the first page load.  
+That is not really noticeable without using "fetch-in-render" suspense features, as the component render on the server was usually side-effect free.  
+But with the `useSuspense` hook, the component will now fire a request during render, and suspend until it has data. This does not only happen in the Browser but also on the server.  
+Where the SSR run was mostly inconsequential for the user (assuming they were not using other SSR-specific APIs) before, they now see different behavior, and we need additional functionality to support that. 
+We now need a way to transparently move data from the server to the client while the server-side Apollo Client receives query responses during the SSR pass - and to inject that data into the browser-side Apollo Client before the rehydration happens.
 
 With prior React versions that used synchronous rendering, the "data transport" problem has typically been solved using a "single-pass hydration" technique. In the case of [Apollo](https://www.apollographql.com/docs/react/performance/server-side-rendering), we would render the full React tree one or more times until all queries had successfully been fetched. Once fetched, we would extract all cache data then output that data with the final HTML. This would allow the browser to prime the client-side cache with the server data during hydration.
 
