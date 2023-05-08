@@ -291,10 +291,10 @@ sequenceDiagram
   Note over SSRA: render started network request, suspend
   SSRCache -) GQL: query A
   GQL -) SSRCache: query A result
-  SSRCache -) SSRA: query result
-  SSRCache -) Stream: serialized data
+  SSRCache -) SSRA: query A result
+  SSRCache -) Stream: serialized query A result
   deactivate SSRCache
-  Stream -) BCache: restore
+  Stream -) BCache: add query A result to cache
   SSRA ->> SSRA: render
   Note over SSRA: render successful, suspense finished
   SSRA -) Stream: transport
@@ -309,10 +309,10 @@ sequenceDiagram
   Note over SSRB: render started network request, suspend
   SSRCache -) GQL: query B
   GQL -) SSRCache: query B result
-  SSRCache -) SSRB: query result
-  SSRCache -) Stream: serialized data
+  SSRCache -) SSRB: query B result
+  SSRCache -) Stream: serialized query B result
   deactivate SSRCache
-  Stream -) BCache: restore
+  Stream -) BCache: add query B result to cache
   SSRB ->> SSRB: render
   Note over SSRB: render successful, suspense finished
   SSRB -) Stream: transport
@@ -370,10 +370,10 @@ sequenceDiagram
   Note over SSRB: render started network request, suspend
 
   GQL -) SSRCache: query A result
-  SSRCache -) SSRA: query result
-  SSRCache -) Stream: serialized data
+  SSRCache -) SSRA: query A result
+  SSRCache -) Stream: serialized query A result
   deactivate SSRCache
-  Stream -) BCache: restore
+  Stream -) BCache: add query A result to cache
   SSRA ->> SSRA: render
   Note over SSRA: render successful, suspense finished
   SSRA -) Stream: transport
@@ -384,10 +384,10 @@ sequenceDiagram
   
 
   GQL -) SSRCache: query B result
-  SSRCache -) SSRB: query result
-  SSRCache -) Stream: serialized data
+  SSRCache -) SSRB: query B result
+  SSRCache -) Stream: serialized query B result
   deactivate SSRCache
-  Stream -) BCache: restore
+  Stream -) BCache: add query B result to cache
   SSRB ->> SSRB: render
   Note over SSRB: render successful, suspense finished
   SSRB -) Stream: transport
@@ -464,10 +464,10 @@ sequenceDiagram
   Note over SSRA: render started network request, suspend
   SSRCache -) GQL: query A
   GQL -) SSRCache: query A result
-  SSRCache -) SSRA: query result
-  SSRCache -) Stream: serialized data
+  SSRCache -) SSRA: query A result
+  SSRCache -) Stream: serialized query A result
   deactivate SSRCache
-  Stream -) BCache: restore data
+  Stream -) BCache: add query A result to cache
   SSRA ->> SSRA: render
   Data -) BCache: cache update
   SSRA ->> SSRA: other children of the suspense boundary still need more time
@@ -505,15 +505,15 @@ sequenceDiagram
   Note over SSRA: render started network request, suspend
   SSRCache -) GQL: query A
   GQL -) SSRCache: query A result
-  SSRCache -) SSRA: query result
+  SSRCache -) SSRA: query A result
   SSRA ->> SSRA: render
   Data -) BCache: cache update
   SSRA ->> SSRA: other children of the suspense boundary still need more time
   Note over SSRA: render successful, suspense finished
-  SSRCache -) Stream: serialized data
+  SSRCache -) Stream: serialized query A result
   deactivate SSRCache
   Note over BCache: ⚠️ this overwrites data that has been updated in the meantime
-  Stream -) BCache: restore data
+  Stream -) BCache: add query A result to cache
   SSRA -) Stream: transport
   deactivate SSRA
   Stream -) BA: restore DOM
