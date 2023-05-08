@@ -25,89 +25,91 @@ This makes it possible to have a client component high up in the component tree 
 
 > Notable exception: as presented [here by Dai-Shi](https://twitter.com/dai_shi/status/1631989295866347520), CC can start a new RSC render tree, but this practice should be left reserved for routing libraries, not for everyday usage.
 
-### An example with interweaving client and server components
+### An example interweaving client and server components
+
+Note that for the sake of simplicity, the example did not contain suspense boundaries, which add another layer of complication.
 
 Let's assume we have this tree.
 
-```jsx
+```js
 // Layout.js
-"use server"
-
-// inside the component
-<html lang="en">
-  <body>
-    {children} // Page will be inserted here by the router
-  </body>
-</html>
+export default function Layout() {
+  return (
+    <html lang="en">
+      <body>
+        {/* Page will be inserted here by the router */}
+        {children}
+      </body>
+    </html>
+  );
+}
 
 // Page.js
-"use server"
-
-// inside the component
-<main>
-  <h1>Hello World</h1>
-  <ClientComponent foo="test">
-    <SomeServerComponent>lalala</SomeServerComponent>
-  </ClientComponent>
-</main>
-
-// ClientComponent.js
-"use client"
-
-// inside the component
-<article>
-  Foo {foo}
-  {children}
-</article>
-```
-(Let's assume that `SomeServerComponent` just renders a `div` here...)
-
-This will lead to two React trees being rendered on the server:
-
-```jsx
-// RSC render
-<html lang="en">
-  <body>
+export default function Page() {
+  return (
     <main>
-      <h1>Hello World</h1>
-      <SomePlaceHolderForClientStuff children={
-        <div>lalala</div>
-      } />
+      {/* a client component */}
+      <Collapsible title="About the author">
+        {/* // a server component */}
+        <AuthorProfile />
+      </Collapsible>
     </main>
-  </body>
-</html>
+  );
+}
 
-// Client Component render (this will also happen once on the server, but with "client rules"!)
-<article>
-  Foo {"test"}
-  <SomePlaceholderForServerStuff />
-</article>
+// Collapsible.js
+"use client";
+
+export function Collapsible({ title, children }) {
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <article>
+      <h1>{title}</h1>
+      {collapsed ? null : children}
+      <button onClick={() => setCollapsed((v) => !v)}>{collapsed ? "expand" : "collapse"}</button>
+    </article>
+  );
+}
+
+// AuthorProfile.js
+export async function AuthorProfile() {
+  const { data } = await fetch("/api/author");
+  return (
+    <div>
+      <h2>{data.name}</h2>
+      <p>{data.bio}</p>
+    </div>
+  );
+}
+
 ```
 
-Both trees can "see" boundaries of the other tree, but treat them as a black box.
+First, the React Server Component layer will render all React Server Components and leave the Client components unevaluated, returning this JSX:
 
-It is important to note that we have a unidirectional dataflow here: (serializable) props can flow from the RSC layer, but nothing can flow from client components back into RSC.
-
-
-Those two trees will then be stitched back into a single tree and be sent to the client.  
-Note that for the sake of simplicity, the example did not contain suspense boundaries, which add another layer of complication. 
-
-This is the final HTML that will be sent to the browser:
 ```jsx
 <html lang="en">
   <body>
     <main>
-      <h1>Hello World</h1>
-      <article>
-        Foo test
-        lalala
-      </article>
+      {/* the client component is not evaluated yet */}
+      <Collapsible title="About the author">
+        <div>
+          <h2>Some name</h2>
+          <p>Lorem Ipsum</p>
+        </div>
+      </Collapsible>
     </main>
   </body>
 </html>
 ```
 
-This will be streamed to the client, rendered out, then hydrated:
+This JSX can be handled in multiple ways:
+* It could be kept around for later usage (e.g., if this was part of a build step), and one of the other options will later be used with it.
+* It could be evaluated for an SSR pass on the server (e.g., on first page load) and be streamed to the browser as HTML, where the components will get hydrated.
+* It could be transformed into a React-specific JSON format and sent to the browser, where it will be evaluated by the client component layer.
+
+It is important to note that we have a unidirectional dataflow here: (serializable) props can flow from the RSC layer to Client Components, but nothing can flow from Client Components back into RSC.
+
+
 
 Once hydrated, client components are fully executable and interactive, and will re-render in response to state updates. The output of server components does not change in response to state updates, but it is possible to request a re-render of RSC from the client imperatively (usually, by clicking a link or explicitly asking the RSC router to refetch the server output). To do so, the client sends a request to the server, which re-renders the RSC tree. An RSC router may also allow to re-render a part of the tree associated with a subroute. When server components re-render, their new output is merged into the existing client tree, so client state does not get lost.
 
@@ -133,27 +135,28 @@ export function Apollo(props) {
 }
 
 // Layout.js
-"use server"
-
-<html lang="en">
-  <body>
-    <Apollo>
-      {children} // Page will be inserted here by the router
-    </Apollo>
-  </body>
-</html>
+export default function Layout(){
+  return (
+    <html lang="en">
+      <body>
+        <Apollo>
+          {children} // Page will be inserted here by the router
+        </Apollo>
+      </body>
+    </html>
+  )
+}
 ```
 
 This way, `{children}` can still be a server component, but all client components further down the tree are able to access the context.
 
-Note that using `<ApolloProvider client={...}>` in a `"use server"` enabled component is not possible, as `client` is non-serializable and cannot pass the RSC-SSR boundary (let alone the SSR-Browser boundary). The Apollo Client will need to be created in a "client-only" file, as it cannot pass the Server-Client-Boundary.
-
+Note that using `<ApolloProvider client={...}>` in a React Server Component is impossible, as `client` is non-serializable and cannot be passed from one environment into the next. The Apollo Client must be created in a Client file, as it cannot pass the Server-Client-Boundary.
 
 ### The terms "client" and "server".
 
 We should note that the terms "Client" and "Server" are a bit of a misnomer.
 * "Server components" aren't strictly rendered on a running server. While this is one case, these components can also be rendered during a build (such as static generation), in a local dev environment, or in CI.
-* "Client components" are the React components we have known for years. They aren't strictly run in the browser. These are also executed in an SSR pass on the server, with a subset of the capabilities they would have in the browser: Effects are not executed and there is no ability to rerender. Because of the different environment, the `window` object is not available.
+* "Client components" are the React components we have known for years. They aren't strictly run in the browser. These are also executed in an SSR pass on the server, with a subset of the capabilities they would have in the browser: Effects are not executed and there is no ability to rerender. Because of the different environments, the `window` object is not available.
 
 In an effort to provide some clarity, I'll use the following terms:
 
@@ -191,9 +194,7 @@ We want to make sure that the Apollo Client does not have to be recreated for ev
 ### Sharing the client between components
 
 As React Server Components cannot access Context, we need another way of creating this "scoped shared client" and passing it around.
-There is no support for anything like this in React, however Next.js internally uses `AsyncLocalStorage` to pass the `headers` down scoped per request. 
-We currently [use this](https://github.com/apollographql/apollo-client-nextjs/blob/c622586533e0f2ac96b692a5106642373c3c45c6/package/src/rsc/registerApolloClient.tsx#L12) to achieve this goal. 
-This however is a Next.js internal and might not be stable.
+For this purpose, we use the `React.cache` API, which essentially behaves like a [per-request globally-scoped `useMemo` call](https://twitter.com/dan_abramov/status/1655216626608791555).
 
 ### Getting data from RSC into the SSR pass
 
