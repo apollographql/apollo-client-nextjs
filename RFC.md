@@ -11,7 +11,7 @@ In this RFC, I'll be referring to RSC in the context of Next.js, as that is the 
 
 In an RSC environment, the root component is a "server component". 
 
-Server components are marked with a `"use server"` pragma at the top of the file. Client components are marked with a `"use client"` pragma.
+Imports from this root Server Component are treated as a Server Components too unless the imported file has a "use client" pragma. Components imported from such a file will be handled as Client Components - and all further components imported directly or indirectly from a "use client" file will also be handled as Client Components.
 These pragmas are only necessary for files that designate a "boundary". Generally, files will inherit their "Serverness" or "Clientness" from the file that imports them.
 
 A server component can render a mix of server components and client components as children, allowing server components to pass props to client components. It's important to note that any "over the boundary" props passed from server to client components **must** be serializable. However, there is one exception to this rule. Server components can pass JSX elements as props to client components, either as `children` or other props that accept JSX elements (i.e. "named slots").
