@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn compile && next dev",
-    "build": "yarn compile && next build",
-    "start": "yarn compile && next start",
-    "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.ts",
-    "compile": "yarn codegen && tsc"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@apollo/experimental-nextjs-app-support": "workspace:^",

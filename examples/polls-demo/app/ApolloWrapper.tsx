@@ -16,9 +16,7 @@ import {
 // have a function to create a client for you
 function makeClient() {
   const httpLink = new HttpLink({
-    // TODO: use env vars
-    // this needs to be an absolute url, as relative urls cannot be used in SSR
-    uri: "http://localhost:3000/graphql",
+    uri: "https://fragrant-shadow-9470.fly.dev/",
   });
 
   return new ApolloClient({
