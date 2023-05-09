@@ -9,7 +9,7 @@ import { answerPollMutation } from "@/components/poll/mutation";
 
 export const Poll = () => {
   const { data } = useSuspenseQuery(pollQuery, {
-    variables: { id: "1" },
+    variables: { id: "1", delay: 0 },
   });
 
   const [mutate, { loading: mutationLoading }] =

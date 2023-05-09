@@ -53,3 +53,23 @@ export const Poll = ({
     </div>
   );
 };
+
+export const PollSkeleton = () => {
+  return (
+    <div>
+      <h1 className="text-6xl mb-6">
+        🚀
+        <br />
+        Loading...
+      </h1>
+      <p className="text-2xl mb-6">Total votes: 0</p>
+
+      <ul className="max-w-3xl">
+        <Answer text="Loading..." loading />
+        <Answer text="Loading..." loading />
+        <Answer text="Loading..." loading />
+        <Answer text="Loading..." loading />
+      </ul>
+    </div>
+  );
+};
