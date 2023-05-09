@@ -638,6 +638,6 @@ The `useSuspenseQuery` hook is written in a way that it will immediately finish 
 For this use case, the `AccumulateMultipartResponsesLink` is used. Once the initial query response comes in, it will not forward it to the client, but wait for a configurable amount of time (`cutoffDelay`) for more chunks to come in. All chunks that come in during that timeframe will be merged into the initial response, and finally forwarded to the client.
 
 Using both of these links together, developers have quite fine-grained control over multipart queries. They can choose which parts of their queries should be requested on the server, and how long it may take for deferred chunks to come in.  
-If a query is "incomplete" after that, the client can re-execute the query in the browser wait for all the deferred fragments to come in.
+If a query is "incomplete" after that, the client can re-execute the query in the browser and wait for all the deferred fragments to come in.
 
 This allows for a nice balance of "fast SSR" and "complete SSR" that can be configured on a per-case basis.
