@@ -1,6 +1,11 @@
 # Apollo Client for Next.js
 
-> ❗️ This package is experimental, and just like the NextJS `app` directory itself, it is not yet ready for production use.
+> ❗️ This package is experimental. 
+> Generally it should work well, you might run into race conditions when your component is still rendering in SSR, and already making overlapping Queries on the browser.  
+> This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
+> If you do not use suspense in your application, this will not be a problem to you.  
+
+> ❗️ This package depends on Apollo Client 3.8, which is currently an alpha release. 
 
 ## Why do you need this?
 
@@ -15,27 +20,6 @@ When using the `app` directory, all your "client components" will not only run i
 If you want to make the most of your application, you probably already want to make your GraphQL requests on the server, so that the page is already fully rendered when it reaches the browser.
 
 This package provides the tools necessary to execute your GraphQL queries on the server, and to use the results to hydrate your browser-side cache and components.
-
-### How does rendering in the `app` directory work?
-
-Rendering in the `app` directory goes through a bunch of phases:
-
-1. static generation: React Server Components
-2. static generation: SSR
-3. dynamic generation: React Server Components
-4. dynamic generation: SSR
-5. browser rendering
-
-Here is a list of features that are supported in each phase:
-
-| Feature         | static RSC | static SSR | dynamic RSC | dynamic SSR | browser |
-| --------------- | ---------- | ---------- | ----------- | ----------- | ------- |
-| "use client"    | ❌         | ✅         | ❌          | ✅          | ✅      |
-| "use server"    | ✅         | ❌         | ✅          | ❌          | ❌      |
-| Context         | ❌         | ✅         | ❌          | ✅          | ✅      |
-| Hooks           | ❌         | ✅         | ❌          | ✅          | ✅      |
-| cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
-| can rerender    | ❌         | ❌         | ❌          | ❌          | ✅      |
 
 ## Usage
 
@@ -111,7 +95,7 @@ function makeClient() {
         ? ApolloLink.from([
             // in a SSR environment, if you use multipart features like
             // @defer, you need to decide how to handle these.
-            // This strips all `@defer` directives from your queries.
+            // This strips all interfaces with a `@defer` directive from your queries.
             new SSRMultipartLink({
               stripDefer: true,
             }),
@@ -166,12 +150,14 @@ export default function RootLayout({
 
 Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-nextjs-app-support/ssr"` in your Client components like you are used to.
 
+If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the `useSuspenseQuery` hook.
+
 ## Handling Multipart responses in SSR
 
 Generally, `useSuspenseQuery` will only suspend until the initial response is received.
-In most cases that means that you get a full response, but if you are using multipart response features like the `@defer` directive, you will only get a partial response.  
-Without further handling, at that point your the component will now render with partial data - but the request itself will still keep running in the background. This is a worst-case scenario, because your server will have to bear the load of that request, but the client will not get the full data anyways.  
-For handling this, you can apply one of two different strategies:
+In most cases, you get a full response, but if you use multipart response features like the `@defer` directive, you will only get a partial response.  
+Without further handling, your component will now render with partial data - but the request will still keep running in the background. This is a worst-case scenario because your server will have to bear the load of that request, but the client will not get the complete data anyways. 
+To handle this, you can apply one of two different strategies:
 
 - remove `@defer` fragments from your query
 - wait for deferred data to be received
@@ -200,7 +186,7 @@ new RemoveMultipartDirectivesLink({
 
 This link will (if called with `stripDefer: true`) strip all `@defer` fragments from your query.
 
-You can exclude certain fragments from this behaviour by giving them a label starting with `"SsrDontStrip"`.
+You can exclude certain fragments from this behavior by giving them a label starting with `"SsrDontStrip"`.
 
 Example:
 
