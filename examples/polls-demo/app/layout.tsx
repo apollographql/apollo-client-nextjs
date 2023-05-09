@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Space_Grotesk } from "next/font/google";
 import clsx from "clsx";
-import { ApolloWrapper } from "./ssr/apollo-wrapper";
+import { ApolloWrapper } from "./cc/apollo-wrapper";
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 

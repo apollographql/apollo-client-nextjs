@@ -4,8 +4,8 @@ export default async function Home() {
   return (
     <ul className="list-disc pl-4 text-xl">
       <li>
-        <Link href="/ssr" className="underline">
-          SSR example
+        <Link href="/cc" className="underline">
+          Client Components example
         </Link>
       </li>
       <li>

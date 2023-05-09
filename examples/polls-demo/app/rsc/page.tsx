@@ -1,7 +1,7 @@
 import { pollQuery } from "@/components/poll/query";
 import { getClient } from "./client";
 import { Poll } from "./poll-rsc";
-import { ApolloWrapper } from "../ssr/apollo-wrapper";
+import { ApolloWrapper } from "../cc/apollo-wrapper";
 
 export const dynamic = "force-dynamic";
 
