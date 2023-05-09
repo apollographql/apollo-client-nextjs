@@ -1,4 +1,3 @@
-"use server";
 import { cookies } from "next/headers";
 import { ClientLayout } from "./ClientLayout";
 
