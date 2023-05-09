@@ -167,23 +167,9 @@ In an effort to provide some clarity, I'll use the following terms:
 ### Next.js specifics: "static" and "dynamic" renders.
 
 RSC within Next.js can happen in different stages: either "statically" or "dynamically".
-Per default, Next.js will render RSC and the SSR pass statically at build time. If you use "dynamic" features like `cookies`, they will be skipped during the build and instead be rendered on the running server.
+By default, Next.js will try to render both RSC and the SSR pass statically at build time. If you use "dynamic" features like `cookies`, they will be skipped during the build and instead be rendered on the running server.
 
 At this point, we see either "static" or "dynamic" RSC/SSR passes, but I assume that in the future, there is a possibility to have a "static" RSC outer layout, while a child page is rendered as "dynamic" RSC.
-
-### Possible stages and capabilities
-
-This leaves us with these five different stages, all which have different capabilities:
-
-| Feature         | static RSC | static SSR | dynamic RSC | dynamic SSR | browser |
-| --------------- | ---------- | ---------- | ----------- | ----------- | ------- |
-| "use client"    | ❌         | ✅         | ❌          | ✅          | ✅      |
-| "use server"    | ✅         | ❌         | ✅          | ❌          | ❌      |
-| Context         | ❌         | ✅         | ❌          | ✅          | ✅      |
-| Hooks           | ❌         | ✅         | ❌          | ✅          | ✅      |
-| Cookies/headers | ❌         | ❌         | ✅          | ❌          | ❌      |
-| Executes effects| ❌         | ❌         | ❌          | ❌          | ✅      |
-| Can rerender    | ❌         | ❌         | ❌          | ❌          | ✅      |
 
 ## Apollo Client and RSC
 
