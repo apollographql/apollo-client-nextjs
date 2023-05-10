@@ -45,6 +45,10 @@ export default function Layout() {
 }
 
 // Page.js
+
+// this is imported from a Client file, so it will be handled as a Client Component
+import { Collapsible } from "./Collapsible"; 
+
 export default function Page() {
   return (
     <main>
@@ -107,7 +111,7 @@ This JSX can be handled in multiple ways:
 * It could be evaluated for an SSR pass on the server (e.g., on first page load) and be streamed to the browser as HTML, where the components will get hydrated.
 * It could be transformed into a React-specific JSON format and sent to the browser, where it will be evaluated by the client component layer.
 
-It is important to note that we have a unidirectional dataflow here: (serializable) props can flow from the RSC layer to Client Components, but nothing can flow from Client Components back into RSC.
+It is important to note that we have a unidirectional dataflow here: (serializable) props can flow from the RSC layer to Client Components, but nothing can flow from Client Components back into RSC. (We do not yet cover Server Actions, as these were released a few days ago as of writing this.)
 
 
 
