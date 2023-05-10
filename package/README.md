@@ -1,4 +1,8 @@
-# Apollo Client for Next.js
+<div align="center">
+<img src="https://raw.githubusercontent.com/apollographql/apollo-client-nextjs/main/banner.jpg" width="500" alt="Apollo Client + Next.js App Router" />
+</div>
+
+# Apollo Client support for the Next.js App Router
 
 > ❗️ This package is experimental. 
 > Generally it should work well, you might run into race conditions when your Client Component is still rendering in SSR, and already making overlapping queries on the browser.  
