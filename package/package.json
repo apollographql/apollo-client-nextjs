@@ -1,6 +1,6 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "exports": {
     "./ssr": "./dist/ssr/index.js",
     "./rsc": "./dist/rsc/index.js",
@@ -26,28 +26,28 @@
   ],
   "scripts": {
     "build": "rimraf dist; tsc",
-    "test": "vitest"
+    "test": "vitest",
+    "prepack": "yarn test run; yarn build"
   },
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
-    "@apollo/client": ">= 3.8.0-alpha.10",
+    "@apollo/client": "3.8.0-alpha.13",
     "@total-typescript/shoehorn": "^0.1.0",
     "@tsconfig/recommended": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
-    "next": "^13.2.4",
+    "next": "^13.4.1",
     "react": "^18.2.0",
-    "release-it": "^15.9.0",
     "rimraf": "^5.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "vitest": "^0.30.1"
   },
   "peerDependencies": {
-    "@apollo/client": ">= 3.8.0-alpha.10",
-    "next": "^13",
+    "@apollo/client": ">= 3.8.0-alpha.13",
+    "next": "^13.4.1",
     "react": "^18"
   },
   "dependencies": {
