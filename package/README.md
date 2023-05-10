@@ -1,25 +1,29 @@
 # Apollo Client for Next.js
 
 > ❗️ This package is experimental. 
-> Generally it should work well, you might run into race conditions when your component is still rendering in SSR, and already making overlapping Queries on the browser.  
+> Generally it should work well, you might run into race conditions when your Client Component is still rendering in SSR, and already making overlapping queries on the browser.  
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.  
 
 > ❗️ This package depends on Apollo Client 3.8, which is currently an alpha release. 
 
+## Detailed technical breakdown
+
+You can find a detailed technical breakdown of what this package does and why it needs to do so [in the discussion around the accompanying RFC](https://github.com/apollographql/apollo-client-nextjs/pull/9).
+
 ## Why do you need this?
 
 ### React Server Components
 
-If you want to use Apollo Client in your Next.js app with React Server Components, you will need a way of creating a client instance that is shared between all your server components for one request, to prevent making duplicate requests.
+If you want to use Apollo Client in your Next.js app with React Server Components, you will need a way of creating a client instance that is shared between all your server components for one request to prevent making duplicate requests.
 
 ### React Client Components
 
-When using the `app` directory, all your "client components" will not only run in the browser. They will also be rendered on the server - in a "SSR" run that will execute after React Server Components have been rendered.
+When using the `app` directory, all your "client components" will not only run in the browser. They will also be rendered on the server - in an "SSR" run that will execute after React Server Components have been rendered.
 
-If you want to make the most of your application, you probably already want to make your GraphQL requests on the server, so that the page is already fully rendered when it reaches the browser.
+If you want to make the most of your application, you probably already want to make your GraphQL requests on the server so that the page is fully rendered when it reaches the browser.
 
-This package provides the tools necessary to execute your GraphQL queries on the server, and to use the results to hydrate your browser-side cache and components.
+This package provides the tools necessary to execute your GraphQL queries on the server and to use the results to hydrate your browser-side cache and components.
 
 ## Usage
 
@@ -57,7 +61,7 @@ const { data } = await getClient().query({ query: userQuery });
 
 ### In SSR
 
-If you use the `app` directory, every of your components _will_ be SSR-rendered. So you will need to use this package.
+If you use the `app` directory, each Client Component _will_ be SSR-rendered for the initial request. So you will need to use this package.
 
 First, create a new file `app/ApolloWrapper.js`:
 
@@ -148,9 +152,9 @@ export default function RootLayout({
 > ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
-Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment` and `useApolloClient` from `"@apollo/experimental-nextjs-app-support/ssr"` in your Client components like you are used to.
+Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment`, and `useApolloClient` from `"@apollo/experimental-nextjs-app-support/ssr"` in your Client components like you are used to.
 
-If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the `useSuspenseQuery` hook.
+If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
 
 ## Handling Multipart responses in SSR
 
@@ -162,7 +166,9 @@ To handle this, you can apply one of two different strategies:
 - remove `@defer` fragments from your query
 - wait for deferred data to be received
 
-For this, we ship the two links `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`, as well as the `SSRMultipartLink` which combines both of them into a more convenient-to-use Link.
+For this, we ship the two links `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`, as well as the `SSRMultipartLink`, which combines both of them into a more convenient-to-use Link.
+
+You can also check out the [Hack The Supergraph example](./examples/hack-the-supergraph-ssr), which shows this in use and allows you to adjust the speed deferred interfaces resolve in.
 
 ### Removing `@defer` fragments from your query with `RemoveMultipartDirectivesLink`
 
@@ -255,7 +261,7 @@ new SSRMultipartLink({
 });
 ```
 
-This link combines the behaviour of both `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink` into a single link.
+This link combines the behavior of `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink` into a single link.
 
 ### Debugging
 
@@ -265,35 +271,3 @@ If you want more information on what data is sent over the wire, enable logging 
 import { setVerbosity } from "ts-invariant";
 setVerbosity("debug");
 ```
-
-## Roadmap
-
-### Support for Apollo in Next app dir React Server Components
-
-- [x] share client instance between multiple requests made in the same render
-
-### Support for Apollo in Next app dir SSR
-
-- [x] enable use of React hooks in SSR
-  - [x] `useApolloClient` (no changes needed)
-  - [x] `useSuspenseQuery`
-  - [x] `useFragment`
-  - [x] `useQuery` (will not make requests on server, but will use cache values that have been added by `useSuspenseQuery`)
-  - [ ] `useBackgroundQuery`
-  - [ ] `useSubscription` (what would support look like?)
-  - [ ] ~~`useMutation`~~ (not going to support this)
-  - [ ] ~~`useLazyQuery`~~ (not going to support this)
-- [x] support `@defer`/Multipart requests
-  - [x] remove `@defer` fragments from query
-  - [x] wait for deferred data to be received, then return initial response (with deferred data merged in)
-- [x] rehydrate the exact hook status on the browser
-- [x] forward incoming query responses to the browser (works, but not optimal: see [React RFC: injectToStream](https://github.com/reactjs/rfcs/pull/219#issuecomment-1505084590) )
-
-### Specific advice for Reactive Variables
-
-- [ ] Specific advice for Reactive Variables
-
-
-### Support for Apollo in legacy SSR in Next with `getServerSideProps` and `getStaticProps`
-
-- [ ] evaluate if we still add this at this point or concentrate on app dir RSC & SSR
