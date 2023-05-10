@@ -518,7 +518,7 @@ Both of these problems will happen with any client-side cache, but they are most
 
 We can solve these problems to varying degrees, so here are a few puzzle pieces:
 
-* Both of these problems become more manageable if fewer requests happen within a suspense boundary. In an optimal world, each suspense boundary would only kick off one request. This is in line what the React team recommends anyways, to prevent waterfalls from happening.  
+* Both of these problems become more manageable if fewer requests happen within a suspense boundary. In an optimal world, within a suspense boundary (or, if possible, even per page) you would not fire off more than one query. This would already be a good practice anyways, to prevent waterfalls from happening.  
 We can do a lot here by educating our users to use `useSuspsenseQuery` as few times as possible with a big query, composed of the fragments required by components further down the tree, and then using `useFragment`in those to access these fragments.  
 This is already an important part of our Suspense.  
 Generally, this will reduce the time from "query start" to "suspense boundary finished/data moves over" and won't make these things impossible, but a lot less likely.
