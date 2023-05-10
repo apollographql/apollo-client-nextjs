@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { TypedDocumentNode, gql } from "@apollo/client";
-import { useFragment } from "@/../../package/dist/ssr/hooks.js";
+import { useFragment } from "@apollo/experimental-nextjs-app-support/ssr";
 
 const ProductCardProductFragment: TypedDocumentNode<{
   id: string;

@@ -13,5 +13,5 @@ jobs:
         with:
           node-version: '18.x'
           cache: 'yarn'
-      - run: yarn
+      - run: yarn install --frozen-lockfile
       - run: yarn workspace @apollo/experimental-nextjs-app-support test run

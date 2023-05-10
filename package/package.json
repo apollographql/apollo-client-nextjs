@@ -1,6 +1,6 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "exports": {
     "./ssr": "./dist/ssr/index.js",
     "./rsc": "./dist/rsc/index.js",
