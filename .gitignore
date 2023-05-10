@@ -9,3 +9,4 @@ tsconfig.tsbuildinfo
 dist/
 .yalc
 yalc.lock
+*.tgz

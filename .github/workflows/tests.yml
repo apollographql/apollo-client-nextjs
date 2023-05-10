@@ -1,0 +1,17 @@
+name: Run tests
+on:
+  push:
+    paths:
+      - 'package/**'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'yarn'
+      - run: yarn
+      - run: yarn workspace @apollo/experimental-nextjs-app-support test run
