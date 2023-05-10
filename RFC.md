@@ -150,7 +150,7 @@ export default function Layout(){
 
 This way, `{children}` can still be a server component, but all client components further down the tree are able to access the context.
 
-Note that using `<ApolloProvider client={...}>` in a React Server Component is impossible, as `client` is non-serializable and cannot be passed from one environment into the next. The Apollo Client must be created in a Client file, as it cannot pass the Server-Client-Boundary.
+Note that using `<ApolloProvider client={...}>` in a React Server Component is impossible, as `client` is non-serializable and cannot be passed from one environment into the next. As a result, the Apollo Client must be created in a Client file.
 
 ### The terms "client" and "server".
 
