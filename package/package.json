@@ -27,7 +27,7 @@
   "scripts": {
     "build": "rimraf dist; tsc",
     "test": "vitest",
-    "prepack": "yarn test run; yarn build"
+    "prepack": "yarn test run && yarn build"
   },
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
