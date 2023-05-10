@@ -12,3 +12,4 @@ yalc.lock
 *.tgz
 .DS_Store
 .vscode/
+.vercel
