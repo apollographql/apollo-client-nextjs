@@ -12,7 +12,7 @@
         "./dist/ssr/index.d.ts"
       ],
       "rsc": [
-        "./dist/ssr/index.d.ts"
+        "./dist/rsc/index.d.ts"
       ]
     }
   },
