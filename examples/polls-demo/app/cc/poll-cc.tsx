@@ -26,7 +26,7 @@ export const Poll = () => {
 
   return (
     <PollInner
-      poll={data.poll}
+      poll={(data as any).poll}
       loading={mutationLoading}
       onClick={handleClick}
     />
