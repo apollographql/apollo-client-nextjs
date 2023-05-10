@@ -25,6 +25,14 @@ If you want to make the most of your application, you probably already want to m
 
 This package provides the tools necessary to execute your GraphQL queries on the server and to use the results to hydrate your browser-side cache and components.
 
+## Installation
+
+This package has a peer dependency on the latest alpha of `@apollo/client`, so you can install both this package and that Apollo Client version via
+
+```sh
+npm install @apollo/client@alpha @apollo/experimental-nextjs-app-support
+```
+
 ## Usage
 
 > ❗️ **We do handle "RSC" and "SSR" use cases as completely separate.**  
