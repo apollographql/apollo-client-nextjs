@@ -1,0 +1,38 @@
+{
+  "name": "apollo-next-13-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/experimental-nextjs-app-support": "workspace:^",
+    "@apollo/server": "^4.7.0",
+    "@as-integrations/next": "^1.3.0",
+    "@types/node": "18.16.3",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
+    "@vercel/kv": "^0.1.1",
+    "autoprefixer": "10.4.14",
+    "clsx": "^1.2.1",
+    "encoding": "^0.1.13",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.4",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "next": "^13.4.1",
+    "postcss": "8.4.23",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "3.3.1",
+    "@graphql-codegen/typescript": "3.0.4",
+    "@graphql-codegen/typescript-resolvers": "3.2.1"
+  }
+}
