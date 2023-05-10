@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Answer } from "../answer";
 
 export const Poll = ({
   poll,
   loading = false,
   onClick,
+  showResults = false,
 }: {
   poll: {
     id: string;
@@ -20,13 +20,11 @@ export const Poll = ({
     }[];
   };
   loading?: boolean;
+  showResults?: boolean;
   onClick: (answerId: string) => Promise<void>;
 }) => {
-  const [showResults, setShowResults] = useState(false);
-
   const handleClick = async (answerId: string) => {
     await onClick(answerId);
-    setShowResults(true);
   };
 
   return (
