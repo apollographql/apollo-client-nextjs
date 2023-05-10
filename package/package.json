@@ -1,9 +1,20 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
+  "keywords": [
+    "apollo",
+    "nextjs",
+    "apollo-client",
+    "graphql",
+    "ssr",
+    "rsc",
+    "app-router",
+    "app"
+
+  ],
   "exports": {
     "./ssr": "./dist/ssr/index.js",
     "./rsc": "./dist/rsc/index.js",
