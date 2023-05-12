@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "yarn codegen",
     "dev": "next dev",
-    "prebuild": "yarn workspace @apollo/experimental-nextjs-app-support run build",
+    "prebuild": "yarn workspace @apollo/experimental-nextjs-app-support run build && yarn codegen",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/experimental-nextjs-app-support": "workspace:^",
@@ -32,7 +34,10 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@graphql-codegen/typed-document-node": "^4.0.1",
     "@graphql-codegen/cli": "3.3.1",
+    "@graphql-codegen/client-preset": "3.0.1",
+    "@graphql-codegen/near-operation-file-preset": "^2.5.0",
     "@graphql-codegen/typescript": "3.0.4",
     "@graphql-codegen/typescript-resolvers": "3.2.1"
   }

@@ -3,8 +3,8 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import { Poll as PollInner } from "@/components/poll";
-import { answerPollMutation } from "@/components/poll/mutation";
 import { useMutation } from "@apollo/client";
+import { AnswerPollDocument } from "@/components/poll/documents.generated";
 
 export const Poll = ({
   poll,
@@ -27,7 +27,7 @@ export const Poll = ({
 
   const [loading, setLoading] = useState(false);
 
-  const [mutate] = useMutation(answerPollMutation);
+  const [mutate] = useMutation(AnswerPollDocument);
 
   const handleClick = useCallback(
     async (answerId: string) => {
@@ -45,7 +45,6 @@ export const Poll = ({
     },
     [mutate, poll.id, router, pathname]
   );
-
 
   return (
     <PollInner
