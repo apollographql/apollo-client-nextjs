@@ -1,0 +1,27 @@
+mutation AnswerPoll($pollId: ID!, $answerId: ID!) {
+  answerPoll(id: $pollId, answerId: $answerId) {
+    id
+    question
+    totalVotes
+    answers {
+      id
+      text
+      votes
+      percentage
+    }
+  }
+}
+
+query GetPoll($id: ID!, $delay: Int = 0) {
+  poll(id: $id) @delay(ms: $delay) {
+    id
+    question
+    totalVotes
+    answers {
+      id
+      text
+      votes
+      percentage
+    }
+  }
+}

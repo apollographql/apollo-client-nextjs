@@ -1,13 +1,13 @@
-import { pollQuery } from "@/components/poll/query";
 import { getClient } from "./client";
 import { Poll } from "./poll-rsc";
 import { ApolloWrapper } from "../cc/apollo-wrapper";
+import { GetPollDocument } from "@/components/poll/documents.generated";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const data = await getClient().query({
-    query: pollQuery,
+    query: GetPollDocument,
     variables: { id: "1" },
   });
 
@@ -15,7 +15,7 @@ export default async function Page() {
   // useMutation in the Poll component
   return (
     <ApolloWrapper>
-      <Poll poll={data.data.poll} />
+      <Poll poll={data.data.poll!} />
     </ApolloWrapper>
   );
 }

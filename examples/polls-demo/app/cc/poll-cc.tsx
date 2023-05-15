@@ -3,19 +3,23 @@
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { useMutation } from "@apollo/client";
 import { Poll as PollInner } from "@/components/poll";
-import { pollQuery } from "@/components/poll/query";
+
 import { useState, useCallback } from "react";
-import { answerPollMutation } from "@/components/poll/mutation";
+
+import {
+  AnswerPollDocument,
+  GetPollDocument,
+} from "@/components/poll/documents.generated";
 
 export const Poll = () => {
   const [showResults, setShowResults] = useState(false);
 
-  const { data } = useSuspenseQuery(pollQuery, {
+  const { data } = useSuspenseQuery(GetPollDocument, {
     variables: { id: "1", delay: 0 },
   });
 
   const [mutate, { loading: mutationLoading }] =
-    useMutation(answerPollMutation);
+    useMutation(AnswerPollDocument);
 
   const handleClick = useCallback(
     async (answerId: string) => {
