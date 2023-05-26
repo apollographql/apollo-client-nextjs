@@ -5,6 +5,7 @@ import { ServerInsertedHTMLContext } from "next/navigation";
 import { RehydrationContextValue } from "./types";
 import { registerDataTransport, transportDataToJS } from "./dataTransport";
 import invariant from "ts-invariant";
+import { NextSSRApolloClient } from "./NextSSRApolloClient";
 
 const ApolloRehydrationContext = React.createContext<
   RehydrationContextValue | undefined
@@ -13,19 +14,18 @@ const ApolloRehydrationContext = React.createContext<
 export const RehydrationContextProvider = ({
   children,
 }: React.PropsWithChildren) => {
-  const { cache } = useApolloClient();
+  const client = useApolloClient();
   const rehydrationContext = React.useRef<RehydrationContextValue>();
   if (typeof window == "undefined") {
     if (!rehydrationContext.current) {
       rehydrationContext.current = buildApolloRehydrationContext();
     }
-
-    if (cache instanceof NextSSRInMemoryCache) {
-      cache.setRehydrationContext(rehydrationContext.current);
-    } else {
-      throw new Error(
-        "When using Next SSR, you must use the `NextSSRInMemoryCache`"
-      );
+    if (client instanceof NextSSRApolloClient) {
+      console.log("SET HYDRATION CONTEXT");
+      client.setRehydrationContext(rehydrationContext.current);
+    }
+    if (client.cache instanceof NextSSRInMemoryCache) {
+      client.cache.setRehydrationContext(rehydrationContext.current);
     }
   } else {
     registerDataTransport();
@@ -61,6 +61,7 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
     transportValueData: {},
     transportedValues: {},
     incomingResults: [],
+    incomingBackgroundQueries: [],
     RehydrateOnClient() {
       rehydrationContext.currentlyInjected = false;
       if (
@@ -85,6 +86,7 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
           )
         ),
         results: rehydrationContext.incomingResults,
+        backgroundQueries: rehydrationContext.incomingBackgroundQueries,
       });
       Object.assign(
         rehydrationContext.transportedValues,
@@ -92,6 +94,7 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
       );
       rehydrationContext.transportValueData = {};
       rehydrationContext.incomingResults = [];
+      rehydrationContext.incomingBackgroundQueries = [];
       return (
         <script
           dangerouslySetInnerHTML={{

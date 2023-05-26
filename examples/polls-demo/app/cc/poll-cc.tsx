@@ -1,7 +1,14 @@
 "use client";
-
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
-import { useMutation } from "@apollo/client";
+import { Suspense } from "react";
+import {
+  useReadQuery,
+  useSuspenseQuery,
+} from "@apollo/experimental-nextjs-app-support/ssr";
+import {
+  useMutation,
+  useBackgroundQuery_experimental as useBackgroundQuery,
+} from "@apollo/client";
+import { QueryReference } from "@apollo/client/react/cache/QueryReference";
 import { Poll as PollInner } from "@/components/poll";
 
 import { useState, useCallback } from "react";
@@ -9,15 +16,32 @@ import { useState, useCallback } from "react";
 import {
   AnswerPollDocument,
   GetPollDocument,
+  GetPollQuery,
 } from "@/components/poll/documents.generated";
 
 export const Poll = () => {
-  const [showResults, setShowResults] = useState(false);
-
-  const { data } = useSuspenseQuery(GetPollDocument, {
+  const [queryRef] = useBackgroundQuery(GetPollDocument, {
     variables: { id: "1", delay: 0 },
   });
 
+  return (
+    <>
+      <h1>Testing 1234...</h1>
+      <Suspense fallback={<>Loading...</>}>
+        <PollWrapper queryRef={queryRef} />
+      </Suspense>
+    </>
+  );
+};
+
+const PollWrapper = ({
+  queryRef,
+}: {
+  queryRef: QueryReference<GetPollQuery>;
+}) => {
+  const { data } = useReadQuery(queryRef);
+  // console.log({ data });
+  const [showResults, setShowResults] = useState(false);
   const [mutate, { loading: mutationLoading }] =
     useMutation(AnswerPollDocument);
 

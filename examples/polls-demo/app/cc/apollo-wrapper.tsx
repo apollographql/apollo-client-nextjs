@@ -1,12 +1,13 @@
 "use client";
 
 import {
-  ApolloClient,
   ApolloLink,
   HttpLink,
   SuspenseCache,
+  InMemoryCache,
 } from "@apollo/client";
 import {
+  NextSSRApolloClient,
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   SSRMultipartLink,
@@ -17,7 +18,7 @@ function makeClient() {
     uri: "https://fragrant-shadow-9470.fly.dev/",
   });
 
-  return new ApolloClient({
+  return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link:
       typeof window === "undefined"

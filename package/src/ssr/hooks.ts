@@ -2,6 +2,7 @@
 import {
   useFragment_experimental,
   useSuspenseQuery_experimental,
+  useReadQuery_experimental,
   useQuery as orig_useQuery,
 } from "@apollo/client";
 import { useTransportValue } from "./useTransportValue";
@@ -18,6 +19,10 @@ export const useQuery = wrap(orig_useQuery, [
   "called",
 ]);
 export const useSuspenseQuery = wrap(useSuspenseQuery_experimental, [
+  "data",
+  "networkStatus",
+]);
+export const useReadQuery = wrap(useReadQuery_experimental, [
   "data",
   "networkStatus",
 ]);

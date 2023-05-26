@@ -1,9 +1,10 @@
-import { Cache } from "@apollo/client";
+import { Cache, WatchQueryOptions } from "@apollo/client";
 import React from "react";
 import { DataTransport } from "./dataTransport";
 
 export type RehydrationCache = Record<string, unknown>;
 export type ResultsCache = DataTransport<Cache.WriteOptions>;
+export type BackgroundQueriesCache = DataTransport<WatchQueryOptions>;
 
 export interface RehydrationContextValue {
   /**
@@ -33,6 +34,11 @@ export interface RehydrationContextValue {
    * be replayed on the client.
    */
   incomingResults: Cache.WriteOptions[];
+  /**
+   * Background queries that are initialized on the server and can be safely
+   * ignored (i.e. not run a second time) on the client.
+   */
+  incomingBackgroundQueries: WatchQueryOptions[];
   /**
    * Tracks if the `RehydrateOnClient` component is currently
    * injected into the `ServerInsertedHTMLHook`.

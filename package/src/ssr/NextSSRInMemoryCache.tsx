@@ -4,9 +4,9 @@ import {
   Cache,
   Reference,
 } from "@apollo/client";
-import { ApolloResultCache } from "./ApolloRehydrateSymbols";
 import { RehydrationContextValue } from "./types";
-import { registerLateInitializingQueue } from "./lateInitializingQueue";
+// import { ApolloResultCache } from "./ApolloRehydrateSymbols";
+// import { registerLateInitializingQueue } from "./lateInitializingQueue";
 
 export class NextSSRInMemoryCache extends InMemoryCache {
   private rehydrationContext: Pick<
@@ -19,23 +19,25 @@ export class NextSSRInMemoryCache extends InMemoryCache {
   constructor(config?: InMemoryCacheConfig) {
     super(config);
 
-    this.registerWindowHook();
+    // this.registerWindowHook();
   }
-  private registerWindowHook() {
-    if (typeof window !== "undefined") {
-      if (Array.isArray(window[ApolloResultCache] || [])) {
-        registerLateInitializingQueue(ApolloResultCache, (data) =>
-          this.write(data)
-        );
-      } else {
-        throw new Error(
-          "On the client side, only one instance of `NextSSRInMemoryCache` can be created!"
-        );
-      }
-    }
-  }
+  // this could be removed here and moved over/merged with the other register window hook fn
+  // private registerWindowHook() {
+  //   if (typeof window !== "undefined") {
+  //     if (Array.isArray(window[ApolloResultCache] || [])) {
+  //       registerLateInitializingQueue(ApolloResultCache, (data) =>
+  //         this.write(data)
+  //       );
+  //     } else {
+  //       throw new Error(
+  //         "On the client side, only one instance of `NextSSRInMemoryCache` can be created!"
+  //       );
+  //     }
+  //   }
+  // }
 
   write(options: Cache.WriteOptions<any, any>): Reference | undefined {
+    console.log("write");
     if (typeof window == "undefined") {
       this.rehydrationContext.incomingResults.push(options);
     }
