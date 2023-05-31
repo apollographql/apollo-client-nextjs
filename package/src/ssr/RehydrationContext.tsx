@@ -21,7 +21,6 @@ export const RehydrationContextProvider = ({
       rehydrationContext.current = buildApolloRehydrationContext();
     }
     if (client instanceof NextSSRApolloClient) {
-      console.log("SET HYDRATION CONTEXT");
       client.setRehydrationContext(rehydrationContext.current);
     }
     if (client.cache instanceof NextSSRInMemoryCache) {

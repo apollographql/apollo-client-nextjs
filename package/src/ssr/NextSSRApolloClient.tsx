@@ -1,11 +1,15 @@
 import { Trie } from "@wry/trie";
 import {
+  Observable,
+  ObservableQuery,
   ApolloClient,
   ApolloClientOptions,
   OperationVariables,
   WatchQueryOptions,
 } from "@apollo/client";
+import { print } from "graphql";
 import { canUseWeakMap } from "@apollo/client/utilities";
+import { QueryManager } from "@apollo/client/core/QueryManager";
 import { canonicalStringify } from "@apollo/client/cache";
 import { RehydrationContextValue } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
@@ -34,48 +38,55 @@ export class NextSSRApolloClient<
     uninitialized: true,
   };
 
-  private backgroundQueriesAndResults = new Map<any[], any>();
-
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
 
     this.registerWindowHook();
   }
-  private cacheKeys = new Trie<any[]>(
-    canUseWeakMap,
-    (cacheKey: any[]) => cacheKey
-  );
+  private resolveFakeQueries = new Map<string, any>();
+  // private cacheKeys = new Trie<any[]>(
+  //   canUseWeakMap,
+  //   (cacheKey: any[]) => cacheKey
+  // );
   private registerWindowHook() {
-    let stableCacheKey: any[] | undefined;
-    if (typeof window !== "undefined") {
-      // shared variables - could be a trie
+    // need to access this.QueryManager["inFlightLinkObservables"]
 
+    // let stableCacheKey: any[] | undefined;
+    if (typeof window !== "undefined") {
       if (Array.isArray(window[ApolloBackgroundQueryTransport] || [])) {
-        console.log("background query transport");
         registerLateInitializingQueue(
           ApolloBackgroundQueryTransport,
           (options) => {
+            console.log("cb 1");
+            // apply document transforms to add __typename up here
+            // check with Jerel about applying the transform up here so we get
+            // the same object back
             const cacheKey = [
-              options.query,
-              canonicalStringify(options.variables),
-            ].concat();
-
-            stableCacheKey = this.cacheKeys.lookupArray(cacheKey);
+              print(options.query),
+              // canonicalStringify(options.variables),
+            ].toString();
 
             // instead of null, set an observable in the map...
-            this.backgroundQueriesAndResults.set(stableCacheKey, "testing 123");
+            this.resolveFakeQueries.set(cacheKey, "testing 123");
+            console.log(print(options.query));
           }
         );
       }
 
       if (Array.isArray(window[ApolloResultCache] || [])) {
-        console.log("result cache");
         registerLateInitializingQueue(ApolloResultCache, (data) => {
           console.log("cb 2", data);
-          if (stableCacheKey) {
-            console.log(this.backgroundQueriesAndResults.get(stableCacheKey));
-            // call obserable with result
-          }
+          const cacheKey = [
+            print(data.query),
+            // canonicalStringify(data.variables),
+          ].toString();
+          // const stableCacheKey = this.cacheKeys.lookupArray(cacheKey);
+          // if (stableCacheKey) {
+          console.log(print(data.query));
+          console.log([...this.resolveFakeQueries.keys()][0] === cacheKey);
+          console.log(this.resolveFakeQueries.get(cacheKey));
+          // call observable with result
+          // }
         });
       }
     }
@@ -88,13 +99,37 @@ export class NextSSRApolloClient<
     T = any,
     TVariables extends OperationVariables = OperationVariables
   >(options: WatchQueryOptions<TVariables, T>) {
+    console.log("watchQuery");
     if (typeof window == "undefined") {
+      console.log("watchQuery server");
       // @ts-ignore
       this.rehydrationContext.incomingBackgroundQueries.push(options);
     }
-    if (typeof window !== "undefined") {
-      console.log("inside watchQuery");
-    }
+    // else if (
+    //   typeof window !== "undefined" &&
+    //   this.rehydrationContext.uninitialized
+    // )
+    // {
+    //   // console.log(this.rehydrationContext.uninitialized);
+    //   // console.log("inside watchQuery", options);
+    //   const cacheKey = [
+    //     options.query,
+    //     canonicalStringify(options.variables),
+    //   ].concat();
+    //   const stableCacheKey = this.cacheKeys.lookupArray(cacheKey);
+    //   this.resolveFakeQueries.set(stableCacheKey, "testing 123");
+    //   // @ts-ignore
+    //   // const observable: ObservableQuery<T, TVariables> = new Observable(
+    //   //   (observer) => () => true
+    //   // );
+    //   // const observable = new ObservableQuery<T, TVariables>({
+    //   //   queryManager: new QueryManager(),
+    //   //   queryInfo,
+    //   //   options,
+    //   // });
+    //   return observable;
+    // } else {
+    // }
     return super.watchQuery(options);
   }
 
