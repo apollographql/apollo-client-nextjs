@@ -1,13 +1,7 @@
 "use client";
 import { Suspense } from "react";
-import {
-  useReadQuery,
-  useSuspenseQuery,
-} from "@apollo/experimental-nextjs-app-support/ssr";
-import {
-  useMutation,
-  useBackgroundQuery_experimental as useBackgroundQuery,
-} from "@apollo/client";
+import { useReadQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useMutation, useBackgroundQuery } from "@apollo/client";
 import { QueryReference } from "@apollo/client/react/cache/QueryReference";
 import { Poll as PollInner } from "@/components/poll";
 

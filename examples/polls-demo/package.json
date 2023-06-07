@@ -12,6 +12,7 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@apollo/client": "0.0.0-pr-10954-20230606145830",
     "@apollo/experimental-nextjs-app-support": "workspace:^",
     "@apollo/server": "^4.7.0",
     "@as-integrations/next": "^1.3.0",

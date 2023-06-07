@@ -1,6 +1,4 @@
-import { Trie } from "@wry/trie";
 import {
-  Observable,
   ObservableQuery,
   ApolloClient,
   ApolloClientOptions,
@@ -8,8 +6,7 @@ import {
   WatchQueryOptions,
 } from "@apollo/client";
 import { print } from "graphql";
-import { canUseWeakMap } from "@apollo/client/utilities";
-import { QueryManager } from "@apollo/client/core/QueryManager";
+// import { canUseWeakMap } from "@apollo/client/utilities";
 import { canonicalStringify } from "@apollo/client/cache";
 import { RehydrationContextValue } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
@@ -44,30 +41,50 @@ export class NextSSRApolloClient<
     this.registerWindowHook();
   }
   private resolveFakeQueries = new Map<string, any>();
-  // private cacheKeys = new Trie<any[]>(
-  //   canUseWeakMap,
-  //   (cacheKey: any[]) => cacheKey
-  // );
-  private registerWindowHook() {
-    // need to access this.QueryManager["inFlightLinkObservables"]
 
-    // let stableCacheKey: any[] | undefined;
+  private registerWindowHook() {
     if (typeof window !== "undefined") {
       if (Array.isArray(window[ApolloBackgroundQueryTransport] || [])) {
         registerLateInitializingQueue(
           ApolloBackgroundQueryTransport,
           (options) => {
             console.log("cb 1");
-            // apply document transforms to add __typename up here
-            // check with Jerel about applying the transform up here so we get
-            // the same object back
+
+            const transformedDocument =
+              this.documentTransform.transformDocument(options.query);
+
+            // doc transforms will add __typename but won't remove directives
+            // need to pass the result of transformed document into
+            const { serverQuery } =
+              this["queryManager"].getDocumentInfo(transformedDocument);
+
+            // ^ this has a property called serverQuery -> this will be stripped
+            // of directives incl defer, nonreactive, connection, etc.
             const cacheKey = [
-              print(options.query),
-              // canonicalStringify(options.variables),
+              serverQuery,
+              canonicalStringify(options.variables),
             ].toString();
 
-            // instead of null, set an observable in the map...
-            this.resolveFakeQueries.set(cacheKey, "testing 123");
+            const queryId = this["queryManager"].generateQueryId();
+            const queryInfo = this["queryManager"].getQuery(queryId).init({
+              document: options.query,
+              variables: options.variables,
+            });
+            const observable = new ObservableQuery({
+              queryManager: this["queryManager"],
+              queryInfo,
+              options,
+            });
+            this.resolveFakeQueries.set(cacheKey, observable);
+            // const byVariables =
+            //   this["queryManager"].inFlightLinkObservables.get(serverQuery) ||
+            //   new Map();
+
+            // this["queryManager"].inFlightLinkObservables.set(
+            //   serverQuery,
+            //   byVariables
+            // );
+
             console.log(print(options.query));
           }
         );
@@ -76,17 +93,26 @@ export class NextSSRApolloClient<
       if (Array.isArray(window[ApolloResultCache] || [])) {
         registerLateInitializingQueue(ApolloResultCache, (data) => {
           console.log("cb 2", data);
+
+          const transformedDocument = this.documentTransform.transformDocument(
+            data.query
+          );
+
+          const { serverQuery } =
+            this["queryManager"].getDocumentInfo(transformedDocument);
+
           const cacheKey = [
-            print(data.query),
-            // canonicalStringify(data.variables),
+            serverQuery,
+            canonicalStringify(data.variables),
           ].toString();
-          // const stableCacheKey = this.cacheKeys.lookupArray(cacheKey);
-          // if (stableCacheKey) {
-          console.log(print(data.query));
-          console.log([...this.resolveFakeQueries.keys()][0] === cacheKey);
-          console.log(this.resolveFakeQueries.get(cacheKey));
+
+          const fakeObservable = this.resolveFakeQueries.get(cacheKey);
+          // console.log(this.resolveFakeQueries.get(cacheKey));
+          console.log("result", data.result, fakeObservable);
+          fakeObservable.updateLastResult(data.result);
+
           // call observable with result
-          // }
+          console.log(data.result);
         });
       }
     }
@@ -99,38 +125,55 @@ export class NextSSRApolloClient<
     T = any,
     TVariables extends OperationVariables = OperationVariables
   >(options: WatchQueryOptions<TVariables, T>) {
-    console.log("watchQuery");
     if (typeof window == "undefined") {
       console.log("watchQuery server");
       // @ts-ignore
       this.rehydrationContext.incomingBackgroundQueries.push(options);
+      return super.watchQuery(options);
     }
-    // else if (
-    //   typeof window !== "undefined" &&
-    //   this.rehydrationContext.uninitialized
-    // )
-    // {
-    //   // console.log(this.rehydrationContext.uninitialized);
-    //   // console.log("inside watchQuery", options);
-    //   const cacheKey = [
-    //     options.query,
-    //     canonicalStringify(options.variables),
-    //   ].concat();
-    //   const stableCacheKey = this.cacheKeys.lookupArray(cacheKey);
-    //   this.resolveFakeQueries.set(stableCacheKey, "testing 123");
-    //   // @ts-ignore
-    //   // const observable: ObservableQuery<T, TVariables> = new Observable(
-    //   //   (observer) => () => true
-    //   // );
-    //   // const observable = new ObservableQuery<T, TVariables>({
-    //   //   queryManager: new QueryManager(),
-    //   //   queryInfo,
-    //   //   options,
-    //   // });
-    //   return observable;
-    // } else {
+    console.log(
+      "watchQuery",
+      this.rehydrationContext.incomingBackgroundQueries
+    );
+    // const transformedDocument = this.documentTransform.transformDocument(
+    //   options.query
+    // );
+
+    // const { serverQuery } =
+    //   this["queryManager"].getDocumentInfo(transformedDocument);
+
+    // const cacheKey = [
+    //   serverQuery,
+    //   canonicalStringify(options.variables),
+    // ].toString();
+
+    // const fakeObservable = this.resolveFakeQueries.get(cacheKey);
+    // console.log({ fakeObservable });
+
+    // if (typeof window !== "undefined" && fakeObservable) {
+    //   console.log("inside return fake obs");
+    //   return fakeObservable;
     // }
-    return super.watchQuery(options);
+    // if the query + variables are in this.resolveFakeQueries
+    // return the fake ObservableQuery
+
+    // const queryId = this["queryManager"].generateQueryId();
+    const queryId = "FOO";
+    const queryInfo = this["queryManager"].getQuery(queryId).init({
+      document: options.query,
+      variables: options.variables,
+    });
+    const observable = new ObservableQuery({
+      queryManager: this["queryManager"],
+      queryInfo,
+      options,
+    });
+    console.log("returning obs");
+    // this["queryManager"].fetchConcastWithInfo = () => {
+    //   console.log("doo doo");
+    // };
+    return observable;
+    // return super.watchQuery(options);
   }
 
   setRehydrationContext(rehydrationContext: RehydrationContextValue) {

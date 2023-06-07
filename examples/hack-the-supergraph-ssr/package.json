@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "3.8.0-alpha.15",
+    "@apollo/client": "0.0.0-pr-10954-20230606145830",
     "@apollo/experimental-nextjs-app-support": "workspace:^",
     "@apollo/space-kit": "^9.11.0",
     "@chakra-ui/next-js": "^2.1.2",
