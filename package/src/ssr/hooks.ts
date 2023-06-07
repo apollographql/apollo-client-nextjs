@@ -1,12 +1,12 @@
 "use client";
 import {
-  useFragment_experimental,
-  useSuspenseQuery_experimental,
+  useFragment as orig_useFragment,
+  useSuspenseQuery as orig_useSuspenseQuery,
   useQuery as orig_useQuery,
 } from "@apollo/client";
 import { useTransportValue } from "./useTransportValue";
 
-export const useFragment = wrap(useFragment_experimental, [
+export const useFragment = wrap(orig_useFragment, [
   "data",
   "complete",
   "missing",
@@ -17,7 +17,7 @@ export const useQuery = wrap(orig_useQuery, [
   "networkStatus",
   "called",
 ]);
-export const useSuspenseQuery = wrap(useSuspenseQuery_experimental, [
+export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
   "data",
   "networkStatus",
 ]);

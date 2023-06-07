@@ -13,7 +13,6 @@
     "rsc",
     "app-router",
     "app"
-
   ],
   "exports": {
     "./ssr": "./dist/ssr/index.js",
@@ -45,14 +44,14 @@
   },
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
-    "@apollo/client": "3.8.0-alpha.13",
+    "@apollo/client": ">=3.8.0-beta.1",
     "@total-typescript/shoehorn": "^0.1.0",
     "@tsconfig/recommended": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
-    "next": "^13.4.1",
+    "next": "^13.4.4",
     "react": "^18.2.0",
     "rimraf": "^5.0.0",
     "ts-node": "^10.9.1",
