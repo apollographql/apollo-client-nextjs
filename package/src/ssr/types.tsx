@@ -38,7 +38,7 @@ export interface RehydrationContextValue {
    * Background queries that are initialized on the server and can be safely
    * ignored (i.e. not run a second time) on the client.
    */
-  incomingBackgroundQueries: WatchQueryOptions[];
+  incomingBackgroundQueries: WatchQueryOptions<any, any>[];
   /**
    * Tracks if the `RehydrateOnClient` component is currently
    * injected into the `ServerInsertedHTMLHook`.

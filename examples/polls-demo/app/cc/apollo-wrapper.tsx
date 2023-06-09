@@ -13,6 +13,9 @@ import {
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
+import { setVerbosity } from "ts-invariant";
+setVerbosity("debug");
+
 function makeClient() {
   const httpLink = new HttpLink({
     uri: "https://fragrant-shadow-9470.fly.dev/",
