@@ -31,10 +31,10 @@ This package provides the tools necessary to execute your GraphQL queries on the
 
 ## Installation
 
-This package has a peer dependency on the latest alpha of `@apollo/client`, so you can install both this package and that Apollo Client version via
+This package has a peer dependency on the latest beta of `@apollo/client`, so you can install both this package and that Apollo Client version via
 
 ```sh
-npm install @apollo/client@alpha @apollo/experimental-nextjs-app-support
+npm install @apollo/client@beta @apollo/experimental-nextjs-app-support
 ```
 
 ## Usage
