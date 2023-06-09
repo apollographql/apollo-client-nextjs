@@ -168,6 +168,17 @@ Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment`, and `us
 
 If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
 
+### Resetting singletons between tests.
+This package uses some singleton instances on the Browser side - if you are writing tests, you must reset them between tests.
+
+For that, you can use the `resetNextSSRApolloSingletons` helper:
+
+```ts
+import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support/ssr";
+
+afterEach(resetNextSSRApolloSingletons);
+```
+
 ## Handling Multipart responses in SSR
 
 Generally, `useSuspenseQuery` will only suspend until the initial response is received.
