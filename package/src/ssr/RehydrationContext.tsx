@@ -22,10 +22,10 @@ export const RehydrationContextProvider = ({
     }
     if (client instanceof NextSSRApolloClient) {
       client.setRehydrationContext(rehydrationContext.current);
-    }
+    } // else error?
     if (client.cache instanceof NextSSRInMemoryCache) {
       client.cache.setRehydrationContext(rehydrationContext.current);
-    }
+    } // else error?
   } else {
     registerDataTransport();
   }
@@ -65,7 +65,8 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
       rehydrationContext.currentlyInjected = false;
       if (
         !Object.keys(rehydrationContext.transportValueData).length &&
-        !Object.keys(rehydrationContext.incomingResults).length
+        !Object.keys(rehydrationContext.incomingResults).length &&
+        !Object.keys(rehydrationContext.incomingBackgroundQueries).length
       )
         return <></>;
       invariant.debug(
@@ -75,6 +76,10 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
       invariant.debug(
         "transporting results",
         rehydrationContext.incomingResults
+      );
+      invariant.debug(
+        "transporting incomingBackgroundQueries",
+        rehydrationContext.incomingBackgroundQueries
       );
 
       const __html = transportDataToJS({
