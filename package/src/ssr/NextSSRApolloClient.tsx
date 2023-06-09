@@ -24,6 +24,8 @@ import {
 // on the client - the data comes in, creates the fake in-flight observable to
 // force the cache to wait for the pending request
 
+const seenDocuments = new Map<string, DocumentNode>();
+
 export class NextSSRApolloClient<
   TCacheShape
 > extends ApolloClient<TCacheShape> {
@@ -36,7 +38,18 @@ export class NextSSRApolloClient<
   };
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
-    super(options);
+    super({
+      ...options,
+      documentTransform: new DocumentTransform((document) => {
+        const stringified = print(document);
+        if (seenDocuments.has(stringified)) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return seenDocuments.get(stringified)!;
+        }
+        seenDocuments.set(stringified, document);
+        return document;
+      }),
+    });
 
     this.registerWindowHook();
   }
