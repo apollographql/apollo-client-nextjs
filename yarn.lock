@@ -31,9 +31,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:>=3.8.0-beta.1":
-  version: 3.8.0-beta.1
-  resolution: "@apollo/client@npm:3.8.0-beta.1"
+"@apollo/client@npm:>=3.8.0-beta.2":
+  version: 3.8.0-beta.2
+  resolution: "@apollo/client@npm:3.8.0-beta.2"
   dependencies:
     "@graphql-typed-document-node/core": ^3.1.1
     "@wry/context": ^0.7.3
@@ -63,7 +63,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: d67d22a617d61d196d796e3fa3a4d82ede8969257eb104bbbaa88b73ec317cb1aba37f4ee1ef91a0375b24af1c09c2d640df2c70427c8752f4377637c88825d2
+  checksum: 2af797e1ac92ce5fcb09b8da4515fee3f4bbbbc3975475750a0de13841d27a02d60ff4e0be000bb955f15cf0ca116972f9c0f71696c6672c8b4b8b9f9a2446ed
   languageName: node
   linkType: hard
 
@@ -71,7 +71,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.1"
+    "@apollo/client": ">=3.8.0-beta.2"
     "@total-typescript/shoehorn": ^0.1.0
     "@tsconfig/recommended": ^1.0.1
     "@typescript-eslint/eslint-plugin": latest
@@ -87,7 +87,7 @@ __metadata:
     typescript: ^5.0.2
     vitest: ^0.30.1
   peerDependencies:
-    "@apollo/client": ">= 3.8.0-alpha.13"
+    "@apollo/client": ">=3.8.0-beta.2"
     next: ^13.4.1
     react: ^18
   languageName: unknown
@@ -4753,6 +4753,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
+    "@apollo/client": ">=3.8.0-beta.2"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": ^4.7.0
     "@as-integrations/next": ^1.3.0
@@ -4786,7 +4787,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.1"
+    "@apollo/client": ">=3.8.0-beta.2"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": ^4.6.0
     "@as-integrations/next": ^1.3.0
@@ -7613,7 +7614,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.1"
+    "@apollo/client": ">=3.8.0-beta.2"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": ^9.11.0
     "@chakra-ui/next-js": ^2.1.2
