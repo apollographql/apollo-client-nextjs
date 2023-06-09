@@ -11,6 +11,14 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { setVerbosity } from "ts-invariant";
+
+if (process.env.NODE_ENV === "development") {
+  setVerbosity("debug");
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 function makeClient() {
   const httpLink = new HttpLink({
