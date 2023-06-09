@@ -9,7 +9,7 @@
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.  
 
-> ❗️ This package depends on Apollo Client 3.8, which is currently an alpha release. 
+> ❗️ This package depends on Apollo Client 3.8, which is currently a beta release. 
 
 ## Detailed technical breakdown
 
