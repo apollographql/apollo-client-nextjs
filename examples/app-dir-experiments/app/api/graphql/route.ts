@@ -1,5 +1,6 @@
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { ApolloServer } from "@apollo/server";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { gql } from "graphql-tag";
 
 const typeDefs = gql`
@@ -37,9 +38,13 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({
-  resolvers,
+export const schema = makeExecutableSchema({
   typeDefs,
+  resolvers,
+});
+
+const server = new ApolloServer({
+  schema,
 });
 
 const handler = startServerAndCreateNextHandler(server);
