@@ -19,7 +19,6 @@ export class NextSSRInMemoryCache extends InMemoryCache {
   }
 
   write(options: Cache.WriteOptions<any, any>): Reference | undefined {
-    console.log("write");
     if (typeof window == "undefined") {
       this.rehydrationContext.incomingResults.push(options);
     }

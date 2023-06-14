@@ -9,7 +9,6 @@ import {
   DocumentTransform,
 } from "@apollo/client";
 import { print } from "graphql";
-// import { canUseWeakMap } from "@apollo/client/utilities";
 import { canonicalStringify } from "@apollo/client/cache";
 import { RehydrationContextValue } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
@@ -17,15 +16,6 @@ import {
   ApolloBackgroundQueryTransport,
   ApolloResultCache,
 } from "./ApolloRehydrateSymbols";
-
-// uBQ: we want to skip it in the browser until data comes in
-// the first time it renders on the client, if we don't yet have data,
-// we tell it to wait for the existing request
-// watchQuery:
-//    watchQuery on the server doesn't do anything new except transport to the
-//    client which query + variables are in flight
-// on the client - the data comes in, creates the fake in-flight observable to
-// force the cache to wait for the pending request
 
 const seenDocuments = new Map<string, DocumentNode>();
 
@@ -43,6 +33,8 @@ export class NextSSRApolloClient<
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super({
       ...options,
+      // TODO: the memoization in `documentTransform` can be removed once
+      // https://github.com/apollographql/apollo-client/pull/10968 is merged.
       documentTransform: new DocumentTransform((document) => {
         const stringified = print(document);
         if (seenDocuments.has(stringified)) {
@@ -56,7 +48,10 @@ export class NextSSRApolloClient<
 
     this.registerWindowHook();
   }
-  private resolveFakeQueries = new Map<string, (result: FetchResult) => void>();
+  private resolveFakeQueries = new Map<
+    string,
+    [(result: FetchResult) => void, (reason: any) => void]
+  >();
 
   private identifyUniqueQuery(options: {
     query: DocumentNode;
@@ -66,8 +61,8 @@ export class NextSSRApolloClient<
       options.query
     );
 
-    // doc transforms will add __typename but won't remove directives
-    // need to pass the result of transformed document into
+    // Calling `transformDocument` will add __typename but won't remove client
+    // directives, so we need to get the `serverQuery`.
     const { serverQuery } =
       this["queryManager"].getDocumentInfo(transformedDocument);
 
@@ -84,8 +79,6 @@ export class NextSSRApolloClient<
         registerLateInitializingQueue(
           ApolloBackgroundQueryTransport,
           (options) => {
-            console.log("cb 1");
-
             const { query, varJson, cacheKey } =
               this.identifyUniqueQuery(options);
 
@@ -99,20 +92,38 @@ export class NextSSRApolloClient<
             );
 
             if (!byVariables.has(varJson)) {
-              console.log("adding myself");
-              const promise = new Promise<FetchResult>((r) => {
-                this.resolveFakeQueries.set(cacheKey, r);
+              const promise = new Promise<FetchResult>((resolve, reject) => {
+                this.resolveFakeQueries.set(cacheKey, [resolve, reject]);
               });
 
               byVariables.set(
                 varJson,
                 new Observable<FetchResult>((observer) => {
-                  promise.then((result) => {
-                    console.log("resolving fake query with result", result);
-                    observer.next(result);
-                    observer.complete();
-                  });
+                  promise
+                    .then((result) => {
+                      observer.next(result);
+                      observer.complete();
+                    })
+                    .catch((err) => {
+                      observer.error(err);
+                    });
                 })
+              );
+
+              const cleanupCancelFn = () =>
+                this["queryManager"].fetchCancelFns.delete(cacheKey);
+
+              const [_, reject] = this.resolveFakeQueries.get(cacheKey) ?? [];
+
+              this["queryManager"].fetchCancelFns.set(
+                cacheKey,
+                (reason: unknown) => {
+                  cleanupCancelFn();
+                  if (reject) {
+                    this.resolveFakeQueries.delete(cacheKey);
+                    reject(reason);
+                  }
+                }
               );
             }
           }
@@ -121,12 +132,10 @@ export class NextSSRApolloClient<
 
       if (Array.isArray(window[ApolloResultCache] || [])) {
         registerLateInitializingQueue(ApolloResultCache, (data) => {
-          console.log("cb 2", data);
-
           const { cacheKey } = this.identifyUniqueQuery(data);
-          const resolve = this.resolveFakeQueries.get(cacheKey);
+          const [resolve] = this.resolveFakeQueries.get(cacheKey) ?? [];
+
           if (resolve) {
-            console.log("resolving", data);
             resolve({
               data: data.result,
             });
@@ -137,25 +146,14 @@ export class NextSSRApolloClient<
     }
   }
 
-  // cache has the queue of incoming results
-  // instead of calling this.write in the nextssrinmemorycache, we'd resolve the
-  // fake observable with the real result data
   watchQuery<
     T = any,
     TVariables extends OperationVariables = OperationVariables
   >(options: WatchQueryOptions<TVariables, T>) {
-    console.log("watchQuery, before", [
-      ...this["queryManager"].inFlightLinkObservables.entries(),
-    ]);
     if (typeof window == "undefined") {
-      console.log("watchQuery server");
       this.rehydrationContext.incomingBackgroundQueries.push(options);
     }
-
     const result = super.watchQuery(options);
-    console.log("watchQuery, after", [
-      ...this["queryManager"].inFlightLinkObservables.entries(),
-    ]);
     return result;
   }
 
