@@ -9,7 +9,7 @@
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.  
 
-> ❗️ This package depends on Apollo Client 3.8, which is currently an alpha release. 
+> ❗️ This package depends on Apollo Client 3.8, which is currently a beta release. 
 
 ## Detailed technical breakdown
 
@@ -31,10 +31,10 @@ This package provides the tools necessary to execute your GraphQL queries on the
 
 ## Installation
 
-This package has a peer dependency on the latest alpha of `@apollo/client`, so you can install both this package and that Apollo Client version via
+This package has a peer dependency on the latest beta of `@apollo/client`, so you can install both this package and that Apollo Client version via
 
 ```sh
-npm install @apollo/client@alpha @apollo/experimental-nextjs-app-support
+npm install @apollo/client@beta @apollo/experimental-nextjs-app-support
 ```
 
 ## Usage
@@ -172,6 +172,17 @@ You can import the following Apollo Client hooks from `"@apollo/experimental-nex
 - `useFragment`
 
 If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
+
+### Resetting singletons between tests.
+This package uses some singleton instances on the Browser side - if you are writing tests, you must reset them between tests.
+
+For that, you can use the `resetNextSSRApolloSingletons` helper:
+
+```ts
+import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support/ssr";
+
+afterEach(resetNextSSRApolloSingletons);
+```
 
 ## Handling Multipart responses in SSR
 

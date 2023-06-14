@@ -31,9 +31,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:0.0.0-pr-10954-20230606145830":
-  version: 0.0.0-pr-10954-20230606145830
-  resolution: "@apollo/client@npm:0.0.0-pr-10954-20230606145830"
+"@apollo/client@npm:>=3.8.0-beta.2":
+  version: 3.8.0-beta.2
+  resolution: "@apollo/client@npm:3.8.0-beta.2"
   dependencies:
     "@graphql-typed-document-node/core": ^3.1.1
     "@wry/context": ^0.7.3
@@ -63,7 +63,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 194dbdd3204901c1cf481db355d6e60b05bc4739ad91622bb5bdb983e348d67870a6f59e6223cb915eb91ab156b57d9d89b57d315f68ae05827a45db003a9e8d
+  checksum: 2af797e1ac92ce5fcb09b8da4515fee3f4bbbbc3975475750a0de13841d27a02d60ff4e0be000bb955f15cf0ca116972f9c0f71696c6672c8b4b8b9f9a2446ed
   languageName: node
   linkType: hard
 
@@ -71,14 +71,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": 0.0.0-pr-10954-20230606145830
+    "@apollo/client": ">=3.8.0-beta.2"
     "@total-typescript/shoehorn": ^0.1.0
     "@tsconfig/recommended": ^1.0.1
     "@typescript-eslint/eslint-plugin": latest
     "@typescript-eslint/parser": latest
     eslint: latest
     eslint-plugin-react: latest
-    next: ^13.4.1
+    next: ^13.4.4
     react: ^18.2.0
     rimraf: ^5.0.0
     superjson: ^1.12.2
@@ -87,7 +87,7 @@ __metadata:
     typescript: ^5.0.2
     vitest: ^0.30.1
   peerDependencies:
-    "@apollo/client": ">= 3.8.0-alpha.13"
+    "@apollo/client": ">=3.8.0-beta.2"
     next: ^13.4.1
     react: ^18
   languageName: unknown
@@ -3478,10 +3478,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/env@npm:13.4.1"
-  checksum: 4736c9c6f75d80b16d3ca0ad3ddb3fcaa171f2144fccf516a67110e3bfcd9121d076e838faad46f815e41ee32e9be0ab68591359de06af13be6cbb860eda3639
+"@next/env@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/env@npm:13.4.4"
+  checksum: 9ab9b9ac4e5920cb9911273a776a5e2564844ac735a9c483bf584e090a7f534ce4a8fcda313132d338837e634513f680885c6b4ee811d5175db1b98b0bba4b35
   languageName: node
   linkType: hard
 
@@ -3512,65 +3512,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-darwin-arm64@npm:13.4.1"
+"@next/swc-darwin-arm64@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-darwin-arm64@npm:13.4.4"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-darwin-x64@npm:13.4.1"
+"@next/swc-darwin-x64@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-darwin-x64@npm:13.4.4"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.1"
+"@next/swc-linux-arm64-gnu@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.4"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-linux-arm64-musl@npm:13.4.1"
+"@next/swc-linux-arm64-musl@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-linux-arm64-musl@npm:13.4.4"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-linux-x64-gnu@npm:13.4.1"
+"@next/swc-linux-x64-gnu@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-linux-x64-gnu@npm:13.4.4"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-linux-x64-musl@npm:13.4.1"
+"@next/swc-linux-x64-musl@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-linux-x64-musl@npm:13.4.4"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.1"
+"@next/swc-win32-arm64-msvc@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.4"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.1"
+"@next/swc-win32-ia32-msvc@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.4"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.4.1":
-  version: 13.4.1
-  resolution: "@next/swc-win32-x64-msvc@npm:13.4.1"
+"@next/swc-win32-x64-msvc@npm:13.4.4":
+  version: 13.4.4
+  resolution: "@next/swc-win32-x64-msvc@npm:13.4.4"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -4556,15 +4556,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wry/trie@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "@wry/trie@npm:0.3.2"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: 151d06b519e1ff1c3acf6ee6846161b1d7d50bbecd4c48e5cd1b05f9e37c30602aff02e88f20105f6e6c54ae4123f9c4eb7715044d7fd927d4ba4ec3e755cd36
-  languageName: node
-  linkType: hard
-
 "@wry/trie@npm:^0.4.3":
   version: 0.4.3
   resolution: "@wry/trie@npm:0.4.3"
@@ -4762,7 +4753,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": 0.0.0-pr-10954-20230606145830
+    "@apollo/client": ">=3.8.0-beta.2"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": ^4.7.0
     "@as-integrations/next": ^1.3.0
@@ -4783,7 +4774,7 @@ __metadata:
     eslint-config-next: 13.3.4
     graphql: ^16.6.0
     graphql-tag: ^2.12.6
-    next: ^13.4.1
+    next: ^13.4.4
     postcss: 8.4.23
     react: 18.2.0
     react-dom: 18.2.0
@@ -4796,7 +4787,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": 0.0.0-pr-10954-20230606145830
+    "@apollo/client": ">=3.8.0-beta.2"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": ^4.6.0
     "@as-integrations/next": ^1.3.0
@@ -4809,7 +4800,7 @@ __metadata:
     eslint-config-next: 13.2.4
     graphql: ^16.6.0
     html-differ: ^1.4.0
-    next: ^13.4.1
+    next: ^13.4.4
     react: 18.2.0
     react-dom: 18.2.0
     server-only: ^0.0.1
@@ -7623,7 +7614,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": 0.0.0-pr-10954-20230606145830
+    "@apollo/client": ">=3.8.0-beta.2"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": ^9.11.0
     "@chakra-ui/next-js": ^2.1.2
@@ -7639,7 +7630,7 @@ __metadata:
     framer-motion: ^10.12.2
     graphql: ^16.6.0
     js-cookie: ^3.0.1
-    next: ^13.4.1
+    next: ^13.4.4
     react: 18.2.0
     react-dom: 18.2.0
     react-icons: ^4.8.0
@@ -9093,20 +9084,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^13.4.1":
-  version: 13.4.1
-  resolution: "next@npm:13.4.1"
+"next@npm:^13.4.4":
+  version: 13.4.4
+  resolution: "next@npm:13.4.4"
   dependencies:
-    "@next/env": 13.4.1
-    "@next/swc-darwin-arm64": 13.4.1
-    "@next/swc-darwin-x64": 13.4.1
-    "@next/swc-linux-arm64-gnu": 13.4.1
-    "@next/swc-linux-arm64-musl": 13.4.1
-    "@next/swc-linux-x64-gnu": 13.4.1
-    "@next/swc-linux-x64-musl": 13.4.1
-    "@next/swc-win32-arm64-msvc": 13.4.1
-    "@next/swc-win32-ia32-msvc": 13.4.1
-    "@next/swc-win32-x64-msvc": 13.4.1
+    "@next/env": 13.4.4
+    "@next/swc-darwin-arm64": 13.4.4
+    "@next/swc-darwin-x64": 13.4.4
+    "@next/swc-linux-arm64-gnu": 13.4.4
+    "@next/swc-linux-arm64-musl": 13.4.4
+    "@next/swc-linux-x64-gnu": 13.4.4
+    "@next/swc-linux-x64-musl": 13.4.4
+    "@next/swc-win32-arm64-msvc": 13.4.4
+    "@next/swc-win32-ia32-msvc": 13.4.4
+    "@next/swc-win32-x64-msvc": 13.4.4
     "@swc/helpers": 0.5.1
     busboy: 1.6.0
     caniuse-lite: ^1.0.30001406
@@ -9116,7 +9107,6 @@ __metadata:
   peerDependencies:
     "@opentelemetry/api": ^1.1.0
     fibers: ">= 3.1.0"
-    node-sass: ^6.0.0 || ^7.0.0
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.3.0
@@ -9144,13 +9134,11 @@ __metadata:
       optional: true
     fibers:
       optional: true
-    node-sass:
-      optional: true
     sass:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 169e3fbbf713fad791a9b016c83d396bce628bb0ddf716c5fe50104a21cbc37af7df1586cbe05ae4ae6a090f4e1107211189cfbeeeab8345fe54e11cfefce87f
+  checksum: d84686f3ca313c57d283872a2946a5c18ecd656c4235ad879cbaa0f2f2886c9bcff94656ff07c4998fa672f40023978235150ce760e4c5b1edab6feaa7ed9fa9
   languageName: node
   linkType: hard
 
@@ -9438,13 +9426,13 @@ __metadata:
   linkType: hard
 
 "optimism@npm:^0.17.4":
-  version: 0.17.4
-  resolution: "optimism@npm:0.17.4"
+  version: 0.17.5
+  resolution: "optimism@npm:0.17.5"
   dependencies:
     "@wry/context": ^0.7.0
-    "@wry/trie": ^0.3.0
+    "@wry/trie": ^0.4.3
     tslib: ^2.3.0
-  checksum: 465c3f6d12dfb39b47e1a8437472b0cdf37d1135094265c54446d991f1c70360814e2a435ceb7d09cf529b98c07283c30ef8869305fabec51b3376208b1f75a2
+  checksum: 5990217d989e9857dc523a64cb6e5a9205eae68c7acac78f7dde8fbe50045d0f11ca8068cdbb51b1eae15510d96ad593a99cf98c6f86c41d1b6f90e54956ff11
   languageName: node
   linkType: hard
 

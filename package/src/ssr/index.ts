@@ -11,3 +11,4 @@ export {
 export { SSRMultipartLink } from "./SSRMultipartLink";
 export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink";
 export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink";
+export { resetNextSSRApolloSingletons } from "./testHelpers";

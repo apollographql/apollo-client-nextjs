@@ -8,9 +8,15 @@ import {
   NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
 
-setVerbosity("debug");
+if (process.env.NODE_ENV === "development") {
+  setVerbosity("debug");
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 export function ApolloWrapper({
   children,
