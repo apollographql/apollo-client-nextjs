@@ -22,12 +22,9 @@ export const Poll = () => {
   });
 
   return (
-    <>
-      <h1>Testing 1234...</h1>
-      <Suspense fallback={<>Loading...</>}>
-        <PollWrapper queryRef={queryRef} />
-      </Suspense>
-    </>
+    <Suspense fallback={<>Loading...</>}>
+      <PollWrapper queryRef={queryRef} />
+    </Suspense>
   );
 };
 
@@ -37,7 +34,6 @@ const PollWrapper = ({
   queryRef: QueryReference<GetPollQuery>;
 }) => {
   const { data } = useReadQuery(queryRef);
-  // console.log({ data });
   const [showResults, setShowResults] = useState(false);
   const [mutate, { loading: mutationLoading }] =
     useMutation(AnswerPollDocument);
