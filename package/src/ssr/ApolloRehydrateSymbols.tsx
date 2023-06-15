@@ -11,7 +11,6 @@ declare global {
     [ApolloRehydrationCache]?: RehydrationCache;
     [ApolloResultCache]?: ResultsCache;
     [ApolloSSRDataTransport]?: DataTransport<SuperJSONResult>;
-    // TODO: types
     [ApolloBackgroundQueryTransport]?: BackgroundQueriesCache;
   }
 }
