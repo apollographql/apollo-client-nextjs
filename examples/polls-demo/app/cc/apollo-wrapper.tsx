@@ -21,9 +21,6 @@ if (process.env.NODE_ENV === "development") {
   loadErrorMessages();
 }
 
-import { setVerbosity } from "ts-invariant";
-setVerbosity("debug");
-
 function makeClient() {
   const httpLink = new HttpLink({
     uri: "https://fragrant-shadow-9470.fly.dev/",

@@ -25,8 +25,10 @@ export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
   "networkStatus",
 ]);
 export const useReadQuery = wrap(orig_useReadQuery, ["data", "networkStatus"]);
+// @ts-ignore
 export const useBackgroundQuery: typeof orig_useBackgroundQuery = (...args) => {
   useRehydrationContext();
+  // @ts-ignore
   return orig_useBackgroundQuery(...args);
 };
 
