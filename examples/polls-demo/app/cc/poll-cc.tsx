@@ -16,23 +16,19 @@ import {
   GetPollQuery,
 } from "@/components/poll/documents.generated";
 
-export const Poll = () => {
+export const PollWrapper = () => {
   const [queryRef] = useBackgroundQuery(GetPollDocument, {
     variables: { id: "1", delay: 0 },
   });
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <PollWrapper queryRef={queryRef} />
+      <Poll queryRef={queryRef} />
     </Suspense>
   );
 };
 
-const PollWrapper = ({
-  queryRef,
-}: {
-  queryRef: QueryReference<GetPollQuery>;
-}) => {
+const Poll = ({ queryRef }: { queryRef: QueryReference<GetPollQuery> }) => {
   const { data } = useReadQuery(queryRef);
   const [showResults, setShowResults] = useState(false);
   const [mutate, { loading: mutationLoading }] =

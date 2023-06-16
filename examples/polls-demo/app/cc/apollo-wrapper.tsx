@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ApolloLink,
-  HttpLink,
-  SuspenseCache,
-  InMemoryCache,
-} from "@apollo/client";
+import { ApolloLink, HttpLink, SuspenseCache } from "@apollo/client";
 import {
   NextSSRApolloClient,
   ApolloNextAppProvider,

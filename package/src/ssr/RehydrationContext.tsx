@@ -22,10 +22,18 @@ export const RehydrationContextProvider = ({
     }
     if (client instanceof NextSSRApolloClient) {
       client.setRehydrationContext(rehydrationContext.current);
-    } // else error?
+    } else {
+      throw new Error(
+        "When using Next SSR, you must use the `NextSSRApolloClient`"
+      );
+    }
     if (client.cache instanceof NextSSRInMemoryCache) {
       client.cache.setRehydrationContext(rehydrationContext.current);
-    } // else error?
+    } else {
+      throw new Error(
+        "When using Next SSR, you must use the `NextSSRInMemoryCache`"
+      );
+    }
   } else {
     registerDataTransport();
   }

@@ -8,6 +8,7 @@ import {
   DocumentNode,
   DocumentTransform,
 } from "@apollo/client";
+import type { QueryManager } from "@apollo/client/core/QueryManager";
 import { print } from "graphql";
 import { canonicalStringify } from "@apollo/client/cache";
 import { RehydrationContextValue } from "./types";
@@ -18,6 +19,12 @@ import {
 } from "./ApolloRehydrateSymbols";
 
 const seenDocuments = new Map<string, DocumentNode>();
+
+function getQueryManager<TCacheShape>(
+  client: ApolloClient<unknown>
+): QueryManager<TCacheShape> {
+  return client["queryManager"];
+}
 
 export class NextSSRApolloClient<
   TCacheShape
@@ -60,11 +67,10 @@ export class NextSSRApolloClient<
     const transformedDocument = this.documentTransform.transformDocument(
       options.query
     );
-
+    const queryManager = getQueryManager<TCacheShape>(this);
     // Calling `transformDocument` will add __typename but won't remove client
     // directives, so we need to get the `serverQuery`.
-    const { serverQuery } =
-      this["queryManager"].getDocumentInfo(transformedDocument);
+    const { serverQuery } = queryManager.getDocumentInfo(transformedDocument);
 
     const canonicalVariables = canonicalStringify(options.variables);
 
@@ -82,14 +88,11 @@ export class NextSSRApolloClient<
             const { query, varJson, cacheKey } =
               this.identifyUniqueQuery(options);
 
+            const queryManager = getQueryManager<TCacheShape>(this);
             const byVariables =
-              this["queryManager"].inFlightLinkObservables.get(query) ||
-              new Map();
+              queryManager["inFlightLinkObservables"].get(query) || new Map();
 
-            this["queryManager"].inFlightLinkObservables.set(
-              query,
-              byVariables
-            );
+            queryManager["inFlightLinkObservables"].set(query, byVariables);
 
             if (!byVariables.has(varJson)) {
               const promise = new Promise<FetchResult>((resolve, reject) => {
@@ -109,13 +112,13 @@ export class NextSSRApolloClient<
                     });
                 })
               );
-
+              const queryManager = getQueryManager<TCacheShape>(this);
               const cleanupCancelFn = () =>
-                this["queryManager"].fetchCancelFns.delete(cacheKey);
+                queryManager["fetchCancelFns"].delete(cacheKey);
 
               const [_, reject] = this.resolveFakeQueries.get(cacheKey) ?? [];
 
-              this["queryManager"].fetchCancelFns.set(
+              queryManager["fetchCancelFns"].set(
                 cacheKey,
                 (reason: unknown) => {
                   cleanupCancelFn();
