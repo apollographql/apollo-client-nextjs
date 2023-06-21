@@ -6,6 +6,7 @@ import {
   ApolloRehydrationCache,
   ApolloResultCache,
   ApolloSSRDataTransport,
+  ApolloBackgroundQueryTransport,
 } from "./ApolloRehydrateSymbols";
 
 /**
@@ -20,6 +21,7 @@ export function resetNextSSRApolloSingletons() {
   delete window[ApolloRehydrationCache];
   delete window[ApolloResultCache];
   delete window[ApolloSSRDataTransport];
+  delete window[ApolloBackgroundQueryTransport];
   delete window[ApolloClientSingleton];
   delete window[SuspenseCacheSingleton];
 }
