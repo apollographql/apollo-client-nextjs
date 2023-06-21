@@ -7,8 +7,8 @@ import {
 } from "@apollo/client";
 import { RehydrationContextProvider } from "./RehydrationContext";
 
-const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
-const SuspenseCacheSingleton = Symbol.for("ApolloSuspenseCacheSingleton");
+export const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
+export const SuspenseCacheSingleton = Symbol.for("ApolloSuspenseCacheSingleton");
 
 declare global {
   interface Window {
