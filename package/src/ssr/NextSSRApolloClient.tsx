@@ -6,7 +6,6 @@ import {
   Observable,
   FetchResult,
   DocumentNode,
-  DocumentTransform,
 } from "@apollo/client";
 import type { QueryManager } from "@apollo/client/core/QueryManager";
 import { print } from "graphql";
@@ -17,8 +16,6 @@ import {
   ApolloBackgroundQueryTransport,
   ApolloResultCache,
 } from "./ApolloRehydrateSymbols";
-
-const seenDocuments = new Map<string, DocumentNode>();
 
 function getQueryManager<TCacheShape>(
   client: ApolloClient<unknown>
@@ -38,23 +35,11 @@ export class NextSSRApolloClient<
   };
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
-    super({
-      ...options,
-      // TODO: the memoization in `documentTransform` can be removed once
-      // https://github.com/apollographql/apollo-client/pull/10968 is merged.
-      documentTransform: new DocumentTransform((document) => {
-        const stringified = print(document);
-        if (seenDocuments.has(stringified)) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          return seenDocuments.get(stringified)!;
-        }
-        seenDocuments.set(stringified, document);
-        return document;
-      }),
-    });
+    super(options);
 
     this.registerWindowHook();
   }
+
   private resolveFakeQueries = new Map<
     string,
     [(result: FetchResult) => void, (reason: any) => void]
@@ -88,11 +73,18 @@ export class NextSSRApolloClient<
             const { query, varJson, cacheKey } =
               this.identifyUniqueQuery(options);
 
+            if (!query) return;
+            const printedServerQuery = print(query);
             const queryManager = getQueryManager<TCacheShape>(this);
-            const byVariables =
-              queryManager["inFlightLinkObservables"].get(query) || new Map();
 
-            queryManager["inFlightLinkObservables"].set(query, byVariables);
+            const byVariables =
+              queryManager["inFlightLinkObservables"].get(printedServerQuery) ||
+              new Map();
+
+            queryManager["inFlightLinkObservables"].set(
+              printedServerQuery,
+              byVariables
+            );
 
             if (!byVariables.has(varJson)) {
               const promise = new Promise<FetchResult>((resolve, reject) => {
@@ -142,6 +134,11 @@ export class NextSSRApolloClient<
             resolve({
               data: data.result,
             });
+            // In order to avoid a scenario where the promise resolves without
+            // a query subscribing to the promise, we immediately call
+            // `cache.write` here.
+            // For more information, see: https://github.com/apollographql/apollo-client-nextjs/pull/38/files/388813a16e2ac5c62408923a1face9ae9417d92a#r1229870523
+            this.cache.write(data);
             this.resolveFakeQueries.delete(cacheKey);
           }
         });
