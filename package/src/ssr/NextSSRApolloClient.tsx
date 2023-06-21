@@ -29,9 +29,8 @@ export class NextSSRApolloClient<
   private rehydrationContext: Pick<
     RehydrationContextValue,
     "incomingBackgroundQueries"
-  > & { uninitialized?: boolean } = {
+  > = {
     incomingBackgroundQueries: [],
-    uninitialized: true,
   };
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
@@ -108,12 +107,12 @@ export class NextSSRApolloClient<
               const cleanupCancelFn = () =>
                 queryManager["fetchCancelFns"].delete(cacheKey);
 
-              const [_, reject] = this.resolveFakeQueries.get(cacheKey) ?? [];
-
-              queryManager["fetchCancelFns"].set(
-                cacheKey,
-                (reason: unknown) => {
-                  cleanupCancelFn();
+                
+                queryManager["fetchCancelFns"].set(
+                  cacheKey,
+                  (reason: unknown) => {
+                    cleanupCancelFn();
+                    const [_, reject] = this.resolveFakeQueries.get(cacheKey) ?? [];
                   if (reject) {
                     this.resolveFakeQueries.delete(cacheKey);
                     reject(reason);
@@ -158,12 +157,13 @@ export class NextSSRApolloClient<
   }
 
   setRehydrationContext(rehydrationContext: RehydrationContextValue) {
-    if (this.rehydrationContext.uninitialized) {
+    if (
+      rehydrationContext.incomingBackgroundQueries !==
+      this.rehydrationContext.incomingBackgroundQueries
+    )
       rehydrationContext.incomingBackgroundQueries.push(
-        ...this.rehydrationContext.incomingBackgroundQueries
+        ...this.rehydrationContext.incomingBackgroundQueries.splice(0)
       );
-    }
     this.rehydrationContext = rehydrationContext;
-    this.rehydrationContext.uninitialized = false;
   }
 }
