@@ -107,12 +107,12 @@ export class NextSSRApolloClient<
               const cleanupCancelFn = () =>
                 queryManager["fetchCancelFns"].delete(cacheKey);
 
-                
-                queryManager["fetchCancelFns"].set(
-                  cacheKey,
-                  (reason: unknown) => {
-                    cleanupCancelFn();
-                    const [_, reject] = this.resolveFakeQueries.get(cacheKey) ?? [];
+              queryManager["fetchCancelFns"].set(
+                cacheKey,
+                (reason: unknown) => {
+                  cleanupCancelFn();
+                  const [_, reject] =
+                    this.resolveFakeQueries.get(cacheKey) ?? [];
                   if (reject) {
                     this.resolveFakeQueries.delete(cacheKey);
                     reject(reason);
