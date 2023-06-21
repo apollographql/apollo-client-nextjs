@@ -6,21 +6,18 @@ import {
   HttpLink,
   SuspenseCache,
 } from "@apollo/client";
+import { SchemaLink } from "@apollo/client/link/schema";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { setVerbosity } from "ts-invariant";
+import { schema } from "../api/graphql/route";
 
 setVerbosity("debug");
 
 function makeClient() {
-  const httpLink = new HttpLink({
-    uri: "http://localhost:3000/api/graphql",
-    fetchOptions: { cache: "no-store" },
-  });
-
   return new ApolloClient({
     cache: new NextSSRInMemoryCache(),
     link:
@@ -29,9 +26,14 @@ function makeClient() {
             new SSRMultipartLink({
               stripDefer: true,
             }),
-            httpLink,
+            new SchemaLink({
+              schema,
+            }),
           ])
-        : httpLink,
+        : new HttpLink({
+            uri: "http://localhost:3000/api/graphql",
+            fetchOptions: { cache: "no-store" },
+          }),
   });
 }
 
