@@ -100,6 +100,8 @@ export class NextSSRApolloClient<
                     })
                     .catch((err) => {
                       observer.error(err);
+                    }).finally(() => {
+                      this.resolveFakeQueries.delete(cacheKey);
                     });
                 })
               );
@@ -114,7 +116,6 @@ export class NextSSRApolloClient<
                   const [_, reject] =
                     this.resolveFakeQueries.get(cacheKey) ?? [];
                   if (reject) {
-                    this.resolveFakeQueries.delete(cacheKey);
                     reject(reason);
                   }
                 }
@@ -138,7 +139,6 @@ export class NextSSRApolloClient<
             // `cache.write` here.
             // For more information, see: https://github.com/apollographql/apollo-client-nextjs/pull/38/files/388813a16e2ac5c62408923a1face9ae9417d92a#r1229870523
             this.cache.write(data);
-            this.resolveFakeQueries.delete(cacheKey);
           }
         });
       }
