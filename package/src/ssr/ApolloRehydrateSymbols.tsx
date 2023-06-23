@@ -1,5 +1,9 @@
 import { SuperJSONResult } from "superjson/dist/types";
-import { RehydrationCache, ResultsCache } from "./types";
+import {
+  RehydrationCache,
+  ResultsCache,
+  BackgroundQueriesCache,
+} from "./types";
 import type { DataTransport } from "./dataTransport";
 
 declare global {
@@ -7,8 +11,12 @@ declare global {
     [ApolloRehydrationCache]?: RehydrationCache;
     [ApolloResultCache]?: ResultsCache;
     [ApolloSSRDataTransport]?: DataTransport<SuperJSONResult>;
+    [ApolloBackgroundQueryTransport]?: BackgroundQueriesCache;
   }
 }
 export const ApolloRehydrationCache = Symbol.for("ApolloRehydrationCache");
 export const ApolloResultCache = Symbol.for("ApolloResultCache");
 export const ApolloSSRDataTransport = Symbol.for("ApolloSSRDataTransport");
+export const ApolloBackgroundQueryTransport = Symbol.for(
+  "ApolloBackgroundQueryTransport"
+);

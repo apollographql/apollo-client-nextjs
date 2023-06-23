@@ -2,9 +2,12 @@
 import {
   useFragment as orig_useFragment,
   useSuspenseQuery as orig_useSuspenseQuery,
+  useReadQuery as orig_useReadQuery,
   useQuery as orig_useQuery,
+  useBackgroundQuery as orig_useBackgroundQuery,
 } from "@apollo/client";
 import { useTransportValue } from "./useTransportValue";
+import { useRehydrationContext } from "./RehydrationContext";
 
 export const useFragment = wrap(orig_useFragment, [
   "data",
@@ -21,6 +24,12 @@ export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
   "data",
   "networkStatus",
 ]);
+export const useReadQuery = wrap(orig_useReadQuery, ["data", "networkStatus"]);
+
+export const useBackgroundQuery: typeof orig_useBackgroundQuery = (...args: [any, any]) => {
+  useRehydrationContext();
+  return orig_useBackgroundQuery(...args);
+};
 
 function wrap<T extends (...args: any[]) => any>(
   useFn: T,

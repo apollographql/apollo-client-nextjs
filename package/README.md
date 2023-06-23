@@ -82,7 +82,6 @@ First, create a new file `app/ApolloWrapper.js`:
 // ^ this file needs the "use client" pragma
 
 import {
-  ApolloClient,
   ApolloLink,
   HttpLink,
   SuspenseCache,
@@ -90,6 +89,7 @@ import {
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
+  NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
@@ -103,7 +103,7 @@ function makeClient() {
     fetchOptions: { cache: "no-store" },
   });
 
-  return new ApolloClient({
+  return new NextSSRApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
     cache: new NextSSRInMemoryCache(),
     link:
@@ -164,7 +164,12 @@ export default function RootLayout({
 > ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
-Now you can use the hooks `useQuery`, `useSuspenseQuery`, `useFragment`, and `useApolloClient` from `"@apollo/experimental-nextjs-app-support/ssr"` in your Client components like you are used to.
+You can import the following Apollo Client hooks from `"@apollo/experimental-nextjs-app-support/ssr"` in your client components (make sure you are not importing these hooks from `@apollo/client` as this package wraps and re-exports them to support streaming SSR):
+- `useQuery`
+- `useSuspenseQuery`
+- `useBackgroundQuery`
+- `useReadQuery`
+- `useFragment`
 
 If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
 

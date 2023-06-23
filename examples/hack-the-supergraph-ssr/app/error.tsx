@@ -4,16 +4,14 @@ import React from "react";
 import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 
 export const Error = ({
-  children,
-  code,
   error,
-}: React.PropsWithChildren<{
-  code?: string;
-  error: { toString(): string };
-}>) => (
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) => (
   <VStack spacing="12">
     <VStack textAlign="center">
-      <Heading size="4xl">{code ?? "Unknown Error"}</Heading>
       <Heading fontSize="3xl">Houston, something went wrong on our end</Heading>
       <Text>Please review the information below for more details.</Text>
     </VStack>
@@ -25,10 +23,9 @@ export const Error = ({
         borderRadius="8px"
         borderColor="brand.light"
       >
-        <Text color="brand.error">{error.toString()}</Text>
+        <Text color="brand.error">Error: {error.message}</Text>
       </Box>
     )}
-    {children}
   </VStack>
 );
 

@@ -3,10 +3,11 @@ import {
   ApolloSSRDataTransport,
   ApolloRehydrationCache,
   ApolloResultCache,
+  ApolloBackgroundQueryTransport,
 } from "./ApolloRehydrateSymbols";
 import { RehydrationCache } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
-import { Cache } from "@apollo/client";
+import { Cache, WatchQueryOptions } from "@apollo/client";
 import invariant from "ts-invariant";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
@@ -14,6 +15,7 @@ export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 type DataToTransport = {
   rehydrate: RehydrationCache;
   results: Cache.WriteOptions[];
+  backgroundQueries: WatchQueryOptions[];
 };
 
 /**
@@ -35,6 +37,9 @@ export function registerDataTransport() {
     const parsed = SuperJSON.deserialize<DataToTransport>(data);
     invariant.debug(`received data from the server:`, parsed);
     Object.assign((window[ApolloRehydrationCache] ??= {}), parsed.rehydrate);
+    (window[ApolloBackgroundQueryTransport] ??= []).push(
+      ...parsed.backgroundQueries
+    );
     (window[ApolloResultCache] ??= []).push(...parsed.results);
   });
 }
