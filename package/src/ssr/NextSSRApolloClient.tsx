@@ -89,6 +89,8 @@ export class NextSSRApolloClient<
               const promise = new Promise<FetchResult>((resolve, reject) => {
                 this.resolveFakeQueries.set(cacheKey, [resolve, reject]);
               });
+              const cleanupCancelFn = () =>
+                queryManager["fetchCancelFns"].delete(cacheKey);
 
               byVariables.set(
                 varJson,
@@ -100,14 +102,13 @@ export class NextSSRApolloClient<
                     })
                     .catch((err) => {
                       observer.error(err);
-                    }).finally(() => {
+                    })
+                    .finally(() => {
                       this.resolveFakeQueries.delete(cacheKey);
+                      cleanupCancelFn();
                     });
                 })
               );
-              const queryManager = getQueryManager<TCacheShape>(this);
-              const cleanupCancelFn = () =>
-                queryManager["fetchCancelFns"].delete(cacheKey);
 
               queryManager["fetchCancelFns"].set(
                 cacheKey,
