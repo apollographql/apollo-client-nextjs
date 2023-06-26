@@ -56,9 +56,13 @@ export class NextSSRApolloClient<
     // directives, so we need to get the `serverQuery`.
     const { serverQuery } = queryManager.getDocumentInfo(transformedDocument);
 
-    const canonicalVariables = canonicalStringify(options.variables);
+    if (!serverQuery) {
+      throw new Error("could not identify unique query");
+    }
 
-    const cacheKey = [serverQuery, canonicalVariables].toString();
+    const canonicalVariables = canonicalStringify(options.variables || {});
+
+    const cacheKey = [print(serverQuery), canonicalVariables].toString();
 
     return { query: serverQuery, cacheKey, varJson: canonicalVariables };
   }
