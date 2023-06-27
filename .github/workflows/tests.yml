@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "package/**"
+      - "integration-test/**"
   workflow_dispatch:
 jobs:
   test:
