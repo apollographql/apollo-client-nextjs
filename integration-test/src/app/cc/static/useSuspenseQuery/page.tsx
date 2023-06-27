@@ -21,8 +21,6 @@ const QUERY: TypedDocumentNode<{
 export const dynamic = "force-static";
 
 export default function Page() {
-  const client = useApolloClient();
-  console.log("lalala", client.extract());
   const { data } = useSuspenseQuery(QUERY);
 
   return (
