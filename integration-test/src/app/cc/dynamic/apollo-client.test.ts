@@ -7,4 +7,12 @@ test.describe("CC dynamic", () => {
 
     await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
   });
+
+  test("useBackgroundQuery (one query)", async ({ page, blockRequest }) => {
+    await page.goto("http://localhost:3000/cc/dynamic/useBackgroundQuery");
+
+    await expect(page.getByText("loading")).toBeVisible();
+    await expect(page.getByText("loading")).not.toBeVisible();
+    await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+  });
 });

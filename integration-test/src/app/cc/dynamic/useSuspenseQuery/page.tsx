@@ -2,7 +2,7 @@
 
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
-import { gql, useApolloClient } from "@apollo/client";
+import { gql } from "@apollo/client";
 
 const QUERY: TypedDocumentNode<{
   products: {
@@ -10,7 +10,7 @@ const QUERY: TypedDocumentNode<{
     title: string;
   }[];
 }> = gql`
-  query {
+  query dynamicProducts {
     products {
       id
       title
@@ -21,8 +21,6 @@ const QUERY: TypedDocumentNode<{
 export const dynamic = "force-dynamic";
 
 export default function Page() {
-  const client = useApolloClient();
-  console.log("lalala", client.extract());
   const { data } = useSuspenseQuery(QUERY);
 
   return (

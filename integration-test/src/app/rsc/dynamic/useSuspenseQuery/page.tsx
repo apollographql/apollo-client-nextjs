@@ -8,7 +8,7 @@ const QUERY: TypedDocumentNode<{
     title: string;
   }[];
 }> = gql`
-  query {
+  query dynamicProducts {
     products {
       id
       title

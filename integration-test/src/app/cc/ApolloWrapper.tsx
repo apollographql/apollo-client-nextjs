@@ -1,20 +1,19 @@
-'use client';
-import React from 'react';
-import { HttpLink, SuspenseCache } from '@apollo/client';
+"use client";
+import React from "react";
+import { HttpLink, SuspenseCache } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   NextSSRApolloClient,
-} from '@apollo/experimental-nextjs-app-support/ssr';
+} from "@apollo/experimental-nextjs-app-support/ssr";
 
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
-import { setVerbosity } from 'ts-invariant';
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { setVerbosity } from "ts-invariant";
+import { delayLink } from "@/shared/delayLink";
 
-//if (process.env.NODE_ENV === 'development') {
-setVerbosity('debug');
+setVerbosity("debug");
 loadDevMessages();
 loadErrorMessages();
-//}
 
 export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
   return (
@@ -28,12 +27,12 @@ export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
 
   function makeClient() {
     const httpLink = new HttpLink({
-      uri: 'https://main--hack-the-e-commerce.apollographos.net/graphql',
+      uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
     });
 
     return new NextSSRApolloClient({
       cache: new NextSSRInMemoryCache(),
-      link: httpLink,
+      link: delayLink.concat(httpLink),
     });
   }
 
