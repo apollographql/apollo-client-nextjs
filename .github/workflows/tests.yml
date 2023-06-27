@@ -24,6 +24,16 @@ jobs:
         with:
           node-version: "18.x"
           cache: "yarn"
+      - run: yarn install --frozen-lockfile
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright
+
       - name: Install playwright browsers
         run: npx playwright install --with-deps
       - name: Build
