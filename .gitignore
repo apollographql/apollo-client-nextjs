@@ -13,3 +13,5 @@ yalc.lock
 .DS_Store
 .vscode/
 .vercel
+.next/
+test-results/
