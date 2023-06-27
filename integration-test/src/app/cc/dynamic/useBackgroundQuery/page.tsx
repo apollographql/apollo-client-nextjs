@@ -6,7 +6,7 @@ import {
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
 import { gql, QueryReference } from "@apollo/client";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 
 interface Data {
   products: {
@@ -29,7 +29,7 @@ export const dynamic = "force-dynamic";
 export default function Page() {
   const [queryRef] = useBackgroundQuery(QUERY, { context: { delay: 2000 } });
   return (
-    <Suspense fallback={<>loading</>}>
+    <Suspense fallback={<p>loading</p>}>
       <DisplayData queryRef={queryRef} />
     </Suspense>
   );
