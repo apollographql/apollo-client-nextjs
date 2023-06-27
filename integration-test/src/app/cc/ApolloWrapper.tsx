@@ -7,9 +7,12 @@ import {
   NextSSRApolloClient,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
+import { SchemaLink } from "@apollo/client/link/schema";
+
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
 import { delayLink } from "@/shared/delayLink";
+import { schema } from "../graphql/route";
 
 setVerbosity("debug");
 loadDevMessages();
@@ -27,12 +30,14 @@ export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
 
   function makeClient() {
     const httpLink = new HttpLink({
-      uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+      uri: "/graphql",
     });
 
     return new NextSSRApolloClient({
       cache: new NextSSRInMemoryCache(),
-      link: delayLink.concat(httpLink),
+      link: delayLink.concat(
+        typeof window === "undefined" ? new SchemaLink({ schema }) : httpLink
+      ),
     });
   }
 
