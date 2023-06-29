@@ -1,0 +1,46 @@
+name: Snapshot Release
+on:
+  issue_comment:
+    types:
+      - created
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    if: |
+      github.repository == 'apollographql/apollo-client' &&
+      github.event.issue.pull_request &&
+      (
+        github.event.sender.login == 'benjamn' ||
+        github.event.sender.login == 'alessbell' ||
+        github.event.sender.login == 'bignimbus' ||
+        github.event.sender.login == 'hwillson' ||
+        github.event.sender.login == 'jerelmiller' ||
+        github.event.sender.login == 'phryneas'
+      ) &&
+      startsWith(github.event.comment.body, '/release:pr')
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn workspace @apollo/experimental-nextjs-app-support version "0.0.0-commit-${GITHUB_SHA::7}" --no-git-tag-version
+      - run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public  --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Get released version
+        id: get-version
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec jq --raw-output '("version="+.version)' package.json >> "$GITHUB_OUTPUT"
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v3.0.1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            A new release has been made for this PR. You can install it with `npm i @apollo/experimental-nextjs-app-support@${{ steps.get-version.outputs.version }}`.
