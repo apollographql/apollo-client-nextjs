@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read
+      contents: write
     if: |
       github.repository == 'apollographql/apollo-client-nextjs' &&
       github.event.issue.pull_request &&
