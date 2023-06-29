@@ -10,7 +10,7 @@ jobs:
       id-token: write
       contents: read
     if: |
-      github.repository == 'apollographql/apollo-client' &&
+      github.repository == 'apollographql/apollo-client-nextjs' &&
       github.event.issue.pull_request &&
       (
         github.event.sender.login == 'benjamn' ||
