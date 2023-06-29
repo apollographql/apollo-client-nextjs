@@ -37,6 +37,7 @@ export const test = base.extend<{
     page.on("pageerror", (error) => {
       expect(error.stack || error).toBe("no error");
     });
+    // this prevents the playwright http cache to kick in in test development
     page.route("**", (route) => route.continue());
     await use(page);
   },
