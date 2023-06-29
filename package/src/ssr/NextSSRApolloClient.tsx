@@ -155,7 +155,12 @@ export class NextSSRApolloClient<
     TVariables extends OperationVariables = OperationVariables
   >(options: WatchQueryOptions<TVariables, T>) {
     if (typeof window == "undefined") {
-      this.rehydrationContext.incomingBackgroundQueries.push(options);
+      if (
+        options.fetchPolicy !== "cache-only" &&
+        options.fetchPolicy !== "standby"
+      ) {
+        this.rehydrationContext.incomingBackgroundQueries.push(options);
+      }
     }
     const result = super.watchQuery(options);
     return result;

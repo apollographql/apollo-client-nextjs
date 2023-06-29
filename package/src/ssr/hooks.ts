@@ -14,12 +14,13 @@ export const useFragment = wrap(orig_useFragment, [
   "complete",
   "missing",
 ]);
-export const useQuery = wrap(orig_useQuery, [
-  "data",
-  "loading",
-  "networkStatus",
-  "called",
-]);
+export const useQuery = wrap<typeof orig_useQuery>(
+  typeof window === "undefined"
+    ? (query, options) =>
+        orig_useQuery(query, { ...options, fetchPolicy: "cache-only" })
+    : orig_useQuery,
+  ["data", "loading", "networkStatus", "called"]
+);
 export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
   "data",
   "networkStatus",
