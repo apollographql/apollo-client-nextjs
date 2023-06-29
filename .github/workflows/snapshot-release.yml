@@ -9,6 +9,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
     if: |
       github.repository == 'apollographql/apollo-client-nextjs' &&
       github.event.issue.pull_request &&
