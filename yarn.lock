@@ -40,6 +40,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/client@npm:>=3.8.0-beta.4 || >=3.8.0-rc || ^3.8.0":
+  version: 3.8.0-beta.7
+  resolution: "@apollo/client@npm:3.8.0-beta.7"
+  dependencies:
+    "@graphql-typed-document-node/core": ^3.1.1
+    "@wry/context": ^0.7.3
+    "@wry/equality": ^0.5.6
+    "@wry/trie": ^0.4.3
+    graphql-tag: ^2.12.6
+    hoist-non-react-statics: ^3.3.2
+    optimism: ^0.17.4
+    prop-types: ^15.7.2
+    response-iterator: ^0.2.6
+    symbol-observable: ^4.0.0
+    ts-invariant: ^0.10.3
+    tslib: ^2.3.0
+    zen-observable-ts: ^1.2.5
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    graphql-ws: ^5.5.5
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
+  peerDependenciesMeta:
+    graphql-ws:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    subscriptions-transport-ws:
+      optional: true
+  checksum: c35ab14a089d286512244ea5ab0196754b38bb7a837c3052a21d50fd05c1df20b87ba17b6ad55e31872f3954a7ce38108fa2e3780b022f271907771ebe5c28be
+  languageName: node
+  linkType: hard
+
 "@apollo/client@npm:>=3.8.0-beta.4, @apollo/client@npm:^3.8.0-beta.4":
   version: 3.8.0-beta.4
   resolution: "@apollo/client@npm:3.8.0-beta.4"
@@ -80,7 +116,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.4"
+    "@apollo/client": ">=3.8.0-beta.4 || >=3.8.0-rc || ^3.8.0"
     "@total-typescript/shoehorn": ^0.1.0
     "@tsconfig/recommended": ^1.0.1
     "@typescript-eslint/eslint-plugin": latest
