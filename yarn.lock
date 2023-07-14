@@ -40,9 +40,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:>=3.8.0-beta.4 || >=3.8.0-rc || ^3.8.0":
-  version: 3.8.0-beta.7
-  resolution: "@apollo/client@npm:3.8.0-beta.7"
+"@apollo/client@npm:>=3.8.0-beta.4 || >=3.8.0-rc || ^3.8.0, @apollo/client@npm:>=3.8.0-rc.0, @apollo/client@npm:^3.8.0-rc.0":
+  version: 3.8.0-rc.0
+  resolution: "@apollo/client@npm:3.8.0-rc.0"
   dependencies:
     "@graphql-typed-document-node/core": ^3.1.1
     "@wry/context": ^0.7.3
@@ -50,7 +50,7 @@ __metadata:
     "@wry/trie": ^0.4.3
     graphql-tag: ^2.12.6
     hoist-non-react-statics: ^3.3.2
-    optimism: ^0.17.4
+    optimism: ^0.17.5
     prop-types: ^15.7.2
     response-iterator: ^0.2.6
     symbol-observable: ^4.0.0
@@ -72,43 +72,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: c35ab14a089d286512244ea5ab0196754b38bb7a837c3052a21d50fd05c1df20b87ba17b6ad55e31872f3954a7ce38108fa2e3780b022f271907771ebe5c28be
-  languageName: node
-  linkType: hard
-
-"@apollo/client@npm:>=3.8.0-beta.4, @apollo/client@npm:^3.8.0-beta.4":
-  version: 3.8.0-beta.4
-  resolution: "@apollo/client@npm:3.8.0-beta.4"
-  dependencies:
-    "@graphql-typed-document-node/core": ^3.1.1
-    "@wry/context": ^0.7.3
-    "@wry/equality": ^0.5.6
-    "@wry/trie": ^0.4.3
-    graphql-tag: ^2.12.6
-    hoist-non-react-statics: ^3.3.2
-    optimism: ^0.17.4
-    prop-types: ^15.7.2
-    response-iterator: ^0.2.6
-    symbol-observable: ^4.0.0
-    ts-invariant: ^0.10.3
-    tslib: ^2.3.0
-    zen-observable-ts: ^1.2.5
-  peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-    graphql-ws: ^5.5.5
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
-  peerDependenciesMeta:
-    graphql-ws:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    subscriptions-transport-ws:
-      optional: true
-  checksum: 37f0cb2c195096221f979095c09bc3e60866ac2476cedfebeb856c908e603f9ba25c812ca4e5321d5f985ad48456c95d677ed94530aedaf8260546956dd86cec
+  checksum: 32d5cfd7c38cdd54561c8e3778be1a5f82bc82000846331a198bb3442f135e219bc42dbd3c0b601fd221ccd7f4a0f03f3481e10a25b53487af584899958ceb28
   languageName: node
   linkType: hard
 
@@ -5012,7 +4976,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.4"
+    "@apollo/client": ">=3.8.0-rc.0"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": ^4.7.0
     "@as-integrations/next": ^1.3.0
@@ -5046,7 +5010,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.4"
+    "@apollo/client": ">=3.8.0-rc.0"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": ^4.6.0
     "@as-integrations/next": ^1.3.0
@@ -7887,7 +7851,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": ">=3.8.0-beta.4"
+    "@apollo/client": ">=3.8.0-rc.0"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": ^9.11.0
     "@chakra-ui/next-js": ^2.1.2
@@ -8200,7 +8164,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "integration-test@workspace:integration-test"
   dependencies:
-    "@apollo/client": ^3.8.0-beta.4
+    "@apollo/client": ^3.8.0-rc.0
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": ^4.7.5
     "@as-integrations/next": ^2.0.0
@@ -9779,7 +9743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"optimism@npm:^0.17.4":
+"optimism@npm:^0.17.5":
   version: 0.17.5
   resolution: "optimism@npm:0.17.5"
   dependencies:

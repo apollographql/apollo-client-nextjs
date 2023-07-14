@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { HttpLink, SuspenseCache } from "@apollo/client";
+import { HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
@@ -20,10 +20,7 @@ loadErrorMessages();
 
 export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
   return (
-    <ApolloNextAppProvider
-      makeClient={makeClient}
-      makeSuspenseCache={makeSuspenseCache}
-    >
+    <ApolloNextAppProvider makeClient={makeClient}>
       {children}
     </ApolloNextAppProvider>
   );
@@ -39,9 +36,5 @@ export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
         typeof window === "undefined" ? new SchemaLink({ schema }) : httpLink
       ),
     });
-  }
-
-  function makeSuspenseCache() {
-    return new SuspenseCache();
   }
 }

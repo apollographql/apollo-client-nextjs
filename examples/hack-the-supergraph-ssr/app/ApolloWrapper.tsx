@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ApolloLink, HttpLink, SuspenseCache } from "@apollo/client";
+import { ApolloLink, HttpLink } from "@apollo/client";
 import clientCookies from "js-cookie";
 import {
   ApolloNextAppProvider,
@@ -29,10 +29,7 @@ export function ApolloWrapper({
   delay: number;
 }>) {
   return (
-    <ApolloNextAppProvider
-      makeClient={makeClient}
-      makeSuspenseCache={makeSuspenseCache}
-    >
+    <ApolloNextAppProvider makeClient={makeClient}>
       {children}
     </ApolloNextAppProvider>
   );
@@ -75,9 +72,5 @@ export function ApolloWrapper({
       cache: new NextSSRInMemoryCache(),
       link,
     });
-  }
-
-  function makeSuspenseCache() {
-    return new SuspenseCache();
   }
 }
