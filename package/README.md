@@ -81,11 +81,7 @@ First, create a new file `app/ApolloWrapper.js`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import {
-  ApolloLink,
-  HttpLink,
-  SuspenseCache,
-} from "@apollo/client";
+import { ApolloLink, HttpLink, SuspenseCache } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
@@ -121,18 +117,10 @@ function makeClient() {
   });
 }
 
-// also have a function to create a suspense cache
-function makeSuspenseCache() {
-  return new SuspenseCache();
-}
-
 // you need to create a component to wrap your app in
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return (
-    <ApolloNextAppProvider
-      makeClient={makeClient}
-      makeSuspenseCache={makeSuspenseCache}
-    >
+    <ApolloNextAppProvider makeClient={makeClient}>
       {children}
     </ApolloNextAppProvider>
   );

@@ -44,7 +44,7 @@
   },
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
-    "@apollo/client": ">=3.8.0-beta.4 || >=3.8.0-rc || ^3.8.0",
+    "@apollo/client": ">=3.8.0-rc.0",
     "@total-typescript/shoehorn": "^0.1.0",
     "@tsconfig/recommended": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -59,7 +59,7 @@
     "vitest": "^0.30.1"
   },
   "peerDependencies": {
-    "@apollo/client": ">=3.8.0-beta.4 || >=3.8.0-rc || ^3.8.0",
+    "@apollo/client": ">=3.8.0-rc || ^3.8.0",
     "next": "^13.4.1",
     "react": "^18"
   },
