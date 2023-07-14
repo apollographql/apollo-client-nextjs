@@ -16,12 +16,19 @@ import {
   ApolloBackgroundQueryTransport,
   ApolloResultCache,
 } from "./ApolloRehydrateSymbols";
+import invariant from "ts-invariant";
 
 function getQueryManager<TCacheShape>(
   client: ApolloClient<unknown>
 ): QueryManager<TCacheShape> {
   return client["queryManager"];
 }
+
+type SimulatedQueryInfo = {
+  resolve: (result: FetchResult) => void;
+  reject: (reason: any) => void;
+  options: WatchQueryOptions<OperationVariables, any>;
+};
 
 export class NextSSRApolloClient<
   TCacheShape
@@ -39,10 +46,7 @@ export class NextSSRApolloClient<
     this.registerWindowHook();
   }
 
-  private resolveFakeQueries = new Map<
-    string,
-    [(result: FetchResult) => void, (reason: any) => void]
-  >();
+  private simulatedStreamingQueries = new Map<string, SimulatedQueryInfo>();
 
   private identifyUniqueQuery(options: {
     query: DocumentNode;
@@ -73,6 +77,9 @@ export class NextSSRApolloClient<
         registerLateInitializingQueue(
           ApolloBackgroundQueryTransport,
           (options) => {
+            // we are not streaming anymore, so we should not simulate "server-side requests"
+            if (document.readyState === "complete") return;
+
             const { query, varJson, cacheKey } =
               this.identifyUniqueQuery(options);
 
@@ -90,10 +97,7 @@ export class NextSSRApolloClient<
             );
 
             if (!byVariables.has(varJson)) {
-              let resolveFakeQuery: [
-                  (result: FetchResult) => void,
-                  (reason: any) => void
-                ],
+              let simulatedStreamingQuery: SimulatedQueryInfo,
                 observable: Observable<FetchResult>,
                 fetchCancelFn: (reason: unknown) => void;
 
@@ -106,14 +110,17 @@ export class NextSSRApolloClient<
                 if (byVariables.get(varJson) === observable)
                   byVariables.delete(varJson);
 
-                if (this.resolveFakeQueries.get(cacheKey) === resolveFakeQuery)
-                  this.resolveFakeQueries.delete(cacheKey);
+                if (
+                  this.simulatedStreamingQueries.get(cacheKey) ===
+                  simulatedStreamingQuery
+                )
+                  this.simulatedStreamingQueries.delete(cacheKey);
               };
 
               const promise = new Promise<FetchResult>((resolve, reject) => {
-                this.resolveFakeQueries.set(
+                this.simulatedStreamingQueries.set(
                   cacheKey,
-                  (resolveFakeQuery = [resolve, reject])
+                  (simulatedStreamingQuery = { resolve, reject, options })
                 );
               });
 
@@ -135,8 +142,8 @@ export class NextSSRApolloClient<
               queryManager["fetchCancelFns"].set(
                 cacheKey,
                 (fetchCancelFn = (reason: unknown) => {
-                  const [_, reject] =
-                    this.resolveFakeQueries.get(cacheKey) ?? [];
+                  const { reject } =
+                    this.simulatedStreamingQueries.get(cacheKey) ?? {};
                   if (reject) {
                     reject(reason);
                   }
@@ -146,12 +153,44 @@ export class NextSSRApolloClient<
             }
           }
         );
+        if (document.readyState !== "complete") {
+          const rerunSimulatedQueries = () => {
+            const queryManager = getQueryManager(this);
+            // streaming finished, so we need to refire all "server-side requests"
+            // that are still not resolved on the browser side to make sure we have all the data
+            for (const [cacheKey, queryInfo] of this
+              .simulatedStreamingQueries) {
+              this.simulatedStreamingQueries.delete(cacheKey);
+              invariant.debug(
+                "streaming connection closed before server query could be fully transported, rerunning:",
+                queryInfo.options
+              );
+              const queryId = queryManager.generateQueryId();
+              queryManager
+                .fetchQuery(queryId, {
+                  ...queryInfo.options,
+                  context: {
+                    ...queryInfo.options.context,
+                    queryDeduplication: false,
+                  },
+                })
+                .finally(() => queryManager.stopQuery(queryId))
+                .then(queryInfo.resolve, queryInfo.reject);
+            }
+          };
+          // happens simulatenously to `readyState` changing to `"complete"`, see
+          // https://html.spec.whatwg.org/multipage/parsing.html#the-end (step 9.1 and 9.5)
+          window.addEventListener("load", rerunSimulatedQueries, {
+            once: true,
+          });
+        }
       }
 
       if (Array.isArray(window[ApolloResultCache] || [])) {
         registerLateInitializingQueue(ApolloResultCache, (data) => {
           const { cacheKey } = this.identifyUniqueQuery(data);
-          const [resolve] = this.resolveFakeQueries.get(cacheKey) ?? [];
+          const { resolve } =
+            this.simulatedStreamingQueries.get(cacheKey) ?? {};
 
           if (resolve) {
             resolve({
