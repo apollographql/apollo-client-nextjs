@@ -81,7 +81,7 @@ First, create a new file `app/ApolloWrapper.js`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import { ApolloLink, HttpLink, SuspenseCache } from "@apollo/client";
+import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
