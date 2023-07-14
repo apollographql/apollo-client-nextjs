@@ -9,7 +9,7 @@
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.  
 
-> ❗️ This package depends on Apollo Client 3.8, which is currently a beta release. 
+> ❗️ This package depends on Apollo Client 3.8, which is currently an rc release.
 
 ## Detailed technical breakdown
 
@@ -31,10 +31,10 @@ This package provides the tools necessary to execute your GraphQL queries on the
 
 ## Installation
 
-This package has a peer dependency on the latest beta of `@apollo/client`, so you can install both this package and that Apollo Client version via
+This package has a peer dependency on the latest rc of `@apollo/client`, so you can install both this package and that Apollo Client version via
 
 ```sh
-npm install @apollo/client@beta @apollo/experimental-nextjs-app-support
+npm install @apollo/client@rc @apollo/experimental-nextjs-app-support
 ```
 
 ## Usage
