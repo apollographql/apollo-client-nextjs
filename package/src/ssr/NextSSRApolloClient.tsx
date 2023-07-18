@@ -90,15 +90,36 @@ export class NextSSRApolloClient<
             );
 
             if (!byVariables.has(varJson)) {
+              let resolveFakeQuery: [
+                  (result: FetchResult) => void,
+                  (reason: any) => void
+                ],
+                observable: Observable<FetchResult>,
+                fetchCancelFn: (reason: unknown) => void;
+
+              const cleanup = () => {
+                if (
+                  queryManager["fetchCancelFns"].get(cacheKey) === fetchCancelFn
+                )
+                  queryManager["fetchCancelFns"].delete(cacheKey);
+
+                if (byVariables.get(varJson) === observable)
+                  byVariables.delete(varJson);
+
+                if (this.resolveFakeQueries.get(cacheKey) === resolveFakeQuery)
+                  this.resolveFakeQueries.delete(cacheKey);
+              };
+
               const promise = new Promise<FetchResult>((resolve, reject) => {
-                this.resolveFakeQueries.set(cacheKey, [resolve, reject]);
+                this.resolveFakeQueries.set(
+                  cacheKey,
+                  (resolveFakeQuery = [resolve, reject])
+                );
               });
-              const cleanupCancelFn = () =>
-                queryManager["fetchCancelFns"].delete(cacheKey);
 
               byVariables.set(
                 varJson,
-                new Observable<FetchResult>((observer) => {
+                (observable = new Observable<FetchResult>((observer) => {
                   promise
                     .then((result) => {
                       observer.next(result);
@@ -107,23 +128,20 @@ export class NextSSRApolloClient<
                     .catch((err) => {
                       observer.error(err);
                     })
-                    .finally(() => {
-                      this.resolveFakeQueries.delete(cacheKey);
-                      cleanupCancelFn();
-                    });
-                })
+                    .finally(cleanup);
+                }))
               );
 
               queryManager["fetchCancelFns"].set(
                 cacheKey,
-                (reason: unknown) => {
-                  cleanupCancelFn();
+                (fetchCancelFn = (reason: unknown) => {
                   const [_, reject] =
                     this.resolveFakeQueries.get(cacheKey) ?? [];
                   if (reject) {
                     reject(reason);
                   }
-                }
+                  cleanup();
+                })
               );
             }
           }
