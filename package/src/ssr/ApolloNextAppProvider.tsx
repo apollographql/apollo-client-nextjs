@@ -8,7 +8,9 @@ import {
 import { RehydrationContextProvider } from "./RehydrationContext";
 
 export const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
-export const SuspenseCacheSingleton = Symbol.for("ApolloSuspenseCacheSingleton");
+export const SuspenseCacheSingleton = Symbol.for(
+  "ApolloSuspenseCacheSingleton"
+);
 
 declare global {
   interface Window {
@@ -43,6 +45,8 @@ export const ApolloNextAppProvider = ({
   return (
     <_ApolloProvider
       client={clientRef.current}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore This is there in the betas and gone in the RC. Will be removed next version.
       suspenseCache={suspenseCacheRef.current}
     >
       <RehydrationContextProvider>{children}</RehydrationContextProvider>
