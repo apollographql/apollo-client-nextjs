@@ -11,7 +11,7 @@ function assertRSC(
   }
 }
 
-export function registerApolloClient(makeClient: () => ApolloClient<any>) {
+export function registerApolloClient<Args extends any[] = any[]>(makeClient: (...args: Args) => ApolloClient<any>) {
   assertRSC(React);
   const getClient = React.cache(makeClient);
   return {

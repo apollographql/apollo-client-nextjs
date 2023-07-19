@@ -71,6 +71,17 @@ You can then use that `getClient` function in your server components:
 const { data } = await getClient().query({ query: userQuery });
 ```
 
+#### Multiple clients
+
+If you need to manage multiple clients, for example if you have different endpoints for content previews,
+the function you pass to `registerApolloClient` can accept arbitrary arguments.
+If you're using Typescript, you can hint their types as a tuple:
+
+```ts
+export const { getClient } = registerApolloClient<[string | null]>((previewToken: string | null) => {
+  ...
+});
+
 ### In SSR
 
 If you use the `app` directory, each Client Component _will_ be SSR-rendered for the initial request. So you will need to use this package.
