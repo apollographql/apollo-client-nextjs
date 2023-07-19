@@ -79,7 +79,7 @@ If you're using Typescript, you can hint their types as a tuple:
 
 ```ts
 export const { getClient } = registerApolloClient<[string | null]>((previewToken: string | null) => {
-  ...
+  // ...
 });
 
 ### In SSR
