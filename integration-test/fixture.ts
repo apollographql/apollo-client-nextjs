@@ -23,7 +23,6 @@ expect.extend({
 });
 
 export const test = base.extend<{
-  withHar: import("@playwright/test").Page;
   blockRequest: import("@playwright/test").Page;
 }>({
   page: async ({ page }, use) => {
