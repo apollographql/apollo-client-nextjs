@@ -75,7 +75,7 @@ const { data } = await getClient().query({ query: userQuery });
 
 If you use the `app` directory, each Client Component _will_ be SSR-rendered for the initial request. So you will need to use this package.
 
-First, create a new file `app/ApolloWrapper.js`:
+First, create a new file `app/ApolloWrapper.jsx`:
 
 ```js
 "use client";

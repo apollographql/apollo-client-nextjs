@@ -41,7 +41,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn workspace @apollo/experimental-nextjs-app-support version "0.0.0-commit-$(git rev-parse --short HEAD)"
-      - run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public  --provenance
+      - run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
