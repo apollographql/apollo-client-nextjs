@@ -124,6 +124,7 @@ export class NextSSRApolloClient<
                 );
               });
 
+              promise.finally(cleanup);
               byVariables.set(
                 varJson,
                 (observable = new Observable<FetchResult>((observer) => {
@@ -134,8 +135,7 @@ export class NextSSRApolloClient<
                     })
                     .catch((err) => {
                       observer.error(err);
-                    })
-                    .finally(cleanup);
+                    });
                 }))
               );
 
