@@ -8,5 +8,8 @@
   ],
   "dependencies": {
     "prettier": "^2.8.4"
+  },
+  "resolutions": {
+    "app-router-apollo-bundle-size": "portal:/Users/mvandergrift/Projects/app-router-apollo-bundle-size"
   }
 }

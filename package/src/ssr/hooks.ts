@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import {
   useFragment as orig_useFragment,
   useSuspenseQuery as orig_useSuspenseQuery,
@@ -27,7 +27,7 @@ export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
 ]);
 export const useReadQuery = wrap(orig_useReadQuery, ["data", "networkStatus"]);
 
-export const useBackgroundQuery: typeof orig_useBackgroundQuery = (...args: [any, any]) => {
+export const useBackgroundQuery = (...args: [any, any]) => {
   useRehydrationContext();
   return orig_useBackgroundQuery(...args);
 };
