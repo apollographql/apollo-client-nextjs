@@ -6,6 +6,7 @@
     "declaration": true,
     "sourceMap": true,
     "jsx": "react",
-    "declarationMap": true
+    "declarationMap": true,
+    "types": ["react/canary"]
   }
 }
