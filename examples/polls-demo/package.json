@@ -27,7 +27,7 @@
     "eslint-config-next": "13.3.4",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
-    "next": "^13.4.4",
+    "next": "^13.5.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
