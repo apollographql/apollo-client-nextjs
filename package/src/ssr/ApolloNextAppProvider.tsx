@@ -24,8 +24,8 @@ export const ApolloNextAppProvider = ({
   const clientRef = React.useRef<ApolloClient<any>>();
   const indexRef = React.useRef<string>(clientIndex);
   
-  console.log("clientIndex", indexRef.current);
-
+  console.log("clientIndex", indexRef.current, "hi", clientIndex);
+  
   if (typeof window !== "undefined") {
     clientRef.current = window[ApolloClientSingleton] ??= makeClient();
   } else {
