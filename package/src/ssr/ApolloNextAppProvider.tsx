@@ -15,19 +15,26 @@ declare global {
 }
 export const ApolloNextAppProvider = ({
   makeClient,
+  clientIndex,
   children,
 }: React.PropsWithChildren<{
   makeClient: () => ApolloClient<any>;
+  clientIndex: string
 }>) => {
   const clientRef = React.useRef<ApolloClient<any>>();
+  const indexRef = React.useRef<string>(clientIndex);
+  
+  console.log("clientIndex", indexRef.current);
 
   if (typeof window !== "undefined") {
     clientRef.current = window[ApolloClientSingleton] ??= makeClient();
   } else {
-    if (!clientRef.current) {
+    if (!clientRef.current || indexRef.current !== clientIndex) {
       clientRef.current = makeClient();
+      indexRef.current = clientIndex;
     }
   }
+
 
   return (
     <_ApolloProvider client={clientRef.current}>
