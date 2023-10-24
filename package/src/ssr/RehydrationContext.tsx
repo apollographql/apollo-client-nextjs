@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import React from "react";
 import { NextSSRInMemoryCache } from "./NextSSRInMemoryCache";
-import { ServerInsertedHTMLContext } from "next/navigation";
+import { ServerHtmlContext } from "@redwoodjs/web";
 import { RehydrationContextValue } from "./types";
 import { registerDataTransport, transportDataToJS } from "./dataTransport";
 import invariant from "ts-invariant";
@@ -46,7 +46,7 @@ export const RehydrationContextProvider = ({
 
 export function useRehydrationContext(): RehydrationContextValue | undefined {
   const rehydrationContext = React.useContext(ApolloRehydrationContext);
-  const insertHtml = React.useContext(ServerInsertedHTMLContext);
+	const insertHtml = React.useContext(ServerHtmlContext);
 
   // help transpilers to omit this code in bundling
   if (typeof window !== "undefined") return;
