@@ -22,15 +22,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/cache-control-types@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@apollo/cache-control-types@npm:1.0.2"
-  peerDependencies:
-    graphql: 14.x || 15.x || 16.x
-  checksum: 1e00c57b45fbd8656c96cdcd254658f332c1955bd8db9274c665e1c6ef8ac881a6b6a3f953b60638ae5f59fdfce6b005adb9a5b945b694903579a9665499e823
-  languageName: node
-  linkType: hard
-
 "@apollo/cache-control-types@npm:^1.0.3":
   version: 1.0.3
   resolution: "@apollo/cache-control-types@npm:1.0.3"
@@ -40,9 +31,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:>=3.8.0-rc.1":
-  version: 3.8.0-rc.1
-  resolution: "@apollo/client@npm:3.8.0-rc.1"
+"@apollo/client@npm:^3.8.6":
+  version: 3.8.6
+  resolution: "@apollo/client@npm:3.8.6"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/context": "npm:^0.7.3"
@@ -72,7 +63,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 6821c0076f386604dc89dd2c2b98557978d0647c9467c247f10bf8b6cf9c2264e7d0086c3014ff75087833d50194f7c6ab96a9caad9b002149ea837063825d82
+  checksum: 497aa3a49eb6377066492989ac7c21611fa512ee965af20d3d8307b13b96eabba14e8718d75c2aefa9457713cfdc72ed43c0b0e7890a777a57d9b5eff8712572
   languageName: node
   linkType: hard
 
@@ -80,14 +71,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": "npm:>=3.8.0-rc.1"
-    "@total-typescript/shoehorn": "npm:^0.1.0"
-    "@tsconfig/recommended": "npm:^1.0.1"
+    "@apollo/client": "npm:^3.8.6"
+    "@total-typescript/shoehorn": "npm:^0.1.1"
+    "@tsconfig/recommended": "npm:^1.0.3"
     "@typescript-eslint/eslint-plugin": "npm:latest"
     "@typescript-eslint/parser": "npm:latest"
     eslint: "npm:latest"
     eslint-plugin-react: "npm:latest"
-    next: "npm:^13.5.1"
+    next: "npm:^14.0.0"
     react: "npm:^18.2.0"
     rimraf: "npm:^5.0.0"
     server-only: "npm:^0.0.1"
@@ -98,7 +89,7 @@ __metadata:
     vitest: "npm:^0.30.1"
   peerDependencies:
     "@apollo/client": ">=3.8.0-rc || ^3.8.0"
-    next: ^13.4.1
+    next: ^13.4.1 || ^14.0.0
     react: ^18
   languageName: unknown
   linkType: soft
@@ -126,20 +117,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/server-gateway-interface@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@apollo/server-gateway-interface@npm:1.1.0"
-  dependencies:
-    "@apollo/usage-reporting-protobuf": "npm:^4.0.0"
-    "@apollo/utils.fetcher": "npm:^2.0.0"
-    "@apollo/utils.keyvaluecache": "npm:^2.1.0"
-    "@apollo/utils.logger": "npm:^2.0.0"
-  peerDependencies:
-    graphql: 14.x || 15.x || 16.x
-  checksum: 0ad0b3b9dfb53cc664245acac638b3a3db0d56c496c8bf6c56928a92c21e9b3062bec47bd42c2c0f85a4469443467b245c772bb558c2733c1c0dde194722c82b
-  languageName: node
-  linkType: hard
-
 "@apollo/server-gateway-interface@npm:^1.1.1":
   version: 1.1.1
   resolution: "@apollo/server-gateway-interface@npm:1.1.1"
@@ -154,81 +131,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/server@npm:^4.6.0":
-  version: 4.6.0
-  resolution: "@apollo/server@npm:4.6.0"
-  dependencies:
-    "@apollo/cache-control-types": "npm:^1.0.2"
-    "@apollo/server-gateway-interface": "npm:^1.1.0"
-    "@apollo/usage-reporting-protobuf": "npm:^4.1.0"
-    "@apollo/utils.createhash": "npm:^2.0.0"
-    "@apollo/utils.fetcher": "npm:^2.0.0"
-    "@apollo/utils.isnodelike": "npm:^2.0.0"
-    "@apollo/utils.keyvaluecache": "npm:^2.1.0"
-    "@apollo/utils.logger": "npm:^2.0.0"
-    "@apollo/utils.usagereporting": "npm:^2.0.0"
-    "@apollo/utils.withrequired": "npm:^2.0.0"
-    "@graphql-tools/schema": "npm:^9.0.0"
-    "@josephg/resolvable": "npm:^1.0.0"
-    "@types/express": "npm:^4.17.13"
-    "@types/express-serve-static-core": "npm:^4.17.30"
-    "@types/node-fetch": "npm:^2.6.1"
-    async-retry: "npm:^1.2.1"
-    body-parser: "npm:^1.20.0"
-    cors: "npm:^2.8.5"
-    express: "npm:^4.17.1"
-    loglevel: "npm:^1.6.8"
-    lru-cache: "npm:^7.10.1"
-    negotiator: "npm:^0.6.3"
-    node-abort-controller: "npm:^3.1.1"
-    node-fetch: "npm:^2.6.7"
-    uuid: "npm:^9.0.0"
-    whatwg-mimetype: "npm:^3.0.0"
-  peerDependencies:
-    graphql: ^16.6.0
-  checksum: aa01b522a8c6cf05b711693960cd9150629a7da603d44d47c77e22d34349154155f721b7e785ba5528a1e7430c5b6c074cb1a7134cc5db03e8c666e71509097e
-  languageName: node
-  linkType: hard
-
-"@apollo/server@npm:^4.7.0":
-  version: 4.7.0
-  resolution: "@apollo/server@npm:4.7.0"
-  dependencies:
-    "@apollo/cache-control-types": "npm:^1.0.2"
-    "@apollo/server-gateway-interface": "npm:^1.1.0"
-    "@apollo/usage-reporting-protobuf": "npm:^4.1.0"
-    "@apollo/utils.createhash": "npm:^2.0.0"
-    "@apollo/utils.fetcher": "npm:^2.0.0"
-    "@apollo/utils.isnodelike": "npm:^2.0.0"
-    "@apollo/utils.keyvaluecache": "npm:^2.1.0"
-    "@apollo/utils.logger": "npm:^2.0.0"
-    "@apollo/utils.usagereporting": "npm:^2.0.0"
-    "@apollo/utils.withrequired": "npm:^2.0.0"
-    "@graphql-tools/schema": "npm:^9.0.0"
-    "@josephg/resolvable": "npm:^1.0.0"
-    "@types/express": "npm:^4.17.13"
-    "@types/express-serve-static-core": "npm:^4.17.30"
-    "@types/node-fetch": "npm:^2.6.1"
-    async-retry: "npm:^1.2.1"
-    body-parser: "npm:^1.20.0"
-    cors: "npm:^2.8.5"
-    express: "npm:^4.17.1"
-    loglevel: "npm:^1.6.8"
-    lru-cache: "npm:^7.10.1"
-    negotiator: "npm:^0.6.3"
-    node-abort-controller: "npm:^3.1.1"
-    node-fetch: "npm:^2.6.7"
-    uuid: "npm:^9.0.0"
-    whatwg-mimetype: "npm:^3.0.0"
-  peerDependencies:
-    graphql: ^16.6.0
-  checksum: 89e75ca80d1f039aa43e7d97054d8c453f9319d9ec986933dec0d5c65aa9d40549aecde42055cff6ed700a05c2e6ce423cf60f3c7b471920377932ecfdac76e7
-  languageName: node
-  linkType: hard
-
-"@apollo/server@npm:^4.7.5":
-  version: 4.7.5
-  resolution: "@apollo/server@npm:4.7.5"
+"@apollo/server@npm:^4.9.5":
+  version: 4.9.5
+  resolution: "@apollo/server@npm:4.9.5"
   dependencies:
     "@apollo/cache-control-types": "npm:^1.0.3"
     "@apollo/server-gateway-interface": "npm:^1.1.1"
@@ -258,7 +163,7 @@ __metadata:
     whatwg-mimetype: "npm:^3.0.0"
   peerDependencies:
     graphql: ^16.6.0
-  checksum: 65c7eb9c01a59feb0e7390b38676d885f872c6a04c7a5f313ac0ed9bbf38354a2e6ca1c932635576baa000ead81397ca85ec6edbd1d32d17c6e42bd47c20ba78
+  checksum: 68074b743a26e15bff06903ec0a1b6c0b0536ff69c4949818e8d64b8f027da4053967806076dfe793d8828fdf706b988939d74cade8a551e33d13da1bb29500a
   languageName: node
   linkType: hard
 
@@ -293,7 +198,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/usage-reporting-protobuf@npm:^4.0.0, @apollo/usage-reporting-protobuf@npm:^4.1.0":
+"@apollo/usage-reporting-protobuf@npm:^4.1.0":
   version: 4.1.0
   resolution: "@apollo/usage-reporting-protobuf@npm:4.1.0"
   dependencies:
@@ -399,22 +304,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/utils.usagereporting@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "@apollo/utils.usagereporting@npm:2.0.1"
-  dependencies:
-    "@apollo/usage-reporting-protobuf": "npm:^4.0.0"
-    "@apollo/utils.dropunuseddefinitions": "npm:^2.0.1"
-    "@apollo/utils.printwithreducedwhitespace": "npm:^2.0.1"
-    "@apollo/utils.removealiases": "npm:2.0.1"
-    "@apollo/utils.sortast": "npm:^2.0.1"
-    "@apollo/utils.stripsensitiveliterals": "npm:^2.0.1"
-  peerDependencies:
-    graphql: 14.x || 15.x || 16.x
-  checksum: cf60f47a169af981d6eec40563797f204dcdb60532efd7bdba753aa0deb52e60b8ba3123cb06a9afe8966992a98854265a98b45d2f4217b7f494ab9fb1a3a850
-  languageName: node
-  linkType: hard
-
 "@apollo/utils.usagereporting@npm:^2.1.0":
   version: 2.1.0
   resolution: "@apollo/utils.usagereporting@npm:2.1.0"
@@ -486,13 +375,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@as-integrations/next@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@as-integrations/next@npm:2.0.0"
+"@as-integrations/next@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@as-integrations/next@npm:2.0.2"
   peerDependencies:
     "@apollo/server": ^4.0.0
     next: ^12.0.0 || ^13.0.0
-  checksum: d18c8703fa78b0ca2dc435fb4a0b11391dc24ae7f477211648e50e2149d07450b5f04bbc9eaef30376cc57321c6d0c6d90eb25a2d4b73ce57ac243f3d2d71103
+  checksum: 8c1331592155f4b785ac72f5032796a55a75038de374cd00c0bf745462a20519e87b84850eafd7d48ede2e3df9f309211cbeae6ca3d170e820227ede9f334a78
   languageName: node
   linkType: hard
 
@@ -3611,10 +3500,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/env@npm:13.5.1"
-  checksum: 5506d6094aca7a22d9072e7cc3b69c918777f6f2e7dddd2eb6465d1a0f389e57acc2f9e52acebd47a93bbc1eedc5224f25dabbd3ea0d20528a9b095468005c46
+"@next/env@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/env@npm:14.0.0"
+  checksum: 50d906fa92f32755dba45ac3b330fdacd9bfba31e836586c15f75e34dc01ef414da871554de94f7e2f1e056fd426a010df4a0b948a8547242fd031f3fbd4571f
   languageName: node
   linkType: hard
 
@@ -3645,65 +3534,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-darwin-arm64@npm:13.5.1"
+"@next/swc-darwin-arm64@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-darwin-arm64@npm:14.0.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-darwin-x64@npm:13.5.1"
+"@next/swc-darwin-x64@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-darwin-x64@npm:14.0.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.5.1"
+"@next/swc-linux-arm64-gnu@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-linux-arm64-gnu@npm:14.0.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-linux-arm64-musl@npm:13.5.1"
+"@next/swc-linux-arm64-musl@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-linux-arm64-musl@npm:14.0.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-linux-x64-gnu@npm:13.5.1"
+"@next/swc-linux-x64-gnu@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-linux-x64-gnu@npm:14.0.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-linux-x64-musl@npm:13.5.1"
+"@next/swc-linux-x64-musl@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-linux-x64-musl@npm:14.0.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.5.1"
+"@next/swc-win32-arm64-msvc@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-win32-arm64-msvc@npm:14.0.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.5.1"
+"@next/swc-win32-ia32-msvc@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-win32-ia32-msvc@npm:14.0.0"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/swc-win32-x64-msvc@npm:13.5.1"
+"@next/swc-win32-x64-msvc@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@next/swc-win32-x64-msvc@npm:14.0.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3822,19 +3711,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.35.1":
-  version: 1.35.1
-  resolution: "@playwright/test@npm:1.35.1"
+"@playwright/test@npm:^1.39.0":
+  version: 1.39.0
+  resolution: "@playwright/test@npm:1.39.0"
   dependencies:
-    "@types/node": "npm:*"
-    fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.35.1"
-  dependenciesMeta:
-    fsevents:
-      optional: true
+    playwright: "npm:1.39.0"
   bin:
     playwright: cli.js
-  checksum: ae5323fbc1e2a346d66dee1d0e4f3cb706bb2f2f6e611e4365138830c544c0f97c76ed86642f7466db26c2aae17d39979d2c03993f12cd0ef2d9a905bf64fbbb
+  checksum: 5d039234609395f3eab46b5954b259bdd80dacf79efe531369c1633647dcafce25a78d497e61e671d661274bf66076426a1bd46be585c44addf23bb5bfaa15a2
   languageName: node
   linkType: hard
 
@@ -4128,10 +4012,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@total-typescript/shoehorn@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@total-typescript/shoehorn@npm:0.1.0"
-  checksum: dd5642a81bfd976b8cc68845375d2d95241d5aed7f15761e800c3dc3d17124c8fe1756ba16748f5471f9240474726f6203cd45198a3f62ff6c63b9a416c51fcc
+"@total-typescript/shoehorn@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@total-typescript/shoehorn@npm:0.1.1"
+  checksum: 33236ebd524a8dd0633f50642cb4d558595b0be2a4edf0899b69356d4e559b91e1362e21b7bcb6628fa281dfbdf659791447e5979870547862d1fcd4b7996ac6
   languageName: node
   linkType: hard
 
@@ -4163,10 +4047,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/recommended@npm:^1.0.1":
-  version: 1.0.2
-  resolution: "@tsconfig/recommended@npm:1.0.2"
-  checksum: 8dab26157fc9748ff2d090b95f4dbe2aeb592dbdcf90f373f712da5ac54ff24f66193e7ee68fdc45880e7f767cfeb339ef3e9970ca59608ef93225db047f0d16
+"@tsconfig/recommended@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@tsconfig/recommended@npm:1.0.3"
+  checksum: cf2bf93d419e28b98ac82d9587035daf7dc1e0ef9b8db873a7962967d8744df352ebd2986b046911889e989d4f2caec3bf5826a4c8a4b61572d03329fdc56b34
   languageName: node
   linkType: hard
 
@@ -4907,9 +4791,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": "npm:>=3.8.0-rc.1"
+    "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
-    "@apollo/server": "npm:^4.7.0"
+    "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^1.3.0"
     "@graphql-codegen/cli": "npm:3.3.1"
     "@graphql-codegen/client-preset": "npm:3.0.1"
@@ -4928,7 +4812,7 @@ __metadata:
     eslint-config-next: "npm:13.3.4"
     graphql: "npm:^16.6.0"
     graphql-tag: "npm:^2.12.6"
-    next: "npm:^13.5.1"
+    next: "npm:^14.0.0"
     postcss: "npm:8.4.23"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
@@ -4941,9 +4825,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": "npm:>=3.8.0-rc.1"
+    "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
-    "@apollo/server": "npm:^4.6.0"
+    "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^1.3.0"
     "@types/node": "npm:18.15.3"
     "@types/react": "npm:^18.2.14"
@@ -4954,7 +4838,7 @@ __metadata:
     eslint-config-next: "npm:13.2.4"
     graphql: "npm:^16.6.0"
     html-differ: "npm:^1.4.0"
-    next: "npm:^13.5.1"
+    next: "npm:^14.0.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     server-only: "npm:^0.0.1"
@@ -7782,7 +7666,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:>=3.8.0-rc.1"
+    "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"
@@ -7798,7 +7682,7 @@ __metadata:
     framer-motion: "npm:^10.12.2"
     graphql: "npm:^16.6.0"
     js-cookie: "npm:^3.0.1"
-    next: "npm:^13.5.1"
+    next: "npm:^14.0.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     react-icons: "npm:^4.8.0"
@@ -8095,18 +7979,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "integration-test@workspace:integration-test"
   dependencies:
-    "@apollo/client": "npm:>=3.8.0-rc.1"
+    "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
-    "@apollo/server": "npm:^4.7.5"
-    "@as-integrations/next": "npm:^2.0.0"
+    "@apollo/server": "npm:^4.9.5"
+    "@as-integrations/next": "npm:^2.0.2"
     "@graphql-tools/schema": "npm:^10.0.0"
-    "@playwright/test": "npm:^1.35.1"
+    "@playwright/test": "npm:^1.39.0"
     "@types/node": "npm:20.3.1"
     "@types/react": "npm:^18.2.14"
     "@types/react-dom": "npm:18.2.6"
     graphql: "npm:^16.7.1"
     graphql-tag: "npm:^2.12.6"
-    next: "npm:^13.5.1"
+    next: "npm:^14.0.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     typescript: "npm:5.1.3"
@@ -9274,27 +9158,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^13.5.1":
-  version: 13.5.1
-  resolution: "next@npm:13.5.1"
+"next@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "next@npm:14.0.0"
   dependencies:
-    "@next/env": "npm:13.5.1"
-    "@next/swc-darwin-arm64": "npm:13.5.1"
-    "@next/swc-darwin-x64": "npm:13.5.1"
-    "@next/swc-linux-arm64-gnu": "npm:13.5.1"
-    "@next/swc-linux-arm64-musl": "npm:13.5.1"
-    "@next/swc-linux-x64-gnu": "npm:13.5.1"
-    "@next/swc-linux-x64-musl": "npm:13.5.1"
-    "@next/swc-win32-arm64-msvc": "npm:13.5.1"
-    "@next/swc-win32-ia32-msvc": "npm:13.5.1"
-    "@next/swc-win32-x64-msvc": "npm:13.5.1"
+    "@next/env": "npm:14.0.0"
+    "@next/swc-darwin-arm64": "npm:14.0.0"
+    "@next/swc-darwin-x64": "npm:14.0.0"
+    "@next/swc-linux-arm64-gnu": "npm:14.0.0"
+    "@next/swc-linux-arm64-musl": "npm:14.0.0"
+    "@next/swc-linux-x64-gnu": "npm:14.0.0"
+    "@next/swc-linux-x64-musl": "npm:14.0.0"
+    "@next/swc-win32-arm64-msvc": "npm:14.0.0"
+    "@next/swc-win32-ia32-msvc": "npm:14.0.0"
+    "@next/swc-win32-x64-msvc": "npm:14.0.0"
     "@swc/helpers": "npm:0.5.2"
     busboy: "npm:1.6.0"
     caniuse-lite: "npm:^1.0.30001406"
-    postcss: "npm:8.4.14"
+    postcss: "npm:8.4.31"
     styled-jsx: "npm:5.1.1"
     watchpack: "npm:2.4.0"
-    zod: "npm:3.21.4"
   peerDependencies:
     "@opentelemetry/api": ^1.1.0
     react: ^18.2.0
@@ -9326,7 +9209,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 82925c49c517775e8182fdec61072a1856c6a5918a2a3f701d4b73e4023956a309d4c52c118409bb84273849ece176d4d5da2f79aaf7daf2c8a97461a4bf4ef1
+  checksum: 9db732496c40cb9de3d7d42031c6c392ca821bb3385afce059fbccffefcd04e49f610a099720c05459db846990e11085fe9dfad1356eb0dc3d62d8c2b30c8973
   languageName: node
   linkType: hard
 
@@ -9920,12 +9803,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.35.1":
-  version: 1.35.1
-  resolution: "playwright-core@npm:1.35.1"
+"playwright-core@npm:1.39.0":
+  version: 1.39.0
+  resolution: "playwright-core@npm:1.39.0"
   bin:
     playwright-core: cli.js
-  checksum: eaf4691c8f699adf5e08c4dda67a8da7215246371261c18473a23276f3fb87b774152a69ae938dd467f9e4f0caf9cf35ea23bada579eee4f18b1a3b20de7cf41
+  checksum: e4e01ddea024c7564bbfacdba5f545b004a4017b466af08ae90e5184da4f5bc61e74c96e37cc5e30b7d4f97341c0883cfb2038c8cfbfab65316d714f65b82d83
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.39.0":
+  version: 1.39.0
+  resolution: "playwright@npm:1.39.0"
+  dependencies:
+    fsevents: "npm:2.3.2"
+    playwright-core: "npm:1.39.0"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 6f6b2f4381fccfbc560c4cd25e164f5093fec4e2046990587282e18618151d723b299b56c16741ce08e44a759c22e38c3e705b716d31238320e08e6ffcfa7319
   languageName: node
   linkType: hard
 
@@ -9999,17 +9897,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.14":
-  version: 8.4.14
-  resolution: "postcss@npm:8.4.14"
-  dependencies:
-    nanoid: "npm:^3.3.4"
-    picocolors: "npm:^1.0.0"
-    source-map-js: "npm:^1.0.2"
-  checksum: 1940e8d1da04a2ac3e518735ab3e9563e2255bfab14cecc8c11fee97b2a36ac5fee496bccfc7057aaae7ff3accae463cd800d746238cf691bd65a32dba5cb7be
-  languageName: node
-  linkType: hard
-
 "postcss@npm:8.4.23, postcss@npm:^8.4.23":
   version: 8.4.23
   resolution: "postcss@npm:8.4.23"
@@ -10018,6 +9905,17 @@ __metadata:
     picocolors: "npm:^1.0.0"
     source-map-js: "npm:^1.0.2"
   checksum: 4171086e54a90b5d9e7e043b3ea4acf5dce808f3501ebf7bf10caaff73f69a5c8d0dff7036752a648beb6317777d144af5b5b8b3ef9a84428630308735df07c2
+  languageName: node
+  linkType: hard
+
+"postcss@npm:8.4.31":
+  version: 8.4.31
+  resolution: "postcss@npm:8.4.31"
+  dependencies:
+    nanoid: "npm:^3.3.6"
+    picocolors: "npm:^1.0.0"
+    source-map-js: "npm:^1.0.2"
+  checksum: 1a6653e72105907377f9d4f2cd341d8d90e3fde823a5ddea1e2237aaa56933ea07853f0f2758c28892a1d70c53bbaca200eb8b80f8ed55f13093003dbec5afa0
   languageName: node
   linkType: hard
 
@@ -12376,12 +12274,5 @@ __metadata:
   version: 0.8.15
   resolution: "zen-observable@npm:0.8.15"
   checksum: 30eac3f4055d33f446b4cd075d3543da347c2c8e68fbc35c3f5a19fb43be67c6ed27ee136bc8f8933efa547be7ce04957809ad00ee7f1b00a964f199ae6fb514
-  languageName: node
-  linkType: hard
-
-"zod@npm:3.21.4":
-  version: 3.21.4
-  resolution: "zod@npm:3.21.4"
-  checksum: 03c79fa4610a35e24119771970be764c6e177a271a225587f86a7fc35d55e94a154d8e1970d23ffe35b567c147262bedbcb53b31aa30eeef2493fbd13e1b4aca
   languageName: node
   linkType: hard
