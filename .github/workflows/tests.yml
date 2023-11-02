@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "18.x"
           cache: "yarn"
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
       - run: yarn workspace @apollo/experimental-nextjs-app-support run test > $GITHUB_STEP_SUMMARY
   tests_playwright:
     name: Run Playwright tests
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: "18.x"
           cache: "yarn"
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
 
       - name: Get installed Playwright version
         id: playwright-version
