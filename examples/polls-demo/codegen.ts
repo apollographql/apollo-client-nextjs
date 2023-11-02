@@ -2,7 +2,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://fragrant-shadow-9470.fly.dev/",
+  schema: "https://apollo-next-poll.up.railway.app/",
   documents: ["components/**/*.graphql"],
   generates: {
     "components/types.generated.ts": { plugins: ["typescript"] },

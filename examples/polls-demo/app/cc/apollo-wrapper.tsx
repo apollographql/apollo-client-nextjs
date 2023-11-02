@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "development") {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: "https://fragrant-shadow-9470.fly.dev/",
+    uri: "https://apollo-next-poll.up.railway.app/",
   });
 
   return new NextSSRApolloClient({
