@@ -1,7 +1,4 @@
-import {
-  ApolloClientSingleton,
-  SuspenseCacheSingleton,
-} from "./ApolloNextAppProvider";
+import { ApolloClientSingleton } from "./ApolloNextAppProvider";
 import {
   ApolloRehydrationCache,
   ApolloResultCache,
@@ -23,5 +20,4 @@ export function resetNextSSRApolloSingletons() {
   delete window[ApolloSSRDataTransport];
   delete window[ApolloBackgroundQueryTransport];
   delete window[ApolloClientSingleton];
-  delete window[SuspenseCacheSingleton];
 }

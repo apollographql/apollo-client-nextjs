@@ -9,8 +9,6 @@
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.  
 
-> ❗️ This package depends on Apollo Client 3.8, which is currently a beta release. 
-
 ## Detailed technical breakdown
 
 You can find a detailed technical breakdown of what this package does and why it needs to do so [in the discussion around the accompanying RFC](https://github.com/apollographql/apollo-client-nextjs/pull/9).
@@ -31,10 +29,10 @@ This package provides the tools necessary to execute your GraphQL queries on the
 
 ## Installation
 
-This package has a peer dependency on the latest beta of `@apollo/client`, so you can install both this package and that Apollo Client version via
+This package has a peer dependency on the latest rc of `@apollo/client`, so you can install both this package and that Apollo Client version via
 
 ```sh
-npm install @apollo/client@beta @apollo/experimental-nextjs-app-support
+npm install @apollo/client@latest @apollo/experimental-nextjs-app-support
 ```
 
 ## Usage
@@ -75,17 +73,13 @@ const { data } = await getClient().query({ query: userQuery });
 
 If you use the `app` directory, each Client Component _will_ be SSR-rendered for the initial request. So you will need to use this package.
 
-First, create a new file `app/ApolloWrapper.js`:
+First, create a new file `app/ApolloWrapper.jsx`:
 
 ```js
 "use client";
 // ^ this file needs the "use client" pragma
 
-import {
-  ApolloLink,
-  HttpLink,
-  SuspenseCache,
-} from "@apollo/client";
+import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
@@ -101,6 +95,10 @@ function makeClient() {
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
     fetchOptions: { cache: "no-store" },
+    // you can override the default `fetchOptions` on a per query basis
+    // via the `context` property on the options passed as a second argument
+    // to an Apollo Client data fetching hook, e.g.:
+    // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
   });
 
   return new NextSSRApolloClient({
@@ -121,18 +119,10 @@ function makeClient() {
   });
 }
 
-// also have a function to create a suspense cache
-function makeSuspenseCache() {
-  return new SuspenseCache();
-}
-
 // you need to create a component to wrap your app in
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return (
-    <ApolloNextAppProvider
-      makeClient={makeClient}
-      makeSuspenseCache={makeSuspenseCache}
-    >
+    <ApolloNextAppProvider makeClient={makeClient}>
       {children}
     </ApolloNextAppProvider>
   );

@@ -10,22 +10,22 @@
     "test": "yarn playwright test"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.0-beta.4",
+    "@apollo/client": "^3.8.6",
     "@apollo/experimental-nextjs-app-support": "workspace:*",
-    "@apollo/server": "^4.7.5",
-    "@as-integrations/next": "^2.0.0",
+    "@apollo/server": "^4.9.5",
+    "@as-integrations/next": "^2.0.2",
     "@graphql-tools/schema": "^10.0.0",
     "@types/node": "20.3.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "18.2.6",
     "graphql": "^16.7.1",
     "graphql-tag": "^2.12.6",
-    "next": "13.4.7",
+    "next": "^14.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.1.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.35.1"
+    "@playwright/test": "^1.39.0"
   }
 }

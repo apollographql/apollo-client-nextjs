@@ -36,12 +36,12 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
+      - run: yarn install --immutable
       - run: yarn workspace @apollo/experimental-nextjs-app-support version "0.0.0-commit-$(git rev-parse --short HEAD)"
-      - run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public  --provenance
+      - run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

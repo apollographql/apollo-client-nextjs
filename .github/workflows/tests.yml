@@ -4,9 +4,15 @@ on:
     paths:
       - "package/**"
       - "integration-test/**"
+  pull_request:
+    paths:
+      - "package/**"
+      - "integration-test/**"
   workflow_dispatch:
 jobs:
   test:
+    name: Run unit tests
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,10 +20,11 @@ jobs:
         with:
           node-version: "18.x"
           cache: "yarn"
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
       - run: yarn workspace @apollo/experimental-nextjs-app-support run test > $GITHUB_STEP_SUMMARY
   tests_playwright:
     name: Run Playwright tests
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,7 +32,7 @@ jobs:
         with:
           node-version: "18.x"
           cache: "yarn"
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
 
       - name: Get installed Playwright version
         id: playwright-version

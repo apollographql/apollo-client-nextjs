@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloLink, HttpLink, SuspenseCache } from "@apollo/client";
+import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   NextSSRApolloClient,
   ApolloNextAppProvider,
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "development") {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: "https://fragrant-shadow-9470.fly.dev/",
+    uri: "https://apollo-next-poll.up.railway.app/",
   });
 
   return new NextSSRApolloClient({
@@ -38,16 +38,9 @@ function makeClient() {
   });
 }
 
-function makeSuspenseCache() {
-  return new SuspenseCache();
-}
-
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return (
-    <ApolloNextAppProvider
-      makeClient={makeClient}
-      makeSuspenseCache={makeSuspenseCache}
-    >
+    <ApolloNextAppProvider makeClient={makeClient}>
       {children}
     </ApolloNextAppProvider>
   );

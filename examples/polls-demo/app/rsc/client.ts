@@ -5,7 +5,7 @@ export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-      uri: "https://fragrant-shadow-9470.fly.dev/",
+      uri: "https://apollo-next-poll.up.railway.app/",
     }),
   });
 });

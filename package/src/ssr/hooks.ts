@@ -29,7 +29,7 @@ export const useReadQuery = wrap(orig_useReadQuery, ["data", "networkStatus"]);
 
 export const useBackgroundQuery: typeof orig_useBackgroundQuery = (...args: [any, any]) => {
   useRehydrationContext();
-  return orig_useBackgroundQuery(...args);
+  return orig_useBackgroundQuery(...args) as any;
 };
 
 function wrap<T extends (...args: any[]) => any>(

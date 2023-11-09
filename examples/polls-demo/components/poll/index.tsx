@@ -30,7 +30,8 @@ export const Poll = ({
   return (
     <div>
       <h1 className="text-6xl mb-6">{poll.question}</h1>
-      <p className="text-2xl mb-6">
+      {/* could be formatted with a different locale on the server than in the browser -> suppressHydrationWarning */}
+      <p className="text-2xl mb-6" suppressHydrationWarning>
         Total votes: {poll.totalVotes.toLocaleString()}
       </p>
 
