@@ -42,7 +42,7 @@
     "test": "vitest",
     "prepack": "yarn test run && yarn build"
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.6.4",
   "devDependencies": {
     "@apollo/client": "^3.8.6",
     "@total-typescript/shoehorn": "^0.1.1",
