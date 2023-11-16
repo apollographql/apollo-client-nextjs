@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "lockFileMaintenance": { "enabled": false },
-  "includePaths": ["package/**", ".github/**"],
+  "ignorePaths": ["examples/**", "integration-test/**"],
   "skipInstalls": false
 }
