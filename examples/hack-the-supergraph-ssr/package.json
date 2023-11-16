@@ -15,6 +15,8 @@
     "@apollo/space-kit": "^9.11.0",
     "@chakra-ui/next-js": "^2.1.2",
     "@chakra-ui/react": "^2.5.5",
+    "@emotion/cache": "^11.11.0",
+    "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@types/node": "18.15.11",

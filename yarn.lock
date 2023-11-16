@@ -74,12 +74,15 @@ __metadata:
     "@apollo/client": "npm:^3.8.6"
     "@total-typescript/shoehorn": "npm:^0.1.1"
     "@tsconfig/recommended": "npm:^1.0.3"
+    "@types/node": "npm:^20.9.0"
     "@typescript-eslint/eslint-plugin": "npm:latest"
     "@typescript-eslint/parser": "npm:latest"
     eslint: "npm:latest"
     eslint-plugin-react: "npm:latest"
+    graphql: "npm:^16.8.1"
     next: "npm:^14.0.0"
     react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
     rimraf: "npm:^5.0.0"
     server-only: "npm:^0.0.1"
     superjson: "npm:^1.12.2"
@@ -365,23 +368,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@as-integrations/next@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@as-integrations/next@npm:1.3.0"
+"@as-integrations/next@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@as-integrations/next@npm:3.0.0"
   peerDependencies:
     "@apollo/server": ^4.0.0
-    next: ^12.0.0 || ^13.0.0
-  checksum: 2d538efbfa967d089718187b8e820ee0df0ff1387752c16ded9c4a08e2a28ccd30302fe4f174f6c45ed640dfcb41ee6adeebdf15f21cd0c2c95d0bf598df5ca8
-  languageName: node
-  linkType: hard
-
-"@as-integrations/next@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@as-integrations/next@npm:2.0.2"
-  peerDependencies:
-    "@apollo/server": ^4.0.0
-    next: ^12.0.0 || ^13.0.0
-  checksum: 8c1331592155f4b785ac72f5032796a55a75038de374cd00c0bf745462a20519e87b84850eafd7d48ede2e3df9f309211cbeae6ca3d170e820227ede9f334a78
+    next: ^12.0.0 || ^13.0.0 || ^14.0.0
+  checksum: 463023499dd4d0170bc03d899aa471b17728edf71b259445035fb0ef62a064a546331b8737952deccfbe3bd01b2f4db802391dfe8228960aec467620ea4e6252
   languageName: node
   linkType: hard
 
@@ -2266,6 +2259,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/cache@npm:^11.11.0":
+  version: 11.11.0
+  resolution: "@emotion/cache@npm:11.11.0"
+  dependencies:
+    "@emotion/memoize": "npm:^0.8.1"
+    "@emotion/sheet": "npm:^1.2.2"
+    "@emotion/utils": "npm:^1.2.1"
+    "@emotion/weak-memoize": "npm:^0.3.1"
+    stylis: "npm:4.2.0"
+  checksum: ef29756247dafb87168b4ffb76ee60feb06b8a1016323ecb1d3ba8aed3f4300ca10049bedbfe83aa11e0d81e616c328002a9d50020ebb3af6e4f5337a785c1fe
+  languageName: node
+  linkType: hard
+
+"@emotion/core@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "@emotion/core@npm:11.0.0"
+  checksum: c73a185d7dc03ef21e95bbf427d7373c0edd72ae3548f7601afb86aa0e96b7d9d5632c6bfce4d0c892c538362d7906426e6795e4e72f9296c8c29861ebe00493
+  languageName: node
+  linkType: hard
+
 "@emotion/hash@npm:^0.9.0":
   version: 0.9.0
   resolution: "@emotion/hash@npm:0.9.0"
@@ -2302,6 +2315,13 @@ __metadata:
   version: 0.8.0
   resolution: "@emotion/memoize@npm:0.8.0"
   checksum: c87bb110b829edd8e1c13b90a6bc37cebc39af29c7599a1e66a48e06f9bec43e8e53495ba86278cc52e7589549492c8dfdc81d19f4fdec0cee6ba13d2ad2c928
+  languageName: node
+  linkType: hard
+
+"@emotion/memoize@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@emotion/memoize@npm:0.8.1"
+  checksum: a19cc01a29fcc97514948eaab4dc34d8272e934466ed87c07f157887406bc318000c69ae6f813a9001c6a225364df04249842a50e692ef7a9873335fbcc141b0
   languageName: node
   linkType: hard
 
@@ -2343,6 +2363,13 @@ __metadata:
   version: 1.2.1
   resolution: "@emotion/sheet@npm:1.2.1"
   checksum: c1140f7ad74c992ac410c3aa0a795e2a47269e7ebf9886dc120ff0b72c55531239f0b5c495438549ef33689f501df73f1787cfaff41e62a76bdfbc04236adf1d
+  languageName: node
+  linkType: hard
+
+"@emotion/sheet@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@emotion/sheet@npm:1.2.2"
+  checksum: cc46b20ef7273dc28de889927ae1498f854be2890905745fcc3154fbbacaa54df1e28c3d89ff3339c2022782c78933f51955bb950d105d5a219576db1eadfb7a
   languageName: node
   linkType: hard
 
@@ -2389,10 +2416,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/utils@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@emotion/utils@npm:1.2.1"
+  checksum: 472fa529c64a13edff80aa11698092e8841c1ffb5001c739d84eb9d0fdd6d8e1cd1848669310578ccfa6383b8601132eca54f8749fca40af85d21fdfc9b776c4
+  languageName: node
+  linkType: hard
+
 "@emotion/weak-memoize@npm:^0.3.0":
   version: 0.3.0
   resolution: "@emotion/weak-memoize@npm:0.3.0"
   checksum: f43ef4c8b7de70d9fa5eb3105921724651e4188e895beb71f0c5919dc899a7b8743e1fdd99d38b9092dd5722c7be2312ebb47fbdad0c4e38bea58f6df5885cc0
+  languageName: node
+  linkType: hard
+
+"@emotion/weak-memoize@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@emotion/weak-memoize@npm:0.3.1"
+  checksum: b2be47caa24a8122622ea18cd2d650dbb4f8ad37b636dc41ed420c2e082f7f1e564ecdea68122b546df7f305b159bf5ab9ffee872abd0f052e687428459af594
   languageName: node
   linkType: hard
 
@@ -4224,6 +4265,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^20.9.0":
+  version: 20.9.0
+  resolution: "@types/node@npm:20.9.0"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: a934f7645ed117a27857147403b0c657ffbca578c8f280e4c21d27dfb43e58dc4f24c4319d4335b8a4fa08e28fb2dc905a5bd5e4bc8878047164c56c1b162139
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -4794,7 +4844,6 @@ __metadata:
     "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
-    "@as-integrations/next": "npm:^1.3.0"
     "@graphql-codegen/cli": "npm:3.3.1"
     "@graphql-codegen/client-preset": "npm:3.0.1"
     "@graphql-codegen/near-operation-file-preset": "npm:^2.5.0"
@@ -4828,7 +4877,7 @@ __metadata:
     "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
-    "@as-integrations/next": "npm:^1.3.0"
+    "@as-integrations/next": "npm:^3.0.0"
     "@types/node": "npm:18.15.3"
     "@types/react": "npm:^18.2.14"
     "@types/react-dom": "npm:18.0.11"
@@ -7662,6 +7711,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"graphql@npm:^16.8.1":
+  version: 16.8.1
+  resolution: "graphql@npm:16.8.1"
+  checksum: 7a09d3ec5f75061afe2bd2421a2d53cf37273d2ecaad8f34febea1f1ac205dfec2834aec3419fa0a10fcc9fb345863b2f893562fb07ea825da2ae82f6392893c
+  languageName: node
+  linkType: hard
+
 "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr":
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
@@ -7671,6 +7727,8 @@ __metadata:
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"
     "@chakra-ui/react": "npm:^2.5.5"
+    "@emotion/cache": "npm:^11.11.0"
+    "@emotion/core": "npm:^11.0.0"
     "@emotion/react": "npm:^11.10.6"
     "@emotion/styled": "npm:^11.10.6"
     "@types/js-cookie": "npm:^3.0.3"
@@ -7982,7 +8040,7 @@ __metadata:
     "@apollo/client": "npm:^3.8.6"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": "npm:^4.9.5"
-    "@as-integrations/next": "npm:^2.0.2"
+    "@as-integrations/next": "npm:^3.0.0"
     "@graphql-tools/schema": "npm:^10.0.0"
     "@playwright/test": "npm:^1.39.0"
     "@types/node": "npm:20.3.1"
@@ -10099,7 +10157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
+"react-dom@npm:18.2.0, react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -11050,6 +11108,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stylis@npm:4.2.0":
+  version: 4.2.0
+  resolution: "stylis@npm:4.2.0"
+  checksum: 58359185275ef1f39c339ae94e598168aa6bb789f6cf0d52e726c1e7087a94e9c17f0385a28d34483dec1ffc2c75670ec714dc5603d99c3124ec83bc2b0a0f42
+  languageName: node
+  linkType: hard
+
 "sucrase@npm:^3.32.0":
   version: 3.32.0
   resolution: "sucrase@npm:3.32.0"
@@ -11593,6 +11658,13 @@ __metadata:
   version: 0.1.2
   resolution: "unc-path-regex@npm:0.1.2"
   checksum: a05fa2006bf4606051c10fc7968f08ce7b28fa646befafa282813aeb1ac1a56f65cb1b577ca7851af2726198d59475bb49b11776036257b843eaacee2860a4ec
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
   languageName: node
   linkType: hard
 
