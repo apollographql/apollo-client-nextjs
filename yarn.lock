@@ -31,7 +31,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.8.6":
+"@apollo/client@npm:3.8.6, @apollo/client@npm:^3.8.6":
   version: 3.8.6
   resolution: "@apollo/client@npm:3.8.6"
   dependencies:
@@ -71,7 +71,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": "npm:^3.8.6"
+    "@apollo/client": "npm:3.8.6"
     "@total-typescript/shoehorn": "npm:^0.1.1"
     "@tsconfig/recommended": "npm:^1.0.3"
     "@types/node": "npm:^20.9.0"
