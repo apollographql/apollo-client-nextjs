@@ -20,7 +20,7 @@ import invariant from "ts-invariant";
 
 function getQueryManager<TCacheShape>(
   client: ApolloClient<unknown>
-): QueryManager<TCacheShape> {
+): QueryManager<TCacheShape> | any {
   return client["queryManager"];
 }
 
