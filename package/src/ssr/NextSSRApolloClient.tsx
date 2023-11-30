@@ -18,9 +18,19 @@ import {
 } from "./ApolloRehydrateSymbols";
 import invariant from "ts-invariant";
 
-function getQueryManager<TCacheShape>(
-  client: ApolloClient<unknown>
-): QueryManager<TCacheShape> | any {
+function getQueryManager<TCacheShape>(client: ApolloClient<unknown>): Pick<
+  QueryManager<any>,
+  "generateQueryId" | "fetchQuery" | "stopQuery" | "getDocumentInfo"
+> & {
+  fetchCancelFns: QueryManager<TCacheShape>["fetchCancelFns"];
+  inFlightLinkObservables:
+    | Map<string, Map<string, Observable<FetchResult>>>
+    | (import("@wry/trie").Trie<{
+        observable?: Observable<FetchResult<any>>;
+      }> & {
+        remove(...args: any[]): void;
+      });
+} {
   return client["queryManager"];
 }
 
@@ -87,17 +97,31 @@ export class NextSSRApolloClient<
             const printedServerQuery = print(query);
             const queryManager = getQueryManager<TCacheShape>(this);
 
-            const byVariables =
-              queryManager["inFlightLinkObservables"].get(printedServerQuery) ||
-              new Map();
+            let hasRunningQuery: boolean;
+            let byVariables: Map<any, any> | undefined;
 
-            queryManager["inFlightLinkObservables"].set(
-              printedServerQuery,
-              byVariables
-            );
+            if ("lookup" in queryManager["inFlightLinkObservables"]) {
+              hasRunningQuery = !!queryManager["inFlightLinkObservables"].peek(
+                printedServerQuery,
+                varJson
+              )?.observable;
+            } else {
+              byVariables =
+                queryManager["inFlightLinkObservables"].get(
+                  printedServerQuery
+                ) || new Map();
 
-            if (!byVariables.has(varJson)) {
+              queryManager["inFlightLinkObservables"].set(
+                printedServerQuery,
+                byVariables
+              );
+
+              hasRunningQuery = byVariables.has(varJson);
+            }
+
+            if (!hasRunningQuery) {
               let simulatedStreamingQuery: SimulatedQueryInfo,
+                // eslint-disable-next-line prefer-const
                 observable: Observable<FetchResult>,
                 fetchCancelFn: (reason: unknown) => void;
 
@@ -107,8 +131,19 @@ export class NextSSRApolloClient<
                 )
                   queryManager["fetchCancelFns"].delete(cacheKey);
 
-                if (byVariables.get(varJson) === observable)
-                  byVariables.delete(varJson);
+                if (byVariables) {
+                  if (byVariables.get(varJson) === observable)
+                    byVariables.delete(varJson);
+                } else if (
+                  "lookup" in queryManager["inFlightLinkObservables"]
+                ) {
+                  queryManager["inFlightLinkObservables"].remove(
+                    printedServerQuery,
+                    varJson
+                  );
+                } else {
+                  throw new Error("unexpected shape of QueryManager");
+                }
 
                 if (
                   this.simulatedStreamingQueries.get(cacheKey) ===
@@ -125,19 +160,27 @@ export class NextSSRApolloClient<
               });
 
               promise.finally(cleanup);
-              byVariables.set(
-                varJson,
-                (observable = new Observable<FetchResult>((observer) => {
-                  promise
-                    .then((result) => {
-                      observer.next(result);
-                      observer.complete();
-                    })
-                    .catch((err) => {
-                      observer.error(err);
-                    });
-                }))
-              );
+
+              observable = new Observable<FetchResult>((observer) => {
+                promise
+                  .then((result) => {
+                    observer.next(result);
+                    observer.complete();
+                  })
+                  .catch((err) => {
+                    observer.error(err);
+                  });
+              });
+              if (byVariables) {
+                byVariables.set(varJson, observable);
+              } else if ("lookup" in queryManager["inFlightLinkObservables"]) {
+                queryManager["inFlightLinkObservables"].lookup(
+                  printedServerQuery,
+                  varJson
+                ).observable = observable;
+              } else {
+                throw new Error("unexpected shape of QueryManager");
+              }
 
               queryManager["fetchCancelFns"].set(
                 cacheKey,
