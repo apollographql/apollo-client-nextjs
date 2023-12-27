@@ -13,12 +13,13 @@ const ApolloRehydrationContext = React.createContext<
 
 export const RehydrationContextProvider = ({
   children,
-}: React.PropsWithChildren) => {
+  nonce,
+}: React.PropsWithChildren<{nonce?: string}>) => {
   const client = useApolloClient();
   const rehydrationContext = React.useRef<RehydrationContextValue>();
   if (typeof window == "undefined") {
     if (!rehydrationContext.current) {
-      rehydrationContext.current = buildApolloRehydrationContext();
+      rehydrationContext.current = buildApolloRehydrationContext(nonce);
     }
     if (client instanceof NextSSRApolloClient) {
       client.setRehydrationContext(rehydrationContext.current);
@@ -62,7 +63,7 @@ export function useRehydrationContext(): RehydrationContextValue | undefined {
   return rehydrationContext;
 }
 
-function buildApolloRehydrationContext(): RehydrationContextValue {
+function buildApolloRehydrationContext(nonce?: string): RehydrationContextValue {
   const rehydrationContext: RehydrationContextValue = {
     currentlyInjected: false,
     transportValueData: {},
@@ -109,6 +110,7 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
       rehydrationContext.incomingBackgroundQueries = [];
       return (
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html,
           }}

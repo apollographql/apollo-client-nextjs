@@ -16,8 +16,10 @@ declare global {
 export const ApolloNextAppProvider = ({
   makeClient,
   children,
+  nonce,
 }: React.PropsWithChildren<{
   makeClient: () => ApolloClient<any>;
+  nonce?: string
 }>) => {
   const clientRef = React.useRef<ApolloClient<any>>();
 
@@ -31,7 +33,7 @@ export const ApolloNextAppProvider = ({
 
   return (
     <_ApolloProvider client={clientRef.current}>
-      <RehydrationContextProvider>{children}</RehydrationContextProvider>
+      <RehydrationContextProvider nonce={nonce}>{children}</RehydrationContextProvider>
     </_ApolloProvider>
   );
 };
