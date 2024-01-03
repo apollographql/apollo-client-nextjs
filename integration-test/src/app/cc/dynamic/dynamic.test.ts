@@ -59,4 +59,31 @@ test.describe("CC dynamic", () => {
       await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
     });
   });
+  test.describe("useSuspenseQuery with a nonce", () => {
+    test("invalid: logs an error", async ({ page, blockRequest }) => {
+      await page.goto(
+        "http://localhost:3000/cc/dynamic/useSuspenseQuery?nonce=invalid",
+        {
+          waitUntil: "commit",
+        }
+      );
+
+      const messagePromise = page.waitForEvent("console");
+      const message = await messagePromise;
+      expect(message.text()).toMatch(
+        /^Refused to execute inline script because it violates the following Content Security Policy/
+      );
+    });
+    test("valid: does not log an error", async ({ page, blockRequest }) => {
+      await page.goto(
+        "http://localhost:3000/cc/dynamic/useSuspenseQuery?nonce=8IBTHwOdqNKAWeKl7plt8g==",
+        {
+          waitUntil: "commit",
+        }
+      );
+
+      const messagePromise = page.waitForEvent("console");
+      expect(messagePromise).rejects.toThrow(/waiting for event \"console\"/);
+    });
+  });
 });

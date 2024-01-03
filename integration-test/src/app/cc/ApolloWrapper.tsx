@@ -18,9 +18,17 @@ setVerbosity("debug");
 loadDevMessages();
 loadErrorMessages();
 
-export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
+export function ApolloWrapper({
+  children,
+  nonce,
+}: React.PropsWithChildren<{ nonce?: string }>) {
   return (
-    <ApolloNextAppProvider makeClient={makeClient}>
+    <ApolloNextAppProvider
+      makeClient={makeClient}
+      extraScriptProps={{
+        nonce,
+      }}
+    >
       {children}
     </ApolloNextAppProvider>
   );
