@@ -1,4 +1,5 @@
-import { ApolloLink, Operation, NextLink, FetchResult } from "@apollo/client";
+import type { Operation, NextLink, FetchResult } from "@apollo/client";
+import { ApolloLink } from "@apollo/client";
 import {
   Observable,
   hasDirectives,

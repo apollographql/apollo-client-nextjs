@@ -1,5 +1,5 @@
-import { SuperJSONResult } from "superjson/dist/types";
-import {
+import type { SuperJSONResult } from "superjson/dist/types";
+import type {
   RehydrationCache,
   ResultsCache,
   BackgroundQueriesCache,

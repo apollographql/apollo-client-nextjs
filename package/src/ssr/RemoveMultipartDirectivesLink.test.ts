@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink";
 import { fromPartial } from "@total-typescript/shoehorn";
-import { gql, DocumentNode, Observable } from "@apollo/client";
+import type { DocumentNode} from "@apollo/client";
+import { gql, Observable } from "@apollo/client";
 import { print } from "graphql";
 import { it, expect } from "vitest";
 
