@@ -9,7 +9,7 @@ import {
   Observable
 } from "@apollo/client";
 import type { QueryManager } from "@apollo/client/core/QueryManager";
-import { print } from "graphql";
+import { print } from "@apollo/client/utilities";
 import { canonicalStringify } from "@apollo/client/cache";
 import type { RehydrationContextValue } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
