@@ -11,14 +11,34 @@ const ApolloRehydrationContext = React.createContext<
   RehydrationContextValue | undefined
 >(undefined);
 
+export interface HydrationContextOptions {
+  extraScriptProps?: ScriptProps;
+}
+
+type SerializableProps<T> = Pick<
+  T,
+  {
+    [K in keyof T]: T[K] extends string | number | boolean | undefined | null
+      ? K
+      : never;
+  }[keyof T]
+>;
+
+type ScriptProps = SerializableProps<
+  React.ScriptHTMLAttributes<HTMLScriptElement>
+>;
+
 export const RehydrationContextProvider = ({
   children,
-}: React.PropsWithChildren) => {
+  extraScriptProps,
+}: React.PropsWithChildren<HydrationContextOptions>) => {
   const client = useApolloClient();
   const rehydrationContext = React.useRef<RehydrationContextValue>();
   if (typeof window == "undefined") {
     if (!rehydrationContext.current) {
-      rehydrationContext.current = buildApolloRehydrationContext();
+      rehydrationContext.current = buildApolloRehydrationContext({
+        extraScriptProps,
+      });
     }
     if (client instanceof NextSSRApolloClient) {
       client.setRehydrationContext(rehydrationContext.current);
@@ -62,7 +82,9 @@ export function useRehydrationContext(): RehydrationContextValue | undefined {
   return rehydrationContext;
 }
 
-function buildApolloRehydrationContext(): RehydrationContextValue {
+function buildApolloRehydrationContext({
+  extraScriptProps,
+}: HydrationContextOptions): RehydrationContextValue {
   const rehydrationContext: RehydrationContextValue = {
     currentlyInjected: false,
     transportValueData: {},
@@ -109,6 +131,7 @@ function buildApolloRehydrationContext(): RehydrationContextValue {
       rehydrationContext.incomingBackgroundQueries = [];
       return (
         <script
+          {...extraScriptProps}
           dangerouslySetInnerHTML={{
             __html,
           }}
