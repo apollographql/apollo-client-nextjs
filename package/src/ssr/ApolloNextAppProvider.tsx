@@ -1,15 +1,9 @@
 "use client";
 import * as React from "react";
-import type {
-  ApolloClient} from "@apollo/client";
-import {
-  ApolloProvider as _ApolloProvider,
-} from "@apollo/client";
-import type {
-  HydrationContextOptions} from "./RehydrationContext";
-import {
-  RehydrationContextProvider,
-} from "./RehydrationContext";
+import type { ApolloClient } from "@apollo/client";
+import { ApolloProvider as _ApolloProvider } from "@apollo/client";
+import type { HydrationContextOptions } from "./RehydrationContext";
+import { RehydrationContextProvider } from "./RehydrationContext";
 
 export const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
 

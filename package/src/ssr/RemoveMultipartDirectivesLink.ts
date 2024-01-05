@@ -1,7 +1,6 @@
 import type { Operation, NextLink, DocumentNode } from "@apollo/client";
 import { ApolloLink } from "@apollo/client";
-import type {
-  RemoveDirectiveConfig} from "@apollo/client/utilities";
+import type { RemoveDirectiveConfig } from "@apollo/client/utilities";
 import {
   Observable,
   removeDirectivesFromDocument,
@@ -39,10 +38,10 @@ function getDirectiveArgumentValue(directive: DirectiveNode, argument: string) {
  * query myQuery {
  *   fastField
  *   ... @defer(label: "SsrDontStrip1") {
- *     slowField1 
+ *     slowField1
  *   }
  *   ... @defer(label: "SsrDontStrip2") {
- *     slowField2 
+ *     slowField2
  *   }
  * }
  * ```
