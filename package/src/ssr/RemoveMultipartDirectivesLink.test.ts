@@ -93,10 +93,10 @@ it("preserves @defer fields with a `SsrDontStrip` label", () => {
   expect(print(resultingQuery!)).toMatchInlineSnapshot(`
     "query myQuery {
       fastField
-      ... @defer(label: \\"SsrDontStrip1\\") {
+      ... @defer(label: "SsrDontStrip1") {
         slowField1
       }
-      ... @defer(label: \\"SsrDontStrip2\\") {
+      ... @defer(label: "SsrDontStrip2") {
         slowField2
       }
     }"
