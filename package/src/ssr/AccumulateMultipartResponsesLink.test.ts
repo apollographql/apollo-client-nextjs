@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type {
-  ExecutionPatchResult,
-  FetchResult} from "@apollo/client";
-import {
-  ApolloLink,
-  Observable,
-  gql,
-} from "@apollo/client";
+import type { ExecutionPatchResult, FetchResult } from "@apollo/client";
+import { ApolloLink, Observable, gql } from "@apollo/client";
 import { AccumulateMultipartResponsesLink } from "./AccumulateMultipartResponsesLink";
 import { test, expect, assert, beforeEach, afterEach, vi } from "vitest";
 import { fromPartial } from "@total-typescript/shoehorn";

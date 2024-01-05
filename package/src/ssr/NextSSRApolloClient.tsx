@@ -3,11 +3,9 @@ import type {
   OperationVariables,
   WatchQueryOptions,
   FetchResult,
-  DocumentNode} from "@apollo/client";
-import {
-  ApolloClient,
-  Observable
+  DocumentNode,
 } from "@apollo/client";
+import { ApolloClient, Observable } from "@apollo/client";
 import type { QueryManager } from "@apollo/client/core/QueryManager";
 import { print } from "@apollo/client/utilities";
 import { canonicalStringify } from "@apollo/client/cache";
@@ -42,7 +40,7 @@ type SimulatedQueryInfo = {
 };
 
 export class NextSSRApolloClient<
-  TCacheShape
+  TCacheShape,
 > extends ApolloClient<TCacheShape> {
   private rehydrationContext: Pick<
     RehydrationContextValue,
@@ -253,7 +251,7 @@ export class NextSSRApolloClient<
 
   watchQuery<
     T = any,
-    TVariables extends OperationVariables = OperationVariables
+    TVariables extends OperationVariables = OperationVariables,
   >(options: WatchQueryOptions<TVariables, T>) {
     if (typeof window == "undefined") {
       if (

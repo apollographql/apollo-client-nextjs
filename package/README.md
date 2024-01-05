@@ -4,10 +4,10 @@
 
 # Apollo Client support for the Next.js App Router
 
-> ❗️ This package is experimental. 
+> ❗️ This package is experimental.<br/>
 > Generally it should work well, you might run into race conditions when your Client Component is still rendering in SSR, and already making overlapping queries on the browser.  
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
-> If you do not use suspense in your application, this will not be a problem to you.  
+> If you do not use suspense in your application, this will not be a problem to you.
 
 ## Detailed technical breakdown
 
@@ -155,6 +155,7 @@ export default function RootLayout({
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
 You can import the following Apollo Client hooks from `"@apollo/experimental-nextjs-app-support/ssr"` in your client components (make sure you are not importing these hooks from `@apollo/client` as this package wraps and re-exports them to support streaming SSR):
+
 - `useQuery`
 - `useSuspenseQuery`
 - `useBackgroundQuery`
@@ -164,6 +165,7 @@ You can import the following Apollo Client hooks from `"@apollo/experimental-nex
 If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
 
 ### Resetting singletons between tests.
+
 This package uses some singleton instances on the Browser side - if you are writing tests, you must reset them between tests.
 
 For that, you can use the `resetNextSSRApolloSingletons` helper:
@@ -178,7 +180,7 @@ afterEach(resetNextSSRApolloSingletons);
 
 Generally, `useSuspenseQuery` will only suspend until the initial response is received.
 In most cases, you get a full response, but if you use multipart response features like the `@defer` directive, you will only get a partial response.  
-Without further handling, your component will now render with partial data - but the request will still keep running in the background. This is a worst-case scenario because your server will have to bear the load of that request, but the client will not get the complete data anyways. 
+Without further handling, your component will now render with partial data - but the request will still keep running in the background. This is a worst-case scenario because your server will have to bear the load of that request, but the client will not get the complete data anyways.<br/>
 To handle this, you can apply one of two different strategies:
 
 - remove `@defer` fragments from your query

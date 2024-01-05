@@ -16,7 +16,7 @@ expect.extend({
     const pass =
       (await received.getByText("loading").isVisible()) === expectedState;
     return {
-      message: () => pass ? "passed" : "failed",
+      message: () => (pass ? "passed" : "failed"),
       pass,
     };
   },

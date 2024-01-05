@@ -1,10 +1,5 @@
-import type {
-  InMemoryCacheConfig,
-  Cache,
-  Reference} from "@apollo/client";
-import {
-  InMemoryCache
-} from "@apollo/client";
+import type { InMemoryCacheConfig, Cache, Reference } from "@apollo/client";
+import { InMemoryCache } from "@apollo/client";
 import type { RehydrationContextValue } from "./types";
 
 export class NextSSRInMemoryCache extends InMemoryCache {
