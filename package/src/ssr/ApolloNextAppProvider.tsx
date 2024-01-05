@@ -1,11 +1,13 @@
 "use client";
 import * as React from "react";
+import type {
+  ApolloClient} from "@apollo/client";
 import {
-  ApolloClient,
   ApolloProvider as _ApolloProvider,
 } from "@apollo/client";
+import type {
+  HydrationContextOptions} from "./RehydrationContext";
 import {
-  HydrationContextOptions,
   RehydrationContextProvider,
 } from "./RehydrationContext";
 

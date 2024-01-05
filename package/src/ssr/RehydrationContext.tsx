@@ -2,7 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import React from "react";
 import { NextSSRInMemoryCache } from "./NextSSRInMemoryCache";
 import { ServerInsertedHTMLContext } from "next/navigation";
-import { RehydrationContextValue } from "./types";
+import type { RehydrationContextValue } from "./types";
 import { registerDataTransport, transportDataToJS } from "./dataTransport";
 import invariant from "ts-invariant";
 import { NextSSRApolloClient } from "./NextSSRApolloClient";

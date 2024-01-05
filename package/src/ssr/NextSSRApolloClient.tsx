@@ -1,16 +1,17 @@
-import {
-  ApolloClient,
+import type {
   ApolloClientOptions,
   OperationVariables,
   WatchQueryOptions,
-  Observable,
   FetchResult,
-  DocumentNode,
+  DocumentNode} from "@apollo/client";
+import {
+  ApolloClient,
+  Observable
 } from "@apollo/client";
 import type { QueryManager } from "@apollo/client/core/QueryManager";
-import { print } from "graphql";
+import { print } from "@apollo/client/utilities";
 import { canonicalStringify } from "@apollo/client/cache";
-import { RehydrationContextValue } from "./types";
+import type { RehydrationContextValue } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
 import {
   ApolloBackgroundQueryTransport,
