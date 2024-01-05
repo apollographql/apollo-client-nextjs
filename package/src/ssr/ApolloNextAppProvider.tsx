@@ -5,8 +5,9 @@ import type {
 import {
   ApolloProvider as _ApolloProvider,
 } from "@apollo/client";
+import type {
+  HydrationContextOptions} from "./RehydrationContext";
 import {
-  HydrationContextOptions,
   RehydrationContextProvider,
 } from "./RehydrationContext";
 
