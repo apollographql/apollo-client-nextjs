@@ -6,7 +6,7 @@ import { setVerbosity } from "ts-invariant";
 import { delayLink } from "@/shared/delayLink";
 import { SchemaLink } from "@apollo/client/link/schema";
 
-import { schema } from "../graphql/route";
+import { schema } from "../graphql/schema";
 
 setVerbosity("debug");
 loadDevMessages();

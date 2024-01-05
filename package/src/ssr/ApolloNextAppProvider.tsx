@@ -4,7 +4,10 @@ import {
   ApolloClient,
   ApolloProvider as _ApolloProvider,
 } from "@apollo/client";
-import { RehydrationContextProvider } from "./RehydrationContext";
+import {
+  HydrationContextOptions,
+  RehydrationContextProvider,
+} from "./RehydrationContext";
 
 export const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
 
@@ -16,9 +19,12 @@ declare global {
 export const ApolloNextAppProvider = ({
   makeClient,
   children,
-}: React.PropsWithChildren<{
-  makeClient: () => ApolloClient<any>;
-}>) => {
+  ...hydrationContextOptions
+}: React.PropsWithChildren<
+  {
+    makeClient: () => ApolloClient<any>;
+  } & HydrationContextOptions
+>) => {
   const clientRef = React.useRef<ApolloClient<any>>();
 
   if (typeof window !== "undefined") {
@@ -31,7 +37,9 @@ export const ApolloNextAppProvider = ({
 
   return (
     <_ApolloProvider client={clientRef.current}>
-      <RehydrationContextProvider>{children}</RehydrationContextProvider>
+      <RehydrationContextProvider {...hydrationContextOptions}>
+        {children}
+      </RehydrationContextProvider>
     </_ApolloProvider>
   );
 };

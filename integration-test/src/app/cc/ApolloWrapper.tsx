@@ -12,15 +12,26 @@ import { SchemaLink } from "@apollo/client/link/schema";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
 import { delayLink } from "@/shared/delayLink";
-import { schema } from "../graphql/route";
+import { schema } from "../graphql/schema";
+
+import { useSSROnlySecret } from "ssr-only-secrets";
 
 setVerbosity("debug");
 loadDevMessages();
 loadErrorMessages();
 
-export function ApolloWrapper({ children }: React.PropsWithChildren<{}>) {
+export function ApolloWrapper({
+  children,
+  nonce,
+}: React.PropsWithChildren<{ nonce?: string }>) {
+  const actualNonce = useSSROnlySecret(nonce, "SECRET");
   return (
-    <ApolloNextAppProvider makeClient={makeClient}>
+    <ApolloNextAppProvider
+      makeClient={makeClient}
+      extraScriptProps={{
+        nonce: actualNonce,
+      }}
+    >
       {children}
     </ApolloNextAppProvider>
   );
