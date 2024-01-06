@@ -46,7 +46,7 @@
     "@apollo/client": "^3.8.6",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
-    "@types/node": "20.9.0",
+    "@types/node": "20.10.6",
     "@typescript-eslint/eslint-plugin": "5.55.0",
     "@typescript-eslint/parser": "5.55.0",
     "eslint": "8.36.0",
