@@ -56,7 +56,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rimraf": "5.0.0",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "typescript": "5.0.2",
     "vitest": "1.0.0"
   },
