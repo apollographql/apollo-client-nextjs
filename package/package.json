@@ -50,7 +50,7 @@
     "@typescript-eslint/eslint-plugin": "5.55.0",
     "@typescript-eslint/parser": "5.55.0",
     "eslint": "8.36.0",
-    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react": "7.33.2",
     "graphql": "16.8.1",
     "next": "14.0.0",
     "react": "18.2.0",
