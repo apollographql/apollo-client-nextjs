@@ -1,6 +1,31 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  lockFileMaintenance: { enabled: false },
-  ignorePaths: ["examples/**", "integration-test/**"],
-  skipInstalls: false,
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "ignorePaths": [
+    "examples/**",
+    "integration-test/**"
+  ],
+  "skipInstalls": false,
+  "packageRules": [
+    {
+      "groupName": "all @types",
+      "groupSlug": "all-types",
+      "matchPackagePatterns": [
+        "@types/*"
+      ]
+    },
+    {
+      "groupName": "all devDependencies",
+      "groupSlug": "all-dev",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "excludePackageNames": ["next"]
+    }
+  ]
 }
