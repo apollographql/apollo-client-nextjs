@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "server-only": "^0.0.1",
-    "superjson": "^1.12.2",
+    "superjson": "^2.0.0",
     "ts-invariant": "^0.10.3"
   }
 }
