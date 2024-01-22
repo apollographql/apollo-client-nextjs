@@ -43,7 +43,7 @@
     "prepack": "yarn test run && yarn build"
   },
   "devDependencies": {
-    "@apollo/client": "3.8.10",
+    "@apollo/client": "^3.8.10",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",

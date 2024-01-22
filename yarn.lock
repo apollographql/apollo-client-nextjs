@@ -38,7 +38,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.8.10":
+"@apollo/client@npm:^3.8.10":
   version: 3.8.10
   resolution: "@apollo/client@npm:3.8.10"
   dependencies:
@@ -73,47 +73,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.8.6":
-  version: 3.8.6
-  resolution: "@apollo/client@npm:3.8.6"
-  dependencies:
-    "@graphql-typed-document-node/core": "npm:^3.1.1"
-    "@wry/context": "npm:^0.7.3"
-    "@wry/equality": "npm:^0.5.6"
-    "@wry/trie": "npm:^0.4.3"
-    graphql-tag: "npm:^2.12.6"
-    hoist-non-react-statics: "npm:^3.3.2"
-    optimism: "npm:^0.17.5"
-    prop-types: "npm:^15.7.2"
-    response-iterator: "npm:^0.2.6"
-    symbol-observable: "npm:^4.0.0"
-    ts-invariant: "npm:^0.10.3"
-    tslib: "npm:^2.3.0"
-    zen-observable-ts: "npm:^1.2.5"
-  peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-    graphql-ws: ^5.5.5
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
-  peerDependenciesMeta:
-    graphql-ws:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    subscriptions-transport-ws:
-      optional: true
-  checksum: 497aa3a49eb6377066492989ac7c21611fa512ee965af20d3d8307b13b96eabba14e8718d75c2aefa9457713cfdc72ed43c0b0e7890a777a57d9b5eff8712572
-  languageName: node
-  linkType: hard
-
 "@apollo/experimental-nextjs-app-support@workspace:*, @apollo/experimental-nextjs-app-support@workspace:^, @apollo/experimental-nextjs-app-support@workspace:package":
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": "npm:3.8.10"
+    "@apollo/client": "npm:^3.8.10"
     "@total-typescript/shoehorn": "npm:0.1.1"
     "@tsconfig/recommended": "npm:1.0.3"
     "@types/node": "npm:20.11.5"
@@ -4970,15 +4934,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wry/context@npm:^0.7.3":
-  version: 0.7.3
-  resolution: "@wry/context@npm:0.7.3"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  checksum: e890f4c36fe93d4cff842ad794b4cab11bbc93e45091b560a0adac466cbcfcfb92f8897ffa5845a2a88c7be6c6a684c2d0f8a4ed071a635345c79755e7a48def
-  languageName: node
-  linkType: hard
-
 "@wry/equality@npm:^0.5.6":
   version: 0.5.6
   resolution: "@wry/equality@npm:0.5.6"
@@ -5219,7 +5174,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": "npm:^3.8.6"
+    "@apollo/client": "npm:^3.8.10"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@graphql-codegen/cli": "npm:3.3.1"
@@ -5252,7 +5207,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": "npm:^3.8.6"
+    "@apollo/client": "npm:^3.8.10"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
@@ -8378,7 +8333,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:^3.8.6"
+    "@apollo/client": "npm:^3.8.10"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"
@@ -8716,7 +8671,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "integration-test@workspace:integration-test"
   dependencies:
-    "@apollo/client": "npm:^3.8.6"
+    "@apollo/client": "npm:^3.8.10"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
