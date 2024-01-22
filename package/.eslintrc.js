@@ -8,8 +8,12 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
   ],
+  settings: {
+    react: { version: "detect" },
+  },
   overrides: [],
   parser: "@typescript-eslint/parser",
   parserOptions: {
