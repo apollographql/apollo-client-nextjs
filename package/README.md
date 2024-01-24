@@ -9,6 +9,10 @@
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.
 
+| ☑️  Apollo Client User Survey |
+| :----- |
+| What do you like best about Apollo Client? What needs to be improved? Please tell us by taking a [one-minute survey](https://docs.google.com/forms/d/e/1FAIpQLSczNDXfJne3ZUOXjk9Ursm9JYvhTh1_nFTDfdq3XBAFWCzplQ/viewform?usp=pp_url&entry.1170701325=Apollo+Client&entry.204965213=Readme). Your responses will help us understand Apollo Client usage and allow us to serve you better. |
+
 ## Detailed technical breakdown
 
 You can find a detailed technical breakdown of what this package does and why it needs to do so [in the discussion around the accompanying RFC](https://github.com/apollographql/apollo-client-nextjs/pull/9).
