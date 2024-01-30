@@ -9,6 +9,7 @@ import type { RehydrationCache } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
 import type { Cache, WatchQueryOptions } from "@apollo/client";
 import invariant from "ts-invariant";
+import { htmlEscapeJsonString } from "../util/htmlescape";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 
@@ -23,8 +24,8 @@ type DataToTransport = {
  */
 export function transportDataToJS(data: DataToTransport) {
   const key = Symbol.keyFor(ApolloSSRDataTransport);
-  return `(window[Symbol.for("${key}")] ??= []).push(${SuperJSON.stringify(
-    data
+  return `(window[Symbol.for("${key}")] ??= []).push(${htmlEscapeJsonString(
+    SuperJSON.stringify(data)
   )})`;
 }
 
