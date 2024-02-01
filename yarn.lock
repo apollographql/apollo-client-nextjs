@@ -38,24 +38,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.8.10":
-  version: 3.8.10
-  resolution: "@apollo/client@npm:3.8.10"
+"@apollo/client@npm:3.9.1, @apollo/client@npm:^3.9.1":
+  version: 3.9.1
+  resolution: "@apollo/client@npm:3.9.1"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
+    "@wry/caches": "npm:^1.0.0"
     "@wry/equality": "npm:^0.5.6"
     "@wry/trie": "npm:^0.5.0"
     graphql-tag: "npm:^2.12.6"
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
+    rehackt: "npm:0.0.3"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
     tslib: "npm:^2.3.0"
     zen-observable-ts: "npm:^1.2.5"
   peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    graphql: ^15.0.0 || ^16.0.0
     graphql-ws: ^5.5.5
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -69,7 +71,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: f28454904887f2b8df7782ef790583545bef1bd4839504769cc01cbbcc5471e9c3cc9ab60a26b586b4c98d4145184a15b07f35effcbb2785a43b5a85d26993e6
+  checksum: 76c7024fbb7bd4a8e4cb1a36193c0ca23340b78e3a47006af6d91bd250b91006d8334856ac91c235d040bcaaadc0ef6d6eb0bba6a4f48b7fa12174f029e9eee1
   languageName: node
   linkType: hard
 
@@ -77,7 +79,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:package"
   dependencies:
-    "@apollo/client": "npm:^3.8.10"
+    "@apollo/client": "npm:3.9.1"
     "@total-typescript/shoehorn": "npm:0.1.1"
     "@tsconfig/recommended": "npm:1.0.3"
     "@types/node": "npm:20.11.5"
@@ -98,7 +100,7 @@ __metadata:
     typescript: "npm:5.3.3"
     vitest: "npm:1.2.1"
   peerDependencies:
-    "@apollo/client": ">=3.8.0-rc || ^3.8.0 || >=3.9.0-alpha || >=3.9.0-beta || >=3.9.0-rc"
+    "@apollo/client": ">=3.8.0-rc || ^3.8.0 || >=3.9.0-alpha || >=3.9.0-beta || >=3.9.0-rc || ^3.9.0"
     next: ^13.4.1 || ^14.0.0
     react: ^18
   languageName: unknown
@@ -5104,7 +5106,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": "npm:^3.8.10"
+    "@apollo/client": "npm:^3.9.1"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@graphql-codegen/cli": "npm:3.3.1"
@@ -5137,7 +5139,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": "npm:^3.8.10"
+    "@apollo/client": "npm:^3.9.1"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
@@ -8256,7 +8258,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:^3.8.10"
+    "@apollo/client": "npm:^3.9.1"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"
@@ -8594,7 +8596,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "integration-test@workspace:integration-test"
   dependencies:
-    "@apollo/client": "npm:^3.8.10"
+    "@apollo/client": "npm:^3.9.1"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
@@ -11068,6 +11070,21 @@ __metadata:
     define-properties: "npm:^1.2.0"
     set-function-name: "npm:^2.0.0"
   checksum: 3fa5610b8e411bbc3a43ddfd13162f3a817beb43155fbd8caa24d4fd0ce2f431a8197541808772a5a06e5946cebfb68464c827827115bde0d11720a92fe2981a
+  languageName: node
+  linkType: hard
+
+"rehackt@npm:0.0.3":
+  version: 0.0.3
+  resolution: "rehackt@npm:0.0.3"
+  peerDependencies:
+    "@types/react": "*"
+    react: "*"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 2e3674d84aca46802f38cf5b01c62bf7d0ca5e324b2749dd79156fa61723e9f84df7778c39f97d351e815a852a8a8ac9633e29b6b7b8734d18042fda86620f54
   languageName: node
   linkType: hard
 
