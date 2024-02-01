@@ -1,6 +1,6 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
@@ -62,7 +62,7 @@
     "vitest": "1.2.1"
   },
   "peerDependencies": {
-    "@apollo/client": ">=3.8.0-rc || ^3.8.0 || >=3.9.0-alpha || >=3.9.0-beta || >=3.9.0-rc || ^3.9.0",
+    "@apollo/client": "^3.9.0",
     "next": "^13.4.1 || ^14.0.0",
     "react": "^18"
   },
