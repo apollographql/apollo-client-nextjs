@@ -3,9 +3,9 @@ import {
   buildManualDataTransport,
   resetManualSSRApolloSingletons,
 } from "../Manual";
-import { WrapApolloProvider } from "../WrapApolloProvider";
-
+import { WrapApolloProvider } from "../";
 import { ServerInsertedHTMLContext } from "next/navigation";
+
 export const ApolloNextAppProvider = WrapApolloProvider(
   buildManualDataTransport({
     useInsertHtml() {
@@ -15,3 +15,15 @@ export const ApolloNextAppProvider = WrapApolloProvider(
 );
 
 export const resetNextSSRApolloSingletons = resetManualSSRApolloSingletons;
+export {
+  WrappedInMemoryCache as NextSSRInMemoryCache,
+  WrappedApolloClient as NextSSRApolloClient,
+  useBackgroundQuery,
+  useFragment,
+  useQuery,
+  useReadQuery,
+  useSuspenseQuery,
+  SSRMultipartLink,
+  DebounceMultipartResponsesLink,
+  RemoveMultipartDirectivesLink,
+} from "..";

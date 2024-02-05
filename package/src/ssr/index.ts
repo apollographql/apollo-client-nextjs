@@ -1,7 +1,5 @@
-export { WrappedInMemoryCache as NextSSRInMemoryCache } from "./WrappedInMemoryCache";
-export { WrappedApolloClient as NextSSRApolloClient } from "./WrappedApolloClient";
-
-export { ApolloNextAppProvider, resetNextSSRApolloSingletons } from "./NextJs";
+export { WrappedInMemoryCache } from "./WrappedInMemoryCache";
+export { WrappedApolloClient } from "./WrappedApolloClient";
 
 export {
   useFragment,
@@ -14,3 +12,5 @@ export { SSRMultipartLink } from "./SSRMultipartLink";
 export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink";
 export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink";
 export { resetApolloSingletons } from "./testHelpers";
+
+export { WrapApolloProvider } from "./WrapApolloProvider";
