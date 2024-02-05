@@ -1,0 +1,57 @@
+/**
+ * implementation to be used with the experimental React hooks implemented in
+ * https://github.com/facebook/react/compare/main...phryneas:react:stream-injection
+ */
+
+import React from "react";
+import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
+import { DataTransportContext } from "../DataTransportAbstraction";
+import type { Cache, WatchQueryOptions } from "@apollo/client";
+
+declare module "react" {
+  const useActionChannel: <T>(onData: (data: T) => void) => (data: T) => void;
+  /**
+   * This api design lends itself to a memory leak - the value passed in here
+   * can never be removed from memory.
+   * Maybe going with a ref-like object as a return value is a better choice
+   * here.
+   */
+  const useStaticValue: <T>(data: T) => T;
+}
+
+export const ExperimentalReactDataTransport: DataTransportProviderImplementation =
+  ({
+    onRequestData,
+    onRequestStarted,
+    registerDispatchRequestStarted,
+    registerDispatchRequestData,
+    children,
+  }) => {
+    const dispatchRequestStarted = React.useActionChannel(
+      (options: WatchQueryOptions) => {
+        onRequestStarted?.(options);
+      }
+    );
+    const dispatchRequestData = React.useActionChannel(
+      (options: Cache.WriteOptions) => {
+        onRequestData?.(options);
+      }
+    );
+    registerDispatchRequestStarted?.(dispatchRequestStarted);
+    registerDispatchRequestData?.(dispatchRequestData);
+
+    return (
+      <DataTransportContext.Provider
+        value={React.useMemo(
+          () => ({
+            useStaticValueRef(value) {
+              return React.useRef(React.useStaticValue(value));
+            },
+          }),
+          []
+        )}
+      >
+        {children}
+      </DataTransportContext.Provider>
+    );
+  };

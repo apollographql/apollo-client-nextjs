@@ -1,0 +1,28 @@
+import type { InMemoryCacheConfig, Cache, Reference } from "@apollo/client";
+import { InMemoryCache as InMemoryCache } from "@apollo/client";
+import { createBackpressuredCallback } from "./backpressuredCallback";
+
+class InMemoryCacheSSRImpl extends InMemoryCache {
+  protected writeQueue = createBackpressuredCallback<Cache.WriteOptions>();
+
+  constructor(config?: InMemoryCacheConfig) {
+    super(config);
+  }
+
+  write(options: Cache.WriteOptions<any, any>): Reference | undefined {
+    this.writeQueue.push(options);
+    return super.write(options);
+  }
+}
+
+export type WrappedInMemoryCache = InMemoryCache & {
+  writeQueue?: {
+    register?: (
+      instance: ((options: Cache.WriteOptions<any, any>) => void) | null
+    ) => void;
+  };
+};
+
+export const WrappedInMemoryCache: {
+  new (config?: InMemoryCacheConfig): WrappedInMemoryCache;
+} = typeof window === "undefined" ? InMemoryCacheSSRImpl : InMemoryCache;
