@@ -6,7 +6,7 @@ import {
 import { WrapApolloProvider } from "../";
 import { ServerInsertedHTMLContext } from "next/navigation";
 
-export const ApolloNextAppProvider = WrapApolloProvider(
+export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
   buildManualDataTransport({
     useInsertHtml() {
       return useContext(ServerInsertedHTMLContext);

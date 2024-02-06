@@ -14,15 +14,36 @@
     "app-router",
     "app"
   ],
+  "type": "module",
   "exports": {
-    "./ssr": "./dist/ssr/index.js",
-    "./rsc": "./dist/rsc/index.js",
+    "./rsc": {
+      "require": {
+        "types": "./dist/rsc/index.d.cts",
+        "react-server": "./dist/rsc/index.cjs"
+      },
+      "import": {
+        "types": "./dist/rsc/index.d.ts",
+        "react-server": "./dist/rsc/index.js"
+      }
+    },
+    "./ssr": {
+      "require": {
+        "types": "./dist/ssr/next.ssr.d.cts",
+        "node": "./dist/ssr/next.ssr.cjs",
+        "default": "./dist/ssr/next.browser.cjs"
+      },
+      "import": {
+        "types": "./dist/ssr/next.ssr.d.ts",
+        "node": "./dist/ssr/next.ssr.js",
+        "default": "./dist/ssr/next.browser.js"
+      }
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "ssr": [
-        "./dist/ssr/index.d.ts"
+        "./dist/ssr/next.ssr.d.ts"
       ],
       "rsc": [
         "./dist/rsc/index.d.ts"
@@ -38,12 +59,14 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf dist; echo 'building package'; tsc",
+    "build": "rimraf dist; tsup",
     "test": "vitest",
-    "prepack": "yarn test run && yarn build"
+    "prepack": "yarn test run && yarn build",
+    "test-bundle": "attw --pack ."
   },
   "devDependencies": {
     "@apollo/client": "3.9.1",
+    "@arethetypeswrong/cli": "0.13.6",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",
@@ -58,6 +81,7 @@
     "react-dom": "18.2.0",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
+    "tsup": "8.0.1",
     "typescript": "5.3.3",
     "vitest": "1.2.1"
   },

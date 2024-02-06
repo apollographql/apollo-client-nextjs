@@ -226,6 +226,8 @@ export const WrappedApolloClient: {
   new <TCacheShape>(
     options: ApolloClientOptions<TCacheShape>
   ): WrappedApolloClient<TCacheShape>;
-} = (
-  typeof window === "undefined" ? ApolloClientSSRImpl : ApolloClientBrowserImpl
+} = /*#__PURE__*/ (
+  process.env.REACT_ENV === "ssr"
+    ? ApolloClientSSRImpl
+    : ApolloClientBrowserImpl
 ) as any;

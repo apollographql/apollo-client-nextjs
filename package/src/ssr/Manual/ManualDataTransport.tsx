@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useId, useMemo, useRef } from "react";
 import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
 import { DataTransportContext } from "../DataTransportAbstraction";
 import type { Cache, WatchQueryOptions } from "@apollo/client";
@@ -24,7 +24,7 @@ const buildManualDataTransportSSRImpl = ({
     if (!insertHtml) {
       throw new Error("No data transport available!");
     }
-    const rehydrationContext = React.useRef<RehydrationContextValue>();
+    const rehydrationContext = useRef<RehydrationContextValue>();
     if (!rehydrationContext.current) {
       rehydrationContext.current = buildApolloRehydrationContext({
         insertHtml,
@@ -42,14 +42,14 @@ const buildManualDataTransportSSRImpl = ({
     const useStaticValueRef = useCallback(function useStaticValueRef<T>(
       value: T
     ) {
-      const id = React.useId();
+      const id = useId();
       rehydrationContext.current!.transportValueData[id] = value;
       return { current: value };
     }, []);
 
     return (
       <DataTransportContext.Provider
-        value={React.useMemo(
+        value={useMemo(
           () => ({
             useStaticValueRef,
           }),
@@ -68,7 +68,7 @@ const buildManualDataTransportBrowserImpl =
       onRequestStarted,
       onRequestData,
     }) {
-      const rehydrationCache = React.useRef<RehydrationCache>({});
+      const rehydrationCache = useRef<RehydrationCache>({});
 
       registerDataTransport({
         onRequestStarted: onRequestStarted!,
@@ -81,9 +81,9 @@ const buildManualDataTransportBrowserImpl =
       const useStaticValueRef = useCallback(function useStaticValueRef<T>(
         v: T
       ) {
-        const id = React.useId();
+        const id = useId();
         const store = rehydrationCache.current;
-        const dataRef = React.useRef(UNINITIALIZED as T);
+        const dataRef = useRef(UNINITIALIZED as T);
         if (dataRef.current === UNINITIALIZED) {
           if (store && id in store) {
             dataRef.current = store[id] as T;
@@ -97,7 +97,7 @@ const buildManualDataTransportBrowserImpl =
 
       return (
         <DataTransportContext.Provider
-          value={React.useMemo(
+          value={useMemo(
             () => ({
               useStaticValueRef,
             }),
@@ -114,6 +114,6 @@ const UNINITIALIZED = {};
 export const buildManualDataTransport: (
   args: BuildArgs
 ) => DataTransportProviderImplementation<HydrationContextOptions> =
-  typeof window === "undefined"
+  process.env.REACT_ENV === "ssr"
     ? buildManualDataTransportSSRImpl
     : buildManualDataTransportBrowserImpl;

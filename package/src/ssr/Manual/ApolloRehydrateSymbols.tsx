@@ -6,4 +6,6 @@ declare global {
     [ApolloSSRDataTransport]?: DataTransport<SuperJSONResult>;
   }
 }
-export const ApolloSSRDataTransport = Symbol.for("ApolloSSRDataTransport");
+export const ApolloSSRDataTransport = /*#__PURE__*/ Symbol.for(
+  "ApolloSSRDataTransport"
+);

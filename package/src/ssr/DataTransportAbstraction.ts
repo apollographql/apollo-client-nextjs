@@ -1,5 +1,6 @@
-import React from "react";
+import type React from "react";
 import type { Cache, WatchQueryOptions } from "@apollo/client";
+import { createContext } from "react";
 
 interface DataTransportAbstraction {
   /**
@@ -11,16 +12,7 @@ interface DataTransportAbstraction {
 }
 
 export const DataTransportContext =
-  React.createContext<DataTransportAbstraction | null>(null);
-
-export function useStaticValueRef<T>(value: T): { current: T } {
-  const dataTransport = React.useContext(DataTransportContext);
-  if (!dataTransport)
-    throw new Error(
-      "useStaticValue must be used within a DataTransportProvider"
-    );
-  return dataTransport.useStaticValueRef(value);
-}
+  /*#__PURE__*/ createContext<DataTransportAbstraction | null>(null);
 
 export type DataTransportProviderImplementation<
   // eslint-disable-next-line @typescript-eslint/ban-types

@@ -1,4 +1,4 @@
-import { ApolloClientSingleton } from "./WrapApolloProvider";
+import { ApolloClientSingleton } from "./symbols";
 
 /**
  * Resets the singleton instances created for the Apollo SSR data transport and caches.

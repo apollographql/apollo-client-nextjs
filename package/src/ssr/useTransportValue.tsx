@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useStaticValueRef } from "./DataTransportAbstraction";
+import { useStaticValueRef } from "./useStaticValueRef";
 
 /**
  * A hook that mostly acts as an identity function.

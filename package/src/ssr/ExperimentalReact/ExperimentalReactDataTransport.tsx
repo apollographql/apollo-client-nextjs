@@ -3,7 +3,12 @@
  * https://github.com/facebook/react/compare/main...phryneas:react:stream-injection
  */
 
-import React from "react";
+import React, {
+  useMemo,
+  useActionChannel,
+  useStaticValue,
+  useRef,
+} from "react";
 import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
 import { DataTransportContext } from "../DataTransportAbstraction";
 import type { Cache, WatchQueryOptions } from "@apollo/client";
@@ -27,12 +32,12 @@ export const ExperimentalReactDataTransport: DataTransportProviderImplementation
     registerDispatchRequestData,
     children,
   }) => {
-    const dispatchRequestStarted = React.useActionChannel(
+    const dispatchRequestStarted = useActionChannel(
       (options: WatchQueryOptions) => {
         onRequestStarted?.(options);
       }
     );
-    const dispatchRequestData = React.useActionChannel(
+    const dispatchRequestData = useActionChannel(
       (options: Cache.WriteOptions) => {
         onRequestData?.(options);
       }
@@ -42,10 +47,10 @@ export const ExperimentalReactDataTransport: DataTransportProviderImplementation
 
     return (
       <DataTransportContext.Provider
-        value={React.useMemo(
+        value={useMemo(
           () => ({
             useStaticValueRef(value) {
-              return React.useRef(React.useStaticValue(value));
+              return useRef(useStaticValue(value));
             },
           }),
           []

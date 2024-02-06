@@ -16,17 +16,15 @@ export function registerLateInitializingQueue<K extends ValidQueueKeys>(
   key: K,
   callback: (data: Parameters<NonNullable<Window[K]>["push"]>[0]) => void
 ) {
-  if (typeof window !== "undefined") {
-    const previousData = window[key] || [];
-    if (Array.isArray(previousData)) {
-      window[key] = {
-        push: (...data: any[]) => {
-          for (const value of data) {
-            callback(value);
-          }
-        },
-      };
-      window[key].push(...previousData);
-    }
+  const previousData = window[key] || [];
+  if (Array.isArray(previousData)) {
+    window[key] = {
+      push: (...data: any[]) => {
+        for (const value of data) {
+          callback(value);
+        }
+      },
+    };
+    window[key].push(...previousData);
   }
 }

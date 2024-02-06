@@ -25,4 +25,7 @@ export type WrappedInMemoryCache = InMemoryCache & {
 
 export const WrappedInMemoryCache: {
   new (config?: InMemoryCacheConfig): WrappedInMemoryCache;
-} = typeof window === "undefined" ? InMemoryCacheSSRImpl : InMemoryCache;
+} =
+  /*#__PURE__*/ process.env.REACT_ENV === "ssr"
+    ? InMemoryCacheSSRImpl
+    : InMemoryCache;

@@ -14,7 +14,7 @@ export const useFragment = wrap(orig_useFragment, [
   "missing",
 ]);
 export const useQuery = wrap<typeof orig_useQuery>(
-  typeof window === "undefined"
+  process.env.REACT_ENV === "ssr"
     ? (query, options) =>
         orig_useQuery(query, { ...options, fetchPolicy: "cache-only" })
     : orig_useQuery,

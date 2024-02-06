@@ -1,10 +1,10 @@
 "use client";
-import * as React from "react";
+import React from "react";
+import { useRef } from "react";
 import { WrappedApolloClient } from "./WrappedApolloClient";
 import { ApolloProvider } from "@apollo/client";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction";
-
-export const ApolloClientSingleton = Symbol.for("ApolloClientSingleton");
+import { ApolloClientSingleton } from "./symbols";
 
 declare global {
   interface Window {
@@ -28,14 +28,14 @@ export function WrapApolloProvider<ExtraProps>(
       makeClient: () => WrappedApolloClient<any>;
     } & ExtraProps
   >) => {
-    const clientRef = React.useRef<WrappedApolloClient<any>>();
+    const clientRef = useRef<WrappedApolloClient<any>>();
 
-    if (typeof window !== "undefined") {
-      clientRef.current = window[ApolloClientSingleton] ??= makeClient();
-    } else {
+    if (process.env.REACT_ENV === "ssr") {
       if (!clientRef.current) {
         clientRef.current = makeClient();
       }
+    } else {
+      clientRef.current = window[ApolloClientSingleton] ??= makeClient();
     }
 
     if (!(clientRef.current instanceof WrappedApolloClient)) {
