@@ -37,6 +37,7 @@ export default function Page() {
 
 function DisplayData({ queryRef }: { queryRef: QueryReference<Data> }) {
   const { data } = useReadQuery(queryRef);
+  globalThis.hydrationFinished?.();
   return (
     <ul>
       {data.products.map(({ id, title }) => (

@@ -22,6 +22,7 @@ export const dynamic = "force-dynamic";
 
 export default function Page() {
   const result = useQuery(QUERY);
+  globalThis.hydrationFinished?.();
 
   if (!result.data) {
     return <div>Loading...</div>;

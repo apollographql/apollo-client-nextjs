@@ -3,11 +3,13 @@ import { test } from "../../../../fixture";
 
 test.describe("CC static", () => {
   test.describe("useSuspenseQuery", () => {
-    test("one query", async ({ page, blockRequest }) => {
+    test("one query", async ({ page, blockRequest, hydrationFinished }) => {
       await page.goto("http://localhost:3000/cc/static/useSuspenseQuery", {
         waitUntil: "commit",
       });
 
+      await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+      await hydrationFinished;
       await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
     });
   });

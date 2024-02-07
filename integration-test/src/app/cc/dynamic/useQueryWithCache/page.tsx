@@ -26,6 +26,7 @@ export const dynamic = "force-dynamic";
 export default function Page() {
   useSuspenseQuery(QUERY); // fill cache with `useSuspenseQuery`
   const result = useQuery(QUERY);
+  globalThis.hydrationFinished?.();
 
   if (!result.data) {
     return <div>Loading...</div>;
