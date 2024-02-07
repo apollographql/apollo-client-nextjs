@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useStaticValueRef } from "./useStaticValueRef";
+import { useContext, useEffect, useState } from "react";
+import { DataTransportContext } from "./DataTransportAbstraction";
 
 /**
  * A hook that mostly acts as an identity function.
@@ -15,12 +15,19 @@ export function useTransportValue<T>(value: T): T {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
 
-  const valueRef = useStaticValueRef(value);
+  const dataTransport = useContext(DataTransportContext);
+  if (!dataTransport)
+    throw new Error(
+      "useTransportValue must be used within a streaming-specific ApolloProvider"
+    );
+  const valueRef = dataTransport.useStaticValueRef(value);
   if (isClient) {
     // @ts-expect-error this value will never be used again
     // so we can safely delete it
     valueRef.current = undefined;
   }
+
+  console.log({ isClient, value, valueRefCurrent: valueRef.current });
 
   return isClient ? value : valueRef.current;
 }
