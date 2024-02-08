@@ -1,7 +1,7 @@
-import React, { useCallback, useId, useMemo, useRef } from "react";
+import React, { useCallback, useId, useMemo, useRef } from "rehackt";
 import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
 import { DataTransportContext } from "../DataTransportAbstraction";
-import type { Cache, WatchQueryOptions } from "@apollo/client";
+import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import type { RehydrationCache, RehydrationContextValue } from "./types";
 import type { HydrationContextOptions } from "./RehydrationContext";
 import { buildApolloRehydrationContext } from "./RehydrationContext";

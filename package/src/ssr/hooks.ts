@@ -5,7 +5,7 @@ import {
   useReadQuery as orig_useReadQuery,
   useQuery as orig_useQuery,
   useBackgroundQuery as orig_useBackgroundQuery,
-} from "@apollo/client";
+} from "@apollo/client/index.js";
 import { useTransportValue } from "./useTransportValue";
 
 export const useFragment = wrap(orig_useFragment, [

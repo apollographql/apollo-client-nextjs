@@ -5,11 +5,11 @@ import type {
   FetchResult,
   DocumentNode,
   Cache,
-} from "@apollo/client";
-import { ApolloClient, Observable } from "@apollo/client";
+} from "@apollo/client/index.js";
+import { ApolloClient, Observable } from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager";
-import { print } from "@apollo/client/utilities";
-import { canonicalStringify } from "@apollo/client/cache";
+import { print } from "@apollo/client/utilities/index.js";
+import { canonicalStringify } from "@apollo/client/cache/index.js";
 import invariant from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback";
 import { WrappedInMemoryCache } from "./WrappedInMemoryCache";

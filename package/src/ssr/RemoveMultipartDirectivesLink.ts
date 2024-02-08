@@ -1,10 +1,14 @@
-import type { Operation, NextLink, DocumentNode } from "@apollo/client";
-import { ApolloLink } from "@apollo/client";
-import type { RemoveDirectiveConfig } from "@apollo/client/utilities";
+import type {
+  Operation,
+  NextLink,
+  DocumentNode,
+} from "@apollo/client/index.js";
+import { ApolloLink } from "@apollo/client/index.js";
+import type { RemoveDirectiveConfig } from "@apollo/client/utilities/index.js";
 import {
   Observable,
   removeDirectivesFromDocument,
-} from "@apollo/client/utilities";
+} from "@apollo/client/utilities/index.js";
 import type { DirectiveNode } from "graphql";
 
 interface RemoveMultipartDirectivesConfig {

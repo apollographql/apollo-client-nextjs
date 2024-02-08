@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext } from "rehackt";
 import {
   buildManualDataTransport,
   resetManualSSRApolloSingletons,

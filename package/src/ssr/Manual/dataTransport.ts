@@ -2,7 +2,7 @@ import SuperJSON from "superjson";
 import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols";
 import type { RehydrationCache } from "./types";
 import { registerLateInitializingQueue } from "./lateInitializingQueue";
-import type { Cache, WatchQueryOptions } from "@apollo/client";
+import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import invariant from "ts-invariant";
 import { htmlEscapeJsonString } from "../../util/htmlescape";
 

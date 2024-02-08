@@ -8,10 +8,10 @@ import React, {
   useActionChannel,
   useStaticValue,
   useRef,
-} from "react";
+} from "rehackt";
 import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
 import { DataTransportContext } from "../DataTransportAbstraction";
-import type { Cache, WatchQueryOptions } from "@apollo/client";
+import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 
 declare module "react" {
   const useActionChannel: <T>(onData: (data: T) => void) => (data: T) => void;

@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "rehackt";
 import { DataTransportContext } from "./DataTransportAbstraction";
 
 /**
@@ -26,8 +26,6 @@ export function useTransportValue<T>(value: T): T {
     // so we can safely delete it
     valueRef.current = undefined;
   }
-
-  console.log({ isClient, value, valueRefCurrent: valueRef.current });
 
   return isClient ? value : valueRef.current;
 }

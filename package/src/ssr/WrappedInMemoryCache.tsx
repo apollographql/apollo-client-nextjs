@@ -1,5 +1,9 @@
-import type { InMemoryCacheConfig, Cache, Reference } from "@apollo/client";
-import { InMemoryCache as InMemoryCache } from "@apollo/client";
+import type {
+  InMemoryCacheConfig,
+  Cache,
+  Reference,
+} from "@apollo/client/index.js";
+import { InMemoryCache as InMemoryCache } from "@apollo/client/index.js";
 import { createBackpressuredCallback } from "./backpressuredCallback";
 
 class InMemoryCacheSSRImpl extends InMemoryCache {

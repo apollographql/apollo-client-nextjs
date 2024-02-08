@@ -1,6 +1,6 @@
 import type React from "react";
-import type { Cache, WatchQueryOptions } from "@apollo/client";
-import { createContext } from "react";
+import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
+import { createContext } from "rehackt";
 
 interface DataTransportAbstraction {
   /**

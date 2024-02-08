@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
-import { useRef } from "react";
+import React from "rehackt";
+import { useRef } from "rehackt";
 import { WrappedApolloClient } from "./WrappedApolloClient";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/index.js";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction";
 import { ApolloClientSingleton } from "./symbols";
 

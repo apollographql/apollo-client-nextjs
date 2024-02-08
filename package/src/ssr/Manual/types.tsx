@@ -1,4 +1,4 @@
-import type { Cache, WatchQueryOptions } from "@apollo/client";
+import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import type React from "react";
 import type { DataTransport } from "./dataTransport";
 
