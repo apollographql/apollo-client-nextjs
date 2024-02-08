@@ -20,70 +20,70 @@
       "require": {
         "types": "./dist/combined.d.cts",
         "react-server": "./dist/rsc/index.cjs",
-        "node": "./dist/ssr/index.ssr.cjs",
-        "browser": "./dist/ssr/index.browser.cjs"
+        "browser": "./dist/ssr/index.browser.cjs",
+        "node": "./dist/ssr/index.ssr.cjs"
       },
       "import": {
         "types": "./dist/combined.d.ts",
         "react-server": "./dist/rsc/index.js",
-        "node": "./dist/ssr/index.ssr.js",
-        "browser": "./dist/ssr/index.browser.js"
+        "browser": "./dist/ssr/index.browser.js",
+        "node": "./dist/ssr/index.ssr.js"
       }
     },
     "./core": {
       "require": {
         "types": "./dist/combined.d.cts",
         "react-server": "./dist/rsc/index.cjs",
-        "node": "./dist/ssr/index.ssr.cjs",
-        "browser": "./dist/ssr/index.browser.cjs"
+        "browser": "./dist/ssr/index.browser.cjs",
+        "node": "./dist/ssr/index.ssr.cjs"
       },
       "import": {
         "types": "./dist/combined.d.ts",
         "react-server": "./dist/rsc/index.js",
-        "node": "./dist/ssr/index.ssr.js",
-        "browser": "./dist/ssr/index.browser.js"
+        "browser": "./dist/ssr/index.browser.js",
+        "node": "./dist/ssr/index.ssr.js"
       }
     },
     "./rsc": {
       "require": {
         "types": "./dist/rsc/index.d.cts",
         "react-server": "./dist/rsc/index.cjs",
-        "node": "./dist/empty.cjs",
-        "browser": "./dist/empty.cjs"
+        "browser": "./dist/empty.cjs",
+        "node": "./dist/empty.cjs"
       },
       "import": {
         "types": "./dist/rsc/index.d.ts",
         "react-server": "./dist/rsc/index.js",
-        "node": "./dist/empty.js",
-        "browser": "./dist/empty.js"
+        "browser": "./dist/empty.js",
+        "node": "./dist/empty.js"
       }
     },
     "./ssr": {
       "require": {
         "types": "./dist/ssr/next.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
-        "node": "./dist/ssr/next.ssr.cjs",
-        "browser": "./dist/ssr/next.browser.cjs"
+        "browser": "./dist/ssr/next.browser.cjs",
+        "node": "./dist/ssr/next.ssr.cjs"
       },
       "import": {
         "types": "./dist/ssr/next.ssr.d.ts",
         "react-server": "./dist/empty.js",
-        "node": "./dist/ssr/next.ssr.js",
-        "browser": "./dist/ssr/next.browser.js"
+        "browser": "./dist/ssr/next.browser.js",
+        "node": "./dist/ssr/next.ssr.js"
       }
     },
     "./manual": {
       "require": {
         "types": "./dist/manual.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
-        "node": "./dist/ssr/manual.ssr.cjs",
-        "browser": "./dist/ssr/manual.browser.cjs"
+        "browser": "./dist/ssr/manual.browser.cjs",
+        "node": "./dist/ssr/manual.ssr.cjs"
       },
       "import": {
         "types": "./dist/manual.ssr.d.ts",
         "react-server": "./dist/empty.js",
-        "node": "./dist/ssr/manual.ssr.js",
-        "browser": "./dist/ssr/manual.browser.js"
+        "browser": "./dist/ssr/manual.browser.js",
+        "node": "./dist/ssr/manual.ssr.js"
       }
     },
     "./package.json": "./package.json"
@@ -126,6 +126,7 @@
   "devDependencies": {
     "@apollo/client": "3.9.1",
     "@arethetypeswrong/cli": "0.13.6",
+    "@testing-library/react": "^14.2.1",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",
@@ -136,8 +137,10 @@
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "glob": "^10.3.10",
+    "global-jsdom": "^24.0.0",
     "globstar": "^1.0.0",
     "graphql": "16.8.1",
+    "jsdom": "^24.0.0",
     "next": "14.1.0",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
