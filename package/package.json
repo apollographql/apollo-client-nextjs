@@ -71,7 +71,7 @@
     "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
     "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
     "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
-    "prepack": "yarn test run && yarn build",
+    "prepack": "yarn run test && yarn build",
     "test-bundle": "attw --pack ."
   },
   "devDependencies": {
