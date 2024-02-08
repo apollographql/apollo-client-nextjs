@@ -40,7 +40,7 @@
   "scripts": {
     "build": "rimraf dist; echo 'building package'; tsc",
     "test": "vitest",
-    "prepack": "yarn test run && yarn build"
+    "prepack": "yarn build && yarn run test"
   },
   "devDependencies": {
     "@apollo/client": "3.9.1",
