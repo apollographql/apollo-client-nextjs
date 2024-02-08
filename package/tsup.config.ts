@@ -26,7 +26,10 @@ const ssrEntryPoints = {
 export default defineConfig((options) => [
   {
     ...defaultConfig(options),
-    entry: { "rsc/index": "src/rsc/index.ts" },
+    entry: {
+      "rsc/index": "src/rsc/index.ts",
+      empty: "src/empty.ts",
+    },
   },
   {
     ...defaultConfig(options),

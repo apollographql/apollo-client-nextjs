@@ -19,23 +19,29 @@
     "./rsc": {
       "require": {
         "types": "./dist/rsc/index.d.cts",
-        "react-server": "./dist/rsc/index.cjs"
+        "react-server": "./dist/rsc/index.cjs",
+        "default": "./dist/empty.cjs"
       },
       "import": {
         "types": "./dist/rsc/index.d.ts",
-        "react-server": "./dist/rsc/index.js"
+        "react-server": "./dist/rsc/index.js",
+        "default": "./dist/empty.js"
       }
     },
     "./ssr": {
       "require": {
         "types": "./dist/ssr/next.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
         "node": "./dist/ssr/next.ssr.cjs",
-        "default": "./dist/ssr/next.browser.cjs"
+        "browser": "./dist/ssr/next.browser.cjs",
+        "default": "./dist/empty.cjs"
       },
       "import": {
         "types": "./dist/ssr/next.ssr.d.ts",
+        "react-server": "./dist/empty.js",
         "node": "./dist/ssr/next.ssr.js",
-        "default": "./dist/ssr/next.browser.js"
+        "browser": "./dist/ssr/next.browser.js",
+        "default": "./dist/empty.js"
       }
     },
     "./package.json": "./package.json"
@@ -60,7 +66,11 @@
   ],
   "scripts": {
     "build": "rimraf dist; tsup",
-    "test": "vitest",
+    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
+    "test:base": "node --loader tsx --no-warnings --test \"$@\" src/**/*.test.ts",
+    "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
+    "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
+    "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
     "prepack": "yarn test run && yarn build",
     "test-bundle": "attw --pack ."
   },
@@ -72,16 +82,20 @@
     "@types/node": "20.11.5",
     "@typescript-eslint/eslint-plugin": "6.19.0",
     "@typescript-eslint/parser": "6.19.0",
+    "concurrently": "^8.2.2",
     "eslint": "8.56.0",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "glob": "^10.3.10",
+    "globstar": "^1.0.0",
     "graphql": "16.8.1",
     "next": "14.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.0-canary-60a927d04-20240113",
+    "react-dom": "18.3.0-canary-60a927d04-20240113",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.1",
+    "tsx": "^4.7.0",
     "typescript": "5.3.3",
     "vitest": "1.2.1"
   },
@@ -91,6 +105,7 @@
     "react": "^18"
   },
   "dependencies": {
+    "rehackt": "^0.0.4",
     "server-only": "^0.0.1",
     "superjson": "^1.12.2 || ^2.0.0",
     "ts-invariant": "^0.10.3"

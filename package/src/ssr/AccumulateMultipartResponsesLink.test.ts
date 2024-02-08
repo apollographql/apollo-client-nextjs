@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { ExecutionPatchResult, FetchResult } from "@apollo/client";
-import { ApolloLink, Observable, gql } from "@apollo/client";
-import { AccumulateMultipartResponsesLink } from "./AccumulateMultipartResponsesLink";
-import { test, expect, assert, beforeEach, afterEach, vi } from "vitest";
+import type {
+  ExecutionPatchResult,
+  FetchResult,
+} from "@apollo/client/index.js";
+import { ApolloLink, Observable, gql } from "@apollo/client/index.js";
+import { test, mock } from "node:test";
+import assert from "node:assert";
 import { fromPartial } from "@total-typescript/shoehorn";
 import type { SubscriptionObserver } from "zen-observable-ts";
+import { runInConditions } from "../util/runInConditions";
 
-beforeEach(() => {
-  vi.useFakeTimers();
-});
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+runInConditions("node", "browser");
+
+const { DebounceMultipartResponsesLink: AccumulateMultipartResponsesLink } =
+  await import("@apollo/experimental-nextjs-app-support/ssr");
 
 test("normal queries can resolve synchronously", () => {
   const query = gql`
@@ -32,7 +34,7 @@ test("normal queries can resolve synchronously", () => {
   );
   assert(nextLink.observer);
 
-  expect(subscriptionStatus).toStrictEqual({
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [],
     error: undefined,
     complete: false,
@@ -40,7 +42,7 @@ test("normal queries can resolve synchronously", () => {
 
   nextLink.observer.next({ data: { fastField: "fast" } });
   nextLink.observer.complete();
-  expect(subscriptionStatus).toStrictEqual({
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [{ data: { fastField: "fast" } }],
     error: undefined,
     complete: true,
@@ -66,7 +68,7 @@ test("deferred query will complete synchonously if maxDelay is 0", () => {
   );
   assert(nextLink.observer);
 
-  expect(subscriptionStatus).toStrictEqual({
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [],
     error: undefined,
     complete: false,
@@ -74,8 +76,8 @@ test("deferred query will complete synchonously if maxDelay is 0", () => {
 
   nextLink.observer.next({ data: { fastField: "fast" } });
   // no complete call here!
-  expect(nextLink.observer.closed).toBeTruthy();
-  expect(subscriptionStatus).toStrictEqual({
+  assert.ok(nextLink.observer.closed);
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [{ data: { fastField: "fast" } }],
     error: undefined,
     complete: true,
@@ -83,6 +85,8 @@ test("deferred query will complete synchonously if maxDelay is 0", () => {
 });
 
 test("`next` call will be debounced and results will be merged together", () => {
+  mock.timers.enable();
+
   const query = gql`
     query {
       fastField
@@ -104,19 +108,19 @@ test("`next` call will be debounced and results will be merged together", () => 
   );
   assert(nextLink.observer);
 
-  expect(subscriptionStatus).toStrictEqual({
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [],
     error: undefined,
     complete: false,
   });
 
-  vi.advanceTimersByTime(100);
+  mock.timers.tick(100);
   // initial response after 100ms
   nextLink.observer.next({ data: { fastField: "fast" } });
 
-  vi.advanceTimersByTime(100);
-  expect(nextLink.observer.closed).toBeFalsy();
-  expect(subscriptionStatus).toStrictEqual({
+  mock.timers.tick(100);
+  assert.ok(!nextLink.observer.closed);
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [],
     error: undefined,
     complete: false,
@@ -132,19 +136,19 @@ test("`next` call will be debounced and results will be merged together", () => 
     ],
   });
 
-  vi.advanceTimersByTime(899);
+  mock.timers.tick(899);
   // at 1099ms, 999ms after the initial response, we still don't have our final result
-  expect(nextLink.observer.closed).toBeFalsy();
-  expect(subscriptionStatus).toStrictEqual({
+  assert.ok(!nextLink.observer.closed);
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [],
     error: undefined,
     complete: false,
   });
 
-  vi.advanceTimersByTime(2);
+  mock.timers.tick(2);
   // after 1101ms, 1001ms after the initial response, we have our final result
-  expect(nextLink.observer.closed).toBeTruthy();
-  expect(subscriptionStatus).toStrictEqual({
+  assert.ok(nextLink.observer.closed);
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [{ data: { fastField: "fast", slowField: "slow" } }],
     error: undefined,
     complete: true,
@@ -160,8 +164,8 @@ test("`next` call will be debounced and results will be merged together", () => 
     ],
   });
 
-  expect(nextLink.observer.closed).toBeTruthy();
-  expect(subscriptionStatus).toStrictEqual({
+  assert.ok(nextLink.observer.closed);
+  assert.deepStrictEqual(subscriptionStatus, {
     results: [{ data: { fastField: "fast", slowField: "slow" } }],
     error: undefined,
     complete: true,
