@@ -67,7 +67,7 @@
   "scripts": {
     "build": "rimraf dist; tsup",
     "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
-    "test:base": "node --loader tsx --no-warnings --test \"$@\" src/**/*.test.ts",
+    "test:base": "node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.ts",
     "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
     "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
     "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
