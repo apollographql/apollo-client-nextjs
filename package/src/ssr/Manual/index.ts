@@ -1,7 +1,7 @@
-export { buildManualDataTransport } from "./ManualDataTransport";
+export { buildManualDataTransport } from "./ManualDataTransport.js";
 
-import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols";
-import { resetApolloSingletons } from "../testHelpers";
+import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols.js";
+import { resetApolloSingletons } from "../testHelpers.js";
 
 /**
  * Resets the singleton instances created for the Apollo SSR data transport and caches.

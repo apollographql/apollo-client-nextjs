@@ -1,5 +1,5 @@
 import { parseArgs } from "node:util";
-
+import { test } from "node:test";
 type Condition = "react-server" | "node" | "browser" | "default";
 
 /**
@@ -9,7 +9,24 @@ type Condition = "react-server" | "node" | "browser" | "default";
  * @param validConditions
  */
 export function runInConditions(...validConditions: Condition[]) {
-  console.log(process.execArgv);
+  if (!conditionActive(validConditions)) {
+    process.exit(0);
+  }
+}
+
+export function testIn(...validConditions: Condition[]) {
+  if (conditionActive(validConditions)) {
+    return test;
+  }
+  return new Proxy(test, {
+    apply() {},
+    get() {
+      return function () {};
+    },
+  });
+}
+
+function conditionActive(validConditions: Condition[]) {
   const args = parseArgs({
     args: (process.env.NODE_OPTIONS || "").split(" ").concat(process.execArgv),
     options: {
@@ -21,12 +38,10 @@ export function runInConditions(...validConditions: Condition[]) {
     },
     strict: false,
   });
-  console.log(args);
-  if (
-    !validConditions.some(
-      (condition) => args.values.conditions?.includes(condition)
-    )
-  ) {
-    process.exit(0);
-  }
+
+  const activeConditions = args.values.conditions || [];
+
+  return validConditions.some((condition) =>
+    activeConditions.includes(condition)
+  );
 }

@@ -16,16 +16,46 @@
   ],
   "type": "module",
   "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
+        "node": "./dist/ssr/index.ssr.cjs",
+        "browser": "./dist/ssr/index.browser.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/rsc/index.js",
+        "node": "./dist/ssr/index.ssr.js",
+        "browser": "./dist/ssr/index.browser.js"
+      }
+    },
+    "./core": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
+        "node": "./dist/ssr/index.ssr.cjs",
+        "browser": "./dist/ssr/index.browser.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/rsc/index.js",
+        "node": "./dist/ssr/index.ssr.js",
+        "browser": "./dist/ssr/index.browser.js"
+      }
+    },
     "./rsc": {
       "require": {
         "types": "./dist/rsc/index.d.cts",
         "react-server": "./dist/rsc/index.cjs",
-        "default": "./dist/empty.cjs"
+        "node": "./dist/empty.cjs",
+        "browser": "./dist/empty.cjs"
       },
       "import": {
         "types": "./dist/rsc/index.d.ts",
         "react-server": "./dist/rsc/index.js",
-        "default": "./dist/empty.js"
+        "node": "./dist/empty.js",
+        "browser": "./dist/empty.js"
       }
     },
     "./ssr": {
@@ -33,15 +63,27 @@
         "types": "./dist/ssr/next.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
         "node": "./dist/ssr/next.ssr.cjs",
-        "browser": "./dist/ssr/next.browser.cjs",
-        "default": "./dist/empty.cjs"
+        "browser": "./dist/ssr/next.browser.cjs"
       },
       "import": {
         "types": "./dist/ssr/next.ssr.d.ts",
         "react-server": "./dist/empty.js",
         "node": "./dist/ssr/next.ssr.js",
-        "browser": "./dist/ssr/next.browser.js",
-        "default": "./dist/empty.js"
+        "browser": "./dist/ssr/next.browser.js"
+      }
+    },
+    "./manual": {
+      "require": {
+        "types": "./dist/manual.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "node": "./dist/ssr/manual.ssr.cjs",
+        "browser": "./dist/ssr/manual.browser.cjs"
+      },
+      "import": {
+        "types": "./dist/manual.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "node": "./dist/ssr/manual.ssr.js",
+        "browser": "./dist/ssr/manual.browser.js"
       }
     },
     "./package.json": "./package.json"
@@ -53,9 +95,16 @@
       ],
       "rsc": [
         "./dist/rsc/index.d.ts"
+      ],
+      "manual": [
+        "./dist/ssr/manual.d.ts"
+      ],
+      "core": [
+        "./dist/combined.d.ts"
       ]
     }
   },
+  "typings": "./dist/combined.d.ts",
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
@@ -67,7 +116,7 @@
   "scripts": {
     "build": "rimraf dist; tsup",
     "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
-    "test:base": "node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.ts",
+    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
     "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
     "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
     "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
@@ -90,8 +139,6 @@
     "globstar": "^1.0.0",
     "graphql": "16.8.1",
     "next": "14.1.0",
-    "react": "18.3.0-canary-60a927d04-20240113",
-    "react-dom": "18.3.0-canary-60a927d04-20240113",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.1",

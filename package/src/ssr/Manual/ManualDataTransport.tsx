@@ -1,11 +1,11 @@
 import React, { useCallback, useId, useMemo, useRef } from "rehackt";
-import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
-import { DataTransportContext } from "../DataTransportAbstraction";
+import type { DataTransportProviderImplementation } from "@apollo/experimental-nextjs-app-support/core";
+import { DataTransportContext } from "@apollo/experimental-nextjs-app-support/core";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
-import type { RehydrationCache, RehydrationContextValue } from "./types";
-import type { HydrationContextOptions } from "./RehydrationContext";
-import { buildApolloRehydrationContext } from "./RehydrationContext";
-import { registerDataTransport } from "./dataTransport";
+import type { RehydrationCache, RehydrationContextValue } from "./types.js";
+import type { HydrationContextOptions } from "./RehydrationContext.js";
+import { buildApolloRehydrationContext } from "./RehydrationContext.js";
+import { registerDataTransport } from "./dataTransport.js";
 
 interface BuildArgs {
   useInsertHtml(): ((callbacks: () => React.ReactNode) => void) | null;

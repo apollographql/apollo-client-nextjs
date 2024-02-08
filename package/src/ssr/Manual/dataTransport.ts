@@ -1,10 +1,10 @@
 import SuperJSON from "superjson";
-import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols";
-import type { RehydrationCache } from "./types";
-import { registerLateInitializingQueue } from "./lateInitializingQueue";
+import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols.js";
+import type { RehydrationCache } from "./types.js";
+import { registerLateInitializingQueue } from "./lateInitializingQueue.js";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import invariant from "ts-invariant";
-import { htmlEscapeJsonString } from "../../util/htmlescape";
+import { htmlEscapeJsonString } from "./htmlescape.js";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 

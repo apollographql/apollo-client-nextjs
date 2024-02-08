@@ -9,8 +9,8 @@ import React, {
   useStaticValue,
   useRef,
 } from "rehackt";
-import type { DataTransportProviderImplementation } from "../DataTransportAbstraction";
-import { DataTransportContext } from "../DataTransportAbstraction";
+import type { DataTransportProviderImplementation } from "@apollo/experimental-nextjs-app-support/core";
+import { DataTransportContext } from "@apollo/experimental-nextjs-app-support/core";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 
 declare module "react" {

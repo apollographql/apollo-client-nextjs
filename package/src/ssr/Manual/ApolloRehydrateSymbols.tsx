@@ -1,5 +1,5 @@
-import type { SuperJSONResult } from "superjson/dist/types";
-import type { DataTransport } from "./dataTransport";
+import type { SuperJSONResult } from "superjson";
+import type { DataTransport } from "./dataTransport.js";
 
 declare global {
   interface Window {

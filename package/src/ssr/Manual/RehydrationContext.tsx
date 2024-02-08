@@ -1,6 +1,6 @@
 import React from "rehackt";
-import type { RehydrationContextValue } from "./types";
-import { transportDataToJS } from "./dataTransport";
+import type { RehydrationContextValue } from "./types.js";
+import { transportDataToJS } from "./dataTransport.js";
 import invariant from "ts-invariant";
 
 export interface HydrationContextOptions {

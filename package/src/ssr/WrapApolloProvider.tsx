@@ -1,10 +1,10 @@
 "use client";
 import React from "rehackt";
 import { useRef } from "rehackt";
-import { WrappedApolloClient } from "./WrappedApolloClient";
+import { WrappedApolloClient } from "./WrappedApolloClient.js";
 import { ApolloProvider } from "@apollo/client/index.js";
-import type { DataTransportProviderImplementation } from "./DataTransportAbstraction";
-import { ApolloClientSingleton } from "./symbols";
+import type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";
+import { ApolloClientSingleton } from "./symbols.js";
 
 declare global {
   interface Window {

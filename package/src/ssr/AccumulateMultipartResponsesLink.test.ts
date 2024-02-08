@@ -10,12 +10,12 @@ import { test, mock } from "node:test";
 import assert from "node:assert";
 import { fromPartial } from "@total-typescript/shoehorn";
 import type { SubscriptionObserver } from "zen-observable-ts";
-import { runInConditions } from "../util/runInConditions";
+import { runInConditions } from "../util/runInConditions.js";
 
 runInConditions("node", "browser");
 
 const { DebounceMultipartResponsesLink: AccumulateMultipartResponsesLink } =
-  await import("@apollo/experimental-nextjs-app-support/ssr");
+  await import("@apollo/experimental-nextjs-app-support");
 
 test("normal queries can resolve synchronously", () => {
   const query = gql`

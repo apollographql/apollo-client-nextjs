@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "rehackt";
-import { DataTransportContext } from "./DataTransportAbstraction";
+import { DataTransportContext } from "./DataTransportAbstraction.js";
 
 /**
  * A hook that mostly acts as an identity function.

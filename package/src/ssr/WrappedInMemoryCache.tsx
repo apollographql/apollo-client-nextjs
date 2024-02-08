@@ -4,7 +4,7 @@ import type {
   Reference,
 } from "@apollo/client/index.js";
 import { InMemoryCache as InMemoryCache } from "@apollo/client/index.js";
-import { createBackpressuredCallback } from "./backpressuredCallback";
+import { createBackpressuredCallback } from "./backpressuredCallback.js";
 
 class InMemoryCacheSSRImpl extends InMemoryCache {
   protected writeQueue = createBackpressuredCallback<Cache.WriteOptions>();

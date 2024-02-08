@@ -1,1 +1,1 @@
-export { registerApolloClient } from "./registerApolloClient";
+export { registerApolloClient } from "./registerApolloClient.js";

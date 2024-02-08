@@ -7,12 +7,12 @@ import type {
   Cache,
 } from "@apollo/client/index.js";
 import { ApolloClient, Observable } from "@apollo/client/index.js";
-import type { QueryManager } from "@apollo/client/core/QueryManager";
+import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import { print } from "@apollo/client/utilities/index.js";
 import { canonicalStringify } from "@apollo/client/cache/index.js";
 import invariant from "ts-invariant";
-import { createBackpressuredCallback } from "./backpressuredCallback";
-import { WrappedInMemoryCache } from "./WrappedInMemoryCache";
+import { createBackpressuredCallback } from "./backpressuredCallback.js";
+import { WrappedInMemoryCache } from "./WrappedInMemoryCache.js";
 
 function getQueryManager<TCacheShape>(
   client: ApolloClient<unknown>
