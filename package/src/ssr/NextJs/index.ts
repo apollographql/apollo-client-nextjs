@@ -9,7 +9,13 @@ import { ServerInsertedHTMLContext } from "next/navigation.js";
 export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
   buildManualDataTransport({
     useInsertHtml() {
-      return useContext(ServerInsertedHTMLContext);
+      const insertHtml = useContext(ServerInsertedHTMLContext);
+      if (!insertHtml) {
+        throw new Error(
+          "ApolloNextAppProvider cannot be used outside of the Next App Router!"
+        );
+      }
+      return insertHtml;
     },
   })
 );

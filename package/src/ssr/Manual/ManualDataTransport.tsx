@@ -8,7 +8,11 @@ import { buildApolloRehydrationContext } from "./RehydrationContext.js";
 import { registerDataTransport } from "./dataTransport.js";
 
 interface BuildArgs {
-  useInsertHtml(): ((callbacks: () => React.ReactNode) => void) | null;
+  /**
+   * A hook that allows for insertion into the stream.
+   * Will only be called during SSR, doesn't need to actiually return something otherwise.
+   */
+  useInsertHtml(): (callbacks: () => React.ReactNode) => void;
 }
 
 const buildManualDataTransportSSRImpl = ({
@@ -17,13 +21,11 @@ const buildManualDataTransportSSRImpl = ({
   function NextDataTransportSSRImpl({
     extraScriptProps,
     children,
-    registerDispatchRequestData: dispatchRequestData,
-    registerDispatchRequestStarted: dispatchRequestStarted,
+    registerDispatchRequestData,
+    registerDispatchRequestStarted,
   }) {
     const insertHtml = useInsertHtml();
-    if (!insertHtml) {
-      throw new Error("No data transport available!");
-    }
+
     const rehydrationContext = useRef<RehydrationContextValue>();
     if (!rehydrationContext.current) {
       rehydrationContext.current = buildApolloRehydrationContext({
@@ -32,10 +34,10 @@ const buildManualDataTransportSSRImpl = ({
       });
     }
 
-    dispatchRequestStarted!((options: WatchQueryOptions) => {
+    registerDispatchRequestStarted!((options: WatchQueryOptions) => {
       rehydrationContext.current!.incomingBackgroundQueries.push(options);
     });
-    dispatchRequestData!((options: Cache.WriteOptions) => {
+    registerDispatchRequestData!((options: Cache.WriteOptions) => {
       rehydrationContext.current!.incomingResults.push(options);
     });
 
