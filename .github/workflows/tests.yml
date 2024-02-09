@@ -65,4 +65,4 @@ jobs:
       - name: Build
         run: yarn workspaces foreach -R -t --from integration-test run build
       - name: Run tests
-        run: yarn workspace integration-test run test > $GITHUB_STEP_SUMMARY
+        run: yarn workspace integration-test run test | tee $GITHUB_STEP_SUMMARY
