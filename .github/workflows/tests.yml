@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next", "0.0.0-pr-11345-20231129164802"]
+        version: ["latest", "next"]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
