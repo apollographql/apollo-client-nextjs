@@ -8,7 +8,7 @@ import { resetApolloSingletons } from "../testHelpers.js";
  *
  * To be used in testing only, like
  * ```ts
- * afterEach(resetNextSSRApolloSingletons);
+ * afterEach(resetManualSSRApolloSingletons);
  * ```
  */
 export function resetManualSSRApolloSingletons() {

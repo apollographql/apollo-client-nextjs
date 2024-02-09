@@ -18,7 +18,7 @@ interface BuildArgs {
 const buildManualDataTransportSSRImpl = ({
   useInsertHtml,
 }: BuildArgs): DataTransportProviderImplementation<HydrationContextOptions> =>
-  function NextDataTransportSSRImpl({
+  function ManualDataTransportSSRImpl({
     extraScriptProps,
     children,
     registerDispatchRequestData,
@@ -65,7 +65,7 @@ const buildManualDataTransportSSRImpl = ({
 
 const buildManualDataTransportBrowserImpl =
   (): DataTransportProviderImplementation<HydrationContextOptions> =>
-    function NextDataTransportBrowserImpl({
+    function ManualDataTransportBrowserImpl({
       children,
       onRequestStarted,
       onRequestData,
