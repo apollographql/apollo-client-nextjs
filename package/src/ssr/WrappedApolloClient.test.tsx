@@ -193,8 +193,6 @@ await testIn("browser")(
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // at this point, the suspense hook should return, so why doesn't it?
-
     await findByText("User");
 
     assert.ok(attemptedRenderCount > 0);
