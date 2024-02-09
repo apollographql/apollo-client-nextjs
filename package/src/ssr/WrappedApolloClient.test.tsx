@@ -6,14 +6,12 @@ import {
   WatchQueryOptions,
   gql,
 } from "@apollo/client/index.js";
-import { MockSubscriptionLink } from "@apollo/client/testing/index.js";
-import { render, cleanup } from "@testing-library/react";
+
 import "global-jsdom/register";
 import assert from "node:assert";
 import { afterEach } from "node:test";
 
 runInConditions("browser", "node");
-afterEach(cleanup);
 
 const {
   WrappedApolloClient,
@@ -22,6 +20,12 @@ const {
   DataTransportContext,
   useSuspenseQuery,
 } = await import("@apollo/experimental-nextjs-app-support");
+const { MockSubscriptionLink } = await import(
+  "@apollo/client/testing/index.js"
+);
+const { render, cleanup } = await import("@testing-library/react");
+
+afterEach(cleanup);
 
 const QUERY_ME: TypedDocumentNode<{ me: string }> = gql`
   query {
@@ -47,7 +51,7 @@ const FIRST_HOOK_RESULT = {
   networkStatus: 7,
 };
 
-await testIn("node").only(
+await testIn("node")(
   "`useSuspenseQuery`: data is getting sent to the transport",
   async () => {
     const startedRequests: unknown[] = [];
@@ -123,7 +127,7 @@ await testIn("node").only(
   }
 );
 
-await testIn("browser").only(
+await testIn("browser")(
   "`useSuspenseQuery`: data from the transport is used by the hooks",
   async () => {
     let useStaticValueRefStub = <T extends any>(): { current: T } => {
@@ -134,12 +138,6 @@ await testIn("browser").only(
 
     const Provider = WrapApolloProvider(
       ({ children, onRequestData, onRequestStarted, ...rest }) => {
-        console.log("provider rendering!", {
-          children,
-          onRequestData,
-          onRequestStarted,
-          ...rest,
-        });
         simulateRequestStart = onRequestStarted!;
         simulateRequestData = onRequestData!;
         return (
@@ -168,10 +166,8 @@ await testIn("browser").only(
 
     function Child() {
       attemptedRenderCount++;
-      console.log("before");
       const { data } = useSuspenseQuery(QUERY_ME);
       finishedRenderCount++;
-      console.log("after");
       return <>{data.me}</>;
     }
 
@@ -196,8 +192,6 @@ await testIn("browser").only(
     simulateRequestData!(FIRST_WRITE);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    console.log(client.cache.extract());
 
     // at this point, the suspense hook should return, so why doesn't it?
 

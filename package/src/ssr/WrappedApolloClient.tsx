@@ -59,8 +59,6 @@ export class ApolloClientBrowserImpl<
         "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
       );
     }
-
-    this.registerWindowHook();
   }
 
   private simulatedStreamingQueries = new Map<string, SimulatedQueryInfo>();
@@ -89,9 +87,6 @@ export class ApolloClientBrowserImpl<
   }
 
   protected onRequestStarted = (options: WatchQueryOptions) => {
-    // we are not streaming anymore, so we should not simulate "server-side requests"
-    if (document.readyState === "complete") return;
-
     const { query, varJson, cacheKey } = this.identifyUniqueQuery(options);
 
     if (!query) return;
@@ -175,43 +170,38 @@ export class ApolloClientBrowserImpl<
     this.cache.write(data);
   };
 
-  private registerWindowHook() {
-    if (document.readyState !== "complete") {
-      const rerunSimulatedQueries = () => {
-        const queryManager = getQueryManager(this);
-        // streaming finished, so we need to refire all "server-side requests"
-        // that are still not resolved on the browser side to make sure we have all the data
-        for (const [cacheKey, queryInfo] of this.simulatedStreamingQueries) {
-          this.simulatedStreamingQueries.delete(cacheKey);
-          invariant.debug(
-            "streaming connection closed before server query could be fully transported, rerunning:",
-            queryInfo.options
-          );
-          const queryId = queryManager.generateQueryId();
-          queryManager
-            .fetchQuery(queryId, {
-              ...queryInfo.options,
-              context: {
-                ...queryInfo.options.context,
-                queryDeduplication: false,
-              },
-            })
-            .finally(() => queryManager.stopQuery(queryId))
-            .then(queryInfo.resolve, queryInfo.reject);
-        }
-      };
-      // happens simulatenously to `readyState` changing to `"complete"`, see
-      // https://html.spec.whatwg.org/multipage/parsing.html#the-end (step 9.1 and 9.5)
-      window.addEventListener("load", rerunSimulatedQueries, {
-        once: true,
-      });
+  /**
+   * Can be called when the stream closed unexpectedly while there might still be unresolved
+   * simulated server-side queries going on.
+   * Those queries will be cancelled and then re-run in the browser.
+   */
+  protected rerunSimulatedQueries = () => {
+    const queryManager = getQueryManager(this);
+    for (const [cacheKey, queryInfo] of this.simulatedStreamingQueries) {
+      this.simulatedStreamingQueries.delete(cacheKey);
+      invariant.debug(
+        "streaming connection closed before server query could be fully transported, rerunning:",
+        queryInfo.options
+      );
+      const queryId = queryManager.generateQueryId();
+      queryManager
+        .fetchQuery(queryId, {
+          ...queryInfo.options,
+          context: {
+            ...queryInfo.options.context,
+            queryDeduplication: false,
+          },
+        })
+        .finally(() => queryManager.stopQuery(queryId))
+        .then(queryInfo.resolve, queryInfo.reject);
     }
-  }
+  };
 }
 
 export type WrappedApolloClient<TCacheShape> = ApolloClient<TCacheShape> & {
   onRequestStarted?: ApolloClientBrowserImpl<TCacheShape>["onRequestStarted"];
   onRequestData?: ApolloClientBrowserImpl<TCacheShape>["onRequestData"];
+  rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
 
   watchQueryQueue: {
     register?: (

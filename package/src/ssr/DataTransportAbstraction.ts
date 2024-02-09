@@ -23,6 +23,8 @@ export type DataTransportProviderImplementation<
     onRequestStarted?: (options: WatchQueryOptions) => void;
     /** will be present in the Browser */
     onRequestData?: (options: Cache.WriteOptions) => void;
+    /** will be present in the Browser */
+    rerunSimulatedQueries?: () => void;
     /** will be present during SSR */
     registerDispatchRequestStarted?: (
       callback: (options: WatchQueryOptions) => void

@@ -1,4 +1,4 @@
-import React, { useCallback, useId, useMemo, useRef } from "rehackt";
+import React, { useCallback, useEffect, useId, useMemo, useRef } from "rehackt";
 import type { DataTransportProviderImplementation } from "@apollo/experimental-nextjs-app-support/core";
 import { DataTransportContext } from "@apollo/experimental-nextjs-app-support/core";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
@@ -67,16 +67,33 @@ const buildManualDataTransportBrowserImpl =
       children,
       onRequestStarted,
       onRequestData,
+      rerunSimulatedQueries,
     }) {
       const rehydrationCache = useRef<RehydrationCache>({});
 
       registerDataTransport({
-        onRequestStarted: onRequestStarted!,
+        onRequestStarted: (options) => {
+          // we are not streaming anymore, so we should not simulate "server-side requests"
+          if (document.readyState === "complete") return;
+          onRequestStarted!(options);
+        },
         onRequestData: onRequestData!,
         onRehydrate(rehydrate) {
           Object.assign(rehydrationCache.current, rehydrate);
         },
       });
+
+      useEffect(() => {
+        if (document.readyState !== "complete") {
+          // happens simulatenously to `readyState` changing to `"complete"`, see
+          // https://html.spec.whatwg.org/multipage/parsing.html#the-end (step 9.1 and 9.5)
+          window.addEventListener("load", rerunSimulatedQueries!, {
+            once: true,
+          });
+          return () =>
+            window.removeEventListener("load", rerunSimulatedQueries!);
+        }
+      }, [rerunSimulatedQueries]);
 
       const useStaticValueRef = useCallback(function useStaticValueRef<T>(
         v: T
