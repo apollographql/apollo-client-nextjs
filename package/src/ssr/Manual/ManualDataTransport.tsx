@@ -71,7 +71,7 @@ const buildManualDataTransportBrowserImpl =
       onRequestData,
       rerunSimulatedQueries,
     }) {
-      const rehydrationCache = useRef<RehydrationCache>({});
+      const hookRehydrationCache = useRef<RehydrationCache>({});
 
       registerDataTransport({
         onRequestStarted: (options) => {
@@ -81,7 +81,7 @@ const buildManualDataTransportBrowserImpl =
         },
         onRequestData: onRequestData!,
         onRehydrate(rehydrate) {
-          Object.assign(rehydrationCache.current, rehydrate);
+          Object.assign(hookRehydrationCache.current, rehydrate);
         },
       });
 
@@ -101,7 +101,7 @@ const buildManualDataTransportBrowserImpl =
         v: T
       ) {
         const id = useId();
-        const store = rehydrationCache.current;
+        const store = hookRehydrationCache.current;
         const dataRef = useRef(UNINITIALIZED as T);
         if (dataRef.current === UNINITIALIZED) {
           if (store && id in store) {
