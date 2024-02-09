@@ -41,7 +41,6 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClient<TCacheShape> {
       options.fetchPolicy !== "cache-only" &&
       options.fetchPolicy !== "standby"
     ) {
-      console.log("pushing to watchQueryQueue", options);
       this.watchQueryQueue.push(options);
     }
     return super.watchQuery(options);
