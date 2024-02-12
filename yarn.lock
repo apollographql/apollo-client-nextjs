@@ -45,7 +45,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming-support@workspace:packages/client-react-streaming-support":
+"@apollo/client-react-streaming-support@workspace:*, @apollo/client-react-streaming-support@workspace:packages/client-react-streaming-support":
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming-support@workspace:packages/client-react-streaming-support"
   dependencies:
@@ -126,6 +126,7 @@ __metadata:
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
     "@apollo/client": "npm:3.9.1"
+    "@apollo/client-react-streaming-support": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.13.6"
     "@testing-library/react": "npm:^14.2.1"
     "@total-typescript/shoehorn": "npm:0.1.1"
@@ -143,11 +144,7 @@ __metadata:
     graphql: "npm:16.8.1"
     jsdom: "npm:^24.0.0"
     next: "npm:14.1.0"
-    rehackt: "npm:^0.0.4"
     rimraf: "npm:5.0.5"
-    server-only: "npm:^0.0.1"
-    superjson: "npm:^1.12.2 || ^2.0.0"
-    ts-invariant: "npm:^0.10.3"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.1"
     tsx: "npm:^4.7.0"
