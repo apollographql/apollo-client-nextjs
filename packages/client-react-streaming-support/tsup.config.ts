@@ -12,9 +12,9 @@ export default defineConfig((options) => {
     outDir: "dist/",
     external: [
       "@apollo/client-react-streaming-support",
-      "@apollo/client-react-streaming-support/experimental-manual",
       "react",
       "rehackt",
+      "@apollo/client",
     ],
   };
 
@@ -47,5 +47,21 @@ export default defineConfig((options) => {
     entry("rsc", "src/index.rsc.ts", "index.rsc"),
     entry("ssr", "src/index.ts", "index.ssr"),
     entry("browser", "src/index.ts", "index.browser"),
+    entry(
+      "ssr",
+      "src/ExperimentalManualDataTransport/index.ts",
+      "experimental-manual.ssr"
+    ),
+    entry(
+      "browser",
+      "src/ExperimentalManualDataTransport/index.ts",
+      "experimental-manual.browser"
+    ),
+    entry("ssr", "src/ExperimentalReact/index.ts", "experimental-react.ssr"),
+    entry(
+      "browser",
+      "src/ExperimentalReact/index.ts",
+      "experimental-react.browser"
+    ),
   ];
 });

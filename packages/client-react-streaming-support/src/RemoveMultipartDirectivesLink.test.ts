@@ -9,9 +9,7 @@ import { runInConditions } from "./util/runInConditions.js";
 
 runInConditions("node", "browser");
 
-const { RemoveMultipartDirectivesLink } = await import(
-  "@apollo/experimental-nextjs-app-support"
-);
+const { RemoveMultipartDirectivesLink } = await import("#bundled");
 
 const queryWithDefer = gql`
   query myQuery {

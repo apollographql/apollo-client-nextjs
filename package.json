@@ -2,7 +2,7 @@
   "name": "monorepo",
   "packageManager": "yarn@4.1.0",
   "workspaces": [
-    "package",
+    "packages/*",
     "integration-test",
     "examples/*"
   ],

@@ -1,7 +1,9 @@
 export { buildManualDataTransport } from "./ManualDataTransport.js";
 
+export type { HydrationContextOptions } from "./RehydrationContext.js";
+
 import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols.js";
-import { resetApolloSingletons } from "../../../../client-react-streaming-support/src/DataTransportAbstraction/testHelpers.js";
+import { resetApolloSingletons } from "@apollo/client-react-streaming-support";
 
 /**
  * Resets the singleton instances created for the Apollo SSR data transport and caches.

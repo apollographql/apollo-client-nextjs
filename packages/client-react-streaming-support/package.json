@@ -1,5 +1,5 @@
 {
-  "name": "@apollo/experimental-nextjs-app-support",
+  "name": "@apollo/client-react-streaming-support",
   "version": "0.8.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
@@ -15,58 +15,74 @@
     "app"
   ],
   "type": "module",
+  "imports": {
+    "#bundled": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/index.rsc.cjs",
+        "browser": "./dist/index.browser.cjs",
+        "node": "./dist/index.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/index.rsc.js",
+        "browser": "./dist/index.browser.js",
+        "node": "./dist/index.ssr.js"
+      }
+    }
+  },
   "exports": {
     ".": {
       "require": {
         "types": "./dist/combined.d.cts",
         "react-server": "./dist/index.rsc.cjs",
-        "browser": "./dist/ssr/index.browser.cjs",
-        "node": "./dist/ssr/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "browser": "./dist/ssr/index.browser.js",
-        "node": "./dist/ssr/index.ssr.js"
-      }
-    },
-    "./rsc": {
-      "require": {
-        "types": "./dist/index.rsc.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "browser": "./dist/empty.cjs",
-        "node": "./dist/empty.cjs"
-      },
-      "import": {
-        "types": "./dist/index.rsc.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "browser": "./dist/empty.js",
-        "node": "./dist/empty.js"
-      }
-    },
-    "./ssr": {
-      "require": {
-        "types": "./dist/index.ssr.d.cts",
-        "react-server": "./dist/empty.cjs",
         "browser": "./dist/index.browser.cjs",
         "node": "./dist/index.ssr.cjs"
       },
       "import": {
-        "types": "./dist/index.ssr.d.ts",
-        "react-server": "./dist/empty.js",
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/index.rsc.js",
         "browser": "./dist/index.browser.js",
         "node": "./dist/index.ssr.js"
+      }
+    },
+    "./experimental-manual": {
+      "require": {
+        "types": "./dist/experimental-manual.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/experimental-manual.browser.cjs",
+        "node": "./dist/experimental-manual.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/experimental-manual.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/experimental-manual.browser.js",
+        "node": "./dist/experimental-manual.ssr.js"
+      }
+    },
+    "./experimental-react": {
+      "require": {
+        "types": "./dist/experimental-react.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/experimental-react.browser.cjs",
+        "node": "./dist/experimental-reactreact.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/experimental-react.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/experimental-react.browser.js",
+        "node": "./dist/experimental-react.ssr.js"
       }
     },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "ssr": [
-        "./dist/index.ssr.d.ts"
+      "experimental-manual": [
+        "./dist/experimental-manual.ssr.d.ts"
       ],
-      "rsc": [
-        "./dist/index.rsc.d.ts"
+      "experimental-react": [
+        "./dist/experimental-react.ssr.d.ts"
       ]
     }
   },
@@ -121,6 +137,9 @@
     "react": "^18"
   },
   "dependencies": {
-    "@apollo/client-react-streaming-support": "0.9.0"
+    "rehackt": "^0.0.4",
+    "server-only": "^0.0.1",
+    "superjson": "^1.12.2 || ^2.0.0",
+    "ts-invariant": "^0.10.3"
   }
 }

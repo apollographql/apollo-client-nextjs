@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef } from "rehackt";
-import type { DataTransportProviderImplementation } from "@apollo/experimental-nextjs-app-support/core";
-import { DataTransportContext } from "@apollo/experimental-nextjs-app-support/core";
+import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming-support";
+import { DataTransportContext } from "@apollo/client-react-streaming-support";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import type { RehydrationCache, RehydrationContextValue } from "./types.js";
 import type { HydrationContextOptions } from "./RehydrationContext.js";
