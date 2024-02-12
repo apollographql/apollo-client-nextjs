@@ -2,11 +2,13 @@ name: Run tests
 on:
   push:
     paths:
-      - "package/**"
+      - ".github/workflows/**"
+      - "packages/**"
       - "integration-test/**"
   pull_request:
     paths:
-      - "package/**"
+      - ".github/workflows/**"
+      - "packages/**"
       - "integration-test/**"
       - "yarn.lock"
   workflow_dispatch:
