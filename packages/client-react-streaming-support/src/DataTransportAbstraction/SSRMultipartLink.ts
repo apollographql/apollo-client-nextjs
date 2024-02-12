@@ -1,6 +1,6 @@
 import { ApolloLink } from "@apollo/client/index.js";
-import { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink.js";
-import { AccumulateMultipartResponsesLink } from "./AccumulateMultipartResponsesLink.js";
+import { RemoveMultipartDirectivesLink } from "../RemoveMultipartDirectivesLink.js";
+import { AccumulateMultipartResponsesLink } from "../AccumulateMultipartResponsesLink.js";
 
 interface SSRMultipartLinkConfig {
   /**

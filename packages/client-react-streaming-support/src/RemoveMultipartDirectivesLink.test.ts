@@ -5,7 +5,7 @@ import { gql, Observable } from "@apollo/client/core/index.js";
 import { print } from "graphql";
 import { it } from "node:test";
 import assert from "node:assert";
-import { runInConditions } from "../util/runInConditions.js";
+import { runInConditions } from "./util/runInConditions.js";
 
 runInConditions("node", "browser");
 

@@ -9,8 +9,8 @@ export {
   useBackgroundQuery,
 } from "./hooks.js";
 export { SSRMultipartLink } from "./SSRMultipartLink.js";
-export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink.js";
-export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink.js";
+export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "../AccumulateMultipartResponsesLink.js";
+export { RemoveMultipartDirectivesLink } from "../RemoveMultipartDirectivesLink.js";
 export { resetApolloSingletons } from "./testHelpers.js";
 
 export { DataTransportContext } from "./DataTransportAbstraction.js";

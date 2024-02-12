@@ -1,5 +1,8 @@
 import React, { Suspense, useMemo } from "react";
-import { runInConditions, testIn } from "../util/runInConditions.js";
+import {
+  runInConditions,
+  testIn,
+} from "../../../experimental-nextjs-app-support/src/util/runInConditions.js";
 import {
   Cache,
   TypedDocumentNode,
