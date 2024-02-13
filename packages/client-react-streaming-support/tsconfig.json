@@ -13,7 +13,7 @@
     "types": ["react/canary", "node"],
     "esModuleInterop": true,
     "paths": {
-      "@apollo/client-react-streaming-support": ["./src/combined.ts"]
+      "@apollo/client-react-streaming": ["./src/combined.ts"]
     }
   },
   "include": ["src"]

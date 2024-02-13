@@ -1,5 +1,5 @@
 {
-  "name": "@apollo/client-react-streaming-support",
+  "name": "@apollo/client-react-streaming",
   "version": "0.8.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"

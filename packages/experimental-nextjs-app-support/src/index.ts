@@ -2,22 +2,13 @@ import { useContext } from "rehackt";
 import {
   buildManualDataTransport,
   resetManualSSRApolloSingletons,
-} from "@apollo/client-react-streaming-support/experimental-manual";
-import { WrapApolloProvider } from "@apollo/client-react-streaming-support";
+} from "@apollo/client-react-streaming/experimental-manual-transport-transport";
+import { ExperimentalReactDataTransport } from "@apollo/client-react-streaming/experimental-react-transport-transport";
+import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { ServerInsertedHTMLContext } from "next/navigation.js";
 
 export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
-  buildManualDataTransport({
-    useInsertHtml() {
-      const insertHtml = useContext(ServerInsertedHTMLContext);
-      if (!insertHtml) {
-        throw new Error(
-          "ApolloNextAppProvider cannot be used outside of the Next App Router!"
-        );
-      }
-      return insertHtml;
-    },
-  })
+  buildManualDataTransport(ExperimentalReactDataTransport)
 );
 
 export const resetNextSSRApolloSingletons = resetManualSSRApolloSingletons;
@@ -32,4 +23,4 @@ export {
   SSRMultipartLink,
   DebounceMultipartResponsesLink,
   RemoveMultipartDirectivesLink,
-} from "@apollo/client-react-streaming-support";
+} from "@apollo/client-react-streaming";

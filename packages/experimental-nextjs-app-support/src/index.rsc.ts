@@ -1,1 +1,1 @@
-export * from "@apollo/client-react-streaming-support";
+export * from "@apollo/client-react-streaming";

@@ -11,8 +11,8 @@ export default defineConfig((options) => {
     treeshake: !options.watch,
     outDir: "dist/",
     external: [
-      "@apollo/client-react-streaming-support",
-      "@apollo/client-react-streaming-support/experimental-manual",
+      "@apollo/client-react-streaming",
+      "@apollo/client-react-streaming/experimental-manual-transport",
       "react",
       "rehackt",
     ],

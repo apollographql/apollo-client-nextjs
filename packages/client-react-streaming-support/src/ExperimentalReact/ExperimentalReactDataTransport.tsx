@@ -9,8 +9,8 @@ import React, {
   useStaticValue,
   useRef,
 } from "rehackt";
-import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming-support";
-import { DataTransportContext } from "@apollo/client-react-streaming-support";
+import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
+import { DataTransportContext } from "@apollo/client-react-streaming";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 
 declare module "react" {
