@@ -61,17 +61,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: "@apollo/experimental-nextjs-app: update version and dependencies"
-        run: yarn workspace @apollo/experimental-nextjs-app exec npm pkg set "dependencies[@apollo/client-react-streaming]=${{ env.PKG_VERSION }}" "version=${{ env.PKG_VERSION }}"
+      - name: "@apollo/experimental-nextjs-app-support: update version and dependencies"
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm pkg set "dependencies[@apollo/client-react-streaming]=${{ env.PKG_VERSION }}" "version=${{ env.PKG_VERSION }}"
 
-      - name: "@apollo/experimental-nextjs-app: publish"
-        run: yarn workspace @apollo/experimental-nextjs-app exec npm publish --access public --tag snapshot --provenance --dry-run
+      - name: "@apollo/experimental-nextjs-app-support: publish"
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Get released version
         id: get-version
-        run: yarn workspace @apollo/experimental-nextjs-app exec jq --raw-output '("version="+.version)' package.json >> "$GITHUB_OUTPUT"
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec jq --raw-output '("version="+.version)' package.json >> "$GITHUB_OUTPUT"
 
       - name: Create comment
         if: github.event_name == 'issue_comment'
@@ -80,5 +80,5 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             A new release has been made for this PR. You can install the package you need using one of
-            * `npm i @apollo/experimental-nextjs-app@${{ steps.get-version.outputs.version }}`
+            * `npm i @apollo/experimental-nextjs-app-support@${{ steps.get-version.outputs.version }}`
             * `npm i @apollo/client-react-streaming${{ steps.get-version.outputs.version }}`
