@@ -55,7 +55,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.1"
     "@tsconfig/recommended": "npm:1.0.3"
     "@types/node": "npm:20.11.5"
-    "@types/react": "npm:18.2.55"
+    "@types/react": "npm:^18.2.55"
     "@typescript-eslint/eslint-plugin": "npm:6.19.0"
     "@typescript-eslint/parser": "npm:6.19.0"
     concurrently: "npm:^8.2.2"
@@ -132,7 +132,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.1"
     "@tsconfig/recommended": "npm:1.0.3"
     "@types/node": "npm:20.11.5"
-    "@types/react": "npm:18.2.55"
+    "@types/react": "npm:^18.2.55"
     "@typescript-eslint/eslint-plugin": "npm:6.19.0"
     "@typescript-eslint/parser": "npm:6.19.0"
     concurrently: "npm:^8.2.2"
@@ -4932,7 +4932,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.55":
+"@types/react@npm:^18.2.55":
   version: 18.2.55
   resolution: "@types/react@npm:18.2.55"
   dependencies:
@@ -4940,17 +4940,6 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10/bf8fe19e73575489e63c0726355f164157cd69e75f2a862436ad2c0586e732cb953a7255a6bc73145e8f9506ee7a723f9a569ca9a39c53984e5b12b84e1c718a
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^18.2.14":
-  version: 18.2.14
-  resolution: "@types/react@npm:18.2.14"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 10/9a8e9a6e6d39dba32a449ac986add435ee30d1f5af336efa7b0cb0e8e31eefa2b85ab2ef921284b373e820c47d184c7161f826cc77f1e528cc13642be3596110
   languageName: node
   linkType: hard
 
@@ -5598,7 +5587,7 @@ __metadata:
     "@graphql-codegen/typescript": "npm:3.0.4"
     "@graphql-codegen/typescript-resolvers": "npm:3.2.1"
     "@types/node": "npm:18.16.3"
-    "@types/react": "npm:^18.2.14"
+    "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:18.2.1"
     "@vercel/kv": "npm:^0.1.1"
     autoprefixer: "npm:10.4.14"
@@ -5626,7 +5615,7 @@ __metadata:
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@types/node": "npm:18.15.3"
-    "@types/react": "npm:^18.2.14"
+    "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:18.0.11"
     client-only: "npm:^0.0.1"
     encoding: "npm:^0.1.13"
@@ -9126,7 +9115,7 @@ __metadata:
     "@emotion/styled": "npm:^11.10.6"
     "@types/js-cookie": "npm:^3.0.3"
     "@types/node": "npm:18.15.11"
-    "@types/react": "npm:^18.2.14"
+    "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:18.0.11"
     eslint: "npm:8.38.0"
     eslint-config-next: "npm:13.3.0"
@@ -9496,7 +9485,7 @@ __metadata:
     "@graphql-tools/schema": "npm:^10.0.0"
     "@playwright/test": "npm:^1.39.0"
     "@types/node": "npm:20.3.1"
-    "@types/react": "npm:^18.2.14"
+    "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:18.2.6"
     graphql: "npm:^16.7.1"
     graphql-tag: "npm:^2.12.6"

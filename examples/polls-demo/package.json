@@ -16,7 +16,7 @@
     "@apollo/experimental-nextjs-app-support": "workspace:^",
     "@apollo/server": "^4.9.5",
     "@types/node": "18.16.3",
-    "@types/react": "^18.2.14",
+    "@types/react": "^18.2.55",
     "@types/react-dom": "18.2.1",
     "@vercel/kv": "^0.1.1",
     "autoprefixer": "10.4.14",
