@@ -15,29 +15,38 @@ jobs:
       github.repository == 'apollographql/apollo-client-nextjs' &&
       (
         github.event_name == 'workflow_dispatch' || 
-        (github.event.issue.pull_request &&
         (
-          github.event.sender.login == 'benjamn' ||
-          github.event.sender.login == 'alessbell' ||
-          github.event.sender.login == 'bignimbus' ||
-          github.event.sender.login == 'hwillson' ||
-          github.event.sender.login == 'jerelmiller' ||
-          github.event.sender.login == 'phryneas'
-        ) &&
-        startsWith(github.event.comment.body, '/release:pr')
-      ))
+          github.event.issue.pull_request &&
+          (
+            github.event.sender.login == 'benjamn' ||
+            github.event.sender.login == 'alessbell' ||
+            github.event.sender.login == 'bignimbus' ||
+            github.event.sender.login == 'hwillson' ||
+            github.event.sender.login == 'jerelmiller' ||
+            github.event.sender.login == 'phryneas'
+          ) &&
+          startsWith(github.event.comment.body, '/release:pr')
+        )
+      )
     steps:
-      #- uses: alessbell/pull-request-comment-branch@v1.1
-      #  id: comment-branch
+      - uses: alessbell/pull-request-comment-branch@v1.1
+        if: github.event_name == 'issue_comment'
+        id: comment-branch
 
-      - name: Checkout head ref
+      - name: Checkout head ref (comment trigger)
+        if: github.event_name == 'issue_comment'
         uses: actions/checkout@v4
         with:
           ## specify the owner + repository in order to checkout the fork
           ## for community PRs
-          #repository: ${{ steps.comment-branch.outputs.head_owner }}/${{ steps.comment-branch.outputs.head_repo }}
-          #ref: ${{ steps.comment-branch.outputs.head_ref }}
+          repository: ${{ steps.comment-branch.outputs.head_owner }}/${{ steps.comment-branch.outputs.head_repo }}
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
           fetch-depth: 0
+
+      - name: Checkout head ref (dispatch trigger)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -45,19 +54,31 @@ jobs:
           cache: "yarn"
       - run: yarn install --immutable
       - run: echo PKG_VERSION="0.0.0-commit-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      - run: yarn workspace @apollo/client-react-streaming-support exec npm pkg set "version=${{ env.PKG_VERSION }}"
-      - run: yarn workspace @apollo/experimental-nextjs-app-support exec npm pkg set "dependencies[@apollo/client-react-streaming-support]=${{ env.PKG_VERSION }}" "version=${{ env.PKG_VERSION }}"
-      #- run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: "@apollo/client-react-streaming: update version"
+        run: yarn workspace @apollo/client-react-streaming-support exec npm pkg set "version=${{ env.PKG_VERSION }}"
+      - name: "@apollo/client-react-streaming: publish"
+        run: yarn workspace @apollo/client-react-streaming exec npm publish --access public --tag snapshot --provenance --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: "@apollo/experimental-nextjs-app-support: update version and dependencies"
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm pkg set "dependencies[@apollo/client-react-streaming]=${{ env.PKG_VERSION }}" "version=${{ env.PKG_VERSION }}"
+
+      - name: "@apollo/experimental-nextjs-app-support: publish"
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Get released version
         id: get-version
         run: yarn workspace @apollo/experimental-nextjs-app-support exec jq --raw-output '("version="+.version)' package.json >> "$GITHUB_OUTPUT"
 
       - name: Create comment
+        if: github.event_name == 'issue_comment'
         uses: peter-evans/create-or-update-comment@v3.0.1
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            A new release has been made for this PR. You can install it with `npm i @apollo/experimental-nextjs-app-support@${{ steps.get-version.outputs.version }}`.
+            A new release has been made for this PR. You can install the package you need using one of
+            * `npm i @apollo/experimental-nextjs-app-support@${{ steps.get-version.outputs.version }}`
+            * `npm i @apollo/client-react-streaming${{ steps.get-version.outputs.version }}`
