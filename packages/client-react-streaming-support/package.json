@@ -6,13 +6,11 @@
   },
   "keywords": [
     "apollo",
-    "nextjs",
     "apollo-client",
     "graphql",
     "ssr",
     "rsc",
-    "app-router",
-    "app"
+    "streaming"
   ],
   "type": "module",
   "imports": {
@@ -114,6 +112,7 @@
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",
+    "@types/react": "18.2.55",
     "@typescript-eslint/eslint-plugin": "6.19.0",
     "@typescript-eslint/parser": "6.19.0",
     "concurrently": "^8.2.2",
@@ -125,7 +124,8 @@
     "globstar": "^1.0.0",
     "graphql": "16.8.1",
     "jsdom": "^24.0.0",
-    "next": "14.1.0",
+    "react": "18.3.0-canary-60a927d04-20240113",
+    "react-dom": "18.3.0-canary-60a927d04-20240113",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.1",
@@ -135,11 +135,9 @@
   },
   "peerDependencies": {
     "@apollo/client": "^3.9.0",
-    "next": "^13.4.1 || ^14.0.0",
     "react": "^18"
   },
   "dependencies": {
-    "rehackt": "^0.0.4",
     "server-only": "^0.0.1",
     "superjson": "^1.12.2 || ^2.0.0",
     "ts-invariant": "^0.10.3"

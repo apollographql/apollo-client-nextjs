@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useId, useMemo, useRef } from "rehackt";
+import React, { useCallback, useEffect, useId, useMemo, useRef } from "react";
 import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
 import { DataTransportContext } from "@apollo/client-react-streaming";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";

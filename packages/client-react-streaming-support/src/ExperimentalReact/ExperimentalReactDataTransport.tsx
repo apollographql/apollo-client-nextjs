@@ -8,7 +8,7 @@ import React, {
   useActionChannel,
   useStaticValue,
   useRef,
-} from "rehackt";
+} from "react";
 import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
 import { DataTransportContext } from "@apollo/client-react-streaming";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";

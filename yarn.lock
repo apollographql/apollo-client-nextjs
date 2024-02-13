@@ -55,6 +55,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.1"
     "@tsconfig/recommended": "npm:1.0.3"
     "@types/node": "npm:20.11.5"
+    "@types/react": "npm:18.2.55"
     "@typescript-eslint/eslint-plugin": "npm:6.19.0"
     "@typescript-eslint/parser": "npm:6.19.0"
     concurrently: "npm:^8.2.2"
@@ -66,8 +67,8 @@ __metadata:
     globstar: "npm:^1.0.0"
     graphql: "npm:16.8.1"
     jsdom: "npm:^24.0.0"
-    next: "npm:14.1.0"
-    rehackt: "npm:^0.0.4"
+    react: "npm:18.3.0-canary-60a927d04-20240113"
+    react-dom: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
     server-only: "npm:^0.0.1"
     superjson: "npm:^1.12.2 || ^2.0.0"
@@ -79,7 +80,6 @@ __metadata:
     vitest: "npm:1.2.1"
   peerDependencies:
     "@apollo/client": ^3.9.0
-    next: ^13.4.1 || ^14.0.0
     react: ^18
   languageName: unknown
   linkType: soft
@@ -132,6 +132,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.1"
     "@tsconfig/recommended": "npm:1.0.3"
     "@types/node": "npm:20.11.5"
+    "@types/react": "npm:18.2.55"
     "@typescript-eslint/eslint-plugin": "npm:6.19.0"
     "@typescript-eslint/parser": "npm:6.19.0"
     concurrently: "npm:^8.2.2"
@@ -4928,6 +4929,17 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10/7a752e6c5e76139f258bc14827d2c574bb76d6e7eb1b240f24f79b269153cb88668c34ba7078d3de99ec1973b7022e1f788e71117bd52a287f382d24bb80be40
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.2.55":
+  version: 18.2.55
+  resolution: "@types/react@npm:18.2.55"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10/bf8fe19e73575489e63c0726355f164157cd69e75f2a862436ad2c0586e732cb953a7255a6bc73145e8f9506ee7a723f9a569ca9a39c53984e5b12b84e1c718a
   languageName: node
   linkType: hard
 
@@ -12011,6 +12023,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    scheduler: "npm:^0.23.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10/ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:18.3.0-canary-60a927d04-20240113":
   version: 18.3.0-canary-60a927d04-20240113
   resolution: "react-dom@npm:18.3.0-canary-60a927d04-20240113"
@@ -12139,6 +12163,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10/b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
+  languageName: node
+  linkType: hard
+
 "react@npm:18.3.0-canary-60a927d04-20240113":
   version: 18.3.0-canary-60a927d04-20240113
   resolution: "react@npm:18.3.0-canary-60a927d04-20240113"
@@ -12263,21 +12296,6 @@ __metadata:
     react:
       optional: true
   checksum: 10/2e3674d84aca46802f38cf5b01c62bf7d0ca5e324b2749dd79156fa61723e9f84df7778c39f97d351e815a852a8a8ac9633e29b6b7b8734d18042fda86620f54
-  languageName: node
-  linkType: hard
-
-"rehackt@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "rehackt@npm:0.0.4"
-  peerDependencies:
-    "@types/react": "*"
-    react: "*"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-  checksum: 10/f2811c24847f7a03935c3b2093a01439f883550f6022e6d220574d0f4333fc24dd1bd746bb579038723eef1c48a2ce3002dd91aea9c2e15d2bd105ed6786f8c1
   languageName: node
   linkType: hard
 
@@ -12695,6 +12713,15 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10/0289b2a5d20e4885c268a90765ebe7192eafb5b3a065888092c1684e25438932e06efd199a852b47dc8b57cc8741c609552e9f13de66e4492400e8dd4201b809
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "scheduler@npm:0.23.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10/0c4557aa37bafca44ff21dc0ea7c92e2dbcb298bc62eae92b29a39b029134f02fb23917d6ebc8b1fa536b4184934314c20d8864d156a9f6357f3398aaf7bfda8
   languageName: node
   linkType: hard
 
