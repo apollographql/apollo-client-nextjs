@@ -46,42 +46,42 @@
         "node": "./dist/index.ssr.js"
       }
     },
-    "./experimental-manual": {
+    "./experimental-manual-transport": {
       "require": {
         "types": "./dist/experimental-manual.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
-        "browser": "./dist/experimental-manual.browser.cjs",
-        "node": "./dist/experimental-manual.ssr.cjs"
+        "browser": "./dist/experimental-manual-transport.browser.cjs",
+        "node": "./dist/experimental-manual-transport.ssr.cjs"
       },
       "import": {
         "types": "./dist/experimental-manual.ssr.d.ts",
         "react-server": "./dist/empty.js",
-        "browser": "./dist/experimental-manual.browser.js",
-        "node": "./dist/experimental-manual.ssr.js"
+        "browser": "./dist/experimental-manual-transport.browser.js",
+        "node": "./dist/experimental-manual-transport.ssr.js"
       }
     },
-    "./experimental-react": {
+    "./experimental-react-transport": {
       "require": {
         "types": "./dist/experimental-react.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
-        "browser": "./dist/experimental-react.browser.cjs",
-        "node": "./dist/experimental-reactreact.ssr.cjs"
+        "browser": "./dist/experimental-react-transport.browser.cjs",
+        "node": "./dist/experimental-react-transport.ssr.cjs"
       },
       "import": {
         "types": "./dist/experimental-react.ssr.d.ts",
         "react-server": "./dist/empty.js",
-        "browser": "./dist/experimental-react.browser.js",
-        "node": "./dist/experimental-react.ssr.js"
+        "browser": "./dist/experimental-react-transport.browser.js",
+        "node": "./dist/experimental-react-transport.ssr.js"
       }
     },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "experimental-manual": [
+      "experimental-manual-transport": [
         "./dist/experimental-manual.ssr.d.ts"
       ],
-      "experimental-react": [
+      "experimental-react-transport": [
         "./dist/experimental-react.ssr.d.ts"
       ]
     }

@@ -2,8 +2,8 @@ import { useContext } from "rehackt";
 import {
   buildManualDataTransport,
   resetManualSSRApolloSingletons,
-} from "@apollo/client-react-streaming/experimental-manual-transport-transport";
-import { ExperimentalReactDataTransport } from "@apollo/client-react-streaming/experimental-react-transport-transport";
+} from "@apollo/client-react-streaming/experimental-manual-transport";
+import { ExperimentalReactDataTransport } from "@apollo/client-react-streaming/experimental-react-transport";
 import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { ServerInsertedHTMLContext } from "next/navigation.js";
 
