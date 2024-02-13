@@ -45,9 +45,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming-support@workspace:*, @apollo/client-react-streaming-support@workspace:packages/client-react-streaming-support":
+"@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming-support":
   version: 0.0.0-use.local
-  resolution: "@apollo/client-react-streaming-support@workspace:packages/client-react-streaming-support"
+  resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming-support"
   dependencies:
     "@apollo/client": "npm:3.9.1"
     "@arethetypeswrong/cli": "npm:0.13.6"
@@ -126,7 +126,7 @@ __metadata:
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
     "@apollo/client": "npm:3.9.1"
-    "@apollo/client-react-streaming-support": "workspace:*"
+    "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.13.6"
     "@testing-library/react": "npm:^14.2.1"
     "@total-typescript/shoehorn": "npm:0.1.1"
