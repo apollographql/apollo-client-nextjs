@@ -90,6 +90,7 @@ await testIn("node")(
 
     const link = new MockSubscriptionLink();
     const client = new WrappedApolloClient({
+      connectToDevTools: false,
       cache: new WrappedInMemoryCache(),
       link,
     });
@@ -158,6 +159,7 @@ await testIn("browser")(
     );
 
     const client = new WrappedApolloClient({
+      connectToDevTools: false,
       cache: new WrappedInMemoryCache(),
     });
 
