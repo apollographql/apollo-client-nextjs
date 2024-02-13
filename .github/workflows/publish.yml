@@ -27,7 +27,7 @@ jobs:
           yarn workspace @apollo/client-react-streaming exec jq '{ version: .version, dependencies: .dependencies, peerDependencies: .peerDependencies }' package.json
 
       - name: "@apollo/client-react-streaming: publish"
-        run: yarn workspace @apollo/client-react-streaming exec npm publish --access public --tag snapshot --provenance --dry-run
+        run: yarn workspace @apollo/client-react-streaming exec npm publish --access public --tag snapshot --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -37,6 +37,6 @@ jobs:
           yarn workspace @apollo/experimental-nextjs-app-support exec jq '{ version: .version, dependencies: .dependencies, peerDependencies: .peerDependencies }' package.json
 
       - name: "@apollo/experimental-nextjs-app-support: publish"
-        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance --dry-run
+        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag snapshot --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
