@@ -83,7 +83,7 @@
     "build": "rimraf dist; tsup",
     "test": "true",
     "prepack": "yarn build",
-    "prepublishOnly": "yarn run test-bundle && yarn run test",
+    "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "attw --pack .",
     "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
   },
