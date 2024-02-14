@@ -1,5 +1,5 @@
 {
-  "name": "integration-test",
+  "name": "@integration-test/nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {

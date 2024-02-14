@@ -80,9 +80,9 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
-      - run: yarn workspace integration-test add @apollo/client@${{ matrix.version }}
+      - run: yarn workspace @integration-test/nextjs add @apollo/client@${{ matrix.version }}
 
       - name: Build
-        run: yarn workspaces foreach --all -t --include "@apollo/*" --include integration-test run build
+        run: yarn workspaces foreach --all -t --include "@apollo/*" --include @integration-test/nextjs run build
       - name: Run tests
-        run: yarn workspace integration-test run test | tee $GITHUB_STEP_SUMMARY
+        run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY
