@@ -40,8 +40,9 @@ app.use("*", async (req, res) => {
     write(chunk, encoding, next) {
       //console.log(`👉 \n ~ chunk: ${Date.now()}`, chunk.toString());
       res.write(chunk, encoding);
-      // We need to force flushing the stream after each chunk, or
+      // We'd like to force flushing the stream after each chunk, or
       // the browser won't see any "incremental" behaviour happening.
+      // How (apart from data growing to more than buffer size) can we enforce this?
       next();
     },
     final() {
@@ -88,34 +89,6 @@ app.use("*", async (req, res) => {
       abort();
     }
   }, ABORT_DELAY);
-
-  // try {
-  //   const url = req.originalUrl.replace(base, '')
-
-  //   let template
-  //   let render
-  //   if (!isProduction) {
-  //     // Always read fresh template in development
-  //     template = await fs.readFile('./index.html', 'utf-8')
-  //     template = await vite.transformIndexHtml(url, template)
-  //     render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render
-  //   } else {
-  //     template = templateHtml
-  //     render = (await import('./dist/server/entry-server.js')).render
-  //   }
-
-  //   const rendered = await render(url, ssrManifest)
-
-  //   const html = template
-  //     .replace(`<!--app-head-->`, rendered.head ?? '')
-  //     .replace(`<!--app-html-->`, rendered.html ?? '')
-
-  //   res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  // } catch (e) {
-  //   vite?.ssrFixStacktrace(e)
-  //   console.log(e.stack)
-  //   res.status(500).end(e.stack)
-  // }
 });
 
 // Start http server
