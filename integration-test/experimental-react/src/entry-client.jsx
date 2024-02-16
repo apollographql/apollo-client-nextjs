@@ -5,7 +5,9 @@ import App from "./App";
 
 ReactDOM.hydrateRoot(
   document.getElementById("root"),
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <React.Suspense>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </React.Suspense>
 );

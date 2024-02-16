@@ -1,5 +1,6 @@
 import express from "express";
 import { renderToPipeableStream } from "react-dom/server";
+import { Writable } from "node:stream";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
@@ -16,12 +17,11 @@ console.log({ isProduction });
 if (!isProduction) {
   const { createServer } = await import("vite");
   vite = await createServer({
-    server: { middlewareMode: true, hmr: true },
+    server: { middlewareMode: true, hmr: false },
     appType: "custom",
     base,
   });
-  // disabled for now out of risk of delaying the stream in any way
-  // app.use(vite.middlewares);
+  app.use(vite.middlewares);
 } else {
   const compression = (await import("compression")).default;
   const sirv = (await import("sirv")).default;
@@ -35,6 +35,21 @@ app.use("*", async (req, res) => {
   res.socket.on("error", (error) => {
     console.error("Fatal", error);
   });
+
+  const forceFlushAfterChunkStream = new Writable({
+    write(chunk, encoding, next) {
+      //console.log(`👉 \n ~ chunk: ${Date.now()}`, chunk.toString());
+      res.write(chunk, encoding);
+      // We need to force flushing the stream after each chunk, or
+      // the browser won't see any "incremental" behaviour happening.
+      res.write(Array(4097).join(" "));
+      next();
+    },
+    final() {
+      res.end();
+    },
+  });
+
   let didError = false;
   let didFinish = false;
   const App = (await vite.ssrLoadModule("/src/entry-server.jsx")).render({
@@ -53,7 +68,7 @@ app.use("*", async (req, res) => {
       // If something errored before we started streaming, we set the error code appropriately.
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
-      setImmediate(() => pipe(res));
+      setImmediate(() => pipe(forceFlushAfterChunkStream));
     },
     onShellError(x) {
       console.log("Shell error", x);
