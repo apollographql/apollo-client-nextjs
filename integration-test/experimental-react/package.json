@@ -11,12 +11,14 @@
     "preview": "cross-env NODE_ENV=production node server"
   },
   "dependencies": {
-    "__react": "npm:@phryneas/experimental-react@0.0.0-phryneas-f18c018d5",
-    "__react-dom": "npm:@phryneas/experimental-react-dom@0.0.0-phryneas-f18c018d5",
+    "@apollo/client": "^3.9.1",
+    "@apollo/client-react-streaming": "workspace:*",
     "compression": "^1.7.4",
     "express": "^4.18.2",
-    "react": "18.3.0-canary-2e470a788-20240214",
-    "react-dom": "18.3.0-canary-2e470a788-20240214",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "react": "npm:@phryneas/experimental-react@0.0.0-phryneas-a1c625c",
+    "react-dom": "npm:@phryneas/experimental-react-dom@0.0.0-phryneas-a1c625c",
     "sirv": "^2.0.4"
   },
   "devDependencies": {

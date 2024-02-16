@@ -17,7 +17,7 @@ console.log({ isProduction });
 if (!isProduction) {
   const { createServer } = await import("vite");
   vite = await createServer({
-    server: { middlewareMode: true, hmr: false },
+    server: { middlewareMode: true, hmr: true },
     appType: "custom",
     base,
   });
@@ -42,7 +42,6 @@ app.use("*", async (req, res) => {
       res.write(chunk, encoding);
       // We need to force flushing the stream after each chunk, or
       // the browser won't see any "incremental" behaviour happening.
-      res.write(Array(4097).join(" "));
       next();
     },
     final() {
