@@ -1,6 +1,7 @@
 import express from "express";
 import { renderToPipeableStream } from "react-dom/server";
 import { Writable } from "node:stream";
+import { readFile } from "node:fs/promises";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
@@ -13,6 +14,8 @@ const app = express();
 
 // Add Vite or respective production middlewares
 let vite;
+let bootstrapModules = [];
+let assets = [];
 console.log({ isProduction });
 if (!isProduction) {
   const { createServer } = await import("vite");
@@ -27,7 +30,23 @@ if (!isProduction) {
   const sirv = (await import("sirv")).default;
   app.use(compression());
   app.use(base, sirv("./dist/client", { extensions: [] }));
+  const index = await readFile("./dist/client/index.html", "utf-8");
+  for (const script of index.matchAll(
+    /<script type="module" \w+ src="(.*)">/g
+  )) {
+    bootstrapModules.push(script[1]);
+  }
+  for (const link of index.matchAll(
+    /<link rel="stylesheet" \w+ href="(.*)">/g
+  )) {
+    assets.push(link[1]);
+  }
 }
+
+console.log({
+  bootstrapModules,
+  assets,
+});
 
 // based on https://github.com/facebook/react/blob/9cdf8a99edcfd94d7420835ea663edca04237527/fixtures/fizz/server/render-to-stream.js
 app.use("*", async (req, res) => {
@@ -52,11 +71,16 @@ app.use("*", async (req, res) => {
 
   let didError = false;
   let didFinish = false;
-  const App = (await vite.ssrLoadModule("/src/entry-server.jsx")).render({
+  const App = (
+    await (isProduction
+      ? import("./dist/server/entry-server.js")
+      : vite.ssrLoadModule("/src/entry-server.jsx"))
+  ).render({
     isProduction,
+    assets,
   });
   const { pipe, abort } = renderToPipeableStream(App, {
-    bootstrapScripts: [],
+    bootstrapModules,
     onAllReady() {
       console.log("All ready");
       // Full completion.

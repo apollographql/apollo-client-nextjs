@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import App from "./App";
 
-export function render({ isProduction }) {
+export function render({ isProduction, assets }) {
   return (
     <html lang="en">
       <head>
@@ -9,6 +9,9 @@ export function render({ isProduction }) {
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Vite + React</title>
+        {assets.map((asset) => (
+          <link rel="stylesheet" crossorigin href={asset}></link>
+        ))}
       </head>
       <body>
         <div id="root">
@@ -19,7 +22,7 @@ export function render({ isProduction }) {
           </Suspense>
         </div>
         {isProduction ? (
-          <>{/* TODO */}</>
+          <></>
         ) : (
           <>
             <script type="module" src="/@vite/client"></script>
