@@ -1,9 +1,9 @@
-import { useContext } from "rehackt";
+import { useContext } from "react";
 import {
   buildManualDataTransport,
   resetManualSSRApolloSingletons,
-} from "@apollo/experimental-nextjs-app-support/manual";
-import { WrapApolloProvider } from "@apollo/experimental-nextjs-app-support/core";
+} from "@apollo/client-react-streaming/experimental-manual-transport";
+import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { ServerInsertedHTMLContext } from "next/navigation.js";
 
 export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
@@ -32,4 +32,4 @@ export {
   SSRMultipartLink,
   DebounceMultipartResponsesLink,
   RemoveMultipartDirectivesLink,
-} from "@apollo/experimental-nextjs-app-support/core";
+} from "@apollo/client-react-streaming";

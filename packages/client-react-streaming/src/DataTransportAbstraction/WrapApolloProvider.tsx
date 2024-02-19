@@ -1,6 +1,6 @@
 "use client";
-import React from "rehackt";
-import { useRef } from "rehackt";
+import React from "react";
+import { useRef } from "react";
 import { WrappedApolloClient } from "./WrappedApolloClient.js";
 import { ApolloProvider } from "@apollo/client/index.js";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";

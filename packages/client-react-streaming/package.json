@@ -1,0 +1,144 @@
+{
+  "name": "@apollo/client-react-streaming",
+  "version": "0.8.0",
+  "repository": {
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs"
+  },
+  "keywords": [
+    "apollo",
+    "apollo-client",
+    "graphql",
+    "ssr",
+    "rsc",
+    "streaming"
+  ],
+  "type": "module",
+  "imports": {
+    "#bundled": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/index.rsc.cjs",
+        "browser": "./dist/index.browser.cjs",
+        "node": "./dist/index.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/index.rsc.js",
+        "browser": "./dist/index.browser.js",
+        "node": "./dist/index.ssr.js"
+      }
+    }
+  },
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/index.rsc.cjs",
+        "browser": "./dist/index.browser.cjs",
+        "node": "./dist/index.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/index.rsc.js",
+        "browser": "./dist/index.browser.js",
+        "node": "./dist/index.ssr.js"
+      }
+    },
+    "./experimental-manual-transport": {
+      "require": {
+        "types": "./dist/experimental-manual-transport.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/experimental-manual-transport.browser.cjs",
+        "node": "./dist/experimental-manual-transport.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/experimental-manual-transport.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/experimental-manual-transport.browser.js",
+        "node": "./dist/experimental-manual-transport.ssr.js"
+      }
+    },
+    "./experimental-react-transport": {
+      "require": {
+        "types": "./dist/experimental-react-transport.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/experimental-react-transport.browser.cjs",
+        "node": "./dist/experimental-react-transport.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/experimental-react-transport.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/experimental-react-transport.browser.js",
+        "node": "./dist/experimental-react-transport.ssr.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "experimental-manual-transport": [
+        "./dist/experimental-manual-transport.ssr.d.ts"
+      ],
+      "experimental-react-transport": [
+        "./dist/experimental-react-transport.ssr.d.ts"
+      ]
+    }
+  },
+  "typings": "./dist/combined.d.ts",
+  "author": "packages@apollographql.com",
+  "license": "MIT",
+  "files": [
+    "dist/",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rimraf dist; tsup",
+    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
+    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
+    "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
+    "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
+    "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "test-bundle": "attw --pack .",
+    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
+  },
+  "devDependencies": {
+    "@apollo/client": "3.9.1",
+    "@arethetypeswrong/cli": "0.13.6",
+    "@testing-library/react": "^14.2.1",
+    "@total-typescript/shoehorn": "0.1.1",
+    "@tsconfig/recommended": "1.0.3",
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.55",
+    "@typescript-eslint/eslint-plugin": "6.19.0",
+    "@typescript-eslint/parser": "6.19.0",
+    "concurrently": "^8.2.2",
+    "eslint": "8.56.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "glob": "^10.3.10",
+    "global-jsdom": "^24.0.0",
+    "globstar": "^1.0.0",
+    "graphql": "16.8.1",
+    "jsdom": "^24.0.0",
+    "react": "18.3.0-canary-60a927d04-20240113",
+    "react-dom": "18.3.0-canary-60a927d04-20240113",
+    "rimraf": "5.0.5",
+    "ts-node": "10.9.2",
+    "tsup": "8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "5.3.3",
+    "vitest": "1.2.1"
+  },
+  "peerDependencies": {
+    "@apollo/client": "^3.9.0",
+    "react": "^18"
+  },
+  "dependencies": {
+    "superjson": "^1.12.2 || ^2.0.0",
+    "ts-invariant": "^0.10.3"
+  }
+}

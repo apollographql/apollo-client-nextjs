@@ -2,15 +2,11 @@
   "name": "monorepo",
   "packageManager": "yarn@4.1.0",
   "workspaces": [
-    "package",
+    "packages/*",
     "integration-test",
     "examples/*"
   ],
   "dependencies": {
     "prettier": "^3.0.0"
-  },
-  "resolutions": {
-    "react": "18.3.0-canary-60a927d04-20240113",
-    "react-dom": "18.3.0-canary-60a927d04-20240113"
   }
 }

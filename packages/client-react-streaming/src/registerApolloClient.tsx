@@ -1,5 +1,3 @@
-import "server-only";
-
 import type { ApolloClient } from "@apollo/client/index.js";
 import { cache } from "react";
 

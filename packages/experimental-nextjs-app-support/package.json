@@ -19,71 +19,43 @@
     ".": {
       "require": {
         "types": "./dist/combined.d.cts",
-        "react-server": "./dist/rsc/index.cjs",
+        "react-server": "./dist/index.rsc.cjs",
         "browser": "./dist/ssr/index.browser.cjs",
         "node": "./dist/ssr/index.ssr.cjs"
       },
       "import": {
         "types": "./dist/combined.d.ts",
-        "react-server": "./dist/rsc/index.js",
-        "browser": "./dist/ssr/index.browser.js",
-        "node": "./dist/ssr/index.ssr.js"
-      }
-    },
-    "./core": {
-      "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/rsc/index.cjs",
-        "browser": "./dist/ssr/index.browser.cjs",
-        "node": "./dist/ssr/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/rsc/index.js",
+        "react-server": "./dist/index.rsc.js",
         "browser": "./dist/ssr/index.browser.js",
         "node": "./dist/ssr/index.ssr.js"
       }
     },
     "./rsc": {
       "require": {
-        "types": "./dist/rsc/index.d.cts",
-        "react-server": "./dist/rsc/index.cjs",
+        "types": "./dist/index.rsc.d.cts",
+        "react-server": "./dist/index.rsc.cjs",
         "browser": "./dist/empty.cjs",
         "node": "./dist/empty.cjs"
       },
       "import": {
-        "types": "./dist/rsc/index.d.ts",
-        "react-server": "./dist/rsc/index.js",
+        "types": "./dist/index.rsc.d.ts",
+        "react-server": "./dist/index.rsc.js",
         "browser": "./dist/empty.js",
         "node": "./dist/empty.js"
       }
     },
     "./ssr": {
       "require": {
-        "types": "./dist/ssr/next.ssr.d.cts",
+        "types": "./dist/index.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
-        "browser": "./dist/ssr/next.browser.cjs",
-        "node": "./dist/ssr/next.ssr.cjs"
+        "browser": "./dist/index.browser.cjs",
+        "node": "./dist/index.ssr.cjs"
       },
       "import": {
-        "types": "./dist/ssr/next.ssr.d.ts",
+        "types": "./dist/index.ssr.d.ts",
         "react-server": "./dist/empty.js",
-        "browser": "./dist/ssr/next.browser.js",
-        "node": "./dist/ssr/next.ssr.js"
-      }
-    },
-    "./manual": {
-      "require": {
-        "types": "./dist/manual.ssr.d.cts",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/ssr/manual.browser.cjs",
-        "node": "./dist/ssr/manual.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/manual.ssr.d.ts",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/ssr/manual.browser.js",
-        "node": "./dist/ssr/manual.ssr.js"
+        "browser": "./dist/index.browser.js",
+        "node": "./dist/index.ssr.js"
       }
     },
     "./package.json": "./package.json"
@@ -91,16 +63,10 @@
   "typesVersions": {
     "*": {
       "ssr": [
-        "./dist/ssr/next.ssr.d.ts"
+        "./dist/index.ssr.d.ts"
       ],
       "rsc": [
-        "./dist/rsc/index.d.ts"
-      ],
-      "manual": [
-        "./dist/ssr/manual.d.ts"
-      ],
-      "core": [
-        "./dist/combined.d.ts"
+        "./dist/index.rsc.d.ts"
       ]
     }
   },
@@ -115,21 +81,21 @@
   ],
   "scripts": {
     "build": "rimraf dist; tsup",
-    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
-    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
-    "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
-    "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
-    "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
-    "prepack": "yarn build && yarn run test",
-    "test-bundle": "attw --pack ."
+    "test": "true",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "test-bundle": "attw --pack .",
+    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
   },
   "devDependencies": {
     "@apollo/client": "3.9.1",
+    "@apollo/client-react-streaming": "workspace:*",
     "@arethetypeswrong/cli": "0.13.6",
     "@testing-library/react": "^14.2.1",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",
+    "@types/react": "18.2.55",
     "@typescript-eslint/eslint-plugin": "6.19.0",
     "@typescript-eslint/parser": "6.19.0",
     "concurrently": "^8.2.2",
@@ -155,9 +121,6 @@
     "react": "^18"
   },
   "dependencies": {
-    "rehackt": "^0.0.4",
-    "server-only": "^0.0.1",
-    "superjson": "^1.12.2 || ^2.0.0",
-    "ts-invariant": "^0.10.3"
+    "@apollo/client-react-streaming": "^0.9.0"
   }
 }

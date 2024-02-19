@@ -8,9 +8,9 @@ import React, {
   useActionChannel,
   useStaticValue,
   useRef,
-} from "rehackt";
-import type { DataTransportProviderImplementation } from "@apollo/experimental-nextjs-app-support/core";
-import { DataTransportContext } from "@apollo/experimental-nextjs-app-support/core";
+} from "react";
+import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
+import { DataTransportContext } from "@apollo/client-react-streaming";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 
 declare module "react" {
