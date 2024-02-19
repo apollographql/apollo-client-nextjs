@@ -41,22 +41,19 @@ const buildManualDataTransportSSRImpl = ({
       rehydrationContext.current!.incomingResults.push(options);
     });
 
-    const useStaticValueRef = useCallback(function useStaticValueRef<T>(
-      value: T
-    ) {
-      const id = useId();
-      rehydrationContext.current!.transportValueData[id] = value;
-      return { current: value };
-    }, []);
+    const contextValue = useMemo(() => ({
+      useStaticValueRef: function useStaticValueRef<T>(
+        value: T
+      ) {
+        const id = useId();
+        rehydrationContext.current!.transportValueData[id] = value;
+        return { current: value };
+      };
+    }), []);
 
     return (
       <DataTransportContext.Provider
-        value={useMemo(
-          () => ({
-            useStaticValueRef,
-          }),
-          [useStaticValueRef]
-        )}
+        value={contextValue}
       >
         {children}
       </DataTransportContext.Provider>
