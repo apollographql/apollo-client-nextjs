@@ -22,6 +22,7 @@ export const dynamic = "force-dynamic";
 
 export default function Page() {
   const { data } = useSuspenseQuery(QUERY);
+  globalThis.hydrationFinished?.();
 
   return (
     <ul>

@@ -5,9 +5,8 @@ import {
   useReadQuery as orig_useReadQuery,
   useQuery as orig_useQuery,
   useBackgroundQuery as orig_useBackgroundQuery,
-} from "@apollo/client";
-import { useTransportValue } from "./useTransportValue";
-import { useRehydrationContext } from "./RehydrationContext";
+} from "@apollo/client/index.js";
+import { useTransportValue } from "./useTransportValue.js";
 
 export const useFragment = wrap(orig_useFragment, [
   "data",
@@ -15,7 +14,7 @@ export const useFragment = wrap(orig_useFragment, [
   "missing",
 ]);
 export const useQuery = wrap<typeof orig_useQuery>(
-  typeof window === "undefined"
+  process.env.REACT_ENV === "ssr"
     ? (query, options) =>
         orig_useQuery(query, { ...options, fetchPolicy: "cache-only" })
     : orig_useQuery,
@@ -27,12 +26,7 @@ export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
 ]);
 export const useReadQuery = wrap(orig_useReadQuery, ["data", "networkStatus"]);
 
-export const useBackgroundQuery: typeof orig_useBackgroundQuery = (
-  ...args: [any, any]
-) => {
-  useRehydrationContext();
-  return orig_useBackgroundQuery(...args) as any;
-};
+export const useBackgroundQuery = orig_useBackgroundQuery;
 
 function wrap<T extends (...args: any[]) => any>(
   useFn: T,

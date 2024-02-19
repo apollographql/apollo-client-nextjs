@@ -1,14 +1,18 @@
-export { ApolloNextAppProvider } from "./ApolloNextAppProvider";
-export { NextSSRInMemoryCache } from "./NextSSRInMemoryCache";
-export { NextSSRApolloClient } from "./NextSSRApolloClient";
+export { WrappedInMemoryCache } from "./WrappedInMemoryCache.js";
+export { WrappedApolloClient } from "./WrappedApolloClient.js";
+
 export {
   useFragment,
   useQuery,
   useSuspenseQuery,
   useReadQuery,
   useBackgroundQuery,
-} from "./hooks";
-export { SSRMultipartLink } from "./SSRMultipartLink";
-export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink";
-export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink";
-export { resetNextSSRApolloSingletons } from "./testHelpers";
+} from "./hooks.js";
+export { SSRMultipartLink } from "./SSRMultipartLink.js";
+export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink.js";
+export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink.js";
+export { resetApolloSingletons } from "./testHelpers.js";
+
+export { DataTransportContext } from "./DataTransportAbstraction.js";
+export type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";
+export { WrapApolloProvider } from "./WrapApolloProvider.js";

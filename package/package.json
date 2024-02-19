@@ -14,21 +14,97 @@
     "app-router",
     "app"
   ],
+  "type": "module",
   "exports": {
-    "./ssr": "./dist/ssr/index.js",
-    "./rsc": "./dist/rsc/index.js",
+    ".": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
+        "browser": "./dist/ssr/index.browser.cjs",
+        "node": "./dist/ssr/index.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/rsc/index.js",
+        "browser": "./dist/ssr/index.browser.js",
+        "node": "./dist/ssr/index.ssr.js"
+      }
+    },
+    "./core": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
+        "browser": "./dist/ssr/index.browser.cjs",
+        "node": "./dist/ssr/index.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/rsc/index.js",
+        "browser": "./dist/ssr/index.browser.js",
+        "node": "./dist/ssr/index.ssr.js"
+      }
+    },
+    "./rsc": {
+      "require": {
+        "types": "./dist/rsc/index.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
+        "browser": "./dist/empty.cjs",
+        "node": "./dist/empty.cjs"
+      },
+      "import": {
+        "types": "./dist/rsc/index.d.ts",
+        "react-server": "./dist/rsc/index.js",
+        "browser": "./dist/empty.js",
+        "node": "./dist/empty.js"
+      }
+    },
+    "./ssr": {
+      "require": {
+        "types": "./dist/ssr/next.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/ssr/next.browser.cjs",
+        "node": "./dist/ssr/next.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/ssr/next.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/ssr/next.browser.js",
+        "node": "./dist/ssr/next.ssr.js"
+      }
+    },
+    "./manual": {
+      "require": {
+        "types": "./dist/manual.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/ssr/manual.browser.cjs",
+        "node": "./dist/ssr/manual.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/manual.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/ssr/manual.browser.js",
+        "node": "./dist/ssr/manual.ssr.js"
+      }
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "ssr": [
-        "./dist/ssr/index.d.ts"
+        "./dist/ssr/next.ssr.d.ts"
       ],
       "rsc": [
         "./dist/rsc/index.d.ts"
+      ],
+      "manual": [
+        "./dist/ssr/manual.d.ts"
+      ],
+      "core": [
+        "./dist/combined.d.ts"
       ]
     }
   },
+  "typings": "./dist/combined.d.ts",
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
@@ -38,26 +114,38 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf dist; echo 'building package'; tsc",
-    "test": "vitest",
-    "prepack": "yarn build && yarn run test"
+    "build": "rimraf dist; tsup",
+    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
+    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
+    "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
+    "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
+    "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
+    "prepack": "yarn build && yarn run test",
+    "test-bundle": "attw --pack ."
   },
   "devDependencies": {
     "@apollo/client": "3.9.1",
+    "@arethetypeswrong/cli": "0.13.6",
+    "@testing-library/react": "^14.2.1",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",
     "@typescript-eslint/eslint-plugin": "6.19.0",
     "@typescript-eslint/parser": "6.19.0",
+    "concurrently": "^8.2.2",
     "eslint": "8.56.0",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "glob": "^10.3.10",
+    "global-jsdom": "^24.0.0",
+    "globstar": "^1.0.0",
     "graphql": "16.8.1",
+    "jsdom": "^24.0.0",
     "next": "14.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
+    "tsup": "8.0.1",
+    "tsx": "^4.7.0",
     "typescript": "5.3.3",
     "vitest": "1.2.1"
   },
@@ -67,6 +155,7 @@
     "react": "^18"
   },
   "dependencies": {
+    "rehackt": "^0.0.4",
     "server-only": "^0.0.1",
     "superjson": "^1.12.2 || ^2.0.0",
     "ts-invariant": "^0.10.3"

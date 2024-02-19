@@ -1,10 +1,10 @@
-import type { Operation, NextLink, FetchResult } from "@apollo/client";
-import { ApolloLink } from "@apollo/client";
+import type { Operation, NextLink, FetchResult } from "@apollo/client/index.js";
+import { ApolloLink } from "@apollo/client/index.js";
 import {
   Observable,
   hasDirectives,
   mergeIncrementalData,
-} from "@apollo/client/utilities";
+} from "@apollo/client/utilities/index.js";
 
 export interface AccumulateMultipartResponsesConfig {
   /**

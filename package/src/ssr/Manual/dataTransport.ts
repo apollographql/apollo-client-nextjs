@@ -1,15 +1,10 @@
 import SuperJSON from "superjson";
-import {
-  ApolloSSRDataTransport,
-  ApolloRehydrationCache,
-  ApolloResultCache,
-  ApolloBackgroundQueryTransport,
-} from "./ApolloRehydrateSymbols";
-import type { RehydrationCache } from "./types";
-import { registerLateInitializingQueue } from "./lateInitializingQueue";
-import type { Cache, WatchQueryOptions } from "@apollo/client";
+import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols.js";
+import type { RehydrationCache } from "./types.js";
+import { registerLateInitializingQueue } from "./lateInitializingQueue.js";
+import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import invariant from "ts-invariant";
-import { htmlEscapeJsonString } from "../util/htmlescape";
+import { htmlEscapeJsonString } from "./htmlescape.js";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 
@@ -33,14 +28,24 @@ export function transportDataToJS(data: DataToTransport) {
  * Registers a lazy queue that will be filled with data by `transportDataToJS`.
  * All incoming data will be added either to the rehydration cache or the result cache.
  */
-export function registerDataTransport() {
+export function registerDataTransport({
+  onRequestData,
+  onRequestStarted,
+  onRehydrate,
+}: {
+  onRequestData(options: Cache.WriteOptions): void;
+  onRequestStarted(options: WatchQueryOptions): void;
+  onRehydrate(rehydrate: RehydrationCache): void;
+}) {
   registerLateInitializingQueue(ApolloSSRDataTransport, (data) => {
     const parsed = SuperJSON.deserialize<DataToTransport>(data);
     invariant.debug(`received data from the server:`, parsed);
-    Object.assign((window[ApolloRehydrationCache] ??= {}), parsed.rehydrate);
-    (window[ApolloBackgroundQueryTransport] ??= []).push(
-      ...parsed.backgroundQueries
-    );
-    (window[ApolloResultCache] ??= []).push(...parsed.results);
+    onRehydrate(parsed.rehydrate);
+    for (const query of parsed.backgroundQueries) {
+      onRequestStarted(query);
+    }
+    for (const result of parsed.results) {
+      onRequestData(result);
+    }
   });
 }

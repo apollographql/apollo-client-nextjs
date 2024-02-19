@@ -24,6 +24,7 @@ expect.extend({
 
 export const test = base.extend<{
   blockRequest: import("@playwright/test").Page;
+  hydrationFinished: Promise<void>;
 }>({
   page: async ({ page }, use) => {
     page.on("pageerror", (error) => {
@@ -33,10 +34,17 @@ export const test = base.extend<{
     page.route("**", (route) => route.continue());
     await use(page);
   },
+  hydrationFinished: async ({ page }, use) => {
+    let hydrationFinished: () => void;
+    const hydrated = new Promise<void>(
+      (resolve) => (hydrationFinished = resolve)
+    );
+    await page.exposeFunction("hydrationFinished", hydrationFinished!);
+    use(hydrated);
+  },
   blockRequest: async ({ page }, use) => {
-    await page.routeFromHAR("./empty.har", {
-      url: "**/graphql",
-      notFound: "abort",
+    await page.route("**/graphql", (route) => {
+      return route.abort();
     });
     await use(page);
   },

@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useId, useState } from "react";
-import { ApolloRehydrationCache } from "./ApolloRehydrateSymbols";
-import { useRehydrationContext } from "./RehydrationContext";
+import { useContext, useEffect, useState } from "rehackt";
+import { DataTransportContext } from "./DataTransportAbstraction.js";
 
 /**
  * A hook that mostly acts as an identity function.
@@ -13,24 +12,20 @@ import { useRehydrationContext } from "./RehydrationContext";
  * the component can change to client-side values instead.
  */
 export function useTransportValue<T>(value: T): T {
-  const id = useId();
-
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
 
-  const rehydrationContext = useRehydrationContext();
-  if (typeof window == "undefined") {
-    if (rehydrationContext) {
-      rehydrationContext.transportValueData[id] = value;
-    }
-  } else {
-    const store = window[ApolloRehydrationCache];
-    if (store) {
-      if (isClient) {
-        delete store[id];
-      }
-      if (id in store) value = store[id] as T;
-    }
+  const dataTransport = useContext(DataTransportContext);
+  if (!dataTransport)
+    throw new Error(
+      "useTransportValue must be used within a streaming-specific ApolloProvider"
+    );
+  const valueRef = dataTransport.useStaticValueRef(value);
+  if (isClient) {
+    // @ts-expect-error this value will never be used again
+    // so we can safely delete it
+    valueRef.current = undefined;
   }
-  return value;
+
+  return isClient ? value : valueRef.current;
 }

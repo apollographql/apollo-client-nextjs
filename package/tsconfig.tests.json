@@ -11,14 +11,7 @@
     "jsx": "react",
     "declarationMap": true,
     "types": ["react/canary", "node"],
-    "esModuleInterop": true,
-    "paths": {
-      "@apollo/experimental-nextjs-app-support": ["./src/combined.ts"],
-      "@apollo/experimental-nextjs-app-support/core": ["./src/combined.ts"],
-      "@apollo/experimental-nextjs-app-support/manual": [
-        "./src/ssr/Manual/index.ts"
-      ]
-    }
+    "esModuleInterop": false
   },
   "include": ["src"]
 }

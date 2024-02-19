@@ -1,23 +1,13 @@
-import { ApolloClientSingleton } from "./ApolloNextAppProvider";
-import {
-  ApolloRehydrationCache,
-  ApolloResultCache,
-  ApolloSSRDataTransport,
-  ApolloBackgroundQueryTransport,
-} from "./ApolloRehydrateSymbols";
+import { ApolloClientSingleton } from "./symbols.js";
 
 /**
  * Resets the singleton instances created for the Apollo SSR data transport and caches.
  *
  * To be used in testing only, like
  * ```ts
- * afterEach(resetNextSSRApolloSingletons);
+ * afterEach(resetApolloSingletons);
  * ```
  */
-export function resetNextSSRApolloSingletons() {
-  delete window[ApolloRehydrationCache];
-  delete window[ApolloResultCache];
-  delete window[ApolloSSRDataTransport];
-  delete window[ApolloBackgroundQueryTransport];
+export function resetApolloSingletons() {
   delete window[ApolloClientSingleton];
 }

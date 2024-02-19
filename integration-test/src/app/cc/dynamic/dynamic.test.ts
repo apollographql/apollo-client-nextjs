@@ -3,23 +3,29 @@ import { test } from "../../../../fixture";
 
 test.describe("CC dynamic", () => {
   test.describe("useSuspenseQuery", () => {
-    test("one query", async ({ page, blockRequest }) => {
+    test("one query", async ({ page, blockRequest, hydrationFinished }) => {
       await page.goto("http://localhost:3000/cc/dynamic/useSuspenseQuery", {
         waitUntil: "commit",
       });
 
       await expect(page).toBeInitiallyLoading(false);
       await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+
+      await hydrationFinished;
+      await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
     });
   });
-  test.describe("useBackgroundQuery", () => {
-    test("one query", async ({ page, blockRequest }) => {
+  test.describe("useBackgroundQuery + useReadQuery", () => {
+    test("one query", async ({ page, blockRequest, hydrationFinished }) => {
       await page.goto("http://localhost:3000/cc/dynamic/useBackgroundQuery", {
         waitUntil: "commit",
       });
 
       await expect(page).toBeInitiallyLoading(true);
       await expect(page.getByText("loading")).not.toBeVisible();
+      await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+
+      await hydrationFinished;
       await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
     });
 

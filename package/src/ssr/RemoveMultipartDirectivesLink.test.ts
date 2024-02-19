@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink";
 import { fromPartial } from "@total-typescript/shoehorn";
-import type { DocumentNode } from "@apollo/client";
-import { gql, Observable } from "@apollo/client";
+import type { DocumentNode } from "@apollo/client/index.js";
+import { gql, Observable } from "@apollo/client/core/index.js";
 import { print } from "graphql";
-import { it, expect } from "vitest";
+import { it } from "node:test";
+import assert from "node:assert";
+import { runInConditions } from "../util/runInConditions.js";
+
+runInConditions("node", "browser");
+
+const { RemoveMultipartDirectivesLink } = await import(
+  "@apollo/experimental-nextjs-app-support"
+);
 
 const queryWithDefer = gql`
   query myQuery {
@@ -55,11 +62,13 @@ it("removes fields with a @defer directive", () => {
     resultingQuery = operation.query;
     return Observable.of({});
   });
-  expect(print(resultingQuery!)).toMatchInlineSnapshot(`
-  "query myQuery {
-    fastField
-  }"
-  `);
+  assert.equal(
+    print(resultingQuery!),
+    `
+query myQuery {
+  fastField
+}`.trim()
+  );
 });
 
 it("`stripDefer` defaults to `true`", () => {
@@ -71,11 +80,13 @@ it("`stripDefer` defaults to `true`", () => {
     resultingQuery = operation.query;
     return Observable.of({});
   });
-  expect(print(resultingQuery!)).toMatchInlineSnapshot(`
-    "query myQuery {
-      fastField
-    }"
-    `);
+  assert.equal(
+    print(resultingQuery!),
+    `
+query myQuery {
+  fastField
+}`.trim()
+  );
 });
 
 it("preserves @defer fields with a `SsrDontStrip` label", () => {
@@ -90,17 +101,19 @@ it("preserves @defer fields with a `SsrDontStrip` label", () => {
       return Observable.of({});
     }
   );
-  expect(print(resultingQuery!)).toMatchInlineSnapshot(`
-    "query myQuery {
-      fastField
-      ... @defer(label: "SsrDontStrip1") {
-        slowField1
-      }
-      ... @defer(label: "SsrDontStrip2") {
-        slowField2
-      }
-    }"
-  `);
+  assert.equal(
+    print(resultingQuery!),
+    `
+query myQuery {
+  fastField
+  ... @defer(label: "SsrDontStrip1") {
+    slowField1
+  }
+  ... @defer(label: "SsrDontStrip2") {
+    slowField2
+  }
+}`.trim()
+  );
 });
 
 it("can be configured to not remove @defer fields", () => {
@@ -112,17 +125,19 @@ it("can be configured to not remove @defer fields", () => {
     resultingQuery = operation.query;
     return Observable.of({});
   });
-  expect(print(resultingQuery!)).toMatchInlineSnapshot(`
-    "query myQuery {
-      fastField
-      ... @defer {
-        slowField1
-      }
-      ... @defer {
-        slowField2
-      }
-    }"
-  `);
+  assert.equal(
+    print(resultingQuery!),
+    `
+query myQuery {
+  fastField
+  ... @defer {
+    slowField1
+  }
+  ... @defer {
+    slowField2
+  }
+}`.trim()
+  );
 });
 
 it("even with `stripDefer: false`, certain fields can be marked for stripping", () => {
@@ -137,12 +152,14 @@ it("even with `stripDefer: false`, certain fields can be marked for stripping", 
       return Observable.of({});
     }
   );
-  expect(print(resultingQuery!)).toMatchInlineSnapshot(`
-    "query myQuery {
-      fastField
-      ... @defer {
-        slowField3
-      }
-    }"
-  `);
+  assert.equal(
+    print(resultingQuery!),
+    `
+query myQuery {
+  fastField
+  ... @defer {
+    slowField3
+  }
+}`.trim()
+  );
 });

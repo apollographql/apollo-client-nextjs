@@ -1,10 +1,10 @@
 import "server-only";
 
-import type { ApolloClient } from "@apollo/client";
-import * as React from "react";
+import type { ApolloClient } from "@apollo/client/index.js";
+import { cache } from "react";
 
 export function registerApolloClient(makeClient: () => ApolloClient<any>) {
-  const getClient = React.cache(makeClient);
+  const getClient = cache(makeClient);
   return {
     getClient,
   };
