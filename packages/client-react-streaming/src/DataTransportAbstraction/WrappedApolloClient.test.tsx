@@ -1,11 +1,11 @@
 import React, { Suspense, useMemo } from "react";
 import { runInConditions, testIn } from "../util/runInConditions.js";
-import {
+import type {
   Cache,
   TypedDocumentNode,
   WatchQueryOptions,
-  gql,
 } from "@apollo/client/index.js";
+import { gql } from "@apollo/client/index.js";
 
 import "global-jsdom/register";
 import assert from "node:assert";
@@ -79,7 +79,7 @@ await testIn("node")(
               () => ({
                 useStaticValueRef,
               }),
-              [useStaticValueRef]
+              []
             )}
           >
             {children}
@@ -131,14 +131,15 @@ await testIn("node")(
 await testIn("browser")(
   "`useSuspenseQuery`: data from the transport is used by the hooks",
   async () => {
-    let useStaticValueRefStub = <T extends any>(): { current: T } => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
+    let useStaticValueRefStub = <T extends unknown>(): { current: T } => {
       throw new Error("Should not be called yet!");
     };
     let simulateRequestStart: (options: WatchQueryOptions) => void;
     let simulateRequestData: (options: Cache.WriteOptions) => void;
 
     const Provider = WrapApolloProvider(
-      ({ children, onRequestData, onRequestStarted, ...rest }) => {
+      ({ children, onRequestData, onRequestStarted, ..._rest }) => {
         simulateRequestStart = onRequestStarted!;
         simulateRequestData = onRequestData!;
         return (
