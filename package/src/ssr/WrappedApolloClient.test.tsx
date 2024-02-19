@@ -196,6 +196,15 @@ await testIn("browser")(
     await findByText("User");
 
     assert.ok(attemptedRenderCount > 0);
-    assert.ok(finishedRenderCount > 0);
+    // one render to rehydrate the server value
+    // one rerender with the actual client value (which is hopefull equal)
+    assert.equal(finishedRenderCount, 2);
+
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(client.extract())), {
+      ROOT_QUERY: {
+        __typename: "Query",
+        me: "User",
+      },
+    });
   }
 );
