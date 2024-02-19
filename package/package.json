@@ -155,7 +155,7 @@
     "react": "^18"
   },
   "dependencies": {
-    "rehackt": "^0.0.4",
+    "rehackt": "^0.0.5",
     "server-only": "^0.0.1",
     "superjson": "^1.12.2 || ^2.0.0",
     "ts-invariant": "^0.10.3"
