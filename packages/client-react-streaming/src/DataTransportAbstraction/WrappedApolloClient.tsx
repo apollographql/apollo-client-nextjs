@@ -13,6 +13,7 @@ import { canonicalStringify } from "@apollo/client/cache/index.js";
 import invariant from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
 import { WrappedInMemoryCache } from "./WrappedInMemoryCache.js";
+import { ensureNotCalledFromUnwrappedHook } from "./ensureNotCalledFromUnwrappedHook.js";
 
 function getQueryManager<TCacheShape>(
   client: ApolloClient<unknown>
@@ -26,7 +27,29 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
-class ApolloClientSSRImpl<TCacheShape> extends ApolloClient<TCacheShape> {
+class SharedApolloClientImpl<TCacheShape> extends ApolloClient<TCacheShape> {
+  constructor(options: ApolloClientOptions<TCacheShape>) {
+    super(options);
+
+    if (!(this.cache instanceof WrappedInMemoryCache)) {
+      throw new Error(
+        "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
+      );
+    }
+  }
+
+  watchQuery<
+    T = any,
+    TVariables extends OperationVariables = OperationVariables,
+  >(options: WatchQueryOptions<TVariables, T>) {
+    ensureNotCalledFromUnwrappedHook();
+    return super.watchQuery(options);
+  }
+}
+
+class ApolloClientSSRImpl<
+  TCacheShape,
+> extends SharedApolloClientImpl<TCacheShape> {
   watchQueryQueue = createBackpressuredCallback<WatchQueryOptions<any>>();
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
@@ -47,17 +70,11 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClient<TCacheShape> {
   }
 }
 
-export class ApolloClientBrowserImpl<
+class ApolloClientBrowserImpl<
   TCacheShape,
-> extends ApolloClient<TCacheShape> {
+> extends SharedApolloClientImpl<TCacheShape> {
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
-
-    if (!(this.cache instanceof WrappedInMemoryCache)) {
-      throw new Error(
-        "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
-      );
-    }
   }
 
   private simulatedStreamingQueries = new Map<string, SimulatedQueryInfo>();

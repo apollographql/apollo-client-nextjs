@@ -7,6 +7,7 @@ import {
   useBackgroundQuery as orig_useBackgroundQuery,
 } from "@apollo/client/index.js";
 import { useTransportValue } from "./useTransportValue.js";
+import { hookSlot } from "./ensureNotCalledFromUnwrappedHook.js";
 
 export const useFragment = wrap(orig_useFragment, [
   "data",
@@ -26,14 +27,16 @@ export const useSuspenseQuery = wrap(orig_useSuspenseQuery, [
 ]);
 export const useReadQuery = wrap(orig_useReadQuery, ["data", "networkStatus"]);
 
-export const useBackgroundQuery = orig_useBackgroundQuery;
+export const useBackgroundQuery: typeof orig_useBackgroundQuery = ((
+  ...args: [any, any]
+) => hookSlot.withValue(true, orig_useBackgroundQuery, args)) as any;
 
 function wrap<T extends (...args: any[]) => any>(
   useFn: T,
   transportKeys: (keyof ReturnType<T>)[]
 ): T {
   return ((...args: any[]) => {
-    const result = useFn(...args);
+    const result = hookSlot.withValue(true, useFn, args);
     const transported: Partial<typeof result> = {};
     for (const key of transportKeys) {
       transported[key] = result[key];

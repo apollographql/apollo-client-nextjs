@@ -5,14 +5,27 @@ import type {
 } from "@apollo/client/index.js";
 import { InMemoryCache } from "@apollo/client/index.js";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
+import { ensureNotCalledFromUnwrappedHook } from "./ensureNotCalledFromUnwrappedHook.js";
 
-class InMemoryCacheSSRImpl extends InMemoryCache {
+class SharedInMemoryCache extends InMemoryCache {
+  constructor(config?: InMemoryCacheConfig) {
+    super(config);
+  }
+
+  watch<TData = any, TVariables = any>(
+    watch: Cache.WatchOptions<TData, TVariables>
+  ): () => void {
+    ensureNotCalledFromUnwrappedHook();
+    return super.watch(watch);
+  }
+}
+
+class InMemoryCacheSSRImpl extends SharedInMemoryCache {
   protected writeQueue = createBackpressuredCallback<Cache.WriteOptions>();
 
   constructor(config?: InMemoryCacheConfig) {
     super(config);
   }
-
   write(options: Cache.WriteOptions<any, any>): Reference | undefined {
     this.writeQueue.push(options);
     return super.write(options);
@@ -32,4 +45,4 @@ export const WrappedInMemoryCache: {
 } =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
     ? InMemoryCacheSSRImpl
-    : InMemoryCache;
+    : SharedInMemoryCache;
