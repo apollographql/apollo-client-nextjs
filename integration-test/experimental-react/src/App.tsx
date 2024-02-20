@@ -1,15 +1,14 @@
 import { Suspense } from "react";
 import "./App.css";
 import {
-  WrapApolloProvider,
   WrappedApolloClient,
   WrappedInMemoryCache,
   useSuspenseQuery,
 } from "@apollo/client-react-streaming";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
-import { ExperimentalReactDataTransport } from "@apollo/client-react-streaming/experimental-react-transport";
 import { gql, ApolloLink, Observable } from "@apollo/client/core/index.js";
 import { schema } from "./schema";
+import { WrappedApolloProvider } from "./WrappedApolloProvider";
 
 const delayLink = new ApolloLink((operation, forward) => {
   return new Observable((observer) => {
@@ -23,7 +22,6 @@ const delayLink = new ApolloLink((operation, forward) => {
   });
 });
 
-const Provider = WrapApolloProvider(ExperimentalReactDataTransport);
 const makeClient = () => {
   return new WrappedApolloClient({
     cache: new WrappedInMemoryCache(),
@@ -40,11 +38,11 @@ function App() {
     <>
       <h1>Vite + React (patched) Streaming SSR + Apollo Client + Suspense</h1>
       <div className="card">
-        <Provider makeClient={makeClient}>
+        <WrappedApolloProvider makeClient={makeClient}>
           <Suspense fallback={<div>Loading...</div>}>
             <Countries />
           </Suspense>
-        </Provider>
+        </WrappedApolloProvider>
       </div>
     </>
   );
