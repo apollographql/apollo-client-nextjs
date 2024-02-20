@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/vite-react/tsconfig.json",
   "compilerOptions": {
-    "types": ["react/canary", "node"]
+    "types": ["react/canary", "react-dom/canary", "node"]
   }
 }

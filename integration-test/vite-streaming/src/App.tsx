@@ -13,7 +13,7 @@ import {
   TypedDocumentNode,
 } from "@apollo/client/core/index.js";
 import { schema } from "./schema";
-import { WrappedApolloProvider } from "./WrappedApolloProvider";
+import { WrappedApolloProvider } from "./Transport";
 
 const delayLink = new ApolloLink((operation, forward) => {
   return new Observable((observer) => {

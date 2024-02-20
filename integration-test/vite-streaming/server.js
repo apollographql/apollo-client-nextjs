@@ -1,5 +1,5 @@
 import express from "express";
-import { renderToPipeableStream } from "react-dom/server";
+import { renderToReadableStream } from "react-dom/server.edge";
 import { Writable } from "node:stream";
 import { readFile } from "node:fs/promises";
 
@@ -55,65 +55,46 @@ app.use("*", async (req, res) => {
     console.error("Fatal", error);
   });
 
-  const forceFlushAfterChunkStream = new Writable({
-    write(chunk, encoding, next) {
-      //console.log(`👉 \n ~ chunk: ${Date.now()}`, chunk.toString());
-      res.write(chunk, encoding);
-      // We'd like to force flushing the stream after each chunk, or
-      // the browser won't see any "incremental" behaviour happening.
-      // How (apart from data growing to more than buffer size) can we enforce this?
-      next();
-    },
-    final() {
-      res.end();
-    },
-  });
+  const { createTransport, render } =
+    /** @type {import('./src/entry-server.jsx.js')}*/ (
+      await (isProduction
+        ? import("./dist/server/entry-server.js")
+        : vite.ssrLoadModule("/src/entry-server.jsx"))
+    );
 
-  let didError = false;
-  let didFinish = false;
-  const App = (
-    await (isProduction
-      ? import("./dist/server/entry-server.js")
-      : vite.ssrLoadModule("/src/entry-server.jsx"))
-  ).render({
+  const { injectIntoStream, transformStream } = createTransport();
+
+  const App = render({
     isProduction,
     assets,
+    injectIntoStream,
   });
-  const { pipe, abort } = renderToPipeableStream(App, {
-    bootstrapModules,
-    onAllReady() {
-      console.log("All ready");
-      // Full completion.
-      // You can use this for SSG or crawlers.
-      didFinish = true;
-    },
-    onShellReady() {
-      console.log("Shell ready", { didError });
-      // If something errored before we started streaming, we set the error code appropriately.
-      res.statusCode = didError ? 500 : 200;
-      res.setHeader("Content-type", "text/html");
-      setImmediate(() => pipe(forceFlushAfterChunkStream));
-    },
-    onShellError(x) {
-      console.log("Shell error", x);
-      // Something errored before we could complete the shell so we emit an alternative shell.
-      res.statusCode = 500;
-      res.send("<!doctype><p>Error</p>");
-    },
-    onError(x) {
-      console.log("Error", x);
-      didError = true;
-      console.error(x);
-    },
-  });
-  // Abandon and switch to client rendering if enough time passes.
-  // Try lowering this to see the client recover.
-  setTimeout(() => {
-    if (!didFinish) {
-      abort();
-    }
-  }, ABORT_DELAY);
+
+  const reactStream =
+    /** @type {ReadableStream & {allReady: Promise<void>}}  */ (
+      await renderToReadableStream(App, {
+        bootstrapModules,
+      })
+    );
+
+  await pipeReaderToResponse(reactStream.getReader(), res);
 });
+
+async function pipeReaderToResponse(reader, res) {
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        res.end();
+        return;
+      } else {
+        res.write(value);
+      }
+    }
+  } catch (e) {
+    res.destroy(e);
+  }
+}
 
 // Start http server
 app.listen(port, () => {
