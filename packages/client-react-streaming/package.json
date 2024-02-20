@@ -128,8 +128,6 @@
     "globstar": "^1.0.0",
     "graphql": "16.8.1",
     "jsdom": "^24.0.0",
-    "react": "18.3.0-canary-60a927d04-20240113",
-    "react-dom": "18.3.0-canary-60a927d04-20240113",
     "rimraf": "5.0.5",
     "superjson": "1.13.3",
     "ts-node": "10.9.2",
