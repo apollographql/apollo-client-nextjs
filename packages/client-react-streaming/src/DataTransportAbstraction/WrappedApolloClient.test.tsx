@@ -202,7 +202,7 @@ await testIn("browser")(
     assert.ok(attemptedRenderCount > 0);
     // will try with server value and immediately restart with client value
     // one rerender with the actual client value (which is hopefull equal)
-    assert.equal(finishedRenderCount, 2);
+    assert.equal(finishedRenderCount, 1);
 
     assert.deepStrictEqual(JSON.parse(JSON.stringify(client.extract())), {
       ROOT_QUERY: {
