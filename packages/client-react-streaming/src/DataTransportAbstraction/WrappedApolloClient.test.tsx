@@ -277,8 +277,10 @@ await testIn("browser")(
 
     const { findByText } = getQueriesForElement(document.body);
 
+    // server starts streaming
     document.body.innerHTML =
       '<!--$?--><template id="B:0"></template>Fallback<!--/$-->';
+    // request started on the server
     simulateRequestStart!(FIRST_REQUEST);
 
     hydrateRoot(
@@ -292,13 +294,17 @@ await testIn("browser")(
     );
 
     await findByText("Fallback");
-
+    // this is the div for the suspense boundary
     appendToBody`<div hidden id="S:0"><template id="P:1"></template><template id="P:2"></template></div>`;
+    // request has finished on the server
     simulateRequestData!(FIRST_WRITE);
+    // `Child` component wants to transport data from SSR render to the browser
     useStaticValueRefStub = () => ({ current: FIRST_HOOK_RESULT as any });
+    // `Child` finishes rendering on the server
     appendToBody`<div hidden id="S:1"><div id="user">User</div></div>`;
     $RS("S:1", "P:1");
 
+    // meanwhile, in the browser, the cache is modified
     client.cache.writeQuery({
       query: QUERY_ME,
       data: {
@@ -306,11 +312,14 @@ await testIn("browser")(
       },
     });
 
+    // `ParallelSuspending` finishes rendering
     appendToBody`<div hidden id="S:2"><div id="parallel">suspending in parallel</div></div>`;
-
     $RS("S:2", "P:2");
+
+    // everything in the suspende boundary finished rendering, so assemble HTML and take up React rendering again
     $RC("B:0", "S:0");
 
+    // we expect the *new* value to appear after hydration finished, not the old value from the server
     await findByText("Future me.");
 
     // one render to rehydrate the server value
