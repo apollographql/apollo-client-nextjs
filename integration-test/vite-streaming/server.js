@@ -1,13 +1,11 @@
 import express from "express";
 import { renderToReadableStream } from "react-dom/server.edge";
-import { Writable } from "node:stream";
 import { readFile } from "node:fs/promises";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
 const base = process.env.BASE || "/";
-const ABORT_DELAY = 10000;
 
 // Create http server
 const app = express();
@@ -48,7 +46,6 @@ console.log({
   assets,
 });
 
-// based on https://github.com/facebook/react/blob/9cdf8a99edcfd94d7420835ea663edca04237527/fixtures/fizz/server/render-to-stream.js
 app.use("*", async (req, res) => {
   // The new wiring is a bit more involved.
   res.socket.on("error", (error) => {
@@ -77,7 +74,10 @@ app.use("*", async (req, res) => {
       })
     );
 
-  await pipeReaderToResponse(reactStream.getReader(), res);
+  await pipeReaderToResponse(
+    reactStream.pipeThrough(transformStream).getReader(),
+    res
+  );
 });
 
 async function pipeReaderToResponse(reader, res) {
