@@ -83,9 +83,6 @@ export function createTransport(): {
         });
       }
     },
-    async flush(controller) {
-      controller.enqueue(new TextEncoder().encode(await renderInjectedHtml()));
-    },
   });
 
   return {
