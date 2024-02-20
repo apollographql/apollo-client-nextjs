@@ -1,5 +1,5 @@
 {
-  "name": "@integration-test/experimental-react",
+  "name": "@integration-test/vite-streaming",
   "private": true,
   "version": "0.0.0",
   "type": "module",
