@@ -25,7 +25,7 @@
       "matchDepTypes": [
         "devDependencies"
       ],
-      "excludePackageNames": ["next"]
+      "excludePackageNames": ["next", "react", "react-dom"]
     }
   ]
 }
