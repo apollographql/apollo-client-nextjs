@@ -17,8 +17,7 @@ export function registerApolloClient(
 You cannot pass arguments into \`getClient\`!
 If you were to pass arguments into \`getClient\`, you would get a different copy
 of Apollo Client for every time you called it with different arguments, resulting
-in duplicate requests and a non-functional cache, essentially defeating the purpose
-of \`registerApolloClient\` and \`getClient\`.
+in duplicate requests and a non-functional cache.
       `.trim()
       );
     }
