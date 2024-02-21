@@ -22,8 +22,8 @@ export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
 
 export const resetNextSSRApolloSingletons = resetManualSSRApolloSingletons;
 export {
-  WrappedInMemoryCache as NextSSRInMemoryCache,
-  WrappedApolloClient as NextSSRApolloClient,
+  InMemoryCache,
+  ApolloClient,
   useBackgroundQuery,
   useFragment,
   useQuery,
@@ -33,3 +33,9 @@ export {
   DebounceMultipartResponsesLink,
   RemoveMultipartDirectivesLink,
 } from "@apollo/client-react-streaming";
+
+import { ApolloClient, InMemoryCache } from "@apollo/client-react-streaming";
+/** @deprecated use `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package instead */
+export const NextSSRInMemoryCache = InMemoryCache;
+/** @deprecated use `ApolloClient` from the `@apollo/experimental-nextjs-app-support` package instead */
+export const NextSSRApolloClient = ApolloClient;

@@ -50,8 +50,12 @@ npm install @apollo/client@latest @apollo/experimental-nextjs-app-support
 Create an `ApolloClient.js` file:
 
 ```js
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+import { HttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  registerApolloClient,
+} from "@apollo/experimental-nextjs-app-support";
 
 export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
@@ -86,10 +90,10 @@ First, create a new file `app/ApolloWrapper.jsx`:
 import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
-  NextSSRInMemoryCache,
-  NextSSRApolloClient,
+  InMemoryCache,
+  ApolloClient,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+} from "@apollo/experimental-nextjs-app-support";
 
 // have a function to create a client for you
 function makeClient() {
@@ -105,9 +109,10 @@ function makeClient() {
     // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
   });
 
-  return new NextSSRApolloClient({
-    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
-    cache: new NextSSRInMemoryCache(),
+  // use the `ApolloClient` from `@apollo/experimental-nextjs-app-support`, not from `@apollo/client`
+  return new ApolloClient({
+    // use the `InMemoryCache` from `@apollo/experimental-nextjs-app-support`, not from `@apollo/client`
+    cache: new InMemoryCache(),
     link:
       typeof window === "undefined"
         ? ApolloLink.from([
@@ -158,7 +163,7 @@ export default function RootLayout({
 > ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
-You can import the following Apollo Client hooks from `"@apollo/experimental-nextjs-app-support/ssr"` in your client components (make sure you are not importing these hooks from `@apollo/client` as this package wraps and re-exports them to support streaming SSR):
+You can import the following Apollo Client hooks from `"@apollo/experimental-nextjs-app-support"` in your client components (make sure you are not importing these hooks from `@apollo/client` as this package wraps and re-exports them to support streaming SSR):
 
 - `useQuery`
 - `useSuspenseQuery`
@@ -175,7 +180,7 @@ This package uses some singleton instances on the Browser side - if you are writ
 For that, you can use the `resetNextSSRApolloSingletons` helper:
 
 ```ts
-import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support/ssr";
+import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support";
 
 afterEach(resetNextSSRApolloSingletons);
 ```

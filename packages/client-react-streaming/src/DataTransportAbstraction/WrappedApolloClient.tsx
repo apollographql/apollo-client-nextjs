@@ -6,16 +6,19 @@ import type {
   DocumentNode,
   Cache,
 } from "@apollo/client/index.js";
-import { ApolloClient, Observable } from "@apollo/client/index.js";
+import {
+  ApolloClient as OrigApolloClient,
+  Observable,
+} from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import { print } from "@apollo/client/utilities/index.js";
 import { canonicalStringify } from "@apollo/client/cache/index.js";
 import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
-import { WrappedInMemoryCache } from "./WrappedInMemoryCache.js";
+import { InMemoryCache } from "./WrappedInMemoryCache.js";
 
 function getQueryManager<TCacheShape>(
-  client: ApolloClient<unknown>
+  client: OrigApolloClient<unknown>
 ): QueryManager<TCacheShape> {
   return client["queryManager"];
 }
@@ -26,7 +29,7 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
-class ApolloClientSSRImpl<TCacheShape> extends ApolloClient<TCacheShape> {
+class ApolloClientSSRImpl<TCacheShape> extends OrigApolloClient<TCacheShape> {
   watchQueryQueue = createBackpressuredCallback<WatchQueryOptions<any>>();
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
@@ -49,11 +52,11 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClient<TCacheShape> {
 
 export class ApolloClientBrowserImpl<
   TCacheShape,
-> extends ApolloClient<TCacheShape> {
+> extends OrigApolloClient<TCacheShape> {
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
 
-    if (!(this.cache instanceof WrappedInMemoryCache)) {
+    if (!(this.cache instanceof InMemoryCache)) {
       throw new Error(
         "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
       );
@@ -197,7 +200,7 @@ export class ApolloClientBrowserImpl<
   };
 }
 
-export type WrappedApolloClient<TCacheShape> = ApolloClient<TCacheShape> & {
+export type ApolloClient<TCacheShape> = OrigApolloClient<TCacheShape> & {
   onRequestStarted?: ApolloClientBrowserImpl<TCacheShape>["onRequestStarted"];
   onRequestData?: ApolloClientBrowserImpl<TCacheShape>["onRequestData"];
   rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
@@ -208,15 +211,17 @@ export type WrappedApolloClient<TCacheShape> = ApolloClient<TCacheShape> & {
     ) => void;
   };
 
-  cache: WrappedInMemoryCache;
+  cache: InMemoryCache;
 };
 
-export const WrappedApolloClient: {
+export const ApolloClient: {
   new <TCacheShape>(
     options: ApolloClientOptions<TCacheShape>
-  ): WrappedApolloClient<TCacheShape>;
+  ): ApolloClient<TCacheShape>;
 } = /*#__PURE__*/ (
   process.env.REACT_ENV === "ssr"
     ? ApolloClientSSRImpl
-    : ApolloClientBrowserImpl
+    : process.env.REACT_ENV === "browser"
+      ? ApolloClientBrowserImpl
+      : OrigApolloClient
 ) as any;

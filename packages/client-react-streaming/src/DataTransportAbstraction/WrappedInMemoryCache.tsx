@@ -3,10 +3,10 @@ import type {
   Cache,
   Reference,
 } from "@apollo/client/index.js";
-import { InMemoryCache } from "@apollo/client/index.js";
+import { InMemoryCache as OrigInMemoryCache } from "@apollo/client/index.js";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
 
-class InMemoryCacheSSRImpl extends InMemoryCache {
+class InMemoryCacheSSRImpl extends OrigInMemoryCache {
   protected writeQueue = createBackpressuredCallback<Cache.WriteOptions>();
 
   constructor(config?: InMemoryCacheConfig) {
@@ -19,7 +19,7 @@ class InMemoryCacheSSRImpl extends InMemoryCache {
   }
 }
 
-export type WrappedInMemoryCache = InMemoryCache & {
+export type InMemoryCache = OrigInMemoryCache & {
   writeQueue?: {
     register?: (
       instance: ((options: Cache.WriteOptions<any, any>) => void) | null
@@ -27,9 +27,9 @@ export type WrappedInMemoryCache = InMemoryCache & {
   };
 };
 
-export const WrappedInMemoryCache: {
-  new (config?: InMemoryCacheConfig): WrappedInMemoryCache;
+export const InMemoryCache: {
+  new (config?: InMemoryCacheConfig): InMemoryCache;
 } =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
     ? InMemoryCacheSSRImpl
-    : InMemoryCache;
+    : OrigInMemoryCache;

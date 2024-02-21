@@ -1,4 +1,12 @@
-export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink.js";
-export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink.js";
-export { SSRMultipartLink } from "./SSRMultipartLink.js";
-export * from "./DataTransportAbstraction/index.js";
+export * from "./index.shared.js";
+export {
+  useFragment,
+  useQuery,
+  useSuspenseQuery,
+  useReadQuery,
+  useBackgroundQuery,
+  resetApolloSingletons,
+  DataTransportContext,
+  DataTransportProviderImplementation,
+  WrapApolloProvider,
+} from "./DataTransportAbstraction/index.js";

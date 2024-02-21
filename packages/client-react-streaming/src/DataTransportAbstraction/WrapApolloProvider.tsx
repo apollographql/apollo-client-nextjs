@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import { useRef } from "react";
-import { WrappedApolloClient } from "./WrappedApolloClient.js";
+import { ApolloClient } from "./WrappedApolloClient.js";
 import { ApolloProvider } from "@apollo/client/index.js";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";
 import { ApolloClientSingleton } from "./symbols.js";
 
 declare global {
   interface Window {
-    [ApolloClientSingleton]?: WrappedApolloClient<any>;
+    [ApolloClientSingleton]?: ApolloClient<any>;
   }
 }
 
@@ -25,10 +25,10 @@ export function WrapApolloProvider<ExtraProps>(
     ...extraProps
   }: React.PropsWithChildren<
     {
-      makeClient: () => WrappedApolloClient<any>;
+      makeClient: () => ApolloClient<any>;
     } & ExtraProps
   >) => {
-    const clientRef = useRef<WrappedApolloClient<any>>();
+    const clientRef = useRef<ApolloClient<any>>();
 
     if (process.env.REACT_ENV === "ssr") {
       if (!clientRef.current) {
@@ -38,7 +38,7 @@ export function WrapApolloProvider<ExtraProps>(
       clientRef.current = window[ApolloClientSingleton] ??= makeClient();
     }
 
-    if (!(clientRef.current instanceof WrappedApolloClient)) {
+    if (!(clientRef.current instanceof ApolloClient)) {
       throw new Error(
         "When using Apollo Client streaming SSR, you must use the `ApolloClient` variant provided by the streaming package."
       );
