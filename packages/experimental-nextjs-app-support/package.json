@@ -60,6 +60,7 @@
     },
     "./package.json": "./package.json"
   },
+  "types": "./dist/combined.d.ts",
   "typesVersions": {
     "*": {
       "ssr": [
