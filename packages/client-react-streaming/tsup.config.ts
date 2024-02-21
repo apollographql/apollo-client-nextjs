@@ -8,7 +8,12 @@ export default defineConfig((options) => {
     format: ["cjs", "esm"],
     target: "node18",
     dts: true,
-    treeshake: !options.watch,
+    treeshake: !options.watch
+      ? {
+          preset: "smallest",
+          moduleSideEffects: "no-external",
+        }
+      : false,
     outDir: "dist/",
     external: [
       "@apollo/client-react-streaming",
