@@ -34,6 +34,13 @@ export {
   RemoveMultipartDirectivesLink,
 } from "@apollo/client-react-streaming";
 
+/*
+work around bundling error: 
+error TS2742: The inferred type of 'NextSSRInMemoryCache' cannot be named without a reference to '@apollo/client-react-streaming/node_modules/@apollo/client'. 
+This is likely not portable. A type annotation is necessary.
+ */
+import type {} from "@apollo/client";
+
 import { ApolloClient, InMemoryCache } from "@apollo/client-react-streaming";
 /** @deprecated use `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package instead */
 export const NextSSRInMemoryCache = InMemoryCache;
