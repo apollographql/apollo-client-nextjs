@@ -42,7 +42,13 @@ This is likely not portable. A type annotation is necessary.
 import type {} from "@apollo/client";
 
 import { ApolloClient, InMemoryCache } from "@apollo/client-react-streaming";
-/** @deprecated use `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package instead */
+/**
+ * @deprecated
+ * use `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package instead
+ */
 export const NextSSRInMemoryCache = InMemoryCache;
-/** @deprecated use `ApolloClient` from the `@apollo/experimental-nextjs-app-support` package instead */
+/**
+ * @deprecated
+ * use `ApolloClient` from the `@apollo/experimental-nextjs-app-support` package instead
+ */
 export const NextSSRApolloClient = ApolloClient;
