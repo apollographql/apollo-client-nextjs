@@ -26,12 +26,15 @@ wrap(
   (options) => options?.client
 );
 wrap<typeof useQuery>(
-  process.env.REACT_ENV === "ssr"
-    ? (query, options) =>
-        useQuery(query, { ...options, fetchPolicy: "cache-only" })
-    : useQuery,
+  useQuery,
+
   ["data", "loading", "networkStatus", "called"],
-  (_, options) => options?.client
+  (_, options) => options?.client,
+  (orig) =>
+    process.env.REACT_ENV === "ssr"
+      ? (query, options) =>
+          orig(query, { ...options, fetchPolicy: "cache-only" })
+      : orig
 );
 wrap(useSuspenseQuery, ["data", "networkStatus"], (_, options) =>
   typeof options === "object" ? options.client : undefined
@@ -41,7 +44,8 @@ wrap(useReadQuery, ["data", "networkStatus"], () => undefined);
 function wrap<T extends (...args: any[]) => any>(
   useFn: T,
   transportKeys: (keyof ReturnType<T>)[],
-  getClientFromArgs: (...args: Parameters<T>) => ApolloClient<any> | undefined
+  getClientFromArgs: (...args: Parameters<T>) => ApolloClient<any> | undefined,
+  additionalLogic: (useFn: T) => T = (orig) => orig
 ): T {
   return wrapFunction(
     useFn,
@@ -54,7 +58,7 @@ function wrap<T extends (...args: any[]) => any>(
           /** nothing to do */
         }
         if (client && client instanceof WrappedApolloClient) {
-          const result = useFn(...args);
+          const result = additionalLogic(useFn)(...args);
           const transported: Partial<typeof result> = {};
           for (const key of transportKeys) {
             transported[key] = result[key];
