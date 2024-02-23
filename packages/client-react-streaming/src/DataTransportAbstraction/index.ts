@@ -7,7 +7,7 @@ export {
   useSuspenseQuery,
   useReadQuery,
   useBackgroundQuery,
-} from "./hooks.js";
+} from "@apollo/client/index.js";
 export { resetApolloSingletons } from "./testHelpers.js";
 
 export { DataTransportContext } from "./DataTransportAbstraction.js";
