@@ -14,6 +14,6 @@
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs"
   },
   "resolutions": {
-    "@apollo/client": "0.0.0-pr-11617-20240223125210"
+    "@apollo/client": "0.0.0-pr-11617-20240223174232"
   }
 }

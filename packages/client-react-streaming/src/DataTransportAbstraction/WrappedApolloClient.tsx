@@ -17,10 +17,13 @@ import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
 import { InMemoryCache } from "./WrappedInMemoryCache.js";
 import { hookWrappers } from "./hooks.js";
+import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
-): QueryManager<TCacheShape> {
+): QueryManager<TCacheShape> & {
+  [wrappers]: HookWrappers;
+} {
   return client["queryManager"];
 }
 
@@ -40,9 +43,9 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
         "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
       );
     }
-  }
 
-  [wrappers] = hookWrappers;
+    getQueryManager(this)[wrappers] = hookWrappers;
+  }
 }
 
 class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
