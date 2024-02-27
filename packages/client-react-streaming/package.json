@@ -102,7 +102,9 @@
     "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
-    "test-bundle": "attw --pack .",
+    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package",
+    "test-bundle:attw": "attw --pack .",
+    "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
     "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
     "lint": "eslint --ext .ts,.tsx src"
   },

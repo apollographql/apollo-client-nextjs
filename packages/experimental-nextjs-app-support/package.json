@@ -16,62 +16,47 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
-      }
-    },
     "./rsc": {
       "require": {
-        "types": "./dist/index.rsc.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
+        "types": "./dist/rsc/index.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
         "browser": "./dist/empty.cjs",
         "node": "./dist/empty.cjs"
       },
       "import": {
-        "types": "./dist/index.rsc.d.ts",
-        "react-server": "./dist/index.rsc.js",
+        "types": "./dist/rsc/index.d.ts",
+        "react-server": "./dist/rsc/index.js",
         "browser": "./dist/empty.js",
         "node": "./dist/empty.js"
       }
     },
     "./ssr": {
       "require": {
-        "types": "./dist/index.ssr.d.cts",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
+        "types": "./dist/ssr/index.ssr.d.cts",
+        "react-server": "./dist/ssr/index.rsc.cjs",
+        "browser": "./dist/ssr/index.browser.cjs",
+        "node": "./dist/ssr/index.ssr.cjs"
       },
       "import": {
-        "types": "./dist/index.ssr.d.ts",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
+        "types": "./dist/ssr/index.ssr.d.ts",
+        "react-server": "./dist/ssr/index.rsc.js",
+        "browser": "./dist/ssr/index.browser.js",
+        "node": "./dist/ssr/index.ssr.js"
       }
     },
     "./package.json": "./package.json"
   },
-  "types": "./dist/combined.d.ts",
   "typesVersions": {
     "*": {
       "ssr": [
-        "./dist/index.ssr.d.ts"
+        "./dist/ssr/index.ssr.d.ts"
       ],
       "rsc": [
-        "./dist/index.rsc.d.ts"
+        "./dist/rsc/index.d.ts"
       ]
     }
   },
-  "typings": "./dist/combined.d.ts",
+  "typings": "./dist/empty.d.ts",
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
@@ -82,10 +67,12 @@
   ],
   "scripts": {
     "build": "rimraf dist; tsup",
-    "test": "true",
+    "test": "yarn verify",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
-    "test-bundle": "attw --pack .",
+    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package",
+    "test-bundle:attw": "attw --pack .",
+    "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
     "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
     "lint": "eslint --ext .ts,.tsx ."
   },
