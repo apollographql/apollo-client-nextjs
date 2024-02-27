@@ -3,7 +3,7 @@ import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols.js";
 import type { RehydrationCache } from "./types.js";
 import { registerLateInitializingQueue } from "./lateInitializingQueue.js";
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { htmlEscapeJsonString } from "./htmlescape.js";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };

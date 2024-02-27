@@ -10,7 +10,7 @@ import { ApolloClient, Observable } from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import { print } from "@apollo/client/utilities/index.js";
 import { canonicalStringify } from "@apollo/client/cache/index.js";
-import invariant from "ts-invariant";
+import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
 import { WrappedInMemoryCache } from "./WrappedInMemoryCache.js";
 

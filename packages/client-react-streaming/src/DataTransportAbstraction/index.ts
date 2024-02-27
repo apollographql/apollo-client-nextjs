@@ -8,7 +8,6 @@ export {
   useReadQuery,
   useBackgroundQuery,
 } from "./hooks.js";
-export { SSRMultipartLink } from "./SSRMultipartLink.js";
 export { resetApolloSingletons } from "./testHelpers.js";
 
 export { DataTransportContext } from "./DataTransportAbstraction.js";

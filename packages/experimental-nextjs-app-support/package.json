@@ -85,7 +85,8 @@
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "attw --pack .",
-    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
+    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
+    "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
     "@apollo/client": "3.9.1",
@@ -96,8 +97,8 @@
     "@tsconfig/recommended": "1.0.3",
     "@types/node": "20.11.5",
     "@types/react": "18.2.55",
-    "@typescript-eslint/eslint-plugin": "6.19.0",
-    "@typescript-eslint/parser": "6.19.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
     "concurrently": "^8.2.2",
     "eslint": "8.56.0",
     "eslint-plugin-react": "7.33.2",
