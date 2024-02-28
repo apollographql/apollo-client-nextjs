@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support";
+import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
 import { gql } from "@apollo/client";
 

@@ -3,10 +3,10 @@
 import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
-  InMemoryCache,
-  ApolloClient,
+  NextSSRInMemoryCache,
+  NextSSRApolloClient,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 import { setVerbosity } from "ts-invariant";
 
 setVerbosity("debug");
@@ -17,8 +17,8 @@ function makeClient() {
     fetchOptions: { cache: "no-store" },
   });
 
-  return new ApolloClient({
-    cache: new InMemoryCache(),
+  return new NextSSRApolloClient({
+    cache: new NextSSRInMemoryCache(),
     link:
       typeof window === "undefined"
         ? ApolloLink.from([

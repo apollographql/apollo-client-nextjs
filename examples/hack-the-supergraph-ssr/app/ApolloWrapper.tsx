@@ -4,10 +4,10 @@ import { ApolloLink, HttpLink } from "@apollo/client";
 import clientCookies from "js-cookie";
 import {
   ApolloNextAppProvider,
-  InMemoryCache,
-  ApolloClient,
+  NextSSRInMemoryCache,
+  NextSSRApolloClient,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
@@ -68,8 +68,8 @@ export function ApolloWrapper({
           ])
         : ApolloLink.from([delayLink, httpLink]);
 
-    return new ApolloClient({
-      cache: new InMemoryCache(),
+    return new NextSSRApolloClient({
+      cache: new NextSSRInMemoryCache(),
       link,
     });
   }

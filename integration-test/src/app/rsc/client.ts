@@ -1,9 +1,5 @@
-import { HttpLink } from "@apollo/client";
-import {
-  ApolloClient,
-  InMemoryCache,
-  registerApolloClient,
-} from "@apollo/experimental-nextjs-app-support";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
 
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";

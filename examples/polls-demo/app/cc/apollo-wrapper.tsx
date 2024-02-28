@@ -2,11 +2,11 @@
 
 import { ApolloLink, HttpLink } from "@apollo/client";
 import {
-  ApolloClient,
+  NextSSRApolloClient,
   ApolloNextAppProvider,
-  InMemoryCache,
+  NextSSRInMemoryCache,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
 
@@ -21,8 +21,8 @@ function makeClient() {
     uri: "https://apollo-next-poll.up.railway.app/",
   });
 
-  return new ApolloClient({
-    cache: new InMemoryCache(),
+  return new NextSSRApolloClient({
+    cache: new NextSSRInMemoryCache(),
     link:
       typeof window === "undefined"
         ? ApolloLink.from([

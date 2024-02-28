@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@apollo/experimental-nextjs-app-support";
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
 import { gql } from "@apollo/client";
 

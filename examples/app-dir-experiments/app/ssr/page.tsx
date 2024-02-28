@@ -4,7 +4,7 @@ import {
   useFragment,
   useQuery,
   useSuspenseQuery,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
 import { HtmlChangesObserver } from "@/components/HtmlChangesObserver";
 

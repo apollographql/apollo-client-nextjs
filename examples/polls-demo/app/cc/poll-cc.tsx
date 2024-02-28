@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import {
   useReadQuery,
   useBackgroundQuery,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 import { useMutation } from "@apollo/client";
 import { QueryReference } from "@apollo/client/react";
 import { Poll as PollInner } from "@/components/poll";

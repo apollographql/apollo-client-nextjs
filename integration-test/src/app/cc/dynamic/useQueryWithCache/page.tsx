@@ -3,7 +3,7 @@
 import {
   useQuery,
   useSuspenseQuery,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
 import { gql } from "@apollo/client";
 
