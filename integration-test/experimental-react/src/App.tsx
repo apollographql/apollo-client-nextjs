@@ -6,7 +6,12 @@ import {
   useSuspenseQuery,
 } from "@apollo/client-react-streaming";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
-import { gql, ApolloLink, Observable } from "@apollo/client/core/index.js";
+import {
+  gql,
+  ApolloLink,
+  Observable,
+  TypedDocumentNode,
+} from "@apollo/client/core/index.js";
 import { schema } from "./schema";
 import { WrappedApolloProvider } from "./WrappedApolloProvider";
 
@@ -48,7 +53,9 @@ function App() {
   );
 }
 
-const QUERY = gql`
+const QUERY: TypedDocumentNode<{
+  products: Array<{ id: string; title: string }>;
+}> = gql`
   query {
     products {
       id

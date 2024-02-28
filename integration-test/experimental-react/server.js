@@ -55,20 +55,6 @@ app.use("*", async (req, res) => {
     console.error("Fatal", error);
   });
 
-  const forceFlushAfterChunkStream = new Writable({
-    write(chunk, encoding, next) {
-      //console.log(`👉 \n ~ chunk: ${Date.now()}`, chunk.toString());
-      res.write(chunk, encoding);
-      // We'd like to force flushing the stream after each chunk, or
-      // the browser won't see any "incremental" behaviour happening.
-      // How (apart from data growing to more than buffer size) can we enforce this?
-      next();
-    },
-    final() {
-      res.end();
-    },
-  });
-
   let didError = false;
   let didFinish = false;
   const App = (
@@ -92,7 +78,7 @@ app.use("*", async (req, res) => {
       // If something errored before we started streaming, we set the error code appropriately.
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
-      setImmediate(() => pipe(forceFlushAfterChunkStream));
+      setImmediate(() => pipe(res));
     },
     onShellError(x) {
       console.log("Shell error", x);
