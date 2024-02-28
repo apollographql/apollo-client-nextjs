@@ -1,5 +1,6 @@
 import type { Options } from "tsup";
 import { defineConfig } from "tsup";
+import type { Plugin } from "esbuild";
 
 export default defineConfig((options) => {
   const defaults: Options = {
@@ -16,6 +17,8 @@ export default defineConfig((options) => {
       "react",
       "rehackt",
     ],
+    noExternal: ["@apollo/client"], // will be handled by `acModuleImports`
+    esbuildPlugins: [acModuleImports],
   };
 
   function entry(
@@ -46,3 +49,16 @@ export default defineConfig((options) => {
     entry("browser", "src/ssr/index.ts", "ssr/index.browser"),
   ];
 });
+
+const acModuleImports: Plugin = {
+  name: "replace-ac-module-imports",
+  setup(build) {
+    build.onResolve({ filter: /^@apollo\/client/ }, async (args) => {
+      if (build.initialOptions.define["TSUP_FORMAT"] === '"cjs"') {
+        // remove trailing `/index.js` in CommonJS builds
+        return { path: args.path.replace(/\/index.js$/, ""), external: true };
+      }
+      return { path: args.path, external: true };
+    });
+  },
+};
