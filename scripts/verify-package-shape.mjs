@@ -1,5 +1,10 @@
 // @ts-check
 
+/**
+ * Compares actual exports of a package per condition with
+ * the expected exports described by a package-shape.json file.
+ */
+
 import assert from "node:assert";
 import { exec } from "node:child_process";
 import { readFile } from "node:fs/promises";

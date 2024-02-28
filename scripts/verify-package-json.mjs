@@ -1,5 +1,9 @@
 // @ts-check
 
+/**
+ * Verifies that all files referenced in package.json actually exist.
+ */
+
 import { readFile, access } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { parseArgs } from "node:util";
