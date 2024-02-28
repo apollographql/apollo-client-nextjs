@@ -1,0 +1,42 @@
+{
+  "@apollo/experimental-nextjs-app-support/ssr": {
+    "react-server": [
+      "DebounceMultipartResponsesLink",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink"
+    ],
+    "browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "NextSSRApolloClient",
+      "NextSSRInMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetNextSSRApolloSingletons",
+      "useBackgroundQuery",
+      "useFragment",
+      "useQuery",
+      "useReadQuery",
+      "useSuspenseQuery"
+    ],
+    "node": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "NextSSRApolloClient",
+      "NextSSRInMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetNextSSRApolloSingletons",
+      "useBackgroundQuery",
+      "useFragment",
+      "useQuery",
+      "useReadQuery",
+      "useSuspenseQuery"
+    ]
+  },
+  "@apollo/experimental-nextjs-app-support/rsc": {
+    "react-server": ["registerApolloClient"],
+    "browser": [],
+    "node": []
+  }
+}

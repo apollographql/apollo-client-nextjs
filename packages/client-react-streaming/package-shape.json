@@ -1,0 +1,47 @@
+{
+  "@apollo/client-react-streaming": {
+    "react-server": [
+      "ApolloClient",
+      "DebounceMultipartResponsesLink",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "registerApolloClient"
+    ],
+    "browser": [
+      "ApolloClient",
+      "DataTransportContext",
+      "DebounceMultipartResponsesLink",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "WrapApolloProvider",
+      "resetApolloSingletons",
+      "useBackgroundQuery",
+      "useFragment",
+      "useQuery",
+      "useReadQuery",
+      "useSuspenseQuery"
+    ],
+    "node": [
+      "ApolloClient",
+      "DataTransportContext",
+      "DebounceMultipartResponsesLink",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "WrapApolloProvider",
+      "resetApolloSingletons",
+      "useBackgroundQuery",
+      "useFragment",
+      "useQuery",
+      "useReadQuery",
+      "useSuspenseQuery"
+    ]
+  },
+  "@apollo/client-react-streaming/experimental-manual-transport": {
+    "react-server": [],
+    "browser": ["buildManualDataTransport", "resetManualSSRApolloSingletons"],
+    "node": ["buildManualDataTransport", "resetManualSSRApolloSingletons"]
+  }
+}

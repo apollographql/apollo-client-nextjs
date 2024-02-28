@@ -70,7 +70,7 @@ __metadata:
     react: "npm:18.3.0-canary-60a927d04-20240113"
     react-dom: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
-    superjson: "npm:^1.12.2 || ^2.0.0"
+    superjson: "npm:1.13.3"
     ts-invariant: "npm:^0.10.3"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.1"
@@ -13407,12 +13407,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superjson@npm:^1.12.2 || ^2.0.0":
-  version: 2.2.1
-  resolution: "superjson@npm:2.2.1"
+"superjson@npm:1.13.3":
+  version: 1.13.3
+  resolution: "superjson@npm:1.13.3"
   dependencies:
     copy-anything: "npm:^3.0.2"
-  checksum: 10/bb8743a87c97f7845e0c27af1af0731d3185b32099ebce2aee0e67ac9a6ae9a7c4b9edfca7e1fe48693a78b56d5922d1cd13ef80c2fa12b788d3fc0ca25afe47
+  checksum: 10/71a186c513a9821e58264c0563cd1b3cf07d3b5ba53a09cc5c1a604d8ffeacac976a6ba1b5d5b3c71b6ab5a1941dfba5a15e3f106ad3ef22fe8d5eee3e2be052
   languageName: node
   linkType: hard
 
