@@ -1,17 +1,14 @@
 import { Suspense } from "react";
 import "./App.css";
-import {
-  WrappedApolloClient,
-  WrappedInMemoryCache,
-  useSuspenseQuery,
-} from "@apollo/client-react-streaming";
+import { ApolloClient, InMemoryCache } from "@apollo/client-react-streaming";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
 import {
   gql,
   ApolloLink,
   Observable,
   TypedDocumentNode,
-} from "@apollo/client/core/index.js";
+  useSuspenseQuery,
+} from "@apollo/client/index.js";
 import { schema } from "./schema";
 import { WrappedApolloProvider } from "./WrappedApolloProvider";
 
@@ -28,8 +25,8 @@ const delayLink = new ApolloLink((operation, forward) => {
 });
 
 const makeClient = () => {
-  return new WrappedApolloClient({
-    cache: new WrappedInMemoryCache(),
+  return new ApolloClient({
+    cache: new InMemoryCache(),
     link:
       // we do not even have a graphql endpoint in the browser, so if this works, streaming works
       typeof window === "undefined"

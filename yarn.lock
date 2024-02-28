@@ -8942,24 +8942,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:16.8.1, graphql@npm:^16.8.1":
+"graphql@npm:16.8.1, graphql@npm:^16.6.0, graphql@npm:^16.7.1, graphql@npm:^16.8.1":
   version: 16.8.1
   resolution: "graphql@npm:16.8.1"
   checksum: 10/7a09d3ec5f75061afe2bd2421a2d53cf37273d2ecaad8f34febea1f1ac205dfec2834aec3419fa0a10fcc9fb345863b2f893562fb07ea825da2ae82f6392893c
-  languageName: node
-  linkType: hard
-
-"graphql@npm:^16.6.0":
-  version: 16.6.0
-  resolution: "graphql@npm:16.6.0"
-  checksum: 10/f2ce5fdd5e1d8f66b40143b791e1063efe50b17071e0b06b30b8cd597a7fc08135d606586935db7e65dbd5ebbf207cd2f9b56c9c5cf4ad818f080d98f47282a4
-  languageName: node
-  linkType: hard
-
-"graphql@npm:^16.7.1":
-  version: 16.7.1
-  resolution: "graphql@npm:16.7.1"
-  checksum: 10/fa9fd383fb9be6d44dc985b3b3f4c858dbe3dcb10ca74c8f8c85ceb5ceddf57a73b77cea719f702e246a46b48b71ffd34cf939fe3686821650a6bd3d9ba2ce4a
   languageName: node
   linkType: hard
 

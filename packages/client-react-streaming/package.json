@@ -58,29 +58,12 @@
         "node": "./dist/experimental-manual-transport.ssr.js"
       }
     },
-    "./experimental-react-transport": {
-      "require": {
-        "types": "./dist/experimental-react-transport.ssr.d.cts",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/experimental-react-transport.browser.cjs",
-        "node": "./dist/experimental-react-transport.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/experimental-react-transport.ssr.d.ts",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/experimental-react-transport.browser.js",
-        "node": "./dist/experimental-react-transport.ssr.js"
-      }
-    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "experimental-manual-transport": [
         "./dist/experimental-manual-transport.ssr.d.ts"
-      ],
-      "experimental-react-transport": [
-        "./dist/experimental-react-transport.ssr.d.ts"
       ]
     }
   },

@@ -65,16 +65,6 @@ export default defineConfig((options) => {
       "src/ExperimentalManualDataTransport/index.ts",
       "experimental-manual-transport.browser"
     ),
-    entry(
-      "ssr",
-      "src/ExperimentalReact/index.ts",
-      "experimental-react-transport.ssr"
-    ),
-    entry(
-      "browser",
-      "src/ExperimentalReact/index.ts",
-      "experimental-react-transport.browser"
-    ),
   ];
 });
 
