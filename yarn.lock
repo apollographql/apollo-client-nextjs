@@ -45,6 +45,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/client-react-streaming@exec:./build-client-react-streaming.cjs::locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react":
+  version: 0.8.0
+  resolution: "@apollo/client-react-streaming@exec:./build-client-react-streaming.cjs#./build-client-react-streaming.cjs::hash=a49ba2&locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react"
+  dependencies:
+    superjson: "npm:^1.12.2 || ^2.0.0"
+    ts-invariant: "npm:^0.10.3"
+  peerDependencies:
+    "@apollo/client": ^3.9.0
+    react: ^18
+  checksum: 10/17aeacbc677181947346c33ad1e3d5af81370f0185a0425463ec807721fdc13229d5bad285931594dfc9eaa477a8e26a7be8ad2a8c46b77a15431967e77b842f
+  languageName: node
+  linkType: hard
+
 "@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
@@ -3674,7 +3687,7 @@ __metadata:
   resolution: "@integration-test/experimental-react@workspace:integration-test/experimental-react"
   dependencies:
     "@apollo/client": "npm:^3.9.1"
-    "@apollo/client-react-streaming": "workspace:*"
+    "@apollo/client-react-streaming": "exec:./build-client-react-streaming.cjs"
     "@tsconfig/vite-react": "npm:^3.0.0"
     "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:^18.2.18"
@@ -11769,6 +11782,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    scheduler: "npm:^0.23.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10/ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:@phryneas/experimental-react-dom@0.0.0-phryneas-a1c625c":
   version: 0.0.0-phryneas-a1c625c
   resolution: "@phryneas/experimental-react-dom@npm:0.0.0-phryneas-a1c625c"
@@ -11901,6 +11926,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10/80c58fd6aac3594e351e2e7b048d8a5b09508adb21031a38b3c40911fe58295572eddc640d4b20a7be364842c8ed1120fe30097e22ea055316b375b88d4ff02a
+  languageName: node
+  linkType: hard
+
+"react@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10/b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
   languageName: node
   linkType: hard
 
@@ -13092,6 +13126,15 @@ __metadata:
   dependencies:
     copy-anything: "npm:^3.0.2"
   checksum: 10/71a186c513a9821e58264c0563cd1b3cf07d3b5ba53a09cc5c1a604d8ffeacac976a6ba1b5d5b3c71b6ab5a1941dfba5a15e3f106ad3ef22fe8d5eee3e2be052
+  languageName: node
+  linkType: hard
+
+"superjson@npm:^1.12.2 || ^2.0.0":
+  version: 2.2.1
+  resolution: "superjson@npm:2.2.1"
+  dependencies:
+    copy-anything: "npm:^3.0.2"
+  checksum: 10/bb8743a87c97f7845e0c27af1af0731d3185b32099ebce2aee0e67ac9a6ae9a7c4b9edfca7e1fe48693a78b56d5922d1cd13ef80c2fa12b788d3fc0ca25afe47
   languageName: node
   linkType: hard
 
