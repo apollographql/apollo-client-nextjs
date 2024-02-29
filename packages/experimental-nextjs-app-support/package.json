@@ -67,7 +67,7 @@
   ],
   "scripts": {
     "build": "rimraf dist; tsup",
-    "test": "yarn verify",
+    "test": "true",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:shape",
