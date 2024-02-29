@@ -79,7 +79,8 @@ jobs:
       - run: npx playwright install-deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
-      - run: yarn workspaces foreach --all --include "@apollo/*" --include "@integration-test/*" add -D -P @apollo/client@${{ matrix.version }}
+      - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
+      - run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
 
       - name: Build libraries
         run: yarn workspaces foreach --all -t --include "@apollo/*" --include @integration-test/nextjs run build
