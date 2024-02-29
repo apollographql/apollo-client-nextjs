@@ -30,7 +30,7 @@ jobs:
       - run: yarn install --immutable
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
       - run: yarn workspaces foreach --all --include "@apollo/*" run build
-      - run: yarn workspaces foreach --all --include "@apollo/*" run test | tee $GITHUB_STEP_SUMMARY
+      - run: yarn workspaces foreach --all --include "@apollo/*" run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   packageShapes:
     name: Test bundles
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
@@ -47,7 +47,7 @@ jobs:
           cache: "yarn"
       - run: yarn install --immutable
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
-      - run: yarn workspaces foreach --all --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY
+      - run: yarn workspaces foreach --all --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   tests_playwright:
     name: Run Playwright tests
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
@@ -85,4 +85,4 @@ jobs:
       - name: Build
         run: yarn workspaces foreach --all -t --include "@apollo/*" --include @integration-test/nextjs run build
       - name: Run tests
-        run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY
+        run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
