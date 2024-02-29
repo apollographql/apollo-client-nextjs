@@ -1,12 +1,15 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import Html from "./Html";
 
 ReactDOM.hydrateRoot(
-  document.getElementById("root"),
-  <React.Suspense>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </React.Suspense>
+  document,
+  <Html {...window.__hydrationProps}>
+    <Suspense>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Suspense>
+  </Html>
 );

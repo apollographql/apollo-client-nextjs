@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import "./App.css";
 import { ApolloClient, InMemoryCache } from "@apollo/client-react-streaming";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
@@ -43,6 +43,7 @@ function App() {
         <WrappedApolloProvider makeClient={makeClient}>
           <Suspense fallback={<div>Loading...</div>}>
             <Countries />
+            <Counter />
           </Suspense>
         </WrappedApolloProvider>
       </div>
@@ -70,6 +71,19 @@ function Countries() {
         <li key={product.id}>{product.title}</li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * Counter components to test that the client has hydrated and is interactive.
+ */
+function Counter() {
+  const [counter, setCounter] = useState(0);
+  return (
+    <>
+      <div data-testid="counter">{counter}</div>
+      <button onClick={() => setCounter((x) => x + 1)}>increment</button>
+    </>
   );
 }
 
