@@ -99,3 +99,6 @@ jobs:
         run: yarn workspace @integration-test/vite-streaming run build
       - name: "Vite Streaming: Test"
         run: yarn workspace @integration-test/vite-streaming run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+
+      - name: "Jest: Test"
+        run: yarn workspace @integration-test/jest run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
