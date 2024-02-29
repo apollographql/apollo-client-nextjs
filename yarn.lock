@@ -79,6 +79,7 @@ __metadata:
     globstar: "npm:^1.0.0"
     graphql: "npm:16.8.1"
     jsdom: "npm:^24.0.0"
+    react: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
     superjson: "npm:1.13.3"
     ts-invariant: "npm:^0.10.3"
@@ -154,6 +155,7 @@ __metadata:
     graphql: "npm:16.8.1"
     jsdom: "npm:^24.0.0"
     next: "npm:14.1.0"
+    react: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.1"
@@ -11781,15 +11783,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
+"react-dom@npm:18.3.0-canary-60a927d04-20240113":
+  version: 18.3.0-canary-60a927d04-20240113
+  resolution: "react-dom@npm:18.3.0-canary-60a927d04-20240113"
   dependencies:
     loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
+    scheduler: "npm:0.24.0-canary-60a927d04-20240113"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10/ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
+    react: 18.3.0-canary-60a927d04-20240113
+  checksum: 10/5a339f511e32d2690021458913d40fcf3671d4fe708026851b811420d958615a298d80352bb78ed4c635c3125ce491d30591213cb1086888bac8c426a2e98e65
   languageName: node
   linkType: hard
 
@@ -11928,12 +11930,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
+"react@npm:18.3.0-canary-60a927d04-20240113":
+  version: 18.3.0-canary-60a927d04-20240113
+  resolution: "react@npm:18.3.0-canary-60a927d04-20240113"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
+  checksum: 10/7da693ec8a4e4c33941f55c2cc042a4a1ea9360ab7b7fd227b7cddcc8949cac0058e585e557ea1a447dbb74e7865bcebb996ee975680e2b98c6d98e941847cb1
   languageName: node
   linkType: hard
 
@@ -12451,6 +12453,15 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 10/97b50daf6ca3a153e89842efa18a862e446248296622b7473c169c84c823ee8a16e4a43bac2f73f11fc8cb9168c73fbb0d73340f26552bac17970e9052367aa9
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:0.24.0-canary-60a927d04-20240113":
+  version: 0.24.0-canary-60a927d04-20240113
+  resolution: "scheduler@npm:0.24.0-canary-60a927d04-20240113"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10/0289b2a5d20e4885c268a90765ebe7192eafb5b3a065888092c1684e25438932e06efd199a852b47dc8b57cc8741c609552e9f13de66e4492400e8dd4201b809
   languageName: node
   linkType: hard
 
@@ -13125,15 +13136,6 @@ __metadata:
   dependencies:
     copy-anything: "npm:^3.0.2"
   checksum: 10/71a186c513a9821e58264c0563cd1b3cf07d3b5ba53a09cc5c1a604d8ffeacac976a6ba1b5d5b3c71b6ab5a1941dfba5a15e3f106ad3ef22fe8d5eee3e2be052
-  languageName: node
-  linkType: hard
-
-"superjson@npm:^1.12.2 || ^2.0.0":
-  version: 2.2.1
-  resolution: "superjson@npm:2.2.1"
-  dependencies:
-    copy-anything: "npm:^3.0.2"
-  checksum: 10/bb8743a87c97f7845e0c27af1af0731d3185b32099ebce2aee0e67ac9a6ae9a7c4b9edfca7e1fe48693a78b56d5922d1cd13ef80c2fa12b788d3fc0ca25afe47
   languageName: node
   linkType: hard
 
