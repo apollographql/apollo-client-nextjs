@@ -83,7 +83,7 @@ jobs:
       - run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
 
       - name: Build libraries
-        run: yarn workspaces foreach --all -t --include "@apollo/*" --include @integration-test/nextjs run build
+        run: yarn workspaces foreach --all -t --include "@apollo/*" run build
 
       - name: "Next.js: Build"
         run: yarn workspace @integration-test/nextjs run build
