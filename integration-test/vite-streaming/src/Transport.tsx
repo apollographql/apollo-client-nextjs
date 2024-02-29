@@ -9,7 +9,7 @@
 import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { buildManualDataTransport } from "@apollo/client-react-streaming/experimental-manual-transport";
 import { renderToString } from "react-dom/server";
-import React, { useContext } from "react";
+import * as React from "react";
 
 const InjectionContext = React.createContext<
   (callback: () => React.ReactNode) => void
@@ -19,7 +19,7 @@ export const InjectionContextProvider = InjectionContext.Provider;
 export const WrappedApolloProvider = WrapApolloProvider(
   buildManualDataTransport({
     useInsertHtml() {
-      return useContext(InjectionContext);
+      return React.useContext(InjectionContext);
     },
   })
 );
