@@ -90,6 +90,8 @@ const buildManualDataTransportBrowserImpl =
           });
           return () =>
             window.removeEventListener("load", rerunSimulatedQueries!);
+        } else {
+          rerunSimulatedQueries!();
         }
       }, [rerunSimulatedQueries]);
 
