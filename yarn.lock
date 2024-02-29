@@ -45,18 +45,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@exec:./build-client-react-streaming.cjs::locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react":
-  version: 0.8.0
-  resolution: "@apollo/client-react-streaming@exec:./build-client-react-streaming.cjs#./build-client-react-streaming.cjs::hash=a49ba2&locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react"
+"@apollo/client-react-streaming@portal:.linked_package/client-react-streaming::locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react":
+  version: 0.0.0-use.local
+  resolution: "@apollo/client-react-streaming@portal:.linked_package/client-react-streaming::locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react"
   dependencies:
     superjson: "npm:^1.12.2 || ^2.0.0"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.9.0
     react: ^18
-  checksum: 10/17aeacbc677181947346c33ad1e3d5af81370f0185a0425463ec807721fdc13229d5bad285931594dfc9eaa477a8e26a7be8ad2a8c46b77a15431967e77b842f
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
   version: 0.0.0-use.local
@@ -3687,7 +3686,7 @@ __metadata:
   resolution: "@integration-test/experimental-react@workspace:integration-test/experimental-react"
   dependencies:
     "@apollo/client": "npm:^3.9.1"
-    "@apollo/client-react-streaming": "exec:./build-client-react-streaming.cjs"
+    "@apollo/client-react-streaming": "portal:.linked_package/client-react-streaming"
     "@tsconfig/vite-react": "npm:^3.0.0"
     "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:^18.2.18"
