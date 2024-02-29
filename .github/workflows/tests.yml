@@ -79,10 +79,17 @@ jobs:
       - run: npx playwright install-deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
-      - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
-      - run: yarn workspace @integration-test/nextjs add @apollo/client@${{ matrix.version }}
+      - run: yarn workspaces foreach --all --include "@apollo/*" --include "@integration-test/*" add -D -P @apollo/client@${{ matrix.version }}
 
-      - name: Build
+      - name: Build libraries
         run: yarn workspaces foreach --all -t --include "@apollo/*" --include @integration-test/nextjs run build
-      - name: Run tests
+
+      - name: "Next.js: Build"
+        run: yarn workspace @integration-test/nextjs run build
+      - name: "Next.js: Test"
         run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+
+      - name: "Experimentally patched React: Build"
+        run: yarn workspace @integration-test/experimental-react run build
+      - name: "Experimentally patched React: Test"
+        run: yarn workspace @integration-test/experimental-react run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}

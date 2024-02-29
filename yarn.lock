@@ -45,18 +45,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@portal:.linked_package/client-react-streaming::locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react":
-  version: 0.0.0-use.local
-  resolution: "@apollo/client-react-streaming@portal:.linked_package/client-react-streaming::locator=%40integration-test%2Fexperimental-react%40workspace%3Aintegration-test%2Fexperimental-react"
-  dependencies:
-    superjson: "npm:^1.12.2 || ^2.0.0"
-    ts-invariant: "npm:^0.10.3"
-  peerDependencies:
-    "@apollo/client": ^3.9.0
-    react: ^18
-  languageName: node
-  linkType: soft
-
 "@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
@@ -3688,7 +3676,8 @@ __metadata:
   resolution: "@integration-test/experimental-react@workspace:integration-test/experimental-react"
   dependencies:
     "@apollo/client": "npm:^3.9.1"
-    "@apollo/client-react-streaming": "portal:.linked_package/client-react-streaming"
+    "@apollo/client-react-streaming": "workspace:*"
+    "@playwright/test": "npm:^1.39.0"
     "@tsconfig/vite-react": "npm:^3.0.0"
     "@types/react": "npm:^18.2.55"
     "@types/react-dom": "npm:^18.2.18"

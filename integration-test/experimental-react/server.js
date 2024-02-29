@@ -1,6 +1,5 @@
 import express from "express";
 import { renderToPipeableStream } from "react-dom/server";
-import { Writable } from "node:stream";
 import { readFile } from "node:fs/promises";
 
 // Constants
@@ -42,11 +41,6 @@ if (!isProduction) {
     assets.push(link[1]);
   }
 }
-
-console.log({
-  bootstrapModules,
-  assets,
-});
 
 // based on https://github.com/facebook/react/blob/9cdf8a99edcfd94d7420835ea663edca04237527/fixtures/fizz/server/render-to-stream.js
 app.use("*", async (req, res) => {
