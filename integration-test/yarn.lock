@@ -2046,8 +2046,6 @@ __metadata:
 "@integration-test/root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@integration-test/root@workspace:."
-  dependencies:
-    monorepo: "link:.."
   languageName: unknown
   linkType: soft
 
@@ -6235,12 +6233,6 @@ __metadata:
   checksum: 10/d71b8dcd4b5af2fe13ecf3bd24070263489404fe216488c5ba7e38ece1f54daf219e72a833a3a2dc404331e870e9f44963a33399589490956bff003a3404d3b2
   languageName: node
   linkType: hard
-
-"monorepo@link:..::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "monorepo@link:..::locator=%40integration-test%2Froot%40workspace%3A."
-  languageName: node
-  linkType: soft
 
 "mrmime@npm:^2.0.0":
   version: 2.0.0

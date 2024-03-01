@@ -10327,10 +10327,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"monorepo@link:.::locator=monorepo%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "monorepo@link:.::locator=monorepo%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "monorepo@workspace:."
   dependencies:
+    monorepo: "link:."
     prettier: "npm:^3.0.0"
   languageName: unknown
   linkType: soft
