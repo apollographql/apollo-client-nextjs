@@ -13,6 +13,11 @@ const monorepoRoot = dirname(
 );
 const pathToArchive = join(execEnv.tempDir, "archive.tgz");
 
+execFileSync(`yarn`, [`workspace`, `@apollo/client-react-streaming`, `build`], {
+  stdio: `inherit`,
+  cwd: monorepoRoot,
+});
+
 execFileSync(
   `yarn`,
   [
