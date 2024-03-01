@@ -68,6 +68,7 @@ __metadata:
     graphql: "npm:16.8.1"
     jsdom: "npm:^24.0.0"
     react: "npm:18.3.0-canary-60a927d04-20240113"
+    react-server-dom-webpack: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
     superjson: "npm:1.13.3"
     ts-invariant: "npm:^0.10.3"
@@ -5120,6 +5121,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn-loose@npm:^8.3.0":
+  version: 8.4.0
+  resolution: "acorn-loose@npm:8.4.0"
+  dependencies:
+    acorn: "npm:^8.11.0"
+  checksum: 10/a005b2bee62e2575963b311ab7c45701062115a62e4286162498b1b198a6f884ceea186592ce41a27d5f382a5b640f1dffb37dd0e6e7848a74dd36e4b0a55105
+  languageName: node
+  linkType: hard
+
 "acorn-walk@npm:^8.1.1, acorn-walk@npm:^8.3.2":
   version: 8.3.2
   resolution: "acorn-walk@npm:8.3.2"
@@ -5127,7 +5137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.10.0, acorn@npm:^8.9.0":
+"acorn@npm:^8.10.0, acorn@npm:^8.11.0, acorn@npm:^8.9.0":
   version: 8.11.3
   resolution: "acorn@npm:8.11.3"
   bin:
@@ -10404,6 +10414,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"neo-async@npm:^2.6.1":
+  version: 2.6.2
+  resolution: "neo-async@npm:2.6.2"
+  checksum: 10/1a7948fea86f2b33ec766bc899c88796a51ba76a4afc9026764aedc6e7cde692a09067031e4a1bf6db4f978ccd99e7f5b6c03fe47ad9865c3d4f99050d67e002
+  languageName: node
+  linkType: hard
+
 "next@npm:14.1.0, next@npm:^14.1.0":
   version: 14.1.0
   resolution: "next@npm:14.1.0"
@@ -11565,6 +11582,21 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10/f0646ac384ce3852d1f41e30a9f9e251b11cf3b430d1d114c937c8fa7f90a895c06378d0d6b6ff0b2d00cbccf15e845921944fd6074ae67a0fb347a718106d88
+  languageName: node
+  linkType: hard
+
+"react-server-dom-webpack@npm:18.3.0-canary-60a927d04-20240113":
+  version: 18.3.0-canary-60a927d04-20240113
+  resolution: "react-server-dom-webpack@npm:18.3.0-canary-60a927d04-20240113"
+  dependencies:
+    acorn-loose: "npm:^8.3.0"
+    loose-envify: "npm:^1.1.0"
+    neo-async: "npm:^2.6.1"
+  peerDependencies:
+    react: 18.3.0-canary-60a927d04-20240113
+    react-dom: 18.3.0-canary-60a927d04-20240113
+    webpack: ^5.59.0
+  checksum: 10/b52ca5befe8e4470a82b79602d10f9949b90d3a4fd90f2067774ad90b311ecb84bd767ec05e8c64df58b12daf37f8aa09349c41c321d13d062e669d04a91507f
   languageName: node
   linkType: hard
 
