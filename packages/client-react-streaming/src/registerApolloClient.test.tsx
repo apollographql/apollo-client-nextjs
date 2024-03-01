@@ -104,3 +104,28 @@ it("calling `getClient` twice during different React renders will return differe
   assert.ok(clients[0] instanceof ApolloClient);
   assert.notStrictEqual(clients[0], clients[1]);
 });
+
+it("calling `getClient` with parameters results in an error", async () => {
+  const { getClient } = registerApolloClient(makeClient);
+
+  function App() {
+    // @ts-expect-error yeah this is a bad idea, that's why we do it in a test
+    getClient("argument");
+    return <div></div>;
+  }
+
+  let error: undefined | Error;
+  const stream = renderToPipeableStream(
+    React.createElement(App),
+    {},
+    {
+      onError(e) {
+        error = e;
+      },
+    }
+  );
+  await drain(stream);
+  assert.ok(
+    /You cannot pass arguments into `getClient`./.test(error?.message || "")
+  );
+});
