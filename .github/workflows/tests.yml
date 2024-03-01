@@ -73,9 +73,12 @@ jobs:
         working-directory: ./
 
       - name: Install Packages (Integration Test)
-        run: yarn install
+        run: |
+          sed -i '' -r '/^  checksum/d' yarn.lock 
+          yarn install
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+
       - name: Set target version of Apollo Client (Integration Test)
         run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
 
