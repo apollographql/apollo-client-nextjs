@@ -3,9 +3,9 @@
   "packageManager": "yarn@4.1.0",
   "workspaces": [
     "packages/*",
-    "integration-test/*",
     "examples/*"
   ],
+  "main": "package.json",
   "dependencies": {
     "prettier": "^3.0.0"
   },
