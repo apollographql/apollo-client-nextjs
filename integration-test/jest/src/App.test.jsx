@@ -4,7 +4,6 @@ import "@testing-library/jest-dom";
 
 import App from "./App";
 import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support/ssr";
-import { afterEach } from "node:test";
 
 afterEach(resetNextSSRApolloSingletons);
 
