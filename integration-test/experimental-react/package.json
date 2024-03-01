@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prepare": "rm -rf node_modules/@apollo/client-react-streaming; mkdir node_modules/@apollo/client-react-streaming && cp -r ../../packages/client-react-streaming/{package.json,dist} node_modules/@apollo/client-react-streaming",
-    "dev": "yarn prepare; node server",
-    "build": "yarn prepare; npm run build:client && npm run build:server",
+    "dev": "node server",
+    "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
     "preview": "cross-env NODE_ENV=production node server",
@@ -15,7 +14,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.1",
-    "@apollo/client-react-streaming": "workspace:*",
+    "@apollo/client-react-streaming": "*",
     "compression": "^1.7.4",
     "express": "^4.18.2",
     "graphql": "^16.8.1",

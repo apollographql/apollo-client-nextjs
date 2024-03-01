@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.1",
-    "@apollo/experimental-nextjs-app-support": "workspace:*",
+    "@apollo/experimental-nextjs-app-support": "*",
     "@apollo/server": "^4.9.5",
     "@as-integrations/next": "^3.0.0",
     "@graphql-tools/schema": "^10.0.0",
