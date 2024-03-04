@@ -32,32 +32,11 @@ const buildManualDataTransportSSRImpl = ({
       });
     }
 
-    registerDispatchRequestStarted!(({ options, id, observable }) => {
-      rehydrationContext.current!.incomingEvents.push({
-        type: "started",
-        id,
-        options,
-      });
+    registerDispatchRequestStarted!(({ event, observable }) => {
+      rehydrationContext.current!.incomingEvents.push(event);
       observable.subscribe({
-        next(value) {
-          rehydrationContext.current!.incomingEvents.push({
-            type: "data",
-            id,
-            result: value,
-          });
-        },
-        error(error) {
-          rehydrationContext.current!.incomingEvents.push({
-            type: "error",
-            id,
-            error,
-          });
-        },
-        complete() {
-          rehydrationContext.current!.incomingEvents.push({
-            type: "complete",
-            id,
-          });
+        next(event) {
+          rehydrationContext.current!.incomingEvents.push(event);
         },
       });
     });

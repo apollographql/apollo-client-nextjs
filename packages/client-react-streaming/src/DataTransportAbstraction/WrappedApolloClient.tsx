@@ -56,9 +56,8 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
 
 class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
   watchQueryQueue = createBackpressuredCallback<{
-    options: WatchQueryOptions<any>;
-    observable: Observable<FetchResult>;
-    id: TransportIdentifier;
+    event: Extract<QueryEvent, { type: "started" }>;
+    observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
   }>();
 
   watchQuery<
@@ -71,28 +70,45 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
     ) {
       const observableQuery = super.watchQuery(options);
       const queryInfo = observableQuery["queryInfo"] as QueryInfo;
-      const streamObservable = new Observable<FetchResult<any>>(
-        (subscriber) => {
-          const { markResult, markError, markReady } = queryInfo;
-          queryInfo.markResult = function (result) {
-            subscriber.next(result);
-            return markResult.apply(queryInfo, arguments as any);
-          };
-          queryInfo.markError = function (error) {
-            subscriber.error(error);
-            return markError.apply(queryInfo, arguments as any);
-          };
-          queryInfo.markReady = function () {
-            subscriber.complete();
-            return markReady.apply(queryInfo, arguments as any);
-          };
-        }
-      );
+      const id = queryInfo.queryId as TransportIdentifier;
+
+      const streamObservable = new Observable<
+        Exclude<QueryEvent, { type: "started" }>
+      >((subscriber) => {
+        const { markResult, markError, markReady } = queryInfo;
+        queryInfo.markResult = function (result: FetchResult<any>) {
+          subscriber.next({
+            type: "data",
+            id,
+            result: result,
+          });
+          return markResult.apply(queryInfo, arguments as any);
+        };
+        queryInfo.markError = function () {
+          subscriber.next({
+            type: "error",
+            id,
+          });
+          subscriber.complete();
+          return markError.apply(queryInfo, arguments as any);
+        };
+        queryInfo.markReady = function () {
+          subscriber.next({
+            type: "complete",
+            id,
+          });
+          subscriber.complete();
+          return markReady.apply(queryInfo, arguments as any);
+        };
+      });
 
       this.watchQueryQueue.push({
-        options,
+        event: {
+          type: "started",
+          options: options as WatchQueryOptions<any>,
+          id,
+        },
         observable: streamObservable,
-        id: queryInfo.queryId as TransportIdentifier,
       });
       return observableQuery;
     }
@@ -211,7 +227,7 @@ export class ApolloClientBrowserImpl<
 
     if (event.type === "data") {
       queryInfo?.resolve?.({
-        data: event.result,
+        data: event.result.data,
       });
 
       // In order to avoid a scenario where the promise resolves without
@@ -286,9 +302,8 @@ export type ApolloClient<TCacheShape> = OrigApolloClient<TCacheShape> & {
     register?: (
       instance:
         | ((_: {
-            options: Cache.WriteOptions<any, any>;
-            observable: Observable<FetchResult<any>>;
-            id: TransportIdentifier;
+            event: Extract<QueryEvent, { type: "started" }>;
+            observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
           }) => void)
         | null
     ) => void;

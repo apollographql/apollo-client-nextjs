@@ -10,6 +10,7 @@ import { gql } from "@apollo/client/index.js";
 import "global-jsdom/register";
 import assert from "node:assert";
 import { afterEach } from "node:test";
+import type { QueryEvent } from "./DataTransportAbstraction.js";
 
 runInConditions("browser", "node");
 
@@ -38,13 +39,20 @@ const FIRST_REQUEST: WatchQueryOptions = {
   notifyOnNetworkStatusChange: false,
   query: QUERY_ME,
 };
+const EVENT_STARTED: QueryEvent = {
+  type: "started",
+  id: "1" as any,
+  options: FIRST_REQUEST,
+};
 const FIRST_RESULT = { me: "User" };
-const FIRST_WRITE: Cache.WriteOptions = {
-  dataId: "ROOT_QUERY",
-  overwrite: false,
-  query: QUERY_ME,
-  result: FIRST_RESULT,
-  variables: {},
+const EVENT_DATA: QueryEvent = {
+  type: "data",
+  id: "1" as any,
+  result: { data: FIRST_RESULT },
+};
+const EVENT_COMPLETE: QueryEvent = {
+  type: "complete",
+  id: "1" as any,
 };
 const FIRST_HOOK_RESULT = {
   data: FIRST_RESULT,
@@ -54,8 +62,7 @@ const FIRST_HOOK_RESULT = {
 await testIn("node")(
   "`useSuspenseQuery`: data is getting sent to the transport",
   async () => {
-    const startedRequests: unknown[] = [];
-    const requestData: unknown[] = [];
+    const events: QueryEvent[] = [];
     const staticData: unknown[] = [];
 
     function useStaticValueRef<T>(current: T) {
@@ -64,15 +71,13 @@ await testIn("node")(
     }
 
     const Provider = WrapApolloProvider(
-      ({
-        children,
-        registerDispatchRequestData,
-        registerDispatchRequestStarted,
-      }) => {
-        registerDispatchRequestData!(requestData.push.bind(requestData));
-        registerDispatchRequestStarted!(
-          startedRequests.push.bind(startedRequests)
-        );
+      ({ children, registerDispatchRequestStarted }) => {
+        registerDispatchRequestStarted!(({ event, observable }) => {
+          events.push(event);
+          observable.subscribe({
+            next: events.push.bind(events),
+          });
+        });
         return (
           <DataTransportContext.Provider
             value={useMemo(
@@ -111,16 +116,14 @@ await testIn("node")(
       </Provider>
     );
 
-    assert.deepStrictEqual(startedRequests, [FIRST_REQUEST]);
-    assert.deepStrictEqual(requestData, []);
+    assert.deepStrictEqual(events, [EVENT_STARTED]);
     assert.deepStrictEqual(staticData, []);
 
     link.simulateResult({ result: { data: FIRST_RESULT } }, true);
 
     await findByText("User");
 
-    assert.deepStrictEqual(requestData, [FIRST_WRITE]);
-    assert.deepStrictEqual(startedRequests, [FIRST_REQUEST]);
+    assert.deepStrictEqual(events, [EVENT_STARTED, EVENT_DATA, EVENT_COMPLETE]);
     assert.deepStrictEqual(
       staticData,
       new Array(finishedRenderCount).fill(FIRST_HOOK_RESULT)
@@ -135,13 +138,11 @@ await testIn("browser")(
     let useStaticValueRefStub = <T extends unknown>(): { current: T } => {
       throw new Error("Should not be called yet!");
     };
-    let simulateRequestStart: (options: WatchQueryOptions) => void;
-    let simulateRequestData: (options: Cache.WriteOptions) => void;
+    let simulateQueryEvent: (event: QueryEvent) => void;
 
     const Provider = WrapApolloProvider(
-      ({ children, onRequestData, onRequestStarted, ..._rest }) => {
-        simulateRequestStart = onRequestStarted!;
-        simulateRequestData = onRequestData!;
+      ({ children, onQueryEvent, ..._rest }) => {
+        simulateQueryEvent = onQueryEvent!;
         return (
           <DataTransportContext.Provider
             value={useMemo(
@@ -178,7 +179,7 @@ await testIn("browser")(
       <Provider makeClient={() => client}></Provider>
     );
 
-    simulateRequestStart!(FIRST_REQUEST);
+    simulateQueryEvent!(EVENT_STARTED);
     rerender(
       <Provider makeClient={() => client}>
         <Suspense fallback={"Fallback"}>
@@ -192,7 +193,8 @@ await testIn("browser")(
     await findByText("Fallback");
 
     useStaticValueRefStub = () => ({ current: FIRST_HOOK_RESULT as any });
-    simulateRequestData!(FIRST_WRITE);
+    simulateQueryEvent!(EVENT_DATA);
+    simulateQueryEvent!(EVENT_COMPLETE);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 

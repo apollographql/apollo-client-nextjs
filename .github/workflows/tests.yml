@@ -74,7 +74,6 @@ jobs:
 
       - name: Install Packages (Integration Test)
         run: |
-          sed -ire '/^  checksum/d' yarn.lock 
           yarn install
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"

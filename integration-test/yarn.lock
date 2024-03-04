@@ -44,9 +44,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.9.1, @apollo/client@npm:^3.9.5":
-  version: 3.9.5
-  resolution: "@apollo/client@npm:3.9.5"
+"@apollo/client@npm:0.0.0-pr-11617-20240227102358":
+  version: 0.0.0-pr-11617-20240227102358
+  resolution: "@apollo/client@npm:0.0.0-pr-11617-20240227102358"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -77,7 +77,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/359b980928fe476c14b38b81aa3713fb6ef525d902caa67e218b7393d76f88433a1dad1b515908ab10bfe7ddec68461f5fbb3dc53bdd6ce185ab57984e7c9028
+  checksum: 10/0189a24d832ef14a408a0a3dd5e15d416ed4c223aa9aca21c80774beb60ff7303242242f688c684a20df0166ba95f4c92708dfe7badc0ab12dabe63232616483
   languageName: node
   linkType: hard
 
@@ -8329,47 +8329,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0":
-  version: 5.1.5
-  resolution: "vite@npm:5.1.5"
-  dependencies:
-    esbuild: "npm:^0.19.3"
-    fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.35"
-    rollup: "npm:^4.2.0"
-  peerDependencies:
-    "@types/node": ^18.0.0 || >=20.0.0
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 10/ada0a9138ca541723008ee261d80a97f6b70173508ded0f87834e2142660f45dff9801d143551aa3a8979ed446f0aec71ae114ab3ae978b3fbd5cf1f8c4bc331
-  languageName: node
-  linkType: hard
-
-"vite@npm:^5.0.10":
+"vite@npm:^5.0.0, vite@npm:^5.0.10":
   version: 5.1.4
   resolution: "vite@npm:5.1.4"
   dependencies:

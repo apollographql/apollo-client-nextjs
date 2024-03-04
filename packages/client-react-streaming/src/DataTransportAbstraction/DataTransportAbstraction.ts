@@ -30,9 +30,8 @@ export type DataTransportProviderImplementation<
     /** will be present during SSR */
     registerDispatchRequestStarted?: (
       callback: (query: {
-        options: WatchQueryOptions;
-        observable: Observable<FetchResult<any>>;
-        id: TransportIdentifier;
+        event: Extract<QueryEvent, { type: "started" }>;
+        observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
       }) => void
     ) => void;
     /** will always be present */
@@ -56,7 +55,8 @@ export type QueryEvent =
   | {
       type: "error";
       id: TransportIdentifier;
-      error: Error;
+      // for now we don't transport the error itself, as it might leak some sensitive information
+      // error: Error;
     }
   | {
       type: "complete";
