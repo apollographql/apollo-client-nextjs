@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore depending on the superjson version, this might not be right
 import type { SuperJSONResult } from "superjson";
 import type { DataTransport } from "./dataTransport.js";
 

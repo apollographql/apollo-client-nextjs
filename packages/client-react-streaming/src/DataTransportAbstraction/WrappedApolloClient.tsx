@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 import type {
   ApolloClientOptions,
   OperationVariables,
@@ -18,6 +19,11 @@ import { createBackpressuredCallback } from "./backpressuredCallback.js";
 import { InMemoryCache } from "./WrappedInMemoryCache.js";
 import { hookWrappers } from "./hooks.js";
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
+import type { QueryInfo } from "@apollo/client/core/QueryInfo.js";
+import type {
+  QueryEvent,
+  TransportIdentifier,
+} from "./DataTransportAbstraction.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
@@ -49,7 +55,11 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
 }
 
 class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
-  watchQueryQueue = createBackpressuredCallback<WatchQueryOptions<any>>();
+  watchQueryQueue = createBackpressuredCallback<{
+    options: WatchQueryOptions<any>;
+    observable: Observable<FetchResult>;
+    id: TransportIdentifier;
+  }>();
 
   watchQuery<
     T = any,
@@ -59,7 +69,32 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
       options.fetchPolicy !== "cache-only" &&
       options.fetchPolicy !== "standby"
     ) {
-      this.watchQueryQueue.push(options);
+      const observableQuery = super.watchQuery(options);
+      const queryInfo = observableQuery["queryInfo"] as QueryInfo;
+      const streamObservable = new Observable<FetchResult<any>>(
+        (subscriber) => {
+          const { markResult, markError, markReady } = queryInfo;
+          queryInfo.markResult = function (result) {
+            subscriber.next(result);
+            return markResult.apply(queryInfo, arguments as any);
+          };
+          queryInfo.markError = function (error) {
+            subscriber.error(error);
+            return markError.apply(queryInfo, arguments as any);
+          };
+          queryInfo.markReady = function () {
+            subscriber.complete();
+            return markReady.apply(queryInfo, arguments as any);
+          };
+        }
+      );
+
+      this.watchQueryQueue.push({
+        options,
+        observable: streamObservable,
+        id: queryInfo.queryId as TransportIdentifier,
+      });
+      return observableQuery;
     }
     return super.watchQuery(options);
   }
@@ -68,7 +103,14 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
 export class ApolloClientBrowserImpl<
   TCacheShape,
 > extends ApolloClientBase<TCacheShape> {
-  private simulatedStreamingQueries = new Map<string, SimulatedQueryInfo>();
+  private simulatedStreamingQueries = new Map<
+    TransportIdentifier,
+    SimulatedQueryInfo
+  >();
+  private transportedQueryOptions = new Map<
+    TransportIdentifier,
+    WatchQueryOptions
+  >();
 
   private identifyUniqueQuery(options: {
     query: DocumentNode;
@@ -93,8 +135,12 @@ export class ApolloClientBrowserImpl<
     return { query: serverQuery, cacheKey, varJson: canonicalVariables };
   }
 
-  protected onRequestStarted = (options: WatchQueryOptions) => {
+  protected onQueryStarted = ({
+    options,
+    id,
+  }: Extract<QueryEvent, { type: "started" }>) => {
     const { query, varJson, cacheKey } = this.identifyUniqueQuery(options);
+    this.transportedQueryOptions.set(id, options);
 
     if (!query) return;
     const printedServerQuery = print(query);
@@ -116,16 +162,13 @@ export class ApolloClientBrowserImpl<
           varJson
         );
 
-        if (
-          this.simulatedStreamingQueries.get(cacheKey) ===
-          simulatedStreamingQuery
-        )
-          this.simulatedStreamingQueries.delete(cacheKey);
+        if (this.simulatedStreamingQueries.get(id) === simulatedStreamingQuery)
+          this.simulatedStreamingQueries.delete(id);
       };
 
       const promise = new Promise<FetchResult>((resolve, reject) => {
         this.simulatedStreamingQueries.set(
-          cacheKey,
+          id,
           (simulatedStreamingQuery = { resolve, reject, options })
         );
       });
@@ -151,7 +194,7 @@ export class ApolloClientBrowserImpl<
       queryManager["fetchCancelFns"].set(
         cacheKey,
         (fetchCancelFn = (reason: unknown) => {
-          const { reject } = this.simulatedStreamingQueries.get(cacheKey) ?? {};
+          const { reject } = this.simulatedStreamingQueries.get(id) ?? {};
           if (reject) {
             reject(reason);
           }
@@ -161,20 +204,46 @@ export class ApolloClientBrowserImpl<
     }
   };
 
-  protected onRequestData = (data: Cache.WriteOptions) => {
-    const { cacheKey } = this.identifyUniqueQuery(data);
-    const { resolve } = this.simulatedStreamingQueries.get(cacheKey) ?? {};
+  protected onQueryProgress = (
+    event: Exclude<QueryEvent, { type: "started" }>
+  ) => {
+    const queryInfo = this.simulatedStreamingQueries.get(event.id);
 
-    if (resolve) {
-      resolve({
-        data: data.result,
+    if (event.type === "data") {
+      queryInfo?.resolve?.({
+        data: event.result,
       });
+
+      // In order to avoid a scenario where the promise resolves without
+      // a query subscribing to the promise, we immediately call
+      // `cache.write` here.
+      // For more information, see: https://github.com/apollographql/apollo-client-nextjs/pull/38/files/388813a16e2ac5c62408923a1face9ae9417d92a#r1229870523
+      const options = this.transportedQueryOptions.get(event.id);
+      if (options) {
+        this.cache.writeQuery({
+          query: options.query,
+          data: event.result.data,
+          variables: options.variables,
+        });
+      }
+    } else if (event.type === "error") {
+      /**
+       * At this point we're not able to correctly serialize the error over the wire
+       * so we do the next-best thing: restart the query in the browser as soon as it
+       * failed on the server.
+       * See https://github.com/apollographql/apollo-client-nextjs/issues/52
+       */
+      if (queryInfo) {
+        invariant.debug(
+          "query failed on server, rerunning in browser:",
+          queryInfo.options
+        );
+        this.rerunSimulatedQuery(queryInfo);
+      }
+      this.transportedQueryOptions.delete(event.id);
+    } else if (event.type === "complete") {
+      this.transportedQueryOptions.delete(event.id);
     }
-    // In order to avoid a scenario where the promise resolves without
-    // a query subscribing to the promise, we immediately call
-    // `cache.write` here.
-    // For more information, see: https://github.com/apollographql/apollo-client-nextjs/pull/38/files/388813a16e2ac5c62408923a1face9ae9417d92a#r1229870523
-    this.cache.write(data);
   };
 
   /**
@@ -183,36 +252,45 @@ export class ApolloClientBrowserImpl<
    * Those queries will be cancelled and then re-run in the browser.
    */
   protected rerunSimulatedQueries = () => {
-    const queryManager = getQueryManager(this);
-    for (const [cacheKey, queryInfo] of this.simulatedStreamingQueries) {
-      this.simulatedStreamingQueries.delete(cacheKey);
+    for (const [id, queryInfo] of this.simulatedStreamingQueries) {
+      this.simulatedStreamingQueries.delete(id);
       invariant.debug(
         "streaming connection closed before server query could be fully transported, rerunning:",
         queryInfo.options
       );
-      const queryId = queryManager.generateQueryId();
-      queryManager
-        .fetchQuery(queryId, {
-          ...queryInfo.options,
-          context: {
-            ...queryInfo.options.context,
-            queryDeduplication: false,
-          },
-        })
-        .finally(() => queryManager.stopQuery(queryId))
-        .then(queryInfo.resolve, queryInfo.reject);
+      this.rerunSimulatedQuery(queryInfo);
     }
+  };
+  protected rerunSimulatedQuery = (queryInfo: SimulatedQueryInfo) => {
+    const queryManager = getQueryManager(this);
+    const queryId = queryManager.generateQueryId();
+    queryManager
+      .fetchQuery(queryId, {
+        ...queryInfo.options,
+        context: {
+          ...queryInfo.options.context,
+          queryDeduplication: false,
+        },
+      })
+      .finally(() => queryManager.stopQuery(queryId))
+      .then(queryInfo.resolve, queryInfo.reject);
   };
 }
 
 export type ApolloClient<TCacheShape> = OrigApolloClient<TCacheShape> & {
-  onRequestStarted?: ApolloClientBrowserImpl<TCacheShape>["onRequestStarted"];
-  onRequestData?: ApolloClientBrowserImpl<TCacheShape>["onRequestData"];
+  onQueryStarted?: ApolloClientBrowserImpl<TCacheShape>["onQueryStarted"];
+  onQueryProgress?: ApolloClientBrowserImpl<TCacheShape>["onQueryProgress"];
   rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
 
   watchQueryQueue: {
     register?: (
-      instance: ((options: Cache.WriteOptions<any, any>) => void) | null
+      instance:
+        | ((_: {
+            options: Cache.WriteOptions<any, any>;
+            observable: Observable<FetchResult<any>>;
+            id: TransportIdentifier;
+          }) => void)
+        | null
     ) => void;
   };
 

@@ -1,5 +1,9 @@
 import type React from "react";
-import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
+import type {
+  FetchResult,
+  Observable,
+  WatchQueryOptions,
+} from "@apollo/client/index.js";
 import { createContext } from "react";
 
 interface DataTransportAbstraction {
@@ -20,20 +24,41 @@ export type DataTransportProviderImplementation<
 > = React.FC<
   {
     /** will be present in the Browser */
-    onRequestStarted?: (options: WatchQueryOptions) => void;
-    /** will be present in the Browser */
-    onRequestData?: (options: Cache.WriteOptions) => void;
+    onQueryEvent?: (event: QueryEvent) => void;
     /** will be present in the Browser */
     rerunSimulatedQueries?: () => void;
     /** will be present during SSR */
     registerDispatchRequestStarted?: (
-      callback: (options: WatchQueryOptions) => void
-    ) => void;
-    /** will be present during SSR */
-    registerDispatchRequestData?: (
-      callback: (options: Cache.WriteOptions) => void
+      callback: (query: {
+        options: WatchQueryOptions;
+        observable: Observable<FetchResult<any>>;
+        id: TransportIdentifier;
+      }) => void
     ) => void;
     /** will always be present */
     children: React.ReactNode;
   } & ExtraProps
 >;
+
+export type TransportIdentifier = string & { __transportIdentifier: true };
+
+export type QueryEvent =
+  | {
+      type: "started";
+      options: WatchQueryOptions;
+      id: TransportIdentifier;
+    }
+  | {
+      type: "data";
+      id: TransportIdentifier;
+      result: FetchResult;
+    }
+  | {
+      type: "error";
+      id: TransportIdentifier;
+      error: Error;
+    }
+  | {
+      type: "complete";
+      id: TransportIdentifier;
+    };

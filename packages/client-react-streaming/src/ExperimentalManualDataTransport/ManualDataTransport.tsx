@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef } from "react";
 import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
 import { DataTransportContext } from "@apollo/client-react-streaming";
-import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import type { RehydrationCache, RehydrationContextValue } from "./types.js";
 import type { HydrationContextOptions } from "./RehydrationContext.js";
 import { buildApolloRehydrationContext } from "./RehydrationContext.js";
@@ -21,7 +20,6 @@ const buildManualDataTransportSSRImpl = ({
   function ManualDataTransportSSRImpl({
     extraScriptProps,
     children,
-    registerDispatchRequestData,
     registerDispatchRequestStarted,
   }) {
     const insertHtml = useInsertHtml();
@@ -34,11 +32,34 @@ const buildManualDataTransportSSRImpl = ({
       });
     }
 
-    registerDispatchRequestStarted!((options: WatchQueryOptions) => {
-      rehydrationContext.current!.incomingBackgroundQueries.push(options);
-    });
-    registerDispatchRequestData!((options: Cache.WriteOptions) => {
-      rehydrationContext.current!.incomingResults.push(options);
+    registerDispatchRequestStarted!(({ options, id, observable }) => {
+      rehydrationContext.current!.incomingEvents.push({
+        type: "started",
+        id,
+        options,
+      });
+      observable.subscribe({
+        next(value) {
+          rehydrationContext.current!.incomingEvents.push({
+            type: "data",
+            id,
+            result: value,
+          });
+        },
+        error(error) {
+          rehydrationContext.current!.incomingEvents.push({
+            type: "error",
+            id,
+            error,
+          });
+        },
+        complete() {
+          rehydrationContext.current!.incomingEvents.push({
+            type: "complete",
+            id,
+          });
+        },
+      });
     });
 
     const contextValue = useMemo(
@@ -63,19 +84,12 @@ const buildManualDataTransportBrowserImpl =
   (): DataTransportProviderImplementation<HydrationContextOptions> =>
     function ManualDataTransportBrowserImpl({
       children,
-      onRequestStarted,
-      onRequestData,
+      onQueryEvent,
       rerunSimulatedQueries,
     }) {
       const hookRehydrationCache = useRef<RehydrationCache>({});
-
       registerDataTransport({
-        onRequestStarted: (options) => {
-          // we are not streaming anymore, so we should not simulate "server-side requests"
-          if (document.readyState === "complete") return;
-          onRequestStarted!(options);
-        },
-        onRequestData: onRequestData!,
+        onQueryEvent: onQueryEvent!,
         onRehydrate(rehydrate) {
           Object.assign(hookRehydrationCache.current, rehydrate);
         },
