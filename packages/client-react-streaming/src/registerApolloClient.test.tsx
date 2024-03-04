@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 import { it } from "node:test";
 import assert from "node:assert";
 import { runInConditions } from "./util/runInConditions.js";
@@ -128,4 +129,67 @@ it("calling `getClient` with parameters results in an error", async () => {
   assert.ok(
     /You cannot pass arguments into `getClient`./.test(error?.message || "")
   );
+});
+
+it("warns if `makeClient` calls that should return different `ApolloClient` instances return the same one (outside of React)", () => {
+  const warn = console.warn;
+  try {
+    let warnArgs: unknown[] | undefined = undefined;
+    console.warn = (...args) => (warnArgs = args);
+    const same = makeClient();
+    const { getClient } = registerApolloClient(() => same);
+
+    getClient();
+    // `console.warn` has not been called
+    assert.equal(warnArgs, undefined);
+
+    getClient();
+    // `console.warn` has been called
+    assert.ok(
+      /Multiple calls to `getClient` for different requests returned the same client instance./i.test(
+        String(warnArgs![0])
+      )
+    );
+  } finally {
+    console.warn = warn;
+  }
+});
+
+it("warns if `makeClient` calls that should return different `ApolloClient` instances return the same one (in React)", async () => {
+  const warn = console.warn;
+  try {
+    let warnArgs: unknown[] | undefined = undefined;
+    console.warn = (...args) => (warnArgs = args);
+    const same = makeClient();
+    const { getClient } = registerApolloClient(() => same);
+
+    function App() {
+      getClient();
+      // it should be perfectly fine and not cause any errors to call `getClient` in here as often as we want to
+      getClient();
+      getClient();
+      return <div></div>;
+    }
+
+    {
+      const stream = renderToPipeableStream(React.createElement(App), {});
+      await drain(stream);
+    }
+    // we had only one request, `console.warn` has not been called
+    assert.equal(warnArgs, undefined);
+
+    {
+      // second render - different request, but returns `same` ApolloClient as before
+      const stream = renderToPipeableStream(React.createElement(App), {});
+      await drain(stream);
+    }
+
+    assert.ok(
+      /Multiple calls to `getClient` for different requests returned the same client instance./i.test(
+        String(warnArgs![0])
+      )
+    );
+  } finally {
+    console.warn = warn;
+  }
 });
