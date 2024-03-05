@@ -5,7 +5,6 @@ import type {
   WatchQueryOptions,
   FetchResult,
   DocumentNode,
-  Cache,
 } from "@apollo/client/index.js";
 import {
   ApolloClient as OrigApolloClient,
@@ -151,7 +150,7 @@ export class ApolloClientBrowserImpl<
     return { query: serverQuery, cacheKey, varJson: canonicalVariables };
   }
 
-  protected onQueryStarted = ({
+  onQueryStarted = ({
     options,
     id,
   }: Extract<QueryEvent, { type: "started" }>) => {
@@ -220,9 +219,7 @@ export class ApolloClientBrowserImpl<
     }
   };
 
-  protected onQueryProgress = (
-    event: Exclude<QueryEvent, { type: "started" }>
-  ) => {
+  onQueryProgress = (event: Exclude<QueryEvent, { type: "started" }>) => {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
 
     if (event.type === "data") {
@@ -267,7 +264,7 @@ export class ApolloClientBrowserImpl<
    * simulated server-side queries going on.
    * Those queries will be cancelled and then re-run in the browser.
    */
-  protected rerunSimulatedQueries = () => {
+  rerunSimulatedQueries = () => {
     for (const [id, queryInfo] of this.simulatedStreamingQueries) {
       this.simulatedStreamingQueries.delete(id);
       invariant.debug(
@@ -277,7 +274,7 @@ export class ApolloClientBrowserImpl<
       this.rerunSimulatedQuery(queryInfo);
     }
   };
-  protected rerunSimulatedQuery = (queryInfo: SimulatedQueryInfo) => {
+  rerunSimulatedQuery = (queryInfo: SimulatedQueryInfo) => {
     const queryManager = getQueryManager(this);
     const queryId = queryManager.generateQueryId();
     queryManager
@@ -293,24 +290,9 @@ export class ApolloClientBrowserImpl<
   };
 }
 
-export type ApolloClient<TCacheShape> = OrigApolloClient<TCacheShape> & {
-  onQueryStarted?: ApolloClientBrowserImpl<TCacheShape>["onQueryStarted"];
-  onQueryProgress?: ApolloClientBrowserImpl<TCacheShape>["onQueryProgress"];
-  rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
-
-  watchQueryQueue: {
-    register?: (
-      instance:
-        | ((_: {
-            event: Extract<QueryEvent, { type: "started" }>;
-            observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
-          }) => void)
-        | null
-    ) => void;
-  };
-
-  cache: InMemoryCache;
-};
+export type ApolloClient<TCacheShape> = OrigApolloClient<TCacheShape> &
+  Partial<ApolloClientBrowserImpl<TCacheShape>> &
+  Partial<ApolloClientSSRImpl<TCacheShape>>;
 
 export const ApolloClient: {
   new <TCacheShape>(

@@ -19,7 +19,6 @@ export interface RehydrationContextValue {
    * transported over to the client - the purpose of this
    * variable is to prevent the same data being sent over
    * again and again.
-   * (TODO: Not used yet.)
    */
   transportedValues: RehydrationCache;
   /**
@@ -31,7 +30,7 @@ export interface RehydrationContextValue {
    */
   transportValueData: RehydrationCache;
   /**
-   * Contains results that came in from a link that should
+   * Contains events that came in from a link that should
    * be replayed on the client.
    */
   incomingEvents: QueryEvent[];

@@ -50,7 +50,7 @@ export function WrapApolloProvider<ExtraProps>(
           onQueryEvent={(event) =>
             event.type === "started"
               ? clientRef.current!.onQueryStarted!(event)
-              : clientRef.current?.onQueryProgress!(event)
+              : clientRef.current!.onQueryProgress!(event)
           }
           rerunSimulatedQueries={clientRef.current.rerunSimulatedQueries}
           registerDispatchRequestStarted={

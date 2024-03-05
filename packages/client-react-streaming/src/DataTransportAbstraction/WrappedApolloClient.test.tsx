@@ -1,7 +1,6 @@
 import React, { Suspense, useMemo } from "react";
 import { runInConditions, testIn } from "../util/runInConditions.js";
 import type {
-  Cache,
   TypedDocumentNode,
   WatchQueryOptions,
 } from "@apollo/client/index.js";
