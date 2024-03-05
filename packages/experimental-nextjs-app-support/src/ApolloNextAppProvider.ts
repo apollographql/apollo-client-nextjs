@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { buildManualDataTransport } from "@apollo/client-react-streaming/experimental-manual-transport";
+import { buildManualDataTransport } from "@apollo/client-react-streaming/manual-transport";
 import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { ServerInsertedHTMLContext } from "next/navigation.js";
 
