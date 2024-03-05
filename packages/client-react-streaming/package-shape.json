@@ -29,7 +29,7 @@
       "resetApolloSingletons"
     ]
   },
-  "@apollo/client-react-streaming/experimental-manual-transport": {
+  "@apollo/client-react-streaming/manual-transport": {
     "react-server": [],
     "browser": ["buildManualDataTransport", "resetManualSSRApolloSingletons"],
     "node": ["buildManualDataTransport", "resetManualSSRApolloSingletons"]
