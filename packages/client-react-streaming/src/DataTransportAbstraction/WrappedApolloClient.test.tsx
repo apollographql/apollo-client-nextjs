@@ -18,8 +18,8 @@ const {
   InMemoryCache,
   WrapApolloProvider,
   DataTransportContext,
-  useSuspenseQuery,
 } = await import("#bundled");
+const { useSuspenseQuery } = await import("@apollo/client/index.js");
 const { MockSubscriptionLink } = await import(
   "@apollo/client/testing/index.js"
 );

@@ -16,12 +16,7 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
-      "resetApolloSingletons",
-      "useBackgroundQuery",
-      "useFragment",
-      "useQuery",
-      "useReadQuery",
-      "useSuspenseQuery"
+      "resetApolloSingletons"
     ],
     "node": [
       "ApolloClient",
@@ -31,12 +26,7 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
-      "resetApolloSingletons",
-      "useBackgroundQuery",
-      "useFragment",
-      "useQuery",
-      "useReadQuery",
-      "useSuspenseQuery"
+      "resetApolloSingletons"
     ]
   },
   "@apollo/client-react-streaming/experimental-manual-transport": {

@@ -83,9 +83,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:3.9.1, @apollo/client@npm:^3.9.1":
-  version: 3.9.1
-  resolution: "@apollo/client@npm:3.9.1"
+"@apollo/client@npm:0.0.0-pr-11617-20240227102358":
+  version: 0.0.0-pr-11617-20240227102358
+  resolution: "@apollo/client@npm:0.0.0-pr-11617-20240227102358"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -95,7 +95,7 @@ __metadata:
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.3"
+    rehackt: "npm:0.0.5"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
@@ -116,7 +116,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/76c7024fbb7bd4a8e4cb1a36193c0ca23340b78e3a47006af6d91bd250b91006d8334856ac91c235d040bcaaadc0ef6d6eb0bba6a4f48b7fa12174f029e9eee1
+  checksum: 10/0189a24d832ef14a408a0a3dd5e15d416ed4c223aa9aca21c80774beb60ff7303242242f688c684a20df0166ba95f4c92708dfe7badc0ab12dabe63232616483
   languageName: node
   linkType: hard
 
@@ -12272,9 +12272,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehackt@npm:0.0.3":
-  version: 0.0.3
-  resolution: "rehackt@npm:0.0.3"
+"rehackt@npm:0.0.5":
+  version: 0.0.5
+  resolution: "rehackt@npm:0.0.5"
   peerDependencies:
     "@types/react": "*"
     react: "*"
@@ -12283,7 +12283,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10/2e3674d84aca46802f38cf5b01c62bf7d0ca5e324b2749dd79156fa61723e9f84df7778c39f97d351e815a852a8a8ac9633e29b6b7b8734d18042fda86620f54
+  checksum: 10/a7536eaeb47ba46bc29fa050c7cbf80860809689c893c6177664efbbdca641a1996185ea6602fb76473f0e2b145c1f3e9c27a5e738054d69809b6c39046fe269
   languageName: node
   linkType: hard
 

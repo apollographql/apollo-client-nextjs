@@ -12,5 +12,8 @@
   "scripts": {
     "verify-package-json": "node ./scripts/verify-package-json.mjs",
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs"
+  },
+  "resolutions": {
+    "@apollo/client": "0.0.0-pr-11617-20240227102358"
   }
 }

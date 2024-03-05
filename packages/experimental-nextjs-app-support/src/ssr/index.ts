@@ -3,12 +3,14 @@ export { resetManualSSRApolloSingletons as resetNextSSRApolloSingletons } from "
 export {
   InMemoryCache as NextSSRInMemoryCache,
   ApolloClient as NextSSRApolloClient,
+  SSRMultipartLink,
+  DebounceMultipartResponsesLink,
+  RemoveMultipartDirectivesLink,
+} from "@apollo/client-react-streaming";
+export {
   useBackgroundQuery,
   useFragment,
   useQuery,
   useReadQuery,
   useSuspenseQuery,
-  SSRMultipartLink,
-  DebounceMultipartResponsesLink,
-  RemoveMultipartDirectivesLink,
-} from "@apollo/client-react-streaming";
+} from "@apollo/client/index.js";

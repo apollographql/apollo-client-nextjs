@@ -16,10 +16,14 @@ import { canonicalStringify } from "@apollo/client/cache/index.js";
 import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
 import { InMemoryCache } from "./WrappedInMemoryCache.js";
+import { hookWrappers } from "./hooks.js";
+import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
-): QueryManager<TCacheShape> {
+): QueryManager<TCacheShape> & {
+  [wrappers]: HookWrappers;
+} {
   return client["queryManager"];
 }
 
@@ -29,12 +33,23 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
-class ApolloClientSSRImpl<TCacheShape> extends OrigApolloClient<TCacheShape> {
-  watchQueryQueue = createBackpressuredCallback<WatchQueryOptions<any>>();
-
+const wrappers = Symbol.for("apollo.hook.wrappers");
+class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
+
+    if (!(this.cache instanceof InMemoryCache)) {
+      throw new Error(
+        "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
+      );
+    }
+
+    getQueryManager(this)[wrappers] = hookWrappers;
   }
+}
+
+class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
+  watchQueryQueue = createBackpressuredCallback<WatchQueryOptions<any>>();
 
   watchQuery<
     T = any,
@@ -52,17 +67,7 @@ class ApolloClientSSRImpl<TCacheShape> extends OrigApolloClient<TCacheShape> {
 
 export class ApolloClientBrowserImpl<
   TCacheShape,
-> extends OrigApolloClient<TCacheShape> {
-  constructor(options: ApolloClientOptions<TCacheShape>) {
-    super(options);
-
-    if (!(this.cache instanceof InMemoryCache)) {
-      throw new Error(
-        "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
-      );
-    }
-  }
-
+> extends ApolloClientBase<TCacheShape> {
   private simulatedStreamingQueries = new Map<string, SimulatedQueryInfo>();
 
   private identifyUniqueQuery(options: {
