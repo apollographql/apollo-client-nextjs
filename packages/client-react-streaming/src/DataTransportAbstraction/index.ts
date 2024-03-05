@@ -1,5 +1,5 @@
-export { WrappedInMemoryCache } from "./WrappedInMemoryCache.js";
-export { WrappedApolloClient } from "./WrappedApolloClient.js";
+export { InMemoryCache } from "./WrappedInMemoryCache.js";
+export { ApolloClient } from "./WrappedApolloClient.js";
 
 export {
   useFragment,

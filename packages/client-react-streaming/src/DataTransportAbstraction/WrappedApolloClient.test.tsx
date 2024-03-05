@@ -14,8 +14,8 @@ import { afterEach } from "node:test";
 runInConditions("browser", "node");
 
 const {
-  WrappedApolloClient,
-  WrappedInMemoryCache,
+  ApolloClient,
+  InMemoryCache,
   WrapApolloProvider,
   DataTransportContext,
   useSuspenseQuery,
@@ -89,9 +89,9 @@ await testIn("node")(
     );
 
     const link = new MockSubscriptionLink();
-    const client = new WrappedApolloClient({
+    const client = new ApolloClient({
       connectToDevTools: false,
-      cache: new WrappedInMemoryCache(),
+      cache: new InMemoryCache(),
       link,
     });
 
@@ -159,9 +159,9 @@ await testIn("browser")(
       }
     );
 
-    const client = new WrappedApolloClient({
+    const client = new ApolloClient({
       connectToDevTools: false,
-      cache: new WrappedInMemoryCache(),
+      cache: new InMemoryCache(),
     });
 
     let attemptedRenderCount = 0;

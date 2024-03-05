@@ -1,8 +1,5 @@
 import { useContext } from "react";
-import {
-  buildManualDataTransport,
-  resetManualSSRApolloSingletons,
-} from "@apollo/client-react-streaming/experimental-manual-transport";
+import { buildManualDataTransport } from "@apollo/client-react-streaming/experimental-manual-transport";
 import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { ServerInsertedHTMLContext } from "next/navigation.js";
 
@@ -19,17 +16,3 @@ export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
     },
   })
 );
-
-export const resetNextSSRApolloSingletons = resetManualSSRApolloSingletons;
-export {
-  WrappedInMemoryCache as NextSSRInMemoryCache,
-  WrappedApolloClient as NextSSRApolloClient,
-  useBackgroundQuery,
-  useFragment,
-  useQuery,
-  useReadQuery,
-  useSuspenseQuery,
-  SSRMultipartLink,
-  DebounceMultipartResponsesLink,
-  RemoveMultipartDirectivesLink,
-} from "@apollo/client-react-streaming";

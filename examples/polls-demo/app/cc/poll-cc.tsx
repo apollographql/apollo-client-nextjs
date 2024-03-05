@@ -5,7 +5,7 @@ import {
   useBackgroundQuery,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { useMutation } from "@apollo/client";
-import { QueryReference } from "@apollo/client/react/cache/QueryReference";
+import { QueryReference } from "@apollo/client/react";
 import { Poll as PollInner } from "@/components/poll";
 
 import { useState, useCallback } from "react";

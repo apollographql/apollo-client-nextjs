@@ -8,5 +8,9 @@
   ],
   "dependencies": {
     "prettier": "^3.0.0"
+  },
+  "scripts": {
+    "verify-package-json": "node ./scripts/verify-package-json.mjs",
+    "verify-package-shape": "node ./scripts/verify-package-shape.mjs"
   }
 }
