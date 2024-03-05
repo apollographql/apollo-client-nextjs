@@ -2048,6 +2048,8 @@ __metadata:
 "@integration-test/root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@integration-test/root@workspace:."
+  dependencies:
+    glob: "npm:^10.3.10"
   languageName: unknown
   linkType: soft
 
