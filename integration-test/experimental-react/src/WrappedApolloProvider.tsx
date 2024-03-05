@@ -1,16 +1,17 @@
 /**
  * implementation to be used with the experimental React hooks implemented in
  * https://github.com/facebook/react/compare/main...phryneas:react:stream-injection
+ *
+ * published under https://www.npmjs.com/package/@phryneas/experimental-react
  */
 
-import React, {
-  useMemo,
-  useActionChannel,
-  useStaticValue,
-  useRef,
-} from "react";
+import {
+  WrapApolloProvider,
+  DataTransportContext,
+} from "@apollo/client-react-streaming";
 import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
-import { DataTransportContext } from "@apollo/client-react-streaming";
+import { useMemo, useActionChannel, useStaticValue, useRef } from "react";
+
 import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 
 declare module "react" {
@@ -60,3 +61,7 @@ export const ExperimentalReactDataTransport: DataTransportProviderImplementation
       </DataTransportContext.Provider>
     );
   };
+
+export const WrappedApolloProvider = WrapApolloProvider(
+  ExperimentalReactDataTransport
+);
