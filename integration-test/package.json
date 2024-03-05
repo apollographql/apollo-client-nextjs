@@ -10,7 +10,6 @@
     "*"
   ],
   "scripts": {
-    "_trigger-rebuild": "rm -rf node_modules/@apollo/client-react-streaming/ node_modules/@apollo/experimental-nextjs-app-support/ # not necessary?",
     "trigger-rebuild": "glob \"../.yarn/cache/@apollo-*exec*\" \"$HOME/.yarn/berry/cache/@apollo-*exec*\" --cmd='rm -v' && yarn"
   },
   "devDependencies": {
