@@ -99,6 +99,13 @@ jobs:
 
       - name: "Next.js: Build"
         run: yarn workspace @integration-test/nextjs run build
+      # Upload webpack-stats.json to use on relative-ci.yaml workflow
+      - name: Upload webpack stats artifact
+        if: matrix.version == 'latest'
+        uses: relative-ci/agent-upload-artifact-action@v1
+        with:
+          webpackStatsFile: ./integration-test/nextjs/webpack-stats.json
+
       - name: "Next.js: Test"
         run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
 
