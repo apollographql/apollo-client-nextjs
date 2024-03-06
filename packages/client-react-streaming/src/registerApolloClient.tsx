@@ -88,9 +88,9 @@ export function registerApolloClient(
             `
 Multiple calls to \`getClient\` for different requests returned the same client instance.
 This means that private user data could accidentally be shared between requests.
-This for example happens if you create a global \`ApolloClient\` instance and your \`makeClient\`
+This happens, for example, if you create a global \`ApolloClient\` instance and your \`makeClient\`
 implementation just looks like \`() => client\`.
-Please insure to always call \`new ApolloClient\` **inside** your \`makeClient\` function and to
+Always call \`new ApolloClient\` **inside** your \`makeClient\` function and
 return a new instance every time \`makeClient\` is called.
 `.trim()
           );
