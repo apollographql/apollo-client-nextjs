@@ -82,26 +82,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:0.0.0-pr-11617-20240227102358":
-  version: 0.0.0-pr-11617-20240227102358
-  resolution: "@apollo/client@npm:0.0.0-pr-11617-20240227102358"
+"@apollo/client@npm:0.0.0-pr-6701-20230824185144":
+  version: 0.0.0-pr-6701-20230824185144
+  resolution: "@apollo/client@npm:0.0.0-pr-6701-20230824185144"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
-    "@wry/caches": "npm:^1.0.0"
+    "@wry/context": "npm:^0.7.3"
     "@wry/equality": "npm:^0.5.6"
-    "@wry/trie": "npm:^0.5.0"
+    "@wry/trie": "npm:^0.4.3"
     graphql-tag: "npm:^2.12.6"
     hoist-non-react-statics: "npm:^3.3.2"
-    optimism: "npm:^0.18.0"
+    optimism: "npm:^0.17.5"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.5"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
     tslib: "npm:^2.3.0"
     zen-observable-ts: "npm:^1.2.5"
   peerDependencies:
-    graphql: ^15.0.0 || ^16.0.0
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     graphql-ws: ^5.5.5
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -115,7 +114,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/0189a24d832ef14a408a0a3dd5e15d416ed4c223aa9aca21c80774beb60ff7303242242f688c684a20df0166ba95f4c92708dfe7badc0ab12dabe63232616483
+  checksum: 10/f4450d1d55afcc0d1f886ffc1af4cee3642e092f59ee2ab351759156328c29f8abe598cf6b0b100d028360ce5bdd2dc3ab78bab08a4ac29553b7b9a1ebd0404d
   languageName: node
   linkType: hard
 
@@ -5035,21 +5034,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wry/caches@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "@wry/caches@npm:1.0.1"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  checksum: 10/055f592ee52b5fd9aa86e274e54e4a8b2650f619000bf6f61880ce14aaf47eb2ab34f3ada2eab964fe8b2f19bf8097ecacddcea4638fcc64c3d3a0a512aaa07c
-  languageName: node
-  linkType: hard
-
 "@wry/context@npm:^0.7.0":
   version: 0.7.0
   resolution: "@wry/context@npm:0.7.0"
   dependencies:
     tslib: "npm:^2.3.0"
   checksum: 10/75e53a64e320b8f1924f5580ce935e55e94238df9fc78259da7d7e6be85dbc1d822eb5f252d9add68646d966ad88d4142c240b25ca7cb5b13849454792d293d4
+  languageName: node
+  linkType: hard
+
+"@wry/context@npm:^0.7.3":
+  version: 0.7.4
+  resolution: "@wry/context@npm:0.7.4"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  checksum: 10/70d648949a97a035b2be2d6ddb716d4162113e850ab2c4c86331b2da94a7e826204080ce04eee2a95665bd3a0b245bf2ea3aae9adfa57b004ae0d2d49bdb5c8f
   languageName: node
   linkType: hard
 
@@ -5068,15 +5067,6 @@ __metadata:
   dependencies:
     tslib: "npm:^2.3.0"
   checksum: 10/106e021125cfafd22250a6631a0438a6a3debae7bd73f6db87fe42aa0757fe67693db0dfbe200ae1f60ba608c3e09ddb8a4e2b3527d56ed0a7e02aa0ee4c94e1
-  languageName: node
-  linkType: hard
-
-"@wry/trie@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@wry/trie@npm:0.5.0"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  checksum: 10/578a08f3a96256c9b163230337183d9511fd775bdfe147a30561ccaacedc9ce33b9731ee6e591bb1f5f53e41b26789e519b47dff5100c7bf4e1cd2df3062f797
   languageName: node
   linkType: hard
 
@@ -10820,15 +10810,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"optimism@npm:^0.18.0":
-  version: 0.18.0
-  resolution: "optimism@npm:0.18.0"
+"optimism@npm:^0.17.5":
+  version: 0.17.5
+  resolution: "optimism@npm:0.17.5"
   dependencies:
-    "@wry/caches": "npm:^1.0.0"
     "@wry/context": "npm:^0.7.0"
     "@wry/trie": "npm:^0.4.3"
     tslib: "npm:^2.3.0"
-  checksum: 10/b461968008eb7aafd5b5dd63b81fd41fbd907f39858bdd5190f10b71db6a5bf54541cdb3d2a569b2bf5585ca917ac192f953e6239d81702a4391fdb476a00ae8
+  checksum: 10/a56bff5b9c483752f13858a72d79dfbd4d54b969522a5c7809573b10f4a971af34a039b726acda97fdad67465ca150c24b9668df0f86072c54b519e24e82317f
   languageName: node
   linkType: hard
 
@@ -11676,21 +11665,6 @@ __metadata:
     define-properties: "npm:^1.2.0"
     set-function-name: "npm:^2.0.0"
   checksum: 10/3fa5610b8e411bbc3a43ddfd13162f3a817beb43155fbd8caa24d4fd0ce2f431a8197541808772a5a06e5946cebfb68464c827827115bde0d11720a92fe2981a
-  languageName: node
-  linkType: hard
-
-"rehackt@npm:0.0.5":
-  version: 0.0.5
-  resolution: "rehackt@npm:0.0.5"
-  peerDependencies:
-    "@types/react": "*"
-    react: "*"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react:
-      optional: true
-  checksum: 10/a7536eaeb47ba46bc29fa050c7cbf80860809689c893c6177664efbbdca641a1996185ea6602fb76473f0e2b145c1f3e9c27a5e738054d69809b6c39046fe269
   languageName: node
   linkType: hard
 

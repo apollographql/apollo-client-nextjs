@@ -15,7 +15,7 @@
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs"
   },
   "resolutions": {
-    "@apollo/client": "0.0.0-pr-11617-20240227102358",
+    "@apollo/client": "0.0.0-pr-6701-20230824185144",
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "superjson": "1.13.3"
