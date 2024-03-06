@@ -15,7 +15,6 @@ const app = express();
 let vite;
 let bootstrapModules = [];
 let assets = [];
-console.log({ isProduction });
 if (!isProduction) {
   const { createServer } = await import("vite");
   vite = await createServer({
@@ -48,7 +47,6 @@ app.use("*", async (req, res) => {
   res.socket.on("error", (error) => {
     console.error("Fatal", error);
   });
-
   let didError = false;
   let didFinish = false;
   const App = (
@@ -62,26 +60,22 @@ app.use("*", async (req, res) => {
   const { pipe, abort } = renderToPipeableStream(App, {
     bootstrapModules,
     onAllReady() {
-      console.log("All ready");
       // Full completion.
       // You can use this for SSG or crawlers.
       didFinish = true;
     },
     onShellReady() {
-      console.log("Shell ready", { didError });
       // If something errored before we started streaming, we set the error code appropriately.
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
       setImmediate(() => pipe(res));
     },
     onShellError(x) {
-      console.log("Shell error", x);
       // Something errored before we could complete the shell so we emit an alternative shell.
       res.statusCode = 500;
       res.send("<!doctype><p>Error</p>");
     },
     onError(x) {
-      console.log("Error", x);
       didError = true;
       console.error(x);
     },

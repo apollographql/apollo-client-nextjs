@@ -14,7 +14,6 @@ const app = express();
 let vite;
 let bootstrapModules = [];
 let assets = [];
-console.log({ isProduction });
 if (!isProduction) {
   const { createServer } = await import("vite");
   vite = await createServer({
