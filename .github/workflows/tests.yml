@@ -83,7 +83,7 @@ jobs:
       - run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
 
       - name: Build libraries
-        run: yarn workspaces foreach --all -t --include "@apollo/*" --include @integration-test/nextjs run build
+        run: yarn workspaces foreach --all -t --include "@apollo/*" run build
 
       - name: "Next.js: Build"
         run: yarn workspace @integration-test/nextjs run build
@@ -94,3 +94,8 @@ jobs:
         run: yarn workspace @integration-test/experimental-react run build
       - name: "Experimentally patched React: Test"
         run: yarn workspace @integration-test/experimental-react run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+
+      - name: "Vite Streaming: Build"
+        run: yarn workspace @integration-test/vite-streaming run build
+      - name: "Vite Streaming: Test"
+        run: yarn workspace @integration-test/vite-streaming run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
