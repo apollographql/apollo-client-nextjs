@@ -1,15 +1,12 @@
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import { useTransportValue } from "./useTransportValue.js";
-import type { WatchQueryOptions } from "@apollo/client";
-import { useApolloClient } from "@apollo/client";
-import { getSuspenseCache } from "@apollo/client/react/internal";
-import { canonicalStringify } from "@apollo/client/cache";
+import type { WatchQueryOptions } from "@apollo/client/index.js";
+import { useApolloClient } from "@apollo/client/index.js";
+import { getSuspenseCache } from "@apollo/client/react/internal/index.js";
+import { canonicalStringify } from "@apollo/client/cache/index.js";
 import { use } from "react";
-import {
-  ApolloClient,
-  getQueryManager,
-  wrappers,
-} from "./WrappedApolloClient.js";
+import type { ApolloClient } from "./WrappedApolloClient.js";
+import { getQueryManager, wrappers } from "./WrappedApolloClient.js";
 
 export const hookWrappers: HookWrappers = {
   useFragment(orig_useFragment) {
