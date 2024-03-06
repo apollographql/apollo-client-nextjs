@@ -9,3 +9,4 @@ export type {
   QueryEvent,
 } from "./DataTransportAbstraction.js";
 export { WrapApolloProvider } from "./WrapApolloProvider.js";
+export { enableSSRWaitForUseQuery } from "./hooks.js";

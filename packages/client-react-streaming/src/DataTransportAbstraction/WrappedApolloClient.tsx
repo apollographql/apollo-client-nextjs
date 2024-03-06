@@ -24,7 +24,7 @@ import type {
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
 
-function getQueryManager<TCacheShape>(
+export function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
 ): QueryManager<TCacheShape> & {
   [wrappers]: HookWrappers;
@@ -38,7 +38,7 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
-const wrappers = Symbol.for("apollo.hook.wrappers");
+export const wrappers = Symbol.for("apollo.hook.wrappers");
 class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
