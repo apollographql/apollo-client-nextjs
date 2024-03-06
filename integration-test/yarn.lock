@@ -40,11 +40,11 @@ __metadata:
   peerDependencies:
     "@apollo/client": ^3.9.0
     react: ^18
-  checksum: 10/ce08a9940b1a08c77f1a63ef8294685df9a091c573f5e74c5b0e0a488ee62f3b86ff889e5e2dcac9af352490dd54a3a4174829ede6311fb0893d9e14ea2e4843
+  checksum: 10/8e12155ebcb9672f5b645c364d356018014df750412c61613341121ebb4d4eabb5f42cd9018cc3a81ad988f1b425548d68254ca49ede19c31d0d9e5a9a4f240a
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.9.1":
+"@apollo/client@npm:^3.9.1, @apollo/client@npm:^3.9.5":
   version: 3.9.5
   resolution: "@apollo/client@npm:3.9.5"
   dependencies:
@@ -90,7 +90,7 @@ __metadata:
     "@apollo/client": ^3.9.0
     next: ^13.4.1 || ^14.0.0
     react: ^18
-  checksum: 10/dbb9e86eaa6561b871ddf3bca851a3b75a406e72ff5e316a4c33a4ac2b1623036e592011371ccc1fc85d800e92bf866ce915732b78c1b1c4053e54f2fdc9efab
+  checksum: 10/505b723bac0f3a7f15287ea32fab9f2e8c0cd567149abf11d750855f8a9bfc0aa26e44179ad10c32f7d162ad86318717032413ef8e1a25385185178e022588fa
   languageName: node
   linkType: hard
 
@@ -2003,8 +2003,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/jest@workspace:jest"
   dependencies:
-    "@apollo/client": "npm:^3.9.1"
-    "@apollo/experimental-nextjs-app-support": "npm:*"
+    "@apollo/client": "npm:^3.9.5"
+    "@apollo/client-react-streaming": "workspace:*"
+    "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
     "@babel/preset-react": "npm:^7.23.3"
@@ -2073,8 +2074,8 @@ __metadata:
     graphql: "npm:^16.8.1"
     graphql-tag: "npm:^2.12.6"
     prettier: "npm:^3.2.5"
-    react: "npm:@phryneas/experimental-react@0.0.0-phryneas-a1c625c"
-    react-dom: "npm:@phryneas/experimental-react-dom@0.0.0-phryneas-a1c625c"
+    react: "npm:18.3.0-canary-60a927d04-20240113"
+    react-dom: "npm:18.3.0-canary-60a927d04-20240113"
     sirv: "npm:^2.0.4"
     vite: "npm:^5.0.10"
   languageName: unknown
@@ -7168,6 +7169,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:18.3.0-canary-60a927d04-20240113":
+  version: 18.3.0-canary-60a927d04-20240113
+  resolution: "react-dom@npm:18.3.0-canary-60a927d04-20240113"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    scheduler: "npm:0.24.0-canary-60a927d04-20240113"
+  peerDependencies:
+    react: 18.3.0-canary-60a927d04-20240113
+  checksum: 10/5a339f511e32d2690021458913d40fcf3671d4fe708026851b811420d958615a298d80352bb78ed4c635c3125ce491d30591213cb1086888bac8c426a2e98e65
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:@phryneas/experimental-react-dom@0.0.0-phryneas-a1c625c":
   version: 0.0.0-phryneas-a1c625c
   resolution: "@phryneas/experimental-react-dom@npm:0.0.0-phryneas-a1c625c"
@@ -7214,6 +7227,15 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10/b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
+  languageName: node
+  linkType: hard
+
+"react@npm:18.3.0-canary-60a927d04-20240113":
+  version: 18.3.0-canary-60a927d04-20240113
+  resolution: "react@npm:18.3.0-canary-60a927d04-20240113"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10/7da693ec8a4e4c33941f55c2cc042a4a1ea9360ab7b7fd227b7cddcc8949cac0058e585e557ea1a447dbb74e7865bcebb996ee975680e2b98c6d98e941847cb1
   languageName: node
   linkType: hard
 
@@ -7485,6 +7507,15 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 10/97b50daf6ca3a153e89842efa18a862e446248296622b7473c169c84c823ee8a16e4a43bac2f73f11fc8cb9168c73fbb0d73340f26552bac17970e9052367aa9
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:0.24.0-canary-60a927d04-20240113":
+  version: 0.24.0-canary-60a927d04-20240113
+  resolution: "scheduler@npm:0.24.0-canary-60a927d04-20240113"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10/0289b2a5d20e4885c268a90765ebe7192eafb5b3a065888092c1684e25438932e06efd199a852b47dc8b57cc8741c609552e9f13de66e4492400e8dd4201b809
   languageName: node
   linkType: hard
 

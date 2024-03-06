@@ -4,8 +4,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.1",
-    "@apollo/experimental-nextjs-app-support": "*",
+    "@apollo/client": "^3.9.5",
+    "@apollo/client-react-streaming": "workspace:*",
+    "@apollo/experimental-nextjs-app-support": "workspace:*",
     "@graphql-tools/schema": "^10.0.3",
     "graphql-tag": "^2.12.6",
     "react": "18.2.0",
