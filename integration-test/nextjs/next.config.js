@@ -1,4 +1,25 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
-module.exports = nextConfig;
+module.exports = {
+  webpack: (config, options) => {
+    const { dev, isServer } = options;
+
+    // Output webpack stats JSON file only for
+    // client-side/production build
+    if (!dev && !isServer) {
+      config.plugins.push(
+        new StatsWriterPlugin({
+          filename: "../webpack-stats.json",
+          stats: {
+            assets: true,
+            chunks: true,
+            modules: true,
+            excludeAssets: [/webpack-stats.json/],
+          },
+        })
+      );
+    }
+
+    return config;
+  },
+};
