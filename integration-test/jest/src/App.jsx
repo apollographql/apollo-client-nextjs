@@ -31,7 +31,7 @@ export const makeClient = () => {
 function App() {
   return (
     <>
-      <h1>Vite + React (patched) Streaming SSR + Apollo Client + Suspense</h1>
+      <h1>Jest integration test</h1>
       <div className="card">
         <ApolloNextAppProvider makeClient={makeClient}>
           <Suspense fallback={<div>Loading...</div>}>
