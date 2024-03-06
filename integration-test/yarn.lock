@@ -2040,6 +2040,7 @@ __metadata:
     next: "npm:^14.1.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    react-error-boundary: "npm:^4.0.13"
     ssr-only-secrets: "npm:^0.0.5"
     typescript: "npm:5.1.3"
   languageName: unknown
@@ -7192,6 +7193,17 @@ __metadata:
   peerDependencies:
     react: "*"
   checksum: 10/9afe0d3f4f840482e5b3fbcc29be9ce371b4de622864c0e24035ca00f021857567cbfdb6ea6e4e19610ea33ea17cfaaaffab0f5baa2d33a1e54156b3acc591cb
+  languageName: node
+  linkType: hard
+
+"react-error-boundary@npm:^4.0.13":
+  version: 4.0.13
+  resolution: "react-error-boundary@npm:4.0.13"
+  dependencies:
+    "@babel/runtime": "npm:^7.12.5"
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 10/28fdf498a58621e21d93978c61719c52455bc00b778080259c5830fe003736153469ebc84f243d7989567b1196e25648c7592f7c8e47de47fcd7d12b875879b9
   languageName: node
   linkType: hard
 

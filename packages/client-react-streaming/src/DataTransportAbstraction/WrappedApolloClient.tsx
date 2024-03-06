@@ -244,9 +244,11 @@ export class ApolloClientBrowserImpl<
        * At this point we're not able to correctly serialize the error over the wire
        * so we do the next-best thing: restart the query in the browser as soon as it
        * failed on the server.
+       * This matches up with what React will be doing (abort hydration and rerender)
        * See https://github.com/apollographql/apollo-client-nextjs/issues/52
        */
       if (queryInfo) {
+        this.simulatedStreamingQueries.delete(event.id);
         invariant.debug(
           "query failed on server, rerunning in browser:",
           queryInfo.options

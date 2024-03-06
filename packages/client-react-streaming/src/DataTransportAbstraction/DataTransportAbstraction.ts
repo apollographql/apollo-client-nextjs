@@ -56,7 +56,7 @@ export type QueryEvent =
       type: "error";
       id: TransportIdentifier;
       // for now we don't transport the error itself, as it might leak some sensitive information
-      // error: Error;
+      // this is similar to how React handles errors during SSR
     }
   | {
       type: "complete";

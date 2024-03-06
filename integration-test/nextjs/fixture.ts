@@ -22,14 +22,22 @@ expect.extend({
   },
 });
 
+declare module "@playwright/test" {
+  interface Page {
+    allowErrors?: () => void;
+  }
+}
+
 export const test = base.extend<{
   blockRequest: import("@playwright/test").Page;
   hydrationFinished: Promise<void>;
 }>({
   page: async ({ page }, use) => {
-    page.on("pageerror", (error) => {
+    function errorListener(error: Error) {
       expect(error.stack || error).toBe("no error");
-    });
+    }
+    page.on("pageerror", errorListener);
+    page.allowErrors = () => page.off("pageerror", errorListener);
     // this prevents the playwright http cache to kick in in test development
     page.route("**", (route) => route.continue());
     await use(page);
