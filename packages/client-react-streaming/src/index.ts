@@ -6,4 +6,5 @@ export {
   QueryEvent,
   WrapApolloProvider,
   WrappedApolloProvider,
+  enableSSRWaitForUseQuery,
 } from "./DataTransportAbstraction/index.js";

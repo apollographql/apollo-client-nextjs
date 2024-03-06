@@ -25,7 +25,7 @@ import type {
 } from "./DataTransportAbstraction.js";
 import { bundle } from "../bundleInfo.js";
 
-function getQueryManager<TCacheShape>(
+export function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
 ): QueryManager<TCacheShape> & {
   [wrappers]: HookWrappers;
@@ -39,7 +39,7 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
-const wrappers = Symbol.for("apollo.hook.wrappers");
+export const wrappers = Symbol.for("apollo.hook.wrappers");
 class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   /**
    * Information about the current package and it's export names, for use in error messages.
