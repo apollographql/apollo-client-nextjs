@@ -3,10 +3,11 @@
   "packageManager": "yarn@4.1.0",
   "workspaces": [
     "packages/*",
-    "integration-test/*",
     "examples/*"
   ],
+  "main": "package.json",
   "dependencies": {
+    "monorepo": "link:.",
     "prettier": "^3.0.0"
   },
   "scripts": {

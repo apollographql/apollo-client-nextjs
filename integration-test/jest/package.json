@@ -1,0 +1,25 @@
+{
+  "name": "@integration-test/jest",
+  "scripts": {
+    "prepare": "rm -rf node_modules/@apollo/client-react-streaming node_modules/@apollo/experimental-nextjs-app-support; mkdir -p node_modules/@apollo/client-react-streaming node_modules/@apollo/experimental-nextjs-app-support && cp -r ../../packages/client-react-streaming/{package.json,dist} node_modules/@apollo/client-react-streaming && cp -r ../../packages/experimental-nextjs-app-support/{package.json,dist} node_modules/@apollo/experimental-nextjs-app-support",
+    "test": "yarn prepare; jest"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.9.5",
+    "@apollo/client-react-streaming": "workspace:*",
+    "@apollo/experimental-nextjs-app-support": "workspace:*",
+    "@graphql-tools/schema": "^10.0.3",
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-react": "^7.23.3",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@testing-library/user-event": "^14.5.2",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

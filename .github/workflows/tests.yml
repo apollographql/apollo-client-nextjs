@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    name: Run unit tests
+    name: Unit Tests
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
@@ -32,7 +32,7 @@ jobs:
       - run: yarn workspaces foreach --all --include "@apollo/*" run build
       - run: yarn workspaces foreach --all --include "@apollo/*" run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   packageShapes:
-    name: Test bundles
+    name: Test Bundles
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
@@ -49,20 +49,38 @@ jobs:
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
       - run: yarn workspaces foreach --all --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   tests_playwright:
-    name: Run Playwright tests
+    name: Integration Tests
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         version: ["latest", "next"]
+    defaults:
+      run:
+        working-directory: ./integration-test
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: "20.x"
           cache: "yarn"
-      - run: yarn install --immutable
+      - name: Install Packages (Root)
+        run: yarn install --immutable
+        working-directory: ./
+      - name: Set target version of Apollo Client (Root)
+        run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
+        working-directory: ./
+
+      - name: Install Packages (Integration Test)
+        run: |
+          sed -ire '/^  checksum/d' yarn.lock 
+          yarn install
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+
+      - name: Set target version of Apollo Client (Integration Test)
+        run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
 
       - name: Get installed Playwright version
         id: playwright-version
@@ -79,12 +97,6 @@ jobs:
       - run: npx playwright install-deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
-      - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
-      - run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
-
-      - name: Build libraries
-        run: yarn workspaces foreach --all -t --include "@apollo/*" run build
-
       - name: "Next.js: Build"
         run: yarn workspace @integration-test/nextjs run build
       - name: "Next.js: Test"
@@ -99,3 +111,6 @@ jobs:
         run: yarn workspace @integration-test/vite-streaming run build
       - name: "Vite Streaming: Test"
         run: yarn workspace @integration-test/vite-streaming run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+
+      - name: "Jest: Test"
+        run: yarn workspace @integration-test/jest run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
