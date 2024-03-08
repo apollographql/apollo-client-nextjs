@@ -12,7 +12,8 @@
   },
   "scripts": {
     "verify-package-json": "node ./scripts/verify-package-json.mjs",
-    "verify-package-shape": "node ./scripts/verify-package-shape.mjs"
+    "verify-package-shape": "node ./scripts/verify-package-shape.mjs",
+    "matrix": "node ./scripts/test-matrix.js"
   },
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",

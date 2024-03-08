@@ -13,14 +13,32 @@ on:
       - "yarn.lock"
   workflow_dispatch:
 jobs:
+  matrix:
+    name: Determine if the `next` tag is higher than the `latest` tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+      - name: Calculate Matrix
+        id: version
+        # Replace 'true' with your condition
+        run: yarn matrix >> $GITHUB_OUTPUT
+
   test:
     name: Unit Tests
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    if: |
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next"]
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -38,7 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next"]
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -55,7 +73,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next"]
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     defaults:
       run:
         working-directory: ./integration-test
