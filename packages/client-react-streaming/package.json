@@ -93,7 +93,7 @@
     "lint": "eslint --ext .ts,.tsx src"
   },
   "devDependencies": {
-    "@apollo/client": "3.9.1",
+    "@apollo/client": "^3.9.6",
     "@arethetypeswrong/cli": "0.13.6",
     "@testing-library/react": "^14.2.1",
     "@total-typescript/shoehorn": "0.1.1",
