@@ -10339,6 +10339,7 @@ __metadata:
   dependencies:
     monorepo: "link:."
     prettier: "npm:^3.0.0"
+    semver: "npm:^7.6.0"
   languageName: unknown
   linkType: soft
 
@@ -12127,7 +12128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0":
+"semver@npm:^7.0.0, semver@npm:^7.6.0":
   version: 7.6.0
   resolution: "semver@npm:7.6.0"
   dependencies:
