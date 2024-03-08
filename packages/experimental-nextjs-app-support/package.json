@@ -78,7 +78,7 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
-    "@apollo/client": "3.9.1",
+    "@apollo/client": "^3.9.6",
     "@apollo/client-react-streaming": "workspace:*",
     "@arethetypeswrong/cli": "0.13.6",
     "@testing-library/react": "^14.2.1",
