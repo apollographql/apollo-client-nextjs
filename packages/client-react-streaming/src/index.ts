@@ -5,4 +5,5 @@ export {
   DataTransportProviderImplementation,
   QueryEvent,
   WrapApolloProvider,
+  enableSSRWaitForUseQuery,
 } from "./DataTransportAbstraction/index.js";

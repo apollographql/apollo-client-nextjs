@@ -16,7 +16,8 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
-      "resetApolloSingletons"
+      "resetApolloSingletons",
+      "enableSSRWaitForUseQuery"
     ],
     "node": [
       "ApolloClient",
@@ -26,7 +27,8 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
-      "resetApolloSingletons"
+      "resetApolloSingletons",
+      "enableSSRWaitForUseQuery"
     ]
   },
   "@apollo/client-react-streaming/manual-transport": {
