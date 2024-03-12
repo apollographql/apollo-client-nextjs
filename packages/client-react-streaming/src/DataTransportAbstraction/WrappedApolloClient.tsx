@@ -79,7 +79,7 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
           subscriber.next({
             type: "data",
             id,
-            result: result,
+            result,
           });
           return markResult.apply(queryInfo, arguments as any);
         };
