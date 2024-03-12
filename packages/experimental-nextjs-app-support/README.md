@@ -70,7 +70,7 @@ export const { getClient } = registerApolloClient(() => {
 You can then use that `getClient` function in your server components:
 
 ```js
-const { data } = await getClient().query({ query: userQuery });
+const { data } = await getClient().query({ query: useQuery });
 ```
 
 ### In SSR
