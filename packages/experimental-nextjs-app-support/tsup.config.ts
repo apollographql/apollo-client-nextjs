@@ -13,7 +13,7 @@ export default defineConfig((options) => {
     outDir: "dist/",
     external: [
       "@apollo/client-react-streaming",
-      "@apollo/client-react-streaming/experimental-manual-transport",
+      "@apollo/client-react-streaming/manual-transport",
       "react",
       "rehackt",
     ],

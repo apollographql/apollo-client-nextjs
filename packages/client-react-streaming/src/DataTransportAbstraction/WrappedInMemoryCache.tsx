@@ -1,35 +1,11 @@
-import type {
-  InMemoryCacheConfig,
-  Cache,
-  Reference,
-} from "@apollo/client/index.js";
 import { InMemoryCache as OrigInMemoryCache } from "@apollo/client/index.js";
-import { createBackpressuredCallback } from "./backpressuredCallback.js";
-
-class InMemoryCacheSSRImpl extends OrigInMemoryCache {
-  protected writeQueue = createBackpressuredCallback<Cache.WriteOptions>();
-
-  constructor(config?: InMemoryCacheConfig) {
-    super(config);
-  }
-
-  write(options: Cache.WriteOptions<any, any>): Reference | undefined {
-    this.writeQueue.push(options);
-    return super.write(options);
-  }
-}
-
-export type InMemoryCache = OrigInMemoryCache & {
-  writeQueue?: {
-    register?: (
-      instance: ((options: Cache.WriteOptions<any, any>) => void) | null
-    ) => void;
-  };
-};
-
-export const InMemoryCache: {
-  new (config?: InMemoryCacheConfig): InMemoryCache;
-} =
-  /*#__PURE__*/ process.env.REACT_ENV === "ssr"
-    ? InMemoryCacheSSRImpl
-    : OrigInMemoryCache;
+/**
+ * We just subclass `InMemoryCache` here so that `WrappedApolloClient`
+ * can detect if it was initialized with an `InMemoryCache` instance that
+ * was also exported from this package.
+ * Right now, we don't have extra logic here, but we might have so again
+ * in the future.
+ * So we want to enforce this import path from the start to prevent future
+ * subtle bugs if people update the package and don't read the patch notes.
+ */
+export class InMemoryCache extends OrigInMemoryCache {}

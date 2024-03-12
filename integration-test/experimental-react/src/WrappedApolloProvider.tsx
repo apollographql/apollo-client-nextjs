@@ -9,13 +9,17 @@ import {
   WrapApolloProvider,
   DataTransportContext,
 } from "@apollo/client-react-streaming";
-import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
+import type {
+  DataTransportProviderImplementation,
+  QueryEvent,
+} from "@apollo/client-react-streaming";
 import { useMemo, useActionChannel, useStaticValue, useRef } from "react";
-
-import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
+import { invariant } from "ts-invariant";
 
 declare module "react" {
-  const useActionChannel: <T>(onData: (data: T) => void) => (data: T) => void;
+  const useActionChannel: <T>(
+    onData: (data: T) => void
+  ) => (data: T | Promise<T>) => void;
   /**
    * This api design lends itself to a memory leak - the value passed in here
    * can never be removed from memory.
@@ -26,25 +30,28 @@ declare module "react" {
 }
 
 export const ExperimentalReactDataTransport: DataTransportProviderImplementation =
-  ({
-    onRequestData,
-    onRequestStarted,
-    registerDispatchRequestStarted,
-    registerDispatchRequestData,
-    children,
-  }) => {
-    const dispatchRequestStarted = useActionChannel(
-      (options: WatchQueryOptions) => {
-        onRequestStarted?.(options);
-      }
-    );
-    const dispatchRequestData = useActionChannel(
-      (options: Cache.WriteOptions) => {
-        onRequestData?.(options);
-      }
-    );
-    registerDispatchRequestStarted?.(dispatchRequestStarted);
-    registerDispatchRequestData?.(dispatchRequestData);
+  ({ onQueryEvent, registerDispatchRequestStarted, children }) => {
+    const dispatchQueryEvent = useActionChannel<QueryEvent>((event) => {
+      invariant.debug("received event", event);
+      onQueryEvent?.(event);
+    });
+    registerDispatchRequestStarted?.(({ event, observable }) => {
+      let resolve: undefined | ((event: QueryEvent) => void);
+      invariant.debug("sending start event", event);
+      dispatchQueryEvent(event);
+      dispatchQueryEvent(new Promise<QueryEvent>((r) => (resolve = r)));
+      observable.subscribe({
+        next(event) {
+          if (event.type === "data") {
+            invariant.debug("sending event", event);
+            dispatchQueryEvent(event);
+          } else {
+            invariant.debug("resolving event promise", event);
+            resolve!(event);
+          }
+        },
+      });
+    });
 
     return (
       <DataTransportContext.Provider

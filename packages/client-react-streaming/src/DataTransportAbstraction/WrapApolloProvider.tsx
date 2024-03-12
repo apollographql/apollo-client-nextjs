@@ -47,12 +47,12 @@ export function WrapApolloProvider<ExtraProps>(
     return (
       <ApolloProvider client={clientRef.current}>
         <TransportProvider
-          onRequestStarted={clientRef.current.onRequestStarted}
-          onRequestData={clientRef.current.onRequestData}
-          rerunSimulatedQueries={clientRef.current.rerunSimulatedQueries}
-          registerDispatchRequestData={
-            clientRef.current.cache.writeQueue?.register
+          onQueryEvent={(event) =>
+            event.type === "started"
+              ? clientRef.current!.onQueryStarted!(event)
+              : clientRef.current!.onQueryProgress!(event)
           }
+          rerunSimulatedQueries={clientRef.current.rerunSimulatedQueries}
           registerDispatchRequestStarted={
             clientRef.current.watchQueryQueue?.register
           }
