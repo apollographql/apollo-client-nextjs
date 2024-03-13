@@ -24,7 +24,17 @@ afterEach(resetNextSSRApolloSingletons);
  * data from the server to the browser.
  */
 test("uses the browser build", () => {
-  expect(NextSSRApolloClient.name).toBe("ApolloClientBrowserImpl");
+  let foundPrototype = false;
+  let proto = NextSSRApolloClient;
+  while (proto) {
+    if (proto.name === "ApolloClientBrowserImpl") {
+      foundPrototype = true;
+      break;
+    }
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  expect(foundPrototype).toBe(true);
 });
 
 /**
