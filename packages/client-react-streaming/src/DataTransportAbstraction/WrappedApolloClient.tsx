@@ -23,6 +23,7 @@ import type {
   QueryEvent,
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
+import { bundle } from "../bundleInfo.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
@@ -40,20 +41,29 @@ type SimulatedQueryInfo = {
 
 const wrappers = Symbol.for("apollo.hook.wrappers");
 class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
+  /**
+   * Information about the current package and it's export names, for use in error messages.
+   */
+  protected info = bundle;
+
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
 
     if (!(this.cache instanceof InMemoryCache)) {
       throw new Error(
-        "When using Apollo Client streaming SSR, you must use the `InMemoryCache` variant provided by the streaming package."
+        `When using \`InMemoryCache\` in streaming SSR, you must use the \`${this.info.cache}\` export provided by \`"${this.info.pkg}"\`.`
       );
     }
-
-    getQueryManager(this)[wrappers] = hookWrappers;
   }
 }
 
 class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
+  constructor(options: ApolloClientOptions<TCacheShape>) {
+    super(options);
+
+    getQueryManager(this)[wrappers] = hookWrappers;
+  }
+
   watchQueryQueue = createBackpressuredCallback<{
     event: Extract<QueryEvent, { type: "started" }>;
     observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
@@ -118,6 +128,12 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
 export class ApolloClientBrowserImpl<
   TCacheShape,
 > extends ApolloClientBase<TCacheShape> {
+  constructor(options: ApolloClientOptions<TCacheShape>) {
+    super(options);
+
+    getQueryManager(this)[wrappers] = hookWrappers;
+  }
+
   private simulatedStreamingQueries = new Map<
     TransportIdentifier,
     SimulatedQueryInfo
@@ -292,18 +308,34 @@ export class ApolloClientBrowserImpl<
   };
 }
 
-export type ApolloClient<TCacheShape> = OrigApolloClient<TCacheShape> &
-  Partial<ApolloClientBrowserImpl<TCacheShape>> &
-  Partial<ApolloClientSSRImpl<TCacheShape>>;
-
-export const ApolloClient: {
-  new <TCacheShape>(
-    options: ApolloClientOptions<TCacheShape>
-  ): ApolloClient<TCacheShape>;
-} = /*#__PURE__*/ (
-  process.env.REACT_ENV === "ssr"
+const ApolloClientImplementation =
+  /*#__PURE__*/ process.env.REACT_ENV === "ssr"
     ? ApolloClientSSRImpl
     : process.env.REACT_ENV === "browser"
       ? ApolloClientBrowserImpl
-      : OrigApolloClient
-) as any;
+      : ApolloClientBase;
+
+/**
+ * A version of `ApolloClient` to be used with streaming SSR.
+ *
+ * For more documentation, please see {@link https://www.apollographql.com/docs/react/api/core/ApolloClient | the Apollo Client API documentation}.
+ *
+ * @public
+ */
+export class ApolloClient<TCacheShape>
+  extends (ApolloClientImplementation as typeof ApolloClientBase)<TCacheShape>
+  implements
+    Partial<ApolloClientBrowserImpl<TCacheShape>>,
+    Partial<ApolloClientSSRImpl<TCacheShape>>
+{
+  /** @internal */
+  declare onQueryStarted?: ApolloClientBrowserImpl<TCacheShape>["onQueryStarted"];
+  /** @internal */
+  declare onQueryProgress?: ApolloClientBrowserImpl<TCacheShape>["onQueryProgress"];
+  /** @internal */
+  declare rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
+  /** @internal */
+  declare rerunSimulatedQuery?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQuery"];
+  /** @internal */
+  declare watchQueryQueue?: ApolloClientSSRImpl<TCacheShape>["watchQueryQueue"];
+}

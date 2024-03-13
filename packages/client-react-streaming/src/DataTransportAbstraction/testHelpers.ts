@@ -7,6 +7,8 @@ import { ApolloClientSingleton } from "./symbols.js";
  * ```ts
  * afterEach(resetApolloSingletons);
  * ```
+ *
+ * @public
  */
 export function resetApolloSingletons() {
   delete window[ApolloClientSingleton];

@@ -5,6 +5,7 @@ import { ApolloClient } from "./WrappedApolloClient.js";
 import { ApolloProvider } from "@apollo/client/index.js";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";
 import { ApolloClientSingleton } from "./symbols.js";
+import { bundle } from "../bundleInfo.js";
 
 declare global {
   interface Window {
@@ -13,13 +14,10 @@ declare global {
 }
 
 /**
- * Creates an ApolloProvider for streaming SSR.
- * @param TransportProvider The transport provider to be used.
+ * A version of `ApolloProvider` particularly suited for React's streaming SSR.
  */
-export function WrapApolloProvider<ExtraProps>(
-  TransportProvider: DataTransportProviderImplementation<ExtraProps>
-) {
-  const WrappedApolloProvider = ({
+export interface WrappedApolloProvider<ExtraProps> {
+  ({
     makeClient,
     children,
     ...extraProps
@@ -27,7 +25,33 @@ export function WrapApolloProvider<ExtraProps>(
     {
       makeClient: () => ApolloClient<any>;
     } & ExtraProps
-  >) => {
+  >): React.JSX.Element;
+  /**
+   * Information about the current package and it's export names, for use in error messages.
+   */
+  info: {
+    pkg: string;
+    client: string;
+    cache: string;
+  };
+}
+
+/**
+ * Creates an ApolloProvider for streaming SSR.
+ *
+ * @param TransportProvider - The transport provider to be used.
+ * This could e.g. be a `ManualDataTransport` created by `buildManualDataTransport`,
+ * or a fully custom implementation of `DataTransportProviderImplementation`.
+ * @public
+ */
+export function WrapApolloProvider<ExtraProps>(
+  TransportProvider: DataTransportProviderImplementation<ExtraProps>
+): WrappedApolloProvider<ExtraProps> {
+  const WrappedApolloProvider: WrappedApolloProvider<ExtraProps> = ({
+    makeClient,
+    children,
+    ...extraProps
+  }) => {
     const clientRef = useRef<ApolloClient<any>>();
 
     if (process.env.REACT_ENV === "ssr") {
@@ -40,7 +64,7 @@ export function WrapApolloProvider<ExtraProps>(
 
     if (!(clientRef.current instanceof ApolloClient)) {
       throw new Error(
-        "When using Apollo Client streaming SSR, you must use the `ApolloClient` variant provided by the streaming package."
+        `When using \`ApolloClient\` in streaming SSR, you must use the \`${WrappedApolloProvider.info.client}\` export provided by \`"${WrappedApolloProvider.info.pkg}"\`.`
       );
     }
 
@@ -63,6 +87,6 @@ export function WrapApolloProvider<ExtraProps>(
       </ApolloProvider>
     );
   };
-
+  WrappedApolloProvider.info = bundle;
   return WrappedApolloProvider;
 }

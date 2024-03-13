@@ -27,6 +27,20 @@
         "browser": "./dist/index.browser.js",
         "node": "./dist/index.ssr.js"
       }
+    },
+    "#bundled/manual-transport": {
+      "require": {
+        "types": "./dist/manual-transport.ssr.d.cts",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/manual-transport.browser.cjs",
+        "node": "./dist/manual-transport.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/manual-transport.ssr.d.ts",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/manual-transport.browser.js",
+        "node": "./dist/manual-transport.ssr.js"
+      }
     }
   },
   "exports": {
@@ -95,6 +109,7 @@
   "devDependencies": {
     "@apollo/client": "^3.9.6",
     "@arethetypeswrong/cli": "0.13.6",
+    "@microsoft/api-extractor": "^7.42.3",
     "@testing-library/react": "^14.2.1",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",
@@ -112,6 +127,7 @@
     "graphql": "16.8.1",
     "jsdom": "^24.0.0",
     "react": "18.3.0-canary-60a927d04-20240113",
+    "react-error-boundary": "^4.0.13",
     "rimraf": "5.0.5",
     "superjson": "1.13.3",
     "ts-node": "10.9.2",
