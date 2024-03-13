@@ -15,6 +15,8 @@ declare global {
 
 /**
  * A version of `ApolloProvider` particularly suited for React's streaming SSR.
+ *
+ * @public
  */
 export interface WrappedApolloProvider<ExtraProps> {
   ({
