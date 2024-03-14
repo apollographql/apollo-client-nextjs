@@ -1,15 +1,14 @@
-/**
- * Config file for API Extractor.  For more info, please visit: https://api-extractor.com
- */
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "<projectFolder>/api-extractor.d.ts",
+  "extends": "../../api-extractor.json",
+  "mainEntryPointFilePath": "./api-extractor.d.ts",
   "bundledPackages": [
     "@apollo/client-react-streaming",
     "@apollo/client-react-streaming/manual-transport"
   ],
   "newlineKind": "lf",
   "compiler": {
+    "tsconfigFilePath": "./tsconfig.json",
     "overrideTsconfig": {
       "paths": {
         "@apollo/client-react-streaming": ["./dist/combined.d.ts"],
@@ -19,38 +18,5 @@
       }
     },
     "skipLibCheck": true
-  },
-  "apiReport": {
-    "enabled": false
-  },
-  "docModel": {
-    "enabled": true
-  },
-  "dtsRollup": {
-    "enabled": false
-  },
-  "tsdocMetadata": {
-    "enabled": false
-  },
-  "messages": {
-    "compilerMessageReporting": {
-      "default": {
-        "logLevel": "warning"
-      }
-    },
-    "extractorMessageReporting": {
-      "default": {
-        "logLevel": "warning"
-      },
-      "ae-forgotten-export": {
-        "addToApiReportFile": false,
-        "logLevel": "none"
-      }
-    },
-    "tsdocMessageReporting": {
-      "default": {
-        "logLevel": "warning"
-      }
-    }
   }
 }

@@ -14,11 +14,21 @@
   "scripts": {
     "verify-package-json": "node ./scripts/verify-package-json.mjs",
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs",
-    "matrix": "node ./scripts/test-matrix.js"
+    "matrix": "node ./scripts/test-matrix.js",
+    "docs": "yarn docs:markdown && yarn docs:html",
+    "docs:markdown": "api-documenter markdown --input-folder temp --output-folder docs",
+    "docs:html": "node ./scripts/compile-docs.mjs"
   },
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "superjson": "1.13.3"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.23.37",
+    "rehype-stringify": "^10.0.0",
+    "remark-cli": "^12.0.0",
+    "remark-rehype": "^11.1.0",
+    "zx": "^7.2.3"
   }
 }
