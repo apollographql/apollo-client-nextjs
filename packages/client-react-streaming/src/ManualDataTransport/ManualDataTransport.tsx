@@ -166,7 +166,7 @@ const UNINITIALIZED = {};
  * ```
  *
  * @example
- * Another usage example is our integration example with Vite and streaming SSR, which you can find at https://github.com/apollographql/apollo-client-nextjs/blob/main/integration-test/vite-streaming
+ * Another usage example is our integration example with Vite and streaming SSR, which you can find at https://github.com/apollographql/apollo-client-nextjs/tree/main/integration-test/vite-streaming
  *
  * @public
  */

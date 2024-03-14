@@ -26,32 +26,13 @@ jobs:
 
       - name: Create Docs
         run: |
-          yarn workspace @apollo/client-react-streaming build
-          yarn workspace @apollo/client-react-streaming run api-extractor run
+          yarn workspaces foreach --all --include "@apollo/*" run build
+          yarn workspaces foreach --all --include "@apollo/*" exec api-extractor run
           yarn workspace monorepo docs
 
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Commit changes back
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          path: "docs"
-  deploy:
-    # Add a dependency to the build job
-    needs: docs
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      actions: read
-      pages: write # to deploy to Pages
-      id-token: write # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4.0.2
+          commit_message: "Update Docs"
+          push_options: ""
+          skip_dirty_check: false

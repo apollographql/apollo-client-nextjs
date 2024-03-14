@@ -38,6 +38,8 @@ import { bundle } from "./bundleInfo.js";
  *   );
  * }
  * ```
+ *
+ * @public
  */
 export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
   buildManualDataTransport({
