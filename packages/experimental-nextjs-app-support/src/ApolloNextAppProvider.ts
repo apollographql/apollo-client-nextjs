@@ -5,6 +5,8 @@ import { ServerInsertedHTMLContext } from "next/navigation.js";
 import { bundle } from "./bundleInfo.js";
 
 /**
+ * > This export is only available in React Client Components
+ *
  * A version of `ApolloProvider` to be used with the Next.js App Router.
  *
  * As opposed to the normal `ApolloProvider`, this version does not require a `client` prop,

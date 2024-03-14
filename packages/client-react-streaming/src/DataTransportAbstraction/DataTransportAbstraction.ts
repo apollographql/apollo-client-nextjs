@@ -16,6 +16,8 @@ interface DataTransportAbstraction {
 }
 
 /**
+ * > This export is only available in React Client Components
+ *
  * If you create a custom data transport, you need to wrap the child tree in a
  * `DataTransportContext.Provider` and provide the `DataTransportAbstraction` to it.
  *

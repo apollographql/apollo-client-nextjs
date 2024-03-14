@@ -3,7 +3,15 @@ import type { RehydrationContextValue } from "./types.js";
 import { transportDataToJS } from "./dataTransport.js";
 import { invariant } from "ts-invariant";
 
+/**
+ * @public
+ */
 export interface HydrationContextOptions {
+  /**
+   * Props that will be passed down to `script` tags that will be used to transport
+   * data to the browser.
+   * Can e.g. be used to add a `nonce`.
+   */
   extraScriptProps?: ScriptProps;
 }
 

@@ -122,6 +122,8 @@ const buildManualDataTransportBrowserImpl =
 const UNINITIALIZED = {};
 
 /**
+ * > This export is only available in React Client Components
+ *
  * Creates a "manual" Data Transport, to be used with `WrapApolloProvider`.
  *
  * @remarks

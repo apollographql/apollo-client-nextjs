@@ -35,6 +35,9 @@
     "tsdocMessageReporting": {
       "default": {
         "logLevel": "warning"
+      },
+      "tsdoc-escape-greater-than": {
+        "logLevel": "none"
       }
     }
   }

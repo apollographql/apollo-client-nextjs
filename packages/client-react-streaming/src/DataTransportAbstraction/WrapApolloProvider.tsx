@@ -14,6 +14,8 @@ declare global {
 }
 
 /**
+ * > This is only available in React Client Components
+ *
  * A version of `ApolloProvider` particularly suited for React's streaming SSR.
  *
  * @public
@@ -39,6 +41,8 @@ export interface WrappedApolloProvider<ExtraProps> {
 }
 
 /**
+ * > This export is only available in React Client Components
+ *
  * Creates an ApolloProvider for streaming SSR.
  *
  * @param TransportProvider - The transport provider to be used.

@@ -16,7 +16,7 @@ for (const file of files) {
     .process(fs.readFileSync(file, "utf-8"));
 
   const target = file.replace(/\.md$/, ".html");
-  await fs.writeFile(target, processed.toString());
+  await fs.writeFile(target, processed.toString().replace(/\.md/g, ".html"));
   console.log(`
 Compiled ${file} 
       -> ${target}`);
