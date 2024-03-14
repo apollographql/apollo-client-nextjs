@@ -14,7 +14,36 @@ constructor(config?: SSRMultipartLinkConfig);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  config | SSRMultipartLinkConfig | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+config
+
+
+</td><td>
+
+SSRMultipartLinkConfig
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody>

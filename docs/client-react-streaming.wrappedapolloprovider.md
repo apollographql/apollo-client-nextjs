@@ -16,7 +16,44 @@ interface WrappedApolloProvider<ExtraProps>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [info](./client-react-streaming.wrappedapolloprovider.info.md) |  | { pkg: string; client: string; cache: string; } | Information about the current package and it's export names, for use in error messages. |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[info](./client-react-streaming.wrappedapolloprovider.info.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ pkg: string; client: string; cache: string; }
+
+
+</td><td>
+
+Information about the current package and it's export names, for use in error messages.
+
+
+</td></tr>
+</tbody>

@@ -18,10 +18,37 @@ declare function registerApolloClient(makeClient: () => Promise<ApolloClient$1<a
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  makeClient | () =&gt; Promise&lt;ApolloClient$1&lt;any&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+makeClient
+
+
+</td><td>
+
+() =&gt; Promise&lt;ApolloClient$1&lt;any&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>
 **Returns:**
 
 { getClient: () =&gt; Promise&lt;ApolloClient$1&lt;any&gt;&gt;; }

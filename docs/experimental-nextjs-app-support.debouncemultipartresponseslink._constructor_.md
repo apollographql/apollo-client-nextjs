@@ -14,7 +14,34 @@ constructor(config: AccumulateMultipartResponsesConfig);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  config | AccumulateMultipartResponsesConfig |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+config
+
+
+</td><td>
+
+AccumulateMultipartResponsesConfig
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>

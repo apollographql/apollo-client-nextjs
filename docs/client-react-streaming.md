@@ -10,12 +10,71 @@ It can also be used to use Apollo Client with a custom streaming SSR setup, e.g.
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [ApolloClient](./client-react-streaming.apolloclient.md) | <p>A version of <code>ApolloClient</code> to be used with streaming SSR.</p><p>For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.</p> |
-|  [DebounceMultipartResponsesLink](./client-react-streaming.debouncemultipartresponseslink.md) | <p>This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the <code>cutoffDelay</code> time will be merged into the initial response.</p><p>After <code>cutoffDelay</code>, the link will return the initial response, even if there is still incremental data pending, and close the network connection.</p><p>If <code>cutoffDelay</code> is <code>0</code>, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.</p> |
-|  [InMemoryCache](./client-react-streaming.inmemorycache.md) | <p>A version of <code>InMemoryCache</code> to be used with streaming SSR.</p><p>For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/cache/InMemoryCache)<!-- -->.</p> |
-|  [RemoveMultipartDirectivesLink](./client-react-streaming.removemultipartdirectiveslink.md) | <p>This link will (if called with <code>stripDefer: true</code>) strip all <code>@defer</code> fragments from your query.</p><p>This is used to prevent the server from doing additional work in SSR scenarios where multipart responses cannot be handled anyways.</p><p>You can exclude certain fragments from this behavior by giving them a label starting with <code>&quot;SsrDontStrip&quot;</code>. The "starting with" is important, because labels have to be unique per operation. So if you have multiple directives where you want to override the default stipping behaviour, you can do this by annotating them like</p>
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ApolloClient](./client-react-streaming.apolloclient.md)
+
+
+</td><td>
+
+A version of `ApolloClient` to be used with streaming SSR.
+
+For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[DebounceMultipartResponsesLink](./client-react-streaming.debouncemultipartresponseslink.md)
+
+
+</td><td>
+
+This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `cutoffDelay` time will be merged into the initial response.
+
+After `cutoffDelay`<!-- -->, the link will return the initial response, even if there is still incremental data pending, and close the network connection.
+
+If `cutoffDelay` is `0`<!-- -->, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.
+
+
+</td></tr>
+<tr><td>
+
+[InMemoryCache](./client-react-streaming.inmemorycache.md)
+
+
+</td><td>
+
+A version of `InMemoryCache` to be used with streaming SSR.
+
+For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/cache/InMemoryCache)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[RemoveMultipartDirectivesLink](./client-react-streaming.removemultipartdirectiveslink.md)
+
+
+</td><td>
+
+This link will (if called with `stripDefer: true`<!-- -->) strip all `@defer` fragments from your query.
+
+This is used to prevent the server from doing additional work in SSR scenarios where multipart responses cannot be handled anyways.
+
+You can exclude certain fragments from this behavior by giving them a label starting with `"SsrDontStrip"`<!-- -->. The "starting with" is important, because labels have to be unique per operation. So if you have multiple directives where you want to override the default stipping behaviour, you can do this by annotating them like
+
 ```graphql
 query myQuery {
   fastField
@@ -27,45 +86,231 @@ query myQuery {
   }
 }
 ```
-<p>You can also use the link with <code>stripDefer: false</code> and mark certain fragments to be stripped by giving them a label starting with <code>&quot;SsrStrip&quot;</code>.</p> |
-|  [SSRMultipartLink](./client-react-streaming.ssrmultipartlink.md) | A convenient combination of <code>RemoveMultipartDirectivesLink</code> and <code>AccumulateMultipartResponsesLink</code>. |
+You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SsrStrip"`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[SSRMultipartLink](./client-react-streaming.ssrmultipartlink.md)
+
+
+</td><td>
+
+A convenient combination of `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`<!-- -->.
+
+
+</td></tr>
+</tbody>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [buildManualDataTransport(args)](./client-react-streaming.buildmanualdatatransport.md) | <p>&gt; This export is only available in React Client Components</p><p>Creates a "manual" Data Transport, to be used with <code>WrapApolloProvider</code>.</p> |
-|  [registerApolloClient(makeClient)](./client-react-streaming.registerapolloclient.md) | <p>&gt; This export is only available in React Server Components</p><p>Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.</p> |
-|  [registerApolloClient(makeClient)](./client-react-streaming.registerapolloclient_1.md) | Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests. |
-|  [resetApolloSingletons()](./client-react-streaming.resetapollosingletons.md) | <p>&gt; This export is only available in React Client Components</p><p>Resets the singleton instances created for the Apollo SSR data transport and caches.</p><p>To be used in testing only, like</p>
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[buildManualDataTransport(args)](./client-react-streaming.buildmanualdatatransport.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+Creates a "manual" Data Transport, to be used with `WrapApolloProvider`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[registerApolloClient(makeClient)](./client-react-streaming.registerapolloclient.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Server Components
+
+Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.
+
+
+</td></tr>
+<tr><td>
+
+[registerApolloClient(makeClient)](./client-react-streaming.registerapolloclient_1.md)
+
+
+</td><td>
+
+Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.
+
+
+</td></tr>
+<tr><td>
+
+[resetApolloSingletons()](./client-react-streaming.resetapollosingletons.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+Resets the singleton instances created for the Apollo SSR data transport and caches.
+
+To be used in testing only, like
+
 ```ts
 afterEach(resetApolloSingletons);
 ```
- |
-|  [resetManualSSRApolloSingletons()](./client-react-streaming.resetmanualssrapollosingletons.md) | <p>&gt; This export is only available in React Client Components</p><p>Resets the singleton instances created for the Apollo SSR data transport and caches.</p><p>To be used in testing only, like</p>
+
+
+</td></tr>
+<tr><td>
+
+[resetManualSSRApolloSingletons()](./client-react-streaming.resetmanualssrapollosingletons.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+Resets the singleton instances created for the Apollo SSR data transport and caches.
+
+To be used in testing only, like
+
 ```ts
 afterEach(resetManualSSRApolloSingletons);
 ```
- |
-|  [WrapApolloProvider(TransportProvider)](./client-react-streaming.wrapapolloprovider.md) | <p>&gt; This export is only available in React Client Components</p><p>Creates an ApolloProvider for streaming SSR.</p> |
+
+
+</td></tr>
+<tr><td>
+
+[WrapApolloProvider(TransportProvider)](./client-react-streaming.wrapapolloprovider.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+Creates an ApolloProvider for streaming SSR.
+
+
+</td></tr>
+</tbody>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [HydrationContextOptions](./client-react-streaming.hydrationcontextoptions.md) |  |
-|  [WrappedApolloProvider](./client-react-streaming.wrappedapolloprovider.md) | <p>&gt; This is only available in React Client Components</p><p>A version of <code>ApolloProvider</code> particularly suited for React's streaming SSR.</p> |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[HydrationContextOptions](./client-react-streaming.hydrationcontextoptions.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[WrappedApolloProvider](./client-react-streaming.wrappedapolloprovider.md)
+
+
+</td><td>
+
+&gt; This is only available in React Client Components
+
+A version of `ApolloProvider` particularly suited for React's streaming SSR.
+
+
+</td></tr>
+</tbody>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [DataTransportContext](./client-react-streaming.datatransportcontext.md) | <p>&gt; This export is only available in React Client Components</p><p>If you create a custom data transport, you need to wrap the child tree in a <code>DataTransportContext.Provider</code> and provide the <code>DataTransportAbstraction</code> to it.</p><p>See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx</p> |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[DataTransportContext](./client-react-streaming.datatransportcontext.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+If you create a custom data transport, you need to wrap the child tree in a `DataTransportContext.Provider` and provide the `DataTransportAbstraction` to it.
+
+See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+
+
+</td></tr>
+</tbody>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [DataTransportProviderImplementation](./client-react-streaming.datatransportproviderimplementation.md) | <p>Interface to be implemented by a custom data transport component, for usage with <code>WrapApolloProvider</code>.</p><p>This component needs to provide a <code>DataTransportContext</code> to it's children.</p><p>See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx</p> |
-|  [QueryEvent](./client-react-streaming.queryevent.md) | Events that will be emitted by a wrapped ApolloClient instance during SSR on <code>DataTransportProviderImplementation.registerDispatchRequestStarted</code>, to be transported to the browser and replayed there using <code>DataTransportProviderImplementation.onQueryEvent</code>. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[DataTransportProviderImplementation](./client-react-streaming.datatransportproviderimplementation.md)
+
+
+</td><td>
+
+Interface to be implemented by a custom data transport component, for usage with `WrapApolloProvider`<!-- -->.
+
+This component needs to provide a `DataTransportContext` to it's children.
+
+See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+
+
+</td></tr>
+<tr><td>
+
+[QueryEvent](./client-react-streaming.queryevent.md)
+
+
+</td><td>
+
+Events that will be emitted by a wrapped ApolloClient instance during SSR on `DataTransportProviderImplementation.registerDispatchRequestStarted`<!-- -->, to be transported to the browser and replayed there using `DataTransportProviderImplementation.onQueryEvent`<!-- -->.
+
+
+</td></tr>
+</tbody>

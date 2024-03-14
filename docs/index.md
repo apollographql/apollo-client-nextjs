@@ -6,8 +6,38 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [@apollo/client-react-streaming](./client-react-streaming.md) | <p>This package provides building blocks to create framework-level integration of Apollo Client with React's streaming SSR. See the \[@<!-- -->apollo/experimental-nextjs-app-support\](https://github.com/apollographql/apollo-client-nextjs/tree/main/packages/experimental-nextjs-app-support) package as an example.</p><p>It can also be used to use Apollo Client with a custom streaming SSR setup, e.g. with Vite. See the \[vite streaming integration test\](https://github.com/apollographql/apollo-client-nextjs/tree/main/integration-test/vite-streaming) as an example.</p> |
-|  [@apollo/experimental-nextjs-app-support](./experimental-nextjs-app-support.md) |  |
+<table><thead><tr><th>
 
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@apollo/client-react-streaming](./client-react-streaming.md)
+
+
+</td><td>
+
+This package provides building blocks to create framework-level integration of Apollo Client with React's streaming SSR. See the \[@<!-- -->apollo/experimental-nextjs-app-support\](https://github.com/apollographql/apollo-client-nextjs/tree/main/packages/experimental-nextjs-app-support) package as an example.
+
+It can also be used to use Apollo Client with a custom streaming SSR setup, e.g. with Vite. See the \[vite streaming integration test\](https://github.com/apollographql/apollo-client-nextjs/tree/main/integration-test/vite-streaming) as an example.
+
+
+</td></tr>
+<tr><td>
+
+[@apollo/experimental-nextjs-app-support](./experimental-nextjs-app-support.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody>

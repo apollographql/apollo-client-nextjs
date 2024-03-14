@@ -17,7 +17,44 @@ declare class NextSSRApolloClient<TCacheShape> extends ApolloClient<TCacheShape>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [info](./experimental-nextjs-app-support.nextssrapolloclient.info.md) | <code>protected</code> | { pkg: string; client: string; cache: string; } |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[info](./experimental-nextjs-app-support.nextssrapolloclient.info.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+{ pkg: string; client: string; cache: string; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>

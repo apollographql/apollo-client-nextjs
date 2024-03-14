@@ -16,10 +16,39 @@ declare function WrapApolloProvider<ExtraProps>(TransportProvider: DataTransport
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  TransportProvider | [DataTransportProviderImplementation](./client-react-streaming.datatransportproviderimplementation.md)<!-- -->&lt;ExtraProps&gt; | The transport provider to be used. This could e.g. be a <code>ManualDataTransport</code> created by <code>buildManualDataTransport</code>, or a fully custom implementation of <code>DataTransportProviderImplementation</code>. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+TransportProvider
+
+
+</td><td>
+
+[DataTransportProviderImplementation](./client-react-streaming.datatransportproviderimplementation.md)<!-- -->&lt;ExtraProps&gt;
+
+
+</td><td>
+
+The transport provider to be used. This could e.g. be a `ManualDataTransport` created by `buildManualDataTransport`<!-- -->, or a fully custom implementation of `DataTransportProviderImplementation`<!-- -->.
+
+
+</td></tr>
+</tbody>
 **Returns:**
 
 [WrappedApolloProvider](./client-react-streaming.wrappedapolloprovider.md)<!-- -->&lt;ExtraProps&gt;

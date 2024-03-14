@@ -7,12 +7,71 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [DebounceMultipartResponsesLink](./experimental-nextjs-app-support.debouncemultipartresponseslink.md) | <p>This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the <code>cutoffDelay</code> time will be merged into the initial response.</p><p>After <code>cutoffDelay</code>, the link will return the initial response, even if there is still incremental data pending, and close the network connection.</p><p>If <code>cutoffDelay</code> is <code>0</code>, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.</p> |
-|  [NextSSRApolloClient](./experimental-nextjs-app-support.nextssrapolloclient.md) | <p>A version of <code>ApolloClient</code> to be used with streaming SSR.</p><p>For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.</p> |
-|  [NextSSRInMemoryCache](./experimental-nextjs-app-support.nextssrinmemorycache.md) | <p>A version of <code>InMemoryCache</code> to be used with streaming SSR.</p><p>For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/cache/InMemoryCache)<!-- -->.</p> |
-|  [RemoveMultipartDirectivesLink](./experimental-nextjs-app-support.removemultipartdirectiveslink.md) | <p>This link will (if called with <code>stripDefer: true</code>) strip all <code>@defer</code> fragments from your query.</p><p>This is used to prevent the server from doing additional work in SSR scenarios where multipart responses cannot be handled anyways.</p><p>You can exclude certain fragments from this behavior by giving them a label starting with <code>&quot;SsrDontStrip&quot;</code>. The "starting with" is important, because labels have to be unique per operation. So if you have multiple directives where you want to override the default stipping behaviour, you can do this by annotating them like</p>
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[DebounceMultipartResponsesLink](./experimental-nextjs-app-support.debouncemultipartresponseslink.md)
+
+
+</td><td>
+
+This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `cutoffDelay` time will be merged into the initial response.
+
+After `cutoffDelay`<!-- -->, the link will return the initial response, even if there is still incremental data pending, and close the network connection.
+
+If `cutoffDelay` is `0`<!-- -->, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.
+
+
+</td></tr>
+<tr><td>
+
+[NextSSRApolloClient](./experimental-nextjs-app-support.nextssrapolloclient.md)
+
+
+</td><td>
+
+A version of `ApolloClient` to be used with streaming SSR.
+
+For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[NextSSRInMemoryCache](./experimental-nextjs-app-support.nextssrinmemorycache.md)
+
+
+</td><td>
+
+A version of `InMemoryCache` to be used with streaming SSR.
+
+For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/cache/InMemoryCache)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[RemoveMultipartDirectivesLink](./experimental-nextjs-app-support.removemultipartdirectiveslink.md)
+
+
+</td><td>
+
+This link will (if called with `stripDefer: true`<!-- -->) strip all `@defer` fragments from your query.
+
+This is used to prevent the server from doing additional work in SSR scenarios where multipart responses cannot be handled anyways.
+
+You can exclude certain fragments from this behavior by giving them a label starting with `"SsrDontStrip"`<!-- -->. The "starting with" is important, because labels have to be unique per operation. So if you have multiple directives where you want to override the default stipping behaviour, you can do this by annotating them like
+
 ```graphql
 query myQuery {
   fastField
@@ -24,24 +83,109 @@ query myQuery {
   }
 }
 ```
-<p>You can also use the link with <code>stripDefer: false</code> and mark certain fragments to be stripped by giving them a label starting with <code>&quot;SsrStrip&quot;</code>.</p> |
-|  [SSRMultipartLink](./experimental-nextjs-app-support.ssrmultipartlink.md) | A convenient combination of <code>RemoveMultipartDirectivesLink</code> and <code>AccumulateMultipartResponsesLink</code>. |
+You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SsrStrip"`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[SSRMultipartLink](./experimental-nextjs-app-support.ssrmultipartlink.md)
+
+
+</td><td>
+
+A convenient combination of `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`<!-- -->.
+
+
+</td></tr>
+</tbody>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [registerApolloClient(makeClient)](./experimental-nextjs-app-support.registerapolloclient.md) | <p>&gt; This export is only available in React Server Components</p><p>Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.</p> |
-|  [registerApolloClient(makeClient)](./experimental-nextjs-app-support.registerapolloclient_1.md) | Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests. |
-|  [resetNextSSRApolloSingletons()](./experimental-nextjs-app-support.resetnextssrapollosingletons.md) | <p>&gt; This export is only available in React Client Components</p><p>Resets the singleton instances created for the Apollo SSR data transport and caches.</p><p>To be used in testing only, like</p>
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[registerApolloClient(makeClient)](./experimental-nextjs-app-support.registerapolloclient.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Server Components
+
+Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.
+
+
+</td></tr>
+<tr><td>
+
+[registerApolloClient(makeClient)](./experimental-nextjs-app-support.registerapolloclient_1.md)
+
+
+</td><td>
+
+Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.
+
+
+</td></tr>
+<tr><td>
+
+[resetNextSSRApolloSingletons()](./experimental-nextjs-app-support.resetnextssrapollosingletons.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+Resets the singleton instances created for the Apollo SSR data transport and caches.
+
+To be used in testing only, like
+
 ```ts
 afterEach(resetManualSSRApolloSingletons);
 ```
- |
+
+
+</td></tr>
+</tbody>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [ApolloNextAppProvider](./experimental-nextjs-app-support.apollonextappprovider.md) | <p>&gt; This export is only available in React Client Components</p><p>A version of <code>ApolloProvider</code> to be used with the Next.js App Router.</p><p>As opposed to the normal <code>ApolloProvider</code>, this version does not require a <code>client</code> prop, but requires a <code>makeClient</code> prop instead.</p><p>Use this component together with <code>NextSSRApolloClient</code> and <code>NextSSRInMemoryCache</code> to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.</p> |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ApolloNextAppProvider](./experimental-nextjs-app-support.apollonextappprovider.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+A version of `ApolloProvider` to be used with the Next.js App Router.
+
+As opposed to the normal `ApolloProvider`<!-- -->, this version does not require a `client` prop, but requires a `makeClient` prop instead.
+
+Use this component together with `NextSSRApolloClient` and `NextSSRInMemoryCache` to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
+
+
+</td></tr>
+</tbody>

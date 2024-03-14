@@ -32,13 +32,66 @@ new AccumulateMultipartResponsesLink({
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(config)](./client-react-streaming.debouncemultipartresponseslink._constructor_.md) |  | Constructs a new instance of the <code>AccumulateMultipartResponsesLink</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(config)](./client-react-streaming.debouncemultipartresponseslink._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `AccumulateMultipartResponsesLink` class
+
+
+</td></tr>
+</tbody>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [request(operation, forward)](./client-react-streaming.debouncemultipartresponseslink.request.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[request(operation, forward)](./client-react-streaming.debouncemultipartresponseslink.request.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>

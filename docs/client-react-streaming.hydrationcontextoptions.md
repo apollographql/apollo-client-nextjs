@@ -13,7 +13,44 @@ interface HydrationContextOptions
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [extraScriptProps?](./client-react-streaming.hydrationcontextoptions.extrascriptprops.md) |  | ScriptProps | _(Optional)_ Props that will be passed down to <code>script</code> tags that will be used to transport data to the browser. Can e.g. be used to add a <code>nonce</code>. |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[extraScriptProps?](./client-react-streaming.hydrationcontextoptions.extrascriptprops.md)
+
+
+</td><td>
+
+
+</td><td>
+
+ScriptProps
+
+
+</td><td>
+
+_(Optional)_ Props that will be passed down to `script` tags that will be used to transport data to the browser. Can e.g. be used to add a `nonce`<!-- -->.
+
+
+</td></tr>
+</tbody>

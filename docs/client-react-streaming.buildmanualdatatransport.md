@@ -16,10 +16,37 @@ buildManualDataTransport: (args: BuildArgs) => DataTransportProviderImplementati
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  args | BuildArgs |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+args
+
+
+</td><td>
+
+BuildArgs
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>
 **Returns:**
 
 [DataTransportProviderImplementation](./client-react-streaming.datatransportproviderimplementation.md)<!-- -->&lt;[HydrationContextOptions](./client-react-streaming.hydrationcontextoptions.md)<!-- -->&gt;

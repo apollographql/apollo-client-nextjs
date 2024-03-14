@@ -40,7 +40,34 @@ new SSRMultipartLink({
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(config)](./experimental-nextjs-app-support.ssrmultipartlink._constructor_.md) |  | Constructs a new instance of the <code>SSRMultipartLink</code> class |
+<table><thead><tr><th>
 
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(config)](./experimental-nextjs-app-support.ssrmultipartlink._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `SSRMultipartLink` class
+
+
+</td></tr>
+</tbody>

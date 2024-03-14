@@ -49,13 +49,66 @@ new RemoveMultipartDirectivesLink({
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(config)](./experimental-nextjs-app-support.removemultipartdirectiveslink._constructor_.md) |  | Constructs a new instance of the <code>RemoveMultipartDirectivesLink</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(config)](./experimental-nextjs-app-support.removemultipartdirectiveslink._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `RemoveMultipartDirectivesLink` class
+
+
+</td></tr>
+</tbody>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [request(operation, forward)](./experimental-nextjs-app-support.removemultipartdirectiveslink.request.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[request(operation, forward)](./experimental-nextjs-app-support.removemultipartdirectiveslink.request.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>

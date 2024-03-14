@@ -14,7 +14,34 @@ constructor(config: RemoveMultipartDirectivesConfig);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  config | RemoveMultipartDirectivesConfig |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+config
+
+
+</td><td>
+
+RemoveMultipartDirectivesConfig
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>

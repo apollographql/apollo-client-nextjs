@@ -12,11 +12,53 @@ request(operation: Operation, forward?: NextLink): Observable<{}>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  operation | Operation |  |
-|  forward | NextLink | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+operation
+
+
+</td><td>
+
+Operation
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+forward
+
+
+</td><td>
+
+NextLink
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody>
 **Returns:**
 
 Observable&lt;{}&gt;

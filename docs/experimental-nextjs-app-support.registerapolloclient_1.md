@@ -16,10 +16,37 @@ declare function registerApolloClient(makeClient: () => ApolloClient$1<any>): {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  makeClient | () =&gt; ApolloClient$1&lt;any&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+makeClient
+
+
+</td><td>
+
+() =&gt; ApolloClient$1&lt;any&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody>
 **Returns:**
 
 { getClient: () =&gt; ApolloClient$1&lt;any&gt;; }
