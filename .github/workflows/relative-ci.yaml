@@ -2,7 +2,7 @@ name: RelativeCI
 
 on:
   workflow_run:
-    workflows: ["Integration Tests (latest)"]
+    workflows: ["Run tests"]
     types:
       - completed
 
@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Send bundle stats and build information to RelativeCI
         uses: relative-ci/agent-action@v2
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         with:
           key: ${{ secrets.RELATIVE_CI_KEY }}
           token: ${{ secrets.GITHUB_TOKEN }}
