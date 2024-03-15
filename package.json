@@ -15,7 +15,8 @@
     "verify-package-json": "node ./scripts/verify-package-json.mjs",
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs",
     "matrix": "node ./scripts/test-matrix.js",
-    "docs": "api-documenter markdown --input-folder temp --output-folder docs"
+    "docs": "api-documenter markdown --input-folder temp --output-folder docs",
+    "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build"
   },
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
@@ -23,6 +24,10 @@
     "superjson": "1.13.3"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch"
+    "@microsoft/api-documenter": "patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch",
+    "@size-limit/file": "^11.1.0",
+    "@size-limit/webpack": "^11.1.0",
+    "@size-limit/webpack-why": "^11.1.0",
+    "size-limit": "^11.1.0"
   }
 }
