@@ -15,7 +15,7 @@
     "verify-package-json": "node ./scripts/verify-package-json.mjs",
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs",
     "matrix": "node ./scripts/test-matrix.js",
-    "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build\""
+    "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build"
   },
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
