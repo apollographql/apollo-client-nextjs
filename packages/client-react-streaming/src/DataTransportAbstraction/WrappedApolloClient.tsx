@@ -44,14 +44,14 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   /**
    * Information about the current package and it's export names, for use in error messages.
    */
-  protected info = bundle;
+  static readonly info = bundle;
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
     super(options);
 
     if (!(this.cache instanceof InMemoryCache)) {
       throw new Error(
-        `When using \`InMemoryCache\` in streaming SSR, you must use the \`${this.info.cache}\` export provided by \`"${this.info.pkg}"\`.`
+        `When using \`InMemoryCache\` in streaming SSR, you must use the \`${(this.constructor as typeof ApolloClientBase).info.cache}\` export provided by \`"${(this.constructor as typeof ApolloClientBase).info.pkg}"\`.`
       );
     }
   }

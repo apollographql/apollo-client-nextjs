@@ -25,5 +25,5 @@ export {
 export class NextSSRApolloClient<
   TCacheShape,
 > extends ApolloClient<TCacheShape> {
-  protected info = bundle;
+  static readonly info = bundle;
 }
