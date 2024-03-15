@@ -9,7 +9,6 @@
     "@apollo/experimental-nextjs-app-support/ssr",
     "@apollo/experimental-nextjs-app-support/rsc"
   ],
-  "newlineKind": "lf",
   "compiler": {
     "tsconfigFilePath": "./tsconfig.json",
     "skipLibCheck": true

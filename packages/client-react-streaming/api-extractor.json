@@ -6,7 +6,6 @@
     "@apollo/client-react-streaming",
     "@apollo/client-react-streaming/manual-transport"
   ],
-  "newlineKind": "lf",
   "compiler": {
     "tsconfigFilePath": "./tsconfig.json",
     "overrideTsconfig": {
