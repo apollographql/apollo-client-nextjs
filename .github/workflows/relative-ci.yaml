@@ -12,7 +12,8 @@ jobs:
     steps:
       - name: Send bundle stats and build information to RelativeCI
         uses: relative-ci/agent-action@v2
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        # if there's no artifact, we don't want to fail the build
+        continue-on-error: true
         with:
           key: ${{ secrets.RELATIVE_CI_KEY }}
           token: ${{ secrets.GITHUB_TOKEN }}
