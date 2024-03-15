@@ -46,7 +46,7 @@ makeClient
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 **Returns:**
 
 { getClient: () =&gt; ApolloClient$1&lt;any&gt;; }

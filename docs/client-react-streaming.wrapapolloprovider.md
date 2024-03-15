@@ -48,7 +48,7 @@ The transport provider to be used. This could e.g. be a `ManualDataTransport` cr
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 **Returns:**
 
 [WrappedApolloProvider](./client-react-streaming.wrappedapolloprovider.md)<!-- -->&lt;ExtraProps&gt;

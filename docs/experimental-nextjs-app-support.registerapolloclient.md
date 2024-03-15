@@ -48,7 +48,7 @@ makeClient
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 **Returns:**
 
 { getClient: () =&gt; Promise&lt;ApolloClient$1&lt;any&gt;&gt;; }

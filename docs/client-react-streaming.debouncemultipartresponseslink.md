@@ -62,7 +62,7 @@ Constructs a new instance of the `AccumulateMultipartResponsesLink` class
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Methods
 
@@ -94,4 +94,4 @@ Description
 
 
 </td></tr>
-</tbody>
+</tbody></table>

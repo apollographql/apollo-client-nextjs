@@ -1,0 +1,155 @@
+diff --git a/lib/markdown/CustomMarkdownEmitter.js b/lib/markdown/CustomMarkdownEmitter.js
+index 208cf953101d47273eee24fa9ba4438b30972599..0b0b654f03e38702e65d1d4b87f46b24065c71f1 100644
+--- a/lib/markdown/CustomMarkdownEmitter.js
++++ b/lib/markdown/CustomMarkdownEmitter.js
+@@ -53,7 +53,6 @@ class CustomMarkdownEmitter extends MarkdownEmitter_1.MarkdownEmitter {
+                 // GitHub's markdown renderer chokes on tables that don't have a blank line above them,
+                 // whereas VS Code's renderer is totally fine with it.
+                 writer.ensureSkippedLine();
+-                context.insideTable = true;
+                 // Markdown table rows can have inconsistent cell counts.  Size the table based on the longest row.
+                 let columnCount = 0;
+                 if (docTable.header) {
+@@ -64,36 +63,42 @@ class CustomMarkdownEmitter extends MarkdownEmitter_1.MarkdownEmitter {
+                         columnCount = row.cells.length;
+                     }
+                 }
+-                // write the table header (which is required by Markdown)
+-                writer.write('| ');
+-                for (let i = 0; i < columnCount; ++i) {
+-                    writer.write(' ');
+-                    if (docTable.header) {
++                writer.write('<table>');
++                if (docTable.header) {
++                    writer.write('<thead><tr>');
++                    for (let i = 0; i < columnCount; ++i) {
++                        writer.write('<th>');
++                        writer.ensureNewLine();
++                        writer.writeLine();
+                         const cell = docTable.header.cells[i];
+                         if (cell) {
+                             this.writeNode(cell.content, context, false);
+                         }
++                        writer.ensureNewLine();
++                        writer.writeLine();
++                        writer.write('</th>');
+                     }
+-                    writer.write(' |');
+-                }
+-                writer.writeLine();
+-                // write the divider
+-                writer.write('| ');
+-                for (let i = 0; i < columnCount; ++i) {
+-                    writer.write(' --- |');
++                    writer.write('</tr></thead>');
+                 }
+                 writer.writeLine();
++                writer.write('<tbody>');
+                 for (const row of docTable.rows) {
+-                    writer.write('| ');
++                    writer.write('<tr>');
+                     for (const cell of row.cells) {
+-                        writer.write(' ');
++                        writer.write('<td>');
++                        writer.ensureNewLine();
++                        writer.writeLine();
+                         this.writeNode(cell.content, context, false);
+-                        writer.write(' |');
++                        writer.ensureNewLine();
++                        writer.writeLine();
++                        writer.write('</td>');
+                     }
++                    writer.write('</tr>');
+                     writer.writeLine();
+                 }
++                writer.write('</tbody>');
++                writer.write('</table>');
+                 writer.writeLine();
+-                context.insideTable = false;
+                 break;
+             }
+             case "EmphasisSpan" /* CustomDocNodeKind.EmphasisSpan */: {
+diff --git a/lib/markdown/MarkdownEmitter.d.ts b/lib/markdown/MarkdownEmitter.d.ts
+index 82d92d3886b2df1dc36fa57f58862fd4529b55b3..95bb3aa7ade421cc798f941c49f51ef57d7e65c4 100644
+--- a/lib/markdown/MarkdownEmitter.d.ts
++++ b/lib/markdown/MarkdownEmitter.d.ts
+@@ -4,7 +4,6 @@ export interface IMarkdownEmitterOptions {
+ }
+ export interface IMarkdownEmitterContext<TOptions = IMarkdownEmitterOptions> {
+     writer: IndentedWriter;
+-    insideTable: boolean;
+     boldRequested: boolean;
+     italicRequested: boolean;
+     writingBold: boolean;
+diff --git a/lib/markdown/MarkdownEmitter.js b/lib/markdown/MarkdownEmitter.js
+index c01046dd4beead5d6238f800d610e1a9c0b26d2f..1c3faedf949e73667204cbf0b9eda64174d58148 100644
+--- a/lib/markdown/MarkdownEmitter.js
++++ b/lib/markdown/MarkdownEmitter.js
+@@ -15,7 +15,6 @@ class MarkdownEmitter {
+         const writer = new IndentedWriter_1.IndentedWriter(stringBuilder);
+         const context = {
+             writer,
+-            insideTable: false,
+             boldRequested: false,
+             italicRequested: false,
+             writingBold: false,
+@@ -64,26 +63,9 @@ class MarkdownEmitter {
+             }
+             case tsdoc_1.DocNodeKind.CodeSpan: {
+                 const docCodeSpan = docNode;
+-                if (context.insideTable) {
+-                    writer.write('<code>');
+-                }
+-                else {
+-                    writer.write('`');
+-                }
+-                if (context.insideTable) {
+-                    const code = this.getTableEscapedText(docCodeSpan.code);
+-                    const parts = code.split(/\r?\n/g);
+-                    writer.write(parts.join('</code><br/><code>'));
+-                }
+-                else {
+-                    writer.write(docCodeSpan.code);
+-                }
+-                if (context.insideTable) {
+-                    writer.write('</code>');
+-                }
+-                else {
+-                    writer.write('`');
+-                }
++                writer.write('`');
++                writer.write(docCodeSpan.code);
++                writer.write('`');
+                 break;
+             }
+             case tsdoc_1.DocNodeKind.LinkTag: {
+@@ -102,26 +84,9 @@ class MarkdownEmitter {
+             case tsdoc_1.DocNodeKind.Paragraph: {
+                 const docParagraph = docNode;
+                 const trimmedParagraph = tsdoc_1.DocNodeTransforms.trimSpacesInParagraph(docParagraph);
+-                if (context.insideTable) {
+-                    if (docNodeSiblings) {
+-                        // This tentative write is necessary to avoid writing empty paragraph tags (i.e. `<p></p>`). At the
+-                        // time this code runs, we do not know whether the `writeNodes` call below will actually write
+-                        // anything. Thus, we want to only write a `<p>` tag (as well as eventually a corresponding
+-                        // `</p>` tag) if something ends up being written within the tags.
+-                        writer.writeTentative('<p>', '</p>', () => {
+-                            this.writeNodes(trimmedParagraph.nodes, context);
+-                        });
+-                    }
+-                    else {
+-                        // Special case:  If we are the only element inside this table cell, then we can omit the <p></p> container.
+-                        this.writeNodes(trimmedParagraph.nodes, context);
+-                    }
+-                }
+-                else {
+-                    this.writeNodes(trimmedParagraph.nodes, context);
+-                    writer.ensureNewLine();
+-                    writer.writeLine();
+-                }
++                this.writeNodes(trimmedParagraph.nodes, context);
++                writer.ensureNewLine();
++                writer.writeLine();
+                 break;
+             }
+             case tsdoc_1.DocNodeKind.FencedCode: {

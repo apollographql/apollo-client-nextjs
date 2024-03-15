@@ -101,7 +101,7 @@ A convenient combination of `RemoveMultipartDirectivesLink` and `AccumulateMulti
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Functions
 
@@ -204,7 +204,7 @@ Creates an ApolloProvider for streaming SSR.
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Interfaces
 
@@ -242,7 +242,7 @@ A version of `ApolloProvider` particularly suited for React's streaming SSR.
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Variables
 
@@ -272,7 +272,7 @@ See for example https://github.com/apollographql/apollo-client-nextjs/blob/37fee
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Type Aliases
 
@@ -313,4 +313,4 @@ Events that will be emitted by a wrapped ApolloClient instance during SSR on `Da
 
 
 </td></tr>
-</tbody>
+</tbody></table>

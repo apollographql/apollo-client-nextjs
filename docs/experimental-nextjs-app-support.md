@@ -98,7 +98,7 @@ A convenient combination of `RemoveMultipartDirectivesLink` and `AccumulateMulti
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Functions
 
@@ -156,7 +156,7 @@ afterEach(resetManualSSRApolloSingletons);
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Variables
 
@@ -188,4 +188,4 @@ Use this component together with `NextSSRApolloClient` and `NextSSRInMemoryCache
 
 
 </td></tr>
-</tbody>
+</tbody></table>

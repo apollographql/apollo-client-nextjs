@@ -23,6 +23,6 @@
     "superjson": "1.13.3"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.23.37"
+    "@microsoft/api-documenter": "patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch"
   }
 }

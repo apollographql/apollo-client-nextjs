@@ -79,7 +79,7 @@ Constructs a new instance of the `RemoveMultipartDirectivesLink` class
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 
 ## Methods
 
@@ -111,4 +111,4 @@ Description
 
 
 </td></tr>
-</tbody>
+</tbody></table>

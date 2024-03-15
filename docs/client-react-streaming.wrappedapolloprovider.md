@@ -56,4 +56,4 @@ Information about the current package and it's export names, for use in error me
 
 
 </td></tr>
-</tbody>
+</tbody></table>

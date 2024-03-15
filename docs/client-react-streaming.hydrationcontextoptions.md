@@ -53,4 +53,4 @@ _(Optional)_ Props that will be passed down to `script` tags that will be used t
 
 
 </td></tr>
-</tbody>
+</tbody></table>

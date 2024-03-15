@@ -46,7 +46,7 @@ BuildArgs
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 **Returns:**
 
 [DataTransportProviderImplementation](./client-react-streaming.datatransportproviderimplementation.md)<!-- -->&lt;[HydrationContextOptions](./client-react-streaming.hydrationcontextoptions.md)<!-- -->&gt;

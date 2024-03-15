@@ -3703,7 +3703,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.23.37":
+"@microsoft/api-documenter@npm:7.23.37":
   version: 7.23.37
   resolution: "@microsoft/api-documenter@npm:7.23.37"
   dependencies:
@@ -3717,6 +3717,23 @@ __metadata:
   bin:
     api-documenter: bin/api-documenter
   checksum: 10/545758a9f4e428ea49a7dce7a941e2e5fc71fb46c1d4deb67093d805cf66b02e340dbb20b91a4745479272d03b23b94bb7ded6d8e497f195f060508485c0ecc3
+  languageName: node
+  linkType: hard
+
+"@microsoft/api-documenter@patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch":
+  version: 7.23.37
+  resolution: "@microsoft/api-documenter@patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch::version=7.23.37&hash=0cc1d5"
+  dependencies:
+    "@microsoft/api-extractor-model": "npm:7.28.13"
+    "@microsoft/tsdoc": "npm:0.14.2"
+    "@rushstack/node-core-library": "npm:4.0.2"
+    "@rushstack/terminal": "npm:0.10.0"
+    "@rushstack/ts-command-line": "npm:4.19.1"
+    js-yaml: "npm:~3.13.1"
+    resolve: "npm:~1.22.1"
+  bin:
+    api-documenter: bin/api-documenter
+  checksum: 10/5aebf07b087d3058d1f4c2c57d4edc8967850fe4966c8ea5452287539d1838cbc76c18b08b96d5507e081ee2947a98a326b274a27ecb343dedc418425bb48bbd
   languageName: node
   linkType: hard
 
@@ -10570,7 +10587,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "monorepo@workspace:."
   dependencies:
-    "@microsoft/api-documenter": "npm:^7.23.37"
+    "@microsoft/api-documenter": "patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch"
     monorepo: "link:."
     prettier: "npm:^3.0.0"
     semver: "npm:^7.6.0"

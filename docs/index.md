@@ -40,4 +40,4 @@ It can also be used to use Apollo Client with a custom streaming SSR setup, e.g.
 
 
 </td></tr>
-</tbody>
+</tbody></table>

@@ -58,7 +58,7 @@ _(Optional)_
 
 
 </td></tr>
-</tbody>
+</tbody></table>
 **Returns:**
 
 Observable&lt;{}&gt;
