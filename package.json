@@ -20,5 +20,11 @@
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "superjson": "1.13.3"
+  },
+  "devDependencies": {
+    "@size-limit/file": "^11.1.0",
+    "@size-limit/webpack": "^11.1.0",
+    "@size-limit/webpack-why": "^11.1.0",
+    "size-limit": "^11.1.0"
   }
 }
