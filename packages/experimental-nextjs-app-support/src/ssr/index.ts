@@ -25,5 +25,10 @@ export {
 export class NextSSRApolloClient<
   TCacheShape,
 > extends ApolloClient<TCacheShape> {
+  /**
+   * Information about the current package and it's export names, for use in error messages.
+   *
+   * @internal
+   */
   static readonly info = bundle;
 }

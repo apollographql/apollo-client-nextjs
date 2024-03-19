@@ -43,6 +43,8 @@ const wrappers = Symbol.for("apollo.hook.wrappers");
 class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   /**
    * Information about the current package and it's export names, for use in error messages.
+   *
+   * @internal
    */
   static readonly info = bundle;
 

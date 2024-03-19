@@ -21,10 +21,11 @@
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
-    "superjson": "1.13.3"
+    "superjson": "1.13.3",
+    "@microsoft/api-documenter": "7.24.0"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "patch:@microsoft/api-documenter@npm%3A7.23.37#~/.yarn/patches/@microsoft-api-documenter-npm-7.23.37-51bf9d9d16.patch",
+    "@microsoft/api-documenter": "7.24.0",
     "@size-limit/file": "^11.1.0",
     "@size-limit/webpack": "^11.1.0",
     "@size-limit/webpack-why": "^11.1.0",
