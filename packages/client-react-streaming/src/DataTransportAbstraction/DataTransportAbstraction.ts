@@ -15,9 +15,31 @@ interface DataTransportAbstraction {
   useStaticValueRef<T>(value: T): { current: T };
 }
 
+/**
+ * > This export is only available in React Client Components
+ *
+ * If you create a custom data transport, you need to wrap the child tree in a
+ * `DataTransportContext.Provider` and provide the `DataTransportAbstraction` to it.
+ *
+ * See for example
+ * https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+ *
+ * @public
+ */
 export const DataTransportContext =
   /*#__PURE__*/ createContext<DataTransportAbstraction | null>(null);
 
+/**
+ * Interface to be implemented by a custom data transport component,
+ * for usage with `WrapApolloProvider`.
+ *
+ * This component needs to provide a `DataTransportContext` to it's children.
+ *
+ * See for example
+ * https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+ *
+ * @public
+ */
 export type DataTransportProviderImplementation<
   // eslint-disable-next-line @typescript-eslint/ban-types
   ExtraProps = {},
@@ -41,6 +63,14 @@ export type DataTransportProviderImplementation<
 
 export type TransportIdentifier = string & { __transportIdentifier: true };
 
+/**
+ * Events that will be emitted by a wrapped ApolloClient instance during
+ * SSR on `DataTransportProviderImplementation.registerDispatchRequestStarted`,
+ * to be transported to the browser and replayed there using
+ * `DataTransportProviderImplementation.onQueryEvent`.
+ *
+ * @public
+ */
 export type QueryEvent =
   | {
       type: "started";

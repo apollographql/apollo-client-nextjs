@@ -16,6 +16,27 @@ export interface AccumulateMultipartResponsesConfig {
   cutoffDelay: number;
 }
 
+/**
+ *
+ * This link can be used to "debounce" the initial response of a multipart request. Any incremental data received during the `cutoffDelay` time will be merged into the initial response.
+ *
+ * After `cutoffDelay`, the link will return the initial response, even if there is still incremental data pending, and close the network connection.
+ *
+ * If `cutoffDelay` is `0`, the link will immediately return data as soon as it is received, without waiting for incremental data, and immediately close the network connection.
+ *
+ * @example
+ * ```ts
+ * new AccumulateMultipartResponsesLink({
+ *   // The maximum delay in milliseconds
+ *   // from receiving the first response
+ *   // until the accumulated data will be flushed
+ *   // and the connection will be closed.
+ *   cutoffDelay: 100,
+ *  });
+ * ```
+ *
+ * @public
+ */
 export class AccumulateMultipartResponsesLink extends ApolloLink {
   private maxDelay: number;
 

@@ -8,4 +8,7 @@ export type {
   DataTransportProviderImplementation,
   QueryEvent,
 } from "./DataTransportAbstraction.js";
-export { WrapApolloProvider } from "./WrapApolloProvider.js";
+export {
+  WrapApolloProvider,
+  WrappedApolloProvider,
+} from "./WrapApolloProvider.js";

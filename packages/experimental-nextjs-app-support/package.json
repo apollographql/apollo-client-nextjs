@@ -81,6 +81,7 @@
     "@apollo/client": "^3.9.6",
     "@apollo/client-react-streaming": "workspace:*",
     "@arethetypeswrong/cli": "0.13.6",
+    "@microsoft/api-extractor": "^7.42.3",
     "@testing-library/react": "^14.2.1",
     "@total-typescript/shoehorn": "0.1.1",
     "@tsconfig/recommended": "1.0.3",

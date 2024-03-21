@@ -5,4 +5,5 @@ export {
   DataTransportProviderImplementation,
   QueryEvent,
   WrapApolloProvider,
+  WrappedApolloProvider,
 } from "./DataTransportAbstraction/index.js";
