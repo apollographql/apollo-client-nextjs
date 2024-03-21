@@ -46,6 +46,7 @@ jobs:
           commit_message: "Bump version to ${{ inputs.version }}"
           push_options: ""
           skip_dirty_check: false
+          tagging_message: "v.${{ inputs.version }}"
 
       - name: "@apollo/client-react-streaming: publish"
         run: yarn workspace @apollo/client-react-streaming exec npm publish --access public --tag ${{ inputs.tag }} --provenance
