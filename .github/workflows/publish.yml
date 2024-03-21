@@ -22,7 +22,22 @@ jobs:
       id-token: write
       contents: write
     steps:
+      # Create an access token for the Github Actions Bot app. This one has permissions
+      # to push directly to this repository (only!) without required status checks.
+      - uses: actions/create-github-app-token@v1
+        id: github-actions-bot-app-token
+        with:
+          app-id: 47012416
+          private-key: ${{ secrets.APOLLO_GITHUB_ACTIONS_BOT_PRIVATE_KEY }}
+          repositories: ${{ github.repository }}
+          owner: ${{ github.repository_owner }}
+
+      # Check out the repository, using the Github Actions Bot app's token so that we
+      # can push later and override required statuses.
       - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.github-actions-bot-app-token.outputs.token }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
