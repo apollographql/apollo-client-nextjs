@@ -40,6 +40,9 @@ jobs:
           yarn workspace @apollo/experimental-nextjs-app-support exec npm pkg set "dependencies[@apollo/client-react-streaming]=${{ inputs.version }}" "version=${{ inputs.version }}"
           yarn workspace @apollo/experimental-nextjs-app-support exec jq '{ version: .version, dependencies: .dependencies, peerDependencies: .peerDependencies }' package.json
 
+      - name: "Update lockfile"
+        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build
+
       - name: Commit changes back
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
