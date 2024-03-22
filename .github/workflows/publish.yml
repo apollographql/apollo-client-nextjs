@@ -24,19 +24,19 @@ jobs:
     steps:
       # Create an access token for the Github Actions Bot app. This one has permissions
       # to push directly to this repository (only!) without required status checks.
-      - uses: actions/create-github-app-token@v1
-        id: github-actions-bot-app-token
-        with:
-          app-id: 48725422
-          private-key: ${{ secrets.APOLLO_GITHUB_ACTIONS_BOT_PRIVATE_KEY }}
-          repositories: ${{ github.repository }}
-          owner: ${{ github.repository_owner }}
+      # - uses: actions/create-github-app-token@v1
+      #   id: github-actions-bot-app-token
+      #   with:
+      #     app-id: 48725422
+      #     private-key: ${{ secrets.APOLLO_GITHUB_ACTIONS_BOT_PRIVATE_KEY }}
+      #     repositories: ${{ github.repository }}
+      #     owner: ${{ github.repository_owner }}
 
       # Check out the repository, using the Github Actions Bot app's token so that we
       # can push later and override required statuses.
       - uses: actions/checkout@v4
-        with:
-          token: ${{ steps.github-actions-bot-app-token.outputs.token }}
+        # with:
+        #   token: ${{ steps.github-actions-bot-app-token.outputs.token }}
 
       - uses: actions/setup-node@v4
         with:
@@ -55,13 +55,22 @@ jobs:
           yarn workspace @apollo/experimental-nextjs-app-support exec npm pkg set "dependencies[@apollo/client-react-streaming]=${{ inputs.version }}" "version=${{ inputs.version }}"
           yarn workspace @apollo/experimental-nextjs-app-support exec jq '{ version: .version, dependencies: .dependencies, peerDependencies: .peerDependencies }' package.json
 
-      - name: Commit changes back
-        uses: stefanzweifel/git-auto-commit-action@v5
+      # - name: Commit changes back
+      #   uses: stefanzweifel/git-auto-commit-action@v5
+      #   with:
+      #     commit_message: "Bump version to ${{ inputs.version }}"
+      #     push_options: ""
+      #     skip_dirty_check: false
+      #     tagging_message: "v.${{ inputs.version }}"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
-          commit_message: "Bump version to ${{ inputs.version }}"
-          push_options: ""
-          skip_dirty_check: false
-          tagging_message: "v.${{ inputs.version }}"
+          title: "Bump version to ${{ inputs.version }}"
+          commit-message: "Bump version to ${{ inputs.version }}"
+          branch: "pr/bump-version"
+          branch-suffix: short-commit-hash
+          delete-branch: true
 
       - name: "@apollo/client-react-streaming: publish"
         run: yarn workspace @apollo/client-react-streaming exec npm publish --access public --tag ${{ inputs.tag }} --provenance
