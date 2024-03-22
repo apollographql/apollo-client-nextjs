@@ -6,7 +6,7 @@
 
 &gt; This export is only available in React Server Components
 
-Ensures that during RSC for an ongoing request, you can always access the same instance of ApolloClient, while always returning a new instance of different requests.
+Ensures that you can always access the same instance of ApolloClient during RSC for an ongoing request, while always returning a new instance for different requests.
 
 **Signature:**
 
