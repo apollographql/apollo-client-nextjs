@@ -21,6 +21,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
     steps:
       # Create an access token for the Github Actions Bot app. This one has permissions
       # to push directly to this repository (only!) without required status checks.
