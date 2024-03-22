@@ -37,7 +37,6 @@ It can also be used to use Apollo Client with a custom streaming SSR setup, e.g.
 
 </td><td>
 
-This will trigger a documentation rebuild.
 
 
 </td></tr>

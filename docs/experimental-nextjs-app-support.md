@@ -4,7 +4,6 @@
 
 ## experimental-nextjs-app-support package
 
-This will trigger a documentation rebuild.
 
 ## Classes
 
