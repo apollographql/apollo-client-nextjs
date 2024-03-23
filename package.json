@@ -21,7 +21,7 @@
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
-    "superjson": "1.13.3",
+    "superjson": "2.2.1",
     "@microsoft/api-documenter": "7.24.0"
   },
   "devDependencies": {
