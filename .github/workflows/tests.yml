@@ -5,6 +5,7 @@ on:
       - ".github/workflows/**"
       - "packages/**"
       - "integration-test/**"
+      - "yarn.lock"
   pull_request:
     paths:
       - ".github/workflows/**"
