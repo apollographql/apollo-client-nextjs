@@ -113,6 +113,6 @@
     "react": "^18"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.9.0-snapshot-test.1"
+    "@apollo/client-react-streaming": "0.9.0"
   }
 }
