@@ -1,31 +1,30 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "lockFileMaintenance": {
-    "enabled": false
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  lockFileMaintenance: {
+    enabled: false,
   },
-  "ignorePaths": [
-    "examples/**",
-    "integration-test/**"
+  ignorePaths: ["examples/**", "integration-test/**"],
+  ignoreDeps: [
+    "react",
+    "react-dom",
+    "superjson",
+    "@apollo/experimental-nextjs-app-support",
+    "@apollo/client-react-streaming",
+    "@apollo/client",
   ],
-  "skipInstalls": false,
-  "packageRules": [
+  skipInstalls: false,
+  packageRules: [
     {
-      "groupName": "all @types",
-      "groupSlug": "all-types",
-      "matchPackagePatterns": [
-        "@types/*"
-      ]
+      groupName: "all devDependencies",
+      groupSlug: "all-dev",
+      matchPackagePatterns: ["*"],
+      matchDepTypes: ["devDependencies"],
+      excludePackagePatterns: ["next"],
     },
     {
-      "groupName": "all devDependencies",
-      "groupSlug": "all-dev",
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchDepTypes": [
-        "devDependencies"
-      ],
-      "excludePackageNames": ["next", "react", "react-dom"]
-    }
-  ]
+      groupName: "all @types",
+      groupSlug: "all-types",
+      matchPackagePatterns: ["@types/*"],
+    },
+  ],
 }
