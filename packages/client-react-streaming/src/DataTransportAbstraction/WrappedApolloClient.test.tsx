@@ -217,19 +217,9 @@ await testIn("browser")(
   }
 );
 
-const { hydrateRoot } = await import("react-dom/client");
-
-// prettier-ignore
-// @ts-expect-error This is React code.
-function $RS(a, b) { a = document.getElementById(a); b = document.getElementById(b); for (a.parentNode.removeChild(a); a.firstChild;)b.parentNode.insertBefore(a.firstChild, b); b.parentNode.removeChild(b) }
-// prettier-ignore
-// @ts-expect-error This is React code.
-// eslint-disable-next-line no-var
-function $RC(b, c, e = undefined) { c = document.getElementById(c); c.parentNode.removeChild(c); var a = document.getElementById(b); if (a) { b = a.previousSibling; if (e) b.data = "$!", a.setAttribute("data-dgst", e); else { e = b.parentNode; a = b.nextSibling; var f = 0; do { if (a && 8 === a.nodeType) { var d = a.data; if ("/$" === d) if (0 === f) break; else f--; else "$" !== d && "$?" !== d && "$!" !== d || f++ } d = a.nextSibling; e.removeChild(a); a = d } while (a); for (; c.firstChild;)e.insertBefore(c.firstChild, a); b.data = "$" } b._reactRetry && b._reactRetry() } }
-
-function appendToBody(html: TemplateStringsArray) {
-  document.body.insertAdjacentHTML("beforeend", html[0].trim());
-}
+const { $RC, $RS, setBody, hydrateBody, appendToBody } = await import(
+  "../util/hydrationTest.js"
+);
 
 await testIn("browser")(
   "race condition: client ahead of server renders without hydration mismatch",
@@ -281,13 +271,11 @@ await testIn("browser")(
     const { findByText } = getQueriesForElement(document.body);
 
     // server starts streaming
-    document.body.innerHTML =
-      '<!--$?--><template id="B:0"></template>Fallback<!--/$-->';
+    setBody`<!--$?--><template id="B:0"></template>Fallback<!--/$-->`;
     // request started on the server
-    simulateRequestStart!(EVENT_STARTED);
+    simulateRequestStart(EVENT_STARTED);
 
-    hydrateRoot(
-      document.body,
+    hydrateBody(
       <Provider makeClient={() => client}>
         <Suspense fallback={"Fallback"}>
           <Child />
@@ -300,8 +288,8 @@ await testIn("browser")(
     // this is the div for the suspense boundary
     appendToBody`<div hidden id="S:0"><template id="P:1"></template><template id="P:2"></template></div>`;
     // request has finished on the server
-    simulateRequestData!(EVENT_DATA);
-    simulateRequestData!(EVENT_COMPLETE);
+    simulateRequestData(EVENT_DATA);
+    simulateRequestData(EVENT_COMPLETE);
     // `Child` component wants to transport data from SSR render to the browser
     useStaticValueRefStub = () => ({ current: FIRST_HOOK_RESULT as any });
     // `Child` finishes rendering on the server
