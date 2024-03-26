@@ -3,10 +3,32 @@
   "packageManager": "yarn@4.1.0",
   "workspaces": [
     "packages/*",
-    "integration-test",
     "examples/*"
   ],
+  "main": "package.json",
   "dependencies": {
-    "prettier": "^3.0.0"
+    "monorepo": "link:.",
+    "prettier": "^3.0.0",
+    "semver": "^7.6.0"
+  },
+  "scripts": {
+    "verify-package-json": "node ./scripts/verify-package-json.mjs",
+    "verify-package-shape": "node ./scripts/verify-package-shape.mjs",
+    "matrix": "node ./scripts/test-matrix.js",
+    "docs": "api-documenter markdown --input-folder temp --output-folder docs",
+    "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build"
+  },
+  "resolutions": {
+    "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
+    "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
+    "superjson": "1.13.3",
+    "@microsoft/api-documenter": "7.24.1"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "7.24.1",
+    "@size-limit/file": "11.1.0",
+    "@size-limit/webpack": "11.1.0",
+    "@size-limit/webpack-why": "11.1.0",
+    "size-limit": "11.1.0"
   }
 }

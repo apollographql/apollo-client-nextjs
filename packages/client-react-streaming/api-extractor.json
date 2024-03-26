@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "extends": "../../api-extractor.json",
+  "mainEntryPointFilePath": "./api-extractor.d.ts",
+  "bundledPackages": [
+    "@apollo/client-react-streaming",
+    "@apollo/client-react-streaming/manual-transport"
+  ],
+  "compiler": {
+    "tsconfigFilePath": "./tsconfig.json",
+    "overrideTsconfig": {
+      "paths": {
+        "@apollo/client-react-streaming": ["./dist/combined.d.ts"],
+        "@apollo/client-react-streaming/manual-transport": [
+          "./dist/manual-transport.ssr.d.ts"
+        ]
+      }
+    },
+    "skipLibCheck": true
+  }
+}

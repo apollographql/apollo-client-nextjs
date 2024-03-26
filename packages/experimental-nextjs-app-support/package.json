@@ -1,6 +1,6 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
@@ -16,46 +16,32 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "browser": "./dist/ssr/index.browser.cjs",
-        "node": "./dist/ssr/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "browser": "./dist/ssr/index.browser.js",
-        "node": "./dist/ssr/index.ssr.js"
-      }
-    },
     "./rsc": {
       "require": {
-        "types": "./dist/index.rsc.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
+        "types": "./dist/rsc/index.d.cts",
+        "react-server": "./dist/rsc/index.cjs",
         "browser": "./dist/empty.cjs",
         "node": "./dist/empty.cjs"
       },
       "import": {
-        "types": "./dist/index.rsc.d.ts",
-        "react-server": "./dist/index.rsc.js",
+        "types": "./dist/rsc/index.d.ts",
+        "react-server": "./dist/rsc/index.js",
         "browser": "./dist/empty.js",
         "node": "./dist/empty.js"
       }
     },
     "./ssr": {
       "require": {
-        "types": "./dist/index.ssr.d.cts",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
+        "types": "./dist/ssr/index.ssr.d.cts",
+        "react-server": "./dist/ssr/index.rsc.cjs",
+        "browser": "./dist/ssr/index.browser.cjs",
+        "node": "./dist/ssr/index.ssr.cjs"
       },
       "import": {
-        "types": "./dist/index.ssr.d.ts",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
+        "types": "./dist/ssr/index.ssr.d.ts",
+        "react-server": "./dist/ssr/index.rsc.js",
+        "browser": "./dist/ssr/index.browser.js",
+        "node": "./dist/ssr/index.ssr.js"
       }
     },
     "./package.json": "./package.json"
@@ -63,14 +49,14 @@
   "typesVersions": {
     "*": {
       "ssr": [
-        "./dist/index.ssr.d.ts"
+        "./dist/ssr/index.ssr.d.ts"
       ],
       "rsc": [
-        "./dist/index.rsc.d.ts"
+        "./dist/rsc/index.d.ts"
       ]
     }
   },
-  "typings": "./dist/combined.d.ts",
+  "typings": "./dist/empty.d.ts",
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
@@ -84,44 +70,49 @@
     "test": "true",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
-    "test-bundle": "attw --pack .",
+    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:shape",
+    "test-bundle:attw": "attw --pack .",
+    "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
+    "test-bundle:shape": "yarn workspace monorepo verify-package-shape $PWD/package-shape.json",
     "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
-    "@apollo/client": "3.9.1",
+    "@apollo/client": "3.9.9",
     "@apollo/client-react-streaming": "workspace:*",
-    "@arethetypeswrong/cli": "0.13.6",
-    "@testing-library/react": "^14.2.1",
-    "@total-typescript/shoehorn": "0.1.1",
+    "@arethetypeswrong/cli": "0.15.2",
+    "@microsoft/api-extractor": "7.42.3",
+    "@testing-library/react": "14.2.1",
+    "@total-typescript/shoehorn": "0.1.2",
     "@tsconfig/recommended": "1.0.3",
-    "@types/node": "20.11.5",
-    "@types/react": "18.2.55",
-    "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "@typescript-eslint/parser": "^7.0.1",
-    "concurrently": "^8.2.2",
-    "eslint": "8.56.0",
-    "eslint-plugin-react": "7.33.2",
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.67",
+    "@typescript-eslint/eslint-plugin": "7.0.1",
+    "@typescript-eslint/parser": "7.0.1",
+    "concurrently": "8.2.2",
+    "eslint": "8.57.0",
+    "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
-    "glob": "^10.3.10",
-    "global-jsdom": "^24.0.0",
-    "globstar": "^1.0.0",
+    "glob": "10.3.10",
+    "global-jsdom": "24.0.0",
+    "globstar": "1.0.0",
     "graphql": "16.8.1",
-    "jsdom": "^24.0.0",
+    "jsdom": "24.0.0",
     "next": "14.1.0",
+    "react": "18.3.0-canary-60a927d04-20240113",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
-    "tsup": "8.0.1",
-    "tsx": "^4.7.0",
-    "typescript": "5.3.3",
-    "vitest": "1.2.1"
+    "tsup": "8.0.2",
+    "tsx": "4.7.0",
+    "typescript": "5.4.3",
+    "vitest": "1.4.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.9.0",
+    "@apollo/client": "^3.9.6",
     "next": "^13.4.1 || ^14.0.0",
     "react": "^18"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "^0.9.0"
+    "@apollo/client-react-streaming": "0.9.0"
   }
 }

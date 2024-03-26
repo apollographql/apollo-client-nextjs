@@ -1,3 +1,9 @@
-export { AccumulateMultipartResponsesLink as DebounceMultipartResponsesLink } from "./AccumulateMultipartResponsesLink.js";
-export { RemoveMultipartDirectivesLink } from "./RemoveMultipartDirectivesLink.js";
-export * from "./DataTransportAbstraction/index.js";
+export * from "./index.shared.js";
+export {
+  resetApolloSingletons,
+  DataTransportContext,
+  DataTransportProviderImplementation,
+  QueryEvent,
+  WrapApolloProvider,
+  WrappedApolloProvider,
+} from "./DataTransportAbstraction/index.js";

@@ -12,6 +12,7 @@
     "declarationMap": true,
     "types": ["react/canary", "node"],
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@apollo/client-react-streaming": ["./src/combined.ts"]
     }

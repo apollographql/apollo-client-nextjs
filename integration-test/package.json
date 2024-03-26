@@ -1,32 +1,17 @@
 {
-  "name": "integration-test",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "build-and-test": "yarn build && yarn test",
-    "test": "yarn playwright test"
+  "name": "@integration-test/root",
+  "packageManager": "yarn@4.1.0",
+  "resolutions": {
+    "@apollo/client-react-streaming": "exec:./shared/build-client-react-streaming.cjs",
+    "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs"
   },
-  "dependencies": {
-    "@apollo/client": "^3.9.1",
-    "@apollo/experimental-nextjs-app-support": "workspace:*",
-    "@apollo/server": "^4.9.5",
-    "@as-integrations/next": "^3.0.0",
-    "@graphql-tools/schema": "^10.0.0",
-    "@types/node": "20.3.1",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "18.2.6",
-    "graphql": "^16.7.1",
-    "graphql-tag": "^2.12.6",
-    "next": "^14.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "ssr-only-secrets": "^0.0.5",
-    "typescript": "5.1.3"
+  "workspaces": [
+    "*"
+  ],
+  "scripts": {
+    "trigger-rebuild": "find . -regextype posix-extended -regex '.*/node_modules/@apollo/(client-react-streaming|experimental-nextjs-app-support)' -printf 'rm -r %p\n' -exec rm -r {} +; glob \"../.yarn/cache/@apollo-*exec*\" \"$HOME/.yarn/berry/cache/@apollo-*exec*\" --cmd='rm -v' ; yarn"
   },
   "devDependencies": {
-    "@playwright/test": "^1.39.0"
+    "glob": "^10.3.10"
   }
 }
