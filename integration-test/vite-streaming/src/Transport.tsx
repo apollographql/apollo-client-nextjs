@@ -7,7 +7,7 @@
  */
 
 import { WrapApolloProvider } from "@apollo/client-react-streaming";
-import { buildManualDataTransport } from "@apollo/client-react-streaming/experimental-manual-transport";
+import { buildManualDataTransport } from "@apollo/client-react-streaming/manual-transport";
 import { renderToString } from "react-dom/server";
 import * as React from "react";
 

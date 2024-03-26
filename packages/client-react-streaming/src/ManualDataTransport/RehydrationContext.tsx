@@ -3,7 +3,15 @@ import type { RehydrationContextValue } from "./types.js";
 import { transportDataToJS } from "./dataTransport.js";
 import { invariant } from "ts-invariant";
 
+/**
+ * @public
+ */
 export interface HydrationContextOptions {
+  /**
+   * Props that will be passed down to `script` tags that will be used to transport
+   * data to the browser.
+   * Can e.g. be used to add a `nonce`.
+   */
   extraScriptProps?: ScriptProps;
 }
 
@@ -37,28 +45,19 @@ export function buildApolloRehydrationContext({
     currentlyInjected: false,
     transportValueData: getTransportObject(ensureInserted),
     transportedValues: {},
-    incomingResults: getTransportArray(ensureInserted),
-    incomingBackgroundQueries: getTransportArray(ensureInserted),
+    incomingEvents: getTransportArray(ensureInserted),
     RehydrateOnClient() {
       rehydrationContext.currentlyInjected = false;
       if (
         !Object.keys(rehydrationContext.transportValueData).length &&
-        !Object.keys(rehydrationContext.incomingResults).length &&
-        !Object.keys(rehydrationContext.incomingBackgroundQueries).length
+        !Object.keys(rehydrationContext.incomingEvents).length
       )
         return <></>;
       invariant.debug(
         "transporting data",
         rehydrationContext.transportValueData
       );
-      invariant.debug(
-        "transporting results",
-        rehydrationContext.incomingResults
-      );
-      invariant.debug(
-        "transporting incomingBackgroundQueries",
-        rehydrationContext.incomingBackgroundQueries
-      );
+      invariant.debug("transporting events", rehydrationContext.incomingEvents);
 
       const __html = transportDataToJS({
         rehydrate: Object.fromEntries(
@@ -67,8 +66,7 @@ export function buildApolloRehydrationContext({
               rehydrationContext.transportedValues[key] !== value
           )
         ),
-        results: rehydrationContext.incomingResults,
-        backgroundQueries: rehydrationContext.incomingBackgroundQueries,
+        events: rehydrationContext.incomingEvents,
       });
       Object.assign(
         rehydrationContext.transportedValues,
@@ -76,9 +74,7 @@ export function buildApolloRehydrationContext({
       );
       rehydrationContext.transportValueData =
         getTransportObject(ensureInserted);
-      rehydrationContext.incomingResults = getTransportArray(ensureInserted);
-      rehydrationContext.incomingBackgroundQueries =
-        getTransportArray(ensureInserted);
+      rehydrationContext.incomingEvents = getTransportArray(ensureInserted);
       return (
         <script
           {...extraScriptProps}

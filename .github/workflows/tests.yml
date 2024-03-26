@@ -5,6 +5,7 @@ on:
       - ".github/workflows/**"
       - "packages/**"
       - "integration-test/**"
+      - "yarn.lock"
   pull_request:
     paths:
       - ".github/workflows/**"
@@ -13,14 +14,33 @@ on:
       - "yarn.lock"
   workflow_dispatch:
 jobs:
+  matrix:
+    name: Determine if the `next` tag is higher than the `latest` tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+      - run: yarn install --immutable
+      - name: Calculate Matrix
+        id: version
+        run: yarn matrix | tee $GITHUB_OUTPUT
+
   test:
     name: Unit Tests
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    needs: matrix
+    if: |
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next"]
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -33,12 +53,13 @@ jobs:
       - run: yarn workspaces foreach --all --include "@apollo/*" run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   packageShapes:
     name: Test Bundles
+    needs: matrix
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next"]
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -50,12 +71,13 @@ jobs:
       - run: yarn workspaces foreach --all --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   tests_playwright:
     name: Integration Tests
+    needs: matrix
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: ["latest", "next"]
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     defaults:
       run:
         working-directory: ./integration-test
@@ -74,7 +96,6 @@ jobs:
 
       - name: Install Packages (Integration Test)
         run: |
-          sed -ire '/^  checksum/d' yarn.lock 
           yarn install
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
@@ -99,6 +120,13 @@ jobs:
 
       - name: "Next.js: Build"
         run: yarn workspace @integration-test/nextjs run build
+      # Upload webpack-stats.json to use on relative-ci.yaml workflow
+      - name: Upload webpack stats artifact
+        if: matrix.version == 'latest'
+        uses: relative-ci/agent-upload-artifact-action@v1
+        with:
+          webpackStatsFile: ./integration-test/nextjs/webpack-stats.json
+
       - name: "Next.js: Test"
         run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
 

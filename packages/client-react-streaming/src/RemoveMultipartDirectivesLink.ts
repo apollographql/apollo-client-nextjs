@@ -30,15 +30,14 @@ function getDirectiveArgumentValue(directive: DirectiveNode, argument: string) {
     ?.value;
 }
 /**
- * This link is used to strip directives from the query before it is sent to the server.
+ * This link will (if called with `stripDefer: true`) strip all `@defer` fragments from your query.
+ *
  * This is used to prevent the server from doing additional work in SSR scenarios where multipart responses cannot be handled anyways.
- * This stripping behaviour can be configured per-directive.
- * It be overridden by adding a label to the directive.
- * In the case this link is configured to strip a directive, but the directive has a label starting with "SsrDontStrip", the directive will not be stripped.
- * In the case this link is configured to not strip a directive, but the directive has a label starting with "SsrStrip", the directive will be stripped.
+ *
+ * You can exclude certain fragments from this behavior by giving them a label starting with `"SsrDontStrip"`.
  * The "starting with" is important, because labels have to be unique per operation. So if you have multiple directives where you want to override the default stipping behaviour,
  * you can do this by annotating them like
- * ```gql
+ * ```graphql
  * query myQuery {
  *   fastField
  *   ... @defer(label: "SsrDontStrip1") {
@@ -50,8 +49,25 @@ function getDirectiveArgumentValue(directive: DirectiveNode, argument: string) {
  * }
  * ```
  *
+ * You can also use the link with `stripDefer: false` and mark certain fragments to be stripped by giving them a label starting with `"SsrStrip"`.
+ *
+ * @example
+ * ```ts
+ * new RemoveMultipartDirectivesLink({
+ *   // Whether to strip fragments with `@defer` directives
+ *   // from queries before sending them to the server.
+ *   //
+ *   // Defaults to `true`.
+ *   //
+ *   // Can be overwritten by adding a label starting
+ *   // with either `"SsrDontStrip"` or `"SsrStrip"` to the
+ *   // directive.
+ *   stripDefer: true,
+ * });
+ * ```
+ *
+ * @public
  */
-
 export class RemoveMultipartDirectivesLink extends ApolloLink {
   private stripDirectives: string[] = [];
   constructor(config: RemoveMultipartDirectivesConfig) {

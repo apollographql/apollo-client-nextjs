@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef } from "react";
 import type { DataTransportProviderImplementation } from "@apollo/client-react-streaming";
 import { DataTransportContext } from "@apollo/client-react-streaming";
-import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import type { RehydrationCache, RehydrationContextValue } from "./types.js";
 import type { HydrationContextOptions } from "./RehydrationContext.js";
 import { buildApolloRehydrationContext } from "./RehydrationContext.js";
@@ -21,7 +20,6 @@ const buildManualDataTransportSSRImpl = ({
   function ManualDataTransportSSRImpl({
     extraScriptProps,
     children,
-    registerDispatchRequestData,
     registerDispatchRequestStarted,
   }) {
     const insertHtml = useInsertHtml();
@@ -34,11 +32,13 @@ const buildManualDataTransportSSRImpl = ({
       });
     }
 
-    registerDispatchRequestStarted!((options: WatchQueryOptions) => {
-      rehydrationContext.current!.incomingBackgroundQueries.push(options);
-    });
-    registerDispatchRequestData!((options: Cache.WriteOptions) => {
-      rehydrationContext.current!.incomingResults.push(options);
+    registerDispatchRequestStarted!(({ event, observable }) => {
+      rehydrationContext.current!.incomingEvents.push(event);
+      observable.subscribe({
+        next(event) {
+          rehydrationContext.current!.incomingEvents.push(event);
+        },
+      });
     });
 
     const contextValue = useMemo(
@@ -63,19 +63,12 @@ const buildManualDataTransportBrowserImpl =
   (): DataTransportProviderImplementation<HydrationContextOptions> =>
     function ManualDataTransportBrowserImpl({
       children,
-      onRequestStarted,
-      onRequestData,
+      onQueryEvent,
       rerunSimulatedQueries,
     }) {
       const hookRehydrationCache = useRef<RehydrationCache>({});
-
       registerDataTransport({
-        onRequestStarted: (options) => {
-          // we are not streaming anymore, so we should not simulate "server-side requests"
-          if (document.readyState === "complete") return;
-          onRequestStarted!(options);
-        },
-        onRequestData: onRequestData!,
+        onQueryEvent: onQueryEvent!,
         onRehydrate(rehydrate) {
           Object.assign(hookRehydrationCache.current, rehydrate);
         },
@@ -128,6 +121,54 @@ const buildManualDataTransportBrowserImpl =
 
 const UNINITIALIZED = {};
 
+/**
+ * > This export is only available in React Client Components
+ *
+ * Creates a "manual" Data Transport, to be used with `WrapApolloProvider`.
+ *
+ * @remarks
+ *
+ * ### Drawbacks
+ *
+ * While this Data Transport enables streaming SSR, it has some conceptual drawbacks:
+ *
+ * - It does not have a way of keeping your connection open if your application already finished, but there are still ongoing queries that might need to be transported over.
+ *   - This can happen if a component renders `useBackgroundQuery`, but does not read the `queryRef` with `useReadQuery`
+ *   - These "cut off" queries will be restarted in the browser once the browser's `load` event happens
+ * - If the `useInsertHtml` doesn't immediately flush data to the browser, the browser might already attain "newer" data through queries triggered by user interaction.
+ *   - This delayed behaviour is the case with the Next.js `ServerInsertedHTMLContext` and in the example Vite implementation.
+ *   - In this, case, older data from the server might overwrite newer data in the browser. This is minimized by simulating ongoing queries in the browser once the information of a started query is transported over.
+ *     If the browser would try to trigger the exact same query, query deduplication would make the browser wait for the server query to resolve instead.
+ * - For more timing-related details, see https://github.com/apollographql/apollo-client-nextjs/pull/9
+ *
+ * To fully work around these drawbacks, React needs to add "data injection into the stream" to it's public API, which is not the case today.
+ * We provide an [example with a patched React version](https://github.com/apollographql/apollo-client-nextjs/blob/main/integration-test/experimental-react) to showcase how that could look.
+ *
+ * @example
+ * For usage examples, see the implementation of the `@apollo/experimental-nextjs-app-support`
+ * [`ApolloNextAppProvider`](https://github.com/apollographql/apollo-client-nextjs/blob/c0715a05cf8ca29a3cbb9ce294cdcbc5ce251b2e/packages/experimental-nextjs-app-support/src/ApolloNextAppProvider.ts)
+ *
+ * ```tsx
+ * export const ApolloNextAppProvider = WrapApolloProvider(
+ *   buildManualDataTransport({
+ *     useInsertHtml() {
+ *       const insertHtml = useContext(ServerInsertedHTMLContext);
+ *       if (!insertHtml) {
+ *         throw new Error(
+ *           "ApolloNextAppProvider cannot be used outside of the Next App Router!"
+ *         );
+ *       }
+ *       return insertHtml;
+ *     },
+ *   })
+ * );
+ * ```
+ *
+ * @example
+ * Another usage example is our integration example with Vite and streaming SSR, which you can find at https://github.com/apollographql/apollo-client-nextjs/tree/main/integration-test/vite-streaming
+ *
+ * @public
+ */
 export const buildManualDataTransport: (
   args: BuildArgs
 ) => DataTransportProviderImplementation<HydrationContextOptions> =
