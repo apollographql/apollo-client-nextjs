@@ -6,19 +6,21 @@ import type {
 } from "@apollo/client/index.js";
 import { gql } from "@apollo/client/index.js";
 
-import "global-jsdom/register";
 import assert from "node:assert";
 import { afterEach } from "node:test";
-import { getQueriesForElement } from "@testing-library/react";
 import type { QueryEvent } from "./DataTransportAbstraction.js";
 
 runInConditions("browser", "node");
 
+// @ts-expect-error no declaration
+await import("global-jsdom/register");
+const { getQueriesForElement } = await import("@testing-library/react");
 const {
   ApolloClient,
   InMemoryCache,
   WrapApolloProvider,
   DataTransportContext,
+  resetApolloSingletons,
 } = await import("#bundled");
 const { useSuspenseQuery } = await import("@apollo/client/index.js");
 const { MockSubscriptionLink } = await import(
@@ -27,6 +29,7 @@ const { MockSubscriptionLink } = await import(
 const { render, cleanup } = await import("@testing-library/react");
 
 afterEach(cleanup);
+afterEach(resetApolloSingletons);
 
 const QUERY_ME: TypedDocumentNode<{ me: string }> = gql`
   query {
@@ -217,10 +220,11 @@ await testIn("browser")(
 const { hydrateRoot } = await import("react-dom/client");
 
 // prettier-ignore
-// @ts-ignore
+// @ts-expect-error This is React code.
 function $RS(a, b) { a = document.getElementById(a); b = document.getElementById(b); for (a.parentNode.removeChild(a); a.firstChild;)b.parentNode.insertBefore(a.firstChild, b); b.parentNode.removeChild(b) }
 // prettier-ignore
-// @ts-ignore
+// @ts-expect-error This is React code.
+// eslint-disable-next-line no-var
 function $RC(b, c, e = undefined) { c = document.getElementById(c); c.parentNode.removeChild(c); var a = document.getElementById(b); if (a) { b = a.previousSibling; if (e) b.data = "$!", a.setAttribute("data-dgst", e); else { e = b.parentNode; a = b.nextSibling; var f = 0; do { if (a && 8 === a.nodeType) { var d = a.data; if ("/$" === d) if (0 === f) break; else f--; else "$" !== d && "$?" !== d && "$!" !== d || f++ } d = a.nextSibling; e.removeChild(a); a = d } while (a); for (; c.firstChild;)e.insertBefore(c.firstChild, a); b.data = "$" } b._reactRetry && b._reactRetry() } }
 
 function appendToBody(html: TemplateStringsArray) {
@@ -235,33 +239,31 @@ await testIn("browser")(
       throw new Error("Should not be called yet!");
     };
 
-    const client = new WrappedApolloClient({
+    const client = new ApolloClient({
       connectToDevTools: false,
-      cache: new WrappedInMemoryCache(),
+      cache: new InMemoryCache(),
     });
-    const simulateRequestStart = client.onRequestStarted;
-    const simulateRequestData = client.onRequestData;
+    const simulateRequestStart = client.onQueryStarted!;
+    const simulateRequestData = client.onQueryProgress!;
 
-    const Provider = WrapApolloProvider(
-      ({ children, onRequestData, onRequestStarted, ..._rest }) => {
-        return (
-          <DataTransportContext.Provider
-            value={useMemo(
-              () => ({
-                useStaticValueRef() {
-                  return useStaticValueRefStub();
-                },
-              }),
-              []
-            )}
-          >
-            {children}
-          </DataTransportContext.Provider>
-        );
-      }
-    );
+    const Provider = WrapApolloProvider(({ children }) => {
+      return (
+        <DataTransportContext.Provider
+          value={useMemo(
+            () => ({
+              useStaticValueRef() {
+                return useStaticValueRefStub();
+              },
+            }),
+            []
+          )}
+        >
+          {children}
+        </DataTransportContext.Provider>
+      );
+    });
 
-    let finishedRenders: any[] = [];
+    const finishedRenders: any[] = [];
 
     function Child() {
       const { data } = useSuspenseQuery(QUERY_ME);
@@ -282,7 +284,7 @@ await testIn("browser")(
     document.body.innerHTML =
       '<!--$?--><template id="B:0"></template>Fallback<!--/$-->';
     // request started on the server
-    simulateRequestStart!(FIRST_REQUEST);
+    simulateRequestStart!(EVENT_STARTED);
 
     hydrateRoot(
       document.body,
@@ -298,7 +300,8 @@ await testIn("browser")(
     // this is the div for the suspense boundary
     appendToBody`<div hidden id="S:0"><template id="P:1"></template><template id="P:2"></template></div>`;
     // request has finished on the server
-    simulateRequestData!(FIRST_WRITE);
+    simulateRequestData!(EVENT_DATA);
+    simulateRequestData!(EVENT_COMPLETE);
     // `Child` component wants to transport data from SSR render to the browser
     useStaticValueRefStub = () => ({ current: FIRST_HOOK_RESULT as any });
     // `Child` finishes rendering on the server
