@@ -59,75 +59,7 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   }
 }
 
-class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
-  constructor(options: ApolloClientOptions<TCacheShape>) {
-    super(options);
-
-    getQueryManager(this)[wrappers] = hookWrappers;
-  }
-
-  watchQueryQueue = createBackpressuredCallback<{
-    event: Extract<QueryEvent, { type: "started" }>;
-    observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
-  }>();
-
-  watchQuery<
-    T = any,
-    TVariables extends OperationVariables = OperationVariables,
-  >(options: WatchQueryOptions<TVariables, T>) {
-    if (
-      options.fetchPolicy !== "cache-only" &&
-      options.fetchPolicy !== "standby"
-    ) {
-      const observableQuery = super.watchQuery(options);
-      const queryInfo = observableQuery["queryInfo"] as QueryInfo;
-      const id = queryInfo.queryId as TransportIdentifier;
-
-      const streamObservable = new Observable<
-        Exclude<QueryEvent, { type: "started" }>
-      >((subscriber) => {
-        const { markResult, markError, markReady } = queryInfo;
-        queryInfo.markResult = function (result: FetchResult<any>) {
-          subscriber.next({
-            type: "data",
-            id,
-            result,
-          });
-          return markResult.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markError = function () {
-          subscriber.next({
-            type: "error",
-            id,
-          });
-          subscriber.complete();
-          return markError.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markReady = function () {
-          subscriber.next({
-            type: "complete",
-            id,
-          });
-          subscriber.complete();
-          return markReady.apply(queryInfo, arguments as any);
-        };
-      });
-
-      this.watchQueryQueue.push({
-        event: {
-          type: "started",
-          options: options as WatchQueryOptions<any>,
-          id,
-        },
-        observable: streamObservable,
-      });
-      return observableQuery;
-    }
-    return super.watchQuery(options);
-  }
-}
-
-export class ApolloClientBrowserImpl<
+export class ApolloClientClientBaseImpl<
   TCacheShape,
 > extends ApolloClientBase<TCacheShape> {
   constructor(options: ApolloClientOptions<TCacheShape>) {
@@ -310,6 +242,74 @@ export class ApolloClientBrowserImpl<
       .then(queryInfo.resolve, queryInfo.reject);
   };
 }
+
+class ApolloClientSSRImpl<
+  TCacheShape,
+> extends ApolloClientClientBaseImpl<TCacheShape> {
+  watchQueryQueue = createBackpressuredCallback<{
+    event: Extract<QueryEvent, { type: "started" }>;
+    observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
+  }>();
+
+  watchQuery<
+    T = any,
+    TVariables extends OperationVariables = OperationVariables,
+  >(options: WatchQueryOptions<TVariables, T>) {
+    if (
+      options.fetchPolicy !== "cache-only" &&
+      options.fetchPolicy !== "standby"
+    ) {
+      const observableQuery = super.watchQuery(options);
+      const queryInfo = observableQuery["queryInfo"] as QueryInfo;
+      const id = queryInfo.queryId as TransportIdentifier;
+
+      const streamObservable = new Observable<
+        Exclude<QueryEvent, { type: "started" }>
+      >((subscriber) => {
+        const { markResult, markError, markReady } = queryInfo;
+        queryInfo.markResult = function (result: FetchResult<any>) {
+          subscriber.next({
+            type: "data",
+            id,
+            result,
+          });
+          return markResult.apply(queryInfo, arguments as any);
+        };
+        queryInfo.markError = function () {
+          subscriber.next({
+            type: "error",
+            id,
+          });
+          subscriber.complete();
+          return markError.apply(queryInfo, arguments as any);
+        };
+        queryInfo.markReady = function () {
+          subscriber.next({
+            type: "complete",
+            id,
+          });
+          subscriber.complete();
+          return markReady.apply(queryInfo, arguments as any);
+        };
+      });
+
+      this.watchQueryQueue.push({
+        event: {
+          type: "started",
+          options: options as WatchQueryOptions<any>,
+          id,
+        },
+        observable: streamObservable,
+      });
+      return observableQuery;
+    }
+    return super.watchQuery(options);
+  }
+}
+
+export class ApolloClientBrowserImpl<
+  TCacheShape,
+> extends ApolloClientClientBaseImpl<TCacheShape> {}
 
 const ApolloClientImplementation =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
