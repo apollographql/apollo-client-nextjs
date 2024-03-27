@@ -300,7 +300,6 @@ export class ApolloClientBrowserImpl<
     queryManager
       .fetchQuery(queryId, {
         ...queryInfo.options,
-        query: queryManager.transform(queryInfo.options.query),
         context: {
           ...queryInfo.options.context,
           queryDeduplication: false,
