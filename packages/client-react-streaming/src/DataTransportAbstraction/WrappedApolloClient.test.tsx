@@ -308,7 +308,7 @@ await testIn("browser")(
     appendToBody`<div hidden id="S:2"><div id="parallel">suspending in parallel</div></div>`;
     $RS("S:2", "P:2");
 
-    // everything in the suspende boundary finished rendering, so assemble HTML and take up React rendering again
+    // everything in the suspense boundary finished rendering, so assemble HTML and take up React rendering again
     $RC("B:0", "S:0");
 
     // we expect the *new* value to appear after hydration finished, not the old value from the server
