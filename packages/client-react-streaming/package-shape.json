@@ -6,7 +6,8 @@
       "InMemoryCache",
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
-      "registerApolloClient"
+      "registerApolloClient",
+      "PreloadQuery"
     ],
     "browser": [
       "ApolloClient",
