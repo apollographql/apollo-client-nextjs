@@ -84,11 +84,11 @@ const acModuleImports: Plugin = {
       return { path: args.path, external: true };
     });
     // handle "client component" boundary imports
-    build.onResolve({ filter: /.cc.js/ }, async (args) => {
-      console.log(args);
+    build.onResolve({ filter: /\.cc\.js$/ }, async (args) => {
+      console.log(args, build.initialOptions.define["TSUP_FORMAT"]);
       if (build.initialOptions.define["TSUP_FORMAT"] === '"cjs"') {
         return {
-          path: args.path.replace(/\/.cc.js$/, "/.cc.cjs"),
+          path: args.path.replace(/\.cc\.js$/, ".cc.cjs"),
           external: true,
         };
       }
