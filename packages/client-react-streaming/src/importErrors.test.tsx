@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { test } from "node:test";
-import { testIn } from "./util/runInConditions.js";
+import { outsideOf } from "./util/runInConditions.js";
 
 test("Error message when `WrappedApolloClient` is instantiated with wrong `InMemoryCache`", async () => {
   const { ApolloClient } = await import("#bundled");
@@ -18,8 +18,9 @@ test("Error message when `WrappedApolloClient` is instantiated with wrong `InMem
   );
 });
 
-testIn("node")(
+test(
   "Error message when using `ManualDataTransport` with the wrong `ApolloClient`",
+  { skip: outsideOf("node") },
   async () => {
     const { WrapApolloProvider } = await import("#bundled");
     const upstreamPkg = await import("@apollo/client/index.js");
@@ -49,8 +50,9 @@ testIn("node")(
   }
 );
 
-testIn("browser")(
+test(
   "Error message when using `ManualDataTransport` with the wrong `ApolloClient`",
+  { skip: outsideOf("browser") },
   async () => {
     const { WrapApolloProvider } = await import("#bundled");
     const upstreamPkg = await import("@apollo/client/index.js");
