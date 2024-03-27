@@ -66,6 +66,10 @@ export default defineConfig((options) => {
       "src/ManualDataTransport/index.ts",
       "manual-transport.browser"
     ),
+    {
+      ...entry("browser", "src/index.cc.ts", "index.cc"),
+      treeshake: false, // would remove the "use client" directive
+    },
   ];
 });
 
@@ -76,6 +80,17 @@ const acModuleImports: Plugin = {
       if (build.initialOptions.define["TSUP_FORMAT"] === '"cjs"') {
         // remove trailing `/index.js` in CommonJS builds
         return { path: args.path.replace(/\/index.js$/, ""), external: true };
+      }
+      return { path: args.path, external: true };
+    });
+    // handle "client component" boundary imports
+    build.onResolve({ filter: /.cc.js/ }, async (args) => {
+      console.log(args);
+      if (build.initialOptions.define["TSUP_FORMAT"] === '"cjs"') {
+        return {
+          path: args.path.replace(/\/.cc.js$/, "/.cc.cjs"),
+          external: true,
+        };
       }
       return { path: args.path, external: true };
     });
