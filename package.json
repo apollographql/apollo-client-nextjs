@@ -26,9 +26,9 @@
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.1",
-    "@size-limit/file": "11.1.0",
-    "@size-limit/webpack": "11.1.0",
-    "@size-limit/webpack-why": "11.1.0",
-    "size-limit": "11.1.0"
+    "@size-limit/file": "11.1.2",
+    "@size-limit/webpack": "11.1.2",
+    "@size-limit/webpack-why": "11.1.2",
+    "size-limit": "11.1.2"
   }
 }
