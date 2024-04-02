@@ -19,9 +19,9 @@
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@types/node": "18.15.11",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "18.0.11",
+    "@types/node": "20.12.2",
+    "@types/react": "18.2.73",
+    "@types/react-dom": "18.2.23",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "framer-motion": "^10.12.2",
@@ -35,6 +35,6 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@types/js-cookie": "^3.0.3"
+    "@types/js-cookie": "3.0.6"
   }
 }

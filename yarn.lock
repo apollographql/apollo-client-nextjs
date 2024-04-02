@@ -55,8 +55,8 @@ __metadata:
     "@testing-library/react": "npm:14.2.1"
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.3"
-    "@types/node": "npm:20.11.30"
-    "@types/react": "npm:18.2.67"
+    "@types/node": "npm:20.12.2"
+    "@types/react": "npm:18.2.73"
     "@typescript-eslint/eslint-plugin": "npm:7.0.1"
     "@typescript-eslint/parser": "npm:7.0.1"
     concurrently: "npm:8.2.2"
@@ -133,8 +133,8 @@ __metadata:
     "@testing-library/react": "npm:14.2.1"
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.3"
-    "@types/node": "npm:20.11.30"
-    "@types/react": "npm:18.2.67"
+    "@types/node": "npm:20.12.2"
+    "@types/react": "npm:18.2.73"
     "@typescript-eslint/eslint-plugin": "npm:7.0.1"
     "@typescript-eslint/parser": "npm:7.0.1"
     concurrently: "npm:8.2.2"
@@ -4966,10 +4966,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-cookie@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@types/js-cookie@npm:3.0.3"
-  checksum: 10/927254ec37ce4fbe4d9d54f53a446b4351259799d9933db5808ddb7c430396aa2496bdd0a4e47e1b56048ffbec98645cbd4daa9e3ed9a6fff55e25eb640fcb15
+"@types/js-cookie@npm:3.0.6":
+  version: 3.0.6
+  resolution: "@types/js-cookie@npm:3.0.6"
+  checksum: 10/272d551687547445cb210213c73e72e0e5d58ad73e2e444a65d688b8ff9425529779ee0cd6492aaa1f070161916d4254ef2b1a76d64179100437f60749d094ef
   languageName: node
   linkType: hard
 
@@ -5057,33 +5057,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.15.11":
-  version: 18.15.11
-  resolution: "@types/node@npm:18.15.11"
-  checksum: 10/ffadc25bea2c8c79db77ab6ad083938c976e2fc4a5ac52cfbdfe387df4404d02813e0f127a6666f5910f8975ff825f2225a8aba734bab7daa652ad60e6d34f45
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:18.15.3":
-  version: 18.15.3
-  resolution: "@types/node@npm:18.15.3"
-  checksum: 10/18c7a19fb2935c0cfb0498fc061c327b2beea06e8ca08f77619eb3d1a975ec8a87dfadf54ca99bc423b5dec997f89249615c4f31f34438fa456fb530213e7d37
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:18.16.3":
-  version: 18.16.3
-  resolution: "@types/node@npm:18.16.3"
-  checksum: 10/4f4425ba49a46e7efa88346dc2ea63ea9aab88c04d244d77710fe8019587f3c163ba2ea1e4854fd20cb5cdec9abd3bfb324ad60aabddf395cee6b0b195bd57bb
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:20.11.30":
-  version: 20.11.30
-  resolution: "@types/node@npm:20.11.30"
+"@types/node@npm:20.12.2":
+  version: 20.12.2
+  resolution: "@types/node@npm:20.12.2"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10/78515bc768d2b878e2e06a1c20eb4f5840072b79b8d28ff3dd0a7feaaf48fd3a2ac03cfa5bc7564da82db5906b43e9ba0e5df9f43d870b7aae2942306e208815
+  checksum: 10/f1f0ebfe475aefa183763b856e0023b81b76554196e8676a45b9fcfd1012cdd20d32adefb3c0330001c0011e074676603c34c24821a4924228250ea13a75da43
   languageName: node
   linkType: hard
 
@@ -5131,21 +5110,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.11":
-  version: 18.0.11
-  resolution: "@types/react-dom@npm:18.0.11"
+"@types/react-dom@npm:18.2.23":
+  version: 18.2.23
+  resolution: "@types/react-dom@npm:18.2.23"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10/e6dd39b2ef65f6e6257f1792c62e997273a06c3e72e05f082185d0b8dfd8972340f9d5452408183b4bf03bd68cbb2fb9da89e063f1ba98c287a38953491febec
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:18.2.1":
-  version: 18.2.1
-  resolution: "@types/react-dom@npm:18.2.1"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 10/5c6bcd6bbd4ac4caf5e492d79102a7b615531e101692dd844daae5709657c7599d4dfcb70fd84e5e1d135a958cf8bb919dc85542601a09419e9604c5e03bfc92
+  checksum: 10/8311c67767b0aafb5cd94176a90f801f0f5f6930731d57caaa04bb0d87fdef6bc6f723a116d9777d2082ec022682acaad7a62d04dc27e330e818cf34f2ef2703
   languageName: node
   linkType: hard
 
@@ -5158,7 +5128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.55":
+"@types/react@npm:*":
   version: 18.2.55
   resolution: "@types/react@npm:18.2.55"
   dependencies:
@@ -5169,14 +5139,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.67":
-  version: 18.2.67
-  resolution: "@types/react@npm:18.2.67"
+"@types/react@npm:18.2.73":
+  version: 18.2.73
+  resolution: "@types/react@npm:18.2.73"
   dependencies:
     "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/d7e248dbe8d9d3b05f0d8e128d615fc9c85aa2c5d15634271d20cb9b343dbeffb0875f31a44e7ac63b42afc25949bd4c3633b7ebee45ee4666591ca934a8dffb
+  checksum: 10/799e30e73464dff40e04f4eb7499ebc31f99b1711a69263b9af340af738e35c9cdf53084e3dacc3b21c031aaa0cba1b51f4ba60490204b7abb75f115b841583f
   languageName: node
   linkType: hard
 
@@ -6008,9 +5977,9 @@ __metadata:
     "@graphql-codegen/typed-document-node": "npm:^4.0.1"
     "@graphql-codegen/typescript": "npm:3.0.4"
     "@graphql-codegen/typescript-resolvers": "npm:3.2.1"
-    "@types/node": "npm:18.16.3"
-    "@types/react": "npm:^18.2.55"
-    "@types/react-dom": "npm:18.2.1"
+    "@types/node": "npm:20.12.2"
+    "@types/react": "npm:18.2.73"
+    "@types/react-dom": "npm:18.2.23"
     "@vercel/kv": "npm:^0.1.1"
     autoprefixer: "npm:10.4.14"
     clsx: "npm:^1.2.1"
@@ -6036,9 +6005,9 @@ __metadata:
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
-    "@types/node": "npm:18.15.3"
-    "@types/react": "npm:^18.2.55"
-    "@types/react-dom": "npm:18.0.11"
+    "@types/node": "npm:20.12.2"
+    "@types/react": "npm:18.2.73"
+    "@types/react-dom": "npm:18.2.23"
     client-only: "npm:^0.0.1"
     encoding: "npm:^0.1.13"
     eslint: "npm:8.36.0"
@@ -9862,10 +9831,10 @@ __metadata:
     "@emotion/core": "npm:^11.0.0"
     "@emotion/react": "npm:^11.10.6"
     "@emotion/styled": "npm:^11.10.6"
-    "@types/js-cookie": "npm:^3.0.3"
-    "@types/node": "npm:18.15.11"
-    "@types/react": "npm:^18.2.55"
-    "@types/react-dom": "npm:18.0.11"
+    "@types/js-cookie": "npm:3.0.6"
+    "@types/node": "npm:20.12.2"
+    "@types/react": "npm:18.2.73"
+    "@types/react-dom": "npm:18.2.23"
     eslint: "npm:8.38.0"
     eslint-config-next: "npm:13.3.0"
     framer-motion: "npm:^10.12.2"
