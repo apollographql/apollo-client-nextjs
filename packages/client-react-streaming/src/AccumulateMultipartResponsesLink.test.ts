@@ -10,14 +10,11 @@ import { test, mock } from "node:test";
 import assert from "node:assert";
 import { fromPartial } from "@total-typescript/shoehorn";
 import type { SubscriptionObserver } from "zen-observable-ts";
-import { runInConditions } from "./util/runInConditions.js";
-
-runInConditions("node", "browser");
 
 const { DebounceMultipartResponsesLink: AccumulateMultipartResponsesLink } =
   await import("#bundled");
 
-test("normal queries can resolve synchronously", () => {
+await test("normal queries can resolve synchronously", () => {
   const query = gql`
     query {
       fastField
@@ -49,7 +46,7 @@ test("normal queries can resolve synchronously", () => {
   });
 });
 
-test("deferred query will complete synchonously if maxDelay is 0", () => {
+await test("deferred query will complete synchonously if maxDelay is 0", () => {
   const query = gql`
     query {
       fastField
@@ -84,7 +81,7 @@ test("deferred query will complete synchonously if maxDelay is 0", () => {
   });
 });
 
-test("`next` call will be debounced and results will be merged together", () => {
+await test("`next` call will be debounced and results will be merged together", () => {
   mock.timers.enable();
 
   const query = gql`
