@@ -21,8 +21,8 @@ jobs:
       version: ${{ steps.version.outputs.matrix }}
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "yarn"
@@ -42,8 +42,8 @@ jobs:
       matrix:
         version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "yarn"
@@ -61,8 +61,8 @@ jobs:
       matrix:
         version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "yarn"
@@ -82,8 +82,8 @@ jobs:
       run:
         working-directory: ./integration-test
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "yarn"
@@ -107,7 +107,7 @@ jobs:
         id: playwright-version
         run: yarn why @playwright/test --json | jq '.children|to_entries[0].value.locator' --raw-output | sed 's/^.*npm:/PLAYWRIGHT_VERSION=/' >> $GITHUB_ENV
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: |
