@@ -6,7 +6,8 @@
       "InMemoryCache",
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
-      "registerApolloClient"
+      "registerApolloClient",
+      "built_for_rsc"
     ],
     "browser": [
       "ApolloClient",
@@ -16,7 +17,8 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
-      "resetApolloSingletons"
+      "resetApolloSingletons",
+      "built_for_browser"
     ],
     "node": [
       "ApolloClient",
@@ -26,12 +28,37 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
-      "resetApolloSingletons"
+      "resetApolloSingletons",
+      "built_for_ssr"
+    ],
+    "edge-light,worker,browser": [
+      "ApolloClient",
+      "DataTransportContext",
+      "DebounceMultipartResponsesLink",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "WrapApolloProvider",
+      "resetApolloSingletons",
+      "built_for_ssr"
     ]
   },
   "@apollo/client-react-streaming/manual-transport": {
-    "react-server": [],
-    "browser": ["buildManualDataTransport", "resetManualSSRApolloSingletons"],
-    "node": ["buildManualDataTransport", "resetManualSSRApolloSingletons"]
+    "react-server": ["built_for_other"],
+    "browser": [
+      "buildManualDataTransport",
+      "resetManualSSRApolloSingletons",
+      "built_for_browser"
+    ],
+    "node": [
+      "buildManualDataTransport",
+      "resetManualSSRApolloSingletons",
+      "built_for_ssr"
+    ],
+    "edge-light,worker,browser": [
+      "buildManualDataTransport",
+      "resetManualSSRApolloSingletons",
+      "built_for_ssr"
+    ]
   }
 }

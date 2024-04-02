@@ -20,26 +20,26 @@
       "require": {
         "types": "./dist/rsc/index.d.cts",
         "react-server": "./dist/rsc/index.cjs",
-        "browser": "./dist/empty.cjs",
-        "node": "./dist/empty.cjs"
+        "default": "./dist/empty.cjs"
       },
       "import": {
         "types": "./dist/rsc/index.d.ts",
         "react-server": "./dist/rsc/index.js",
-        "browser": "./dist/empty.js",
-        "node": "./dist/empty.js"
+        "default": "./dist/empty.js"
       }
     },
     "./ssr": {
       "require": {
         "types": "./dist/ssr/index.ssr.d.cts",
         "react-server": "./dist/ssr/index.rsc.cjs",
+        "edge-light": "./dist/ssr/index.ssr.cjs",
         "browser": "./dist/ssr/index.browser.cjs",
         "node": "./dist/ssr/index.ssr.cjs"
       },
       "import": {
         "types": "./dist/ssr/index.ssr.d.ts",
         "react-server": "./dist/ssr/index.rsc.js",
+        "edge-light": "./dist/ssr/index.ssr.js",
         "browser": "./dist/ssr/index.browser.js",
         "node": "./dist/ssr/index.ssr.js"
       }
