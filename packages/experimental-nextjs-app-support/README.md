@@ -5,8 +5,8 @@
 # Apollo Client support for the Next.js App Router
 
 > ❗️ This package is experimental.<br/>
-> Generally it should work well, you might run into race conditions when your Client Component is still rendering in SSR, and already making overlapping queries on the browser.  
-> This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
+> Generally it should work well, you might run into race conditions when your Client Component is still rendering in SSR, and already making overlapping queries on the browser.
+> This cannot be addressed from our side, but would need API changes in Next.js or React itself.
 > If you do not use suspense in your application, this will not be a problem to you.
 
 | ☑️  Apollo Client User Survey |
@@ -41,8 +41,8 @@ npm install @apollo/client@latest @apollo/experimental-nextjs-app-support
 
 ## Usage
 
-> ❗️ **We do handle "RSC" and "SSR" use cases as completely separate.**  
-> You should generally try not to have overlapping queries between the two, as all queries made in SSR can dynamically update in the browser as the cache updates (e.g. from a mutation or another query), but queries made in RSC will not be updated in the browser - for that purpose, the full page would need to rerender. As a result, any overlapping data would result in inconsistencies in your UI.  
+> ❗️ **We do handle "RSC" and "SSR" use cases as completely separate.**
+> You should generally try not to have overlapping queries between the two, as all queries made in SSR can dynamically update in the browser as the cache updates (e.g. from a mutation or another query), but queries made in RSC will not be updated in the browser - for that purpose, the full page would need to rerender. As a result, any overlapping data would result in inconsistencies in your UI.
 > So decide for yourself, which queries you want to make in RSC and which in SSR, and don't have them overlap.
 
 ### In RSC
@@ -50,7 +50,7 @@ npm install @apollo/client@latest @apollo/experimental-nextjs-app-support
 Create an `ApolloClient.js` file:
 
 ```js
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client-react-streaming";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
 
 export const { getClient } = registerApolloClient(() => {
@@ -84,12 +84,8 @@ First, create a new file `app/ApolloWrapper.jsx`:
 // ^ this file needs the "use client" pragma
 
 import { ApolloLink, HttpLink } from "@apollo/client";
-import {
-  ApolloNextAppProvider,
-  NextSSRInMemoryCache,
-  NextSSRApolloClient,
-  SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client-react-streaming";
+import { ApolloNextAppProvider } from "@apollo/experimental-nextjs-app-support/ssr";
 
 // have a function to create a client for you
 function makeClient() {
@@ -105,9 +101,10 @@ function makeClient() {
     // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
   });
 
-  return new NextSSRApolloClient({
-    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
-    cache: new NextSSRInMemoryCache(),
+  return new ApolloClient({
+    // use the `InMemoryCache` from `@apollo/client-react-streaming`
+    // instead of `@apollo/client`
+    cache: new InMemoryCache(),
     link:
       typeof window === "undefined"
         ? ApolloLink.from([
@@ -155,7 +152,7 @@ export default function RootLayout({
 }
 ```
 
-> ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.  
+> ☝️ This will work even if your layout is a React Server Component and will also allow the children of the layout to be React Server Components.
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
 If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
@@ -175,7 +172,7 @@ afterEach(resetNextSSRApolloSingletons);
 ## Handling Multipart responses in SSR
 
 Generally, `useSuspenseQuery` will only suspend until the initial response is received.
-In most cases, you get a full response, but if you use multipart response features like the `@defer` directive, you will only get a partial response.  
+In most cases, you get a full response, but if you use multipart response features like the `@defer` directive, you will only get a partial response.
 Without further handling, your component will now render with partial data - but the request will still keep running in the background. This is a worst-case scenario because your server will have to bear the load of that request, but the client will not get the complete data anyways.<br/>
 To handle this, you can apply one of two different strategies:
 
