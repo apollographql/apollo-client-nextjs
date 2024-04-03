@@ -5,9 +5,6 @@ import { gql, Observable } from "@apollo/client/core/index.js";
 import { print } from "graphql";
 import { test } from "node:test";
 import assert from "node:assert";
-import { runInConditions } from "./util/runInConditions.js";
-
-runInConditions("node", "browser");
 
 const { RemoveMultipartDirectivesLink } = await import("#bundled");
 

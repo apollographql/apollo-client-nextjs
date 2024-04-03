@@ -38,6 +38,14 @@ export default defineConfig((options) => {
       entry: {
         [output]: input,
       },
+      footer(ctx) {
+        return {
+          js:
+            ctx.format === "esm"
+              ? `export const built_for_${env} = true;`
+              : `exports.built_for_${env} = true;`,
+        };
+      },
     };
   }
 

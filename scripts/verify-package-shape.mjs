@@ -39,9 +39,13 @@ async function checkPackage(/** @type {string} */ pkg) {
  * @param {string[]} shape
  */
 async function verifyESM(condition, entryPoint, pkg, shape) {
-  console.log(`Checking ESM: ${entryPoint} with condition ${condition}`);
+  const conditionFlags = condition
+    .split(",")
+    .map((c) => `--conditions ${c}`)
+    .join(" ");
+  console.log(`Checking ESM: ${entryPoint} with ${conditionFlags}`);
   const child = exec(
-    `node --input-type=module --conditions ${condition} --eval 'console.log(JSON.stringify(Object.keys(await import("${entryPoint}"))))'`,
+    `node --input-type=module ${conditionFlags} --eval 'console.log(JSON.stringify(Object.keys(await import("${entryPoint}"))))'`,
     {
       cwd: dirname(pkg),
     }
@@ -61,9 +65,13 @@ async function verifyESM(condition, entryPoint, pkg, shape) {
  * @param {string[]} shape
  */
 async function verifyCJS(condition, entryPoint, pkg, shape) {
-  console.log(`Checking CJS: ${entryPoint} with condition ${condition}`);
+  const conditionFlags = condition
+    .split(",")
+    .map((c) => `--conditions ${c}`)
+    .join(" ");
+  console.log(`Checking CJS: ${entryPoint} with ${conditionFlags}`);
   const child = exec(
-    `node --input-type=commonjs --conditions ${condition} --eval 'console.log(JSON.stringify(Object.keys(require("${entryPoint}"))))'`,
+    `node --input-type=commonjs ${conditionFlags} --eval 'console.log(JSON.stringify(Object.keys(require("${entryPoint}"))))'`,
     {
       cwd: dirname(pkg),
     }
