@@ -67,7 +67,7 @@ await describe(
       networkStatus: 7,
     };
 
-    await test(
+    test(
       "`useSuspenseQuery`: data is getting sent to the transport",
       { skip: outsideOf("node") },
       async () => {
@@ -144,7 +144,7 @@ await describe(
       }
     );
 
-    await test(
+    test(
       "`useSuspenseQuery`: data from the transport is used by the hooks",
       { skip: outsideOf("browser") },
       async () => {
@@ -269,7 +269,7 @@ await describe("document transforms are applied correctly", async () => {
       },
     })
   );
-  await test("when making a request", async () => {
+  test("when making a request", async () => {
     const link = new MockSubscriptionLink();
     const client = new ApolloClient({
       connectToDevTools: false,
@@ -286,7 +286,7 @@ await describe("document transforms are applied correctly", async () => {
     assert.equal(print(link.operation!.query), print(transformedQuery));
   });
 
-  await test(
+  test(
     "when rerunning queries when connection is closed",
     { skip: outsideOf("browser") },
     async () => {
@@ -313,7 +313,7 @@ await describe("document transforms are applied correctly", async () => {
     }
   );
 
-  await test(
+  test(
     "when rerunning a query that failed on the server",
     { skip: outsideOf("browser") },
     async () => {
