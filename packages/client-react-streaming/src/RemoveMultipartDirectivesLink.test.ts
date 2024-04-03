@@ -3,7 +3,7 @@ import { fromPartial } from "@total-typescript/shoehorn";
 import type { DocumentNode } from "@apollo/client/index.js";
 import { gql, Observable } from "@apollo/client/core/index.js";
 import { print } from "graphql";
-import { it } from "node:test";
+import { test } from "node:test";
 import assert from "node:assert";
 import { runInConditions } from "./util/runInConditions.js";
 
@@ -51,7 +51,7 @@ const queryWithDeferAndStripAnnotation = gql`
   }
 `;
 
-it("removes fields with a @defer directive", () => {
+test("removes fields with a @defer directive", () => {
   const link = new RemoveMultipartDirectivesLink({
     stripDefer: true,
   });
@@ -69,7 +69,7 @@ query myQuery {
   );
 });
 
-it("`stripDefer` defaults to `true`", () => {
+test("`stripDefer` defaults to `true`", () => {
   const link = new RemoveMultipartDirectivesLink({
     stripDefer: true,
   });
@@ -87,7 +87,7 @@ query myQuery {
   );
 });
 
-it("preserves @defer fields with a `SsrDontStrip` label", () => {
+test("preserves @defer fields with a `SsrDontStrip` label", () => {
   const link = new RemoveMultipartDirectivesLink({
     stripDefer: true,
   });
@@ -114,7 +114,7 @@ query myQuery {
   );
 });
 
-it("can be configured to not remove @defer fields", () => {
+test("can be configured to not remove @defer fields", () => {
   const link = new RemoveMultipartDirectivesLink({
     stripDefer: false,
   });
@@ -138,7 +138,7 @@ query myQuery {
   );
 });
 
-it("even with `stripDefer: false`, certain fields can be marked for stripping", () => {
+test("even with `stripDefer: false`, certain fields can be marked for stripping", () => {
   const link = new RemoveMultipartDirectivesLink({
     stripDefer: false,
   });
