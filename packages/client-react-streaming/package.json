@@ -1,6 +1,6 @@
 {
   "name": "@apollo/client-react-streaming",
-  "version": "0.9.0",
+  "version": "0.9.2",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
@@ -48,12 +48,14 @@
       "require": {
         "types": "./dist/combined.d.cts",
         "react-server": "./dist/index.rsc.cjs",
+        "edge-light": "./dist/index.ssr.cjs",
         "browser": "./dist/index.browser.cjs",
         "node": "./dist/index.ssr.cjs"
       },
       "import": {
         "types": "./dist/combined.d.ts",
         "react-server": "./dist/index.rsc.js",
+        "edge-light": "./dist/index.ssr.js",
         "browser": "./dist/index.browser.js",
         "node": "./dist/index.ssr.js"
       }
@@ -62,12 +64,14 @@
       "require": {
         "types": "./dist/manual-transport.ssr.d.cts",
         "react-server": "./dist/empty.cjs",
+        "edge-light": "./dist/manual-transport.ssr.cjs",
         "browser": "./dist/manual-transport.browser.cjs",
         "node": "./dist/manual-transport.ssr.cjs"
       },
       "import": {
         "types": "./dist/manual-transport.ssr.d.ts",
         "react-server": "./dist/empty.js",
+        "edge-light": "./dist/manual-transport.ssr.js",
         "browser": "./dist/manual-transport.browser.js",
         "node": "./dist/manual-transport.ssr.js"
       }
@@ -99,9 +103,10 @@
     "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
-    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:shape",
+    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
     "test-bundle:attw": "attw --pack .",
     "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
+    "test-bundle:publint": "publint --strict",
     "test-bundle:shape": "yarn workspace monorepo verify-package-shape $PWD/package-shape.json",
     "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
     "lint": "eslint --ext .ts,.tsx src"
@@ -109,23 +114,24 @@
   "devDependencies": {
     "@apollo/client": "3.9.9",
     "@arethetypeswrong/cli": "0.15.2",
-    "@microsoft/api-extractor": "7.42.3",
-    "@testing-library/react": "14.2.1",
+    "@microsoft/api-extractor": "7.43.0",
+    "@testing-library/react": "14.2.2",
     "@total-typescript/shoehorn": "0.1.2",
-    "@tsconfig/recommended": "1.0.3",
-    "@types/node": "20.11.30",
-    "@types/react": "18.2.67",
-    "@typescript-eslint/eslint-plugin": "7.0.1",
-    "@typescript-eslint/parser": "7.0.1",
+    "@tsconfig/recommended": "1.0.5",
+    "@types/node": "20.12.2",
+    "@types/react": "18.2.73",
+    "@typescript-eslint/eslint-plugin": "7.5.0",
+    "@typescript-eslint/parser": "7.5.0",
     "concurrently": "8.2.2",
     "eslint": "8.57.0",
     "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
-    "glob": "10.3.10",
+    "glob": "10.3.12",
     "global-jsdom": "24.0.0",
     "globstar": "1.0.0",
     "graphql": "16.8.1",
     "jsdom": "24.0.0",
+    "publint": "0.2.7",
     "react": "18.3.0-canary-60a927d04-20240113",
     "react-error-boundary": "4.0.13",
     "react-server-dom-webpack": "18.3.0-canary-60a927d04-20240113",
@@ -133,7 +139,7 @@
     "superjson": "1.13.3",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
-    "tsx": "4.7.0",
+    "tsx": "4.7.1",
     "typescript": "5.4.3",
     "vitest": "1.4.0"
   },

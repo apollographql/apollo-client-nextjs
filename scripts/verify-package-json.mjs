@@ -26,11 +26,13 @@ if (notfound > 0) {
 
 async function checkPackage(/** @type {string} */ pkg) {
   const json = JSON.parse(await readFile(pkg, { encoding: "utf-8" }));
-  await ensureLeafFilesExist(dirname(pkg), json.exports);
+  // handled by publint
+  // await ensureLeafFilesExist(dirname(pkg), json.exports);
   await ensureLeafFilesExist(dirname(pkg), json.typesVersions);
   await ensureLeafFilesExist(dirname(pkg), json.types);
   await ensureLeafFilesExist(dirname(pkg), json.typings);
-  await ensureLeafFilesExist(dirname(pkg), json.main);
+  // handled by publint
+  // await ensureLeafFilesExist(dirname(pkg), json.main);
 }
 
 /**
