@@ -21,7 +21,9 @@ const QUERY: TypedDocumentNode<{
 export const dynamic = "force-dynamic";
 
 export default function Page() {
-  const { data } = useSuspenseQuery(QUERY);
+  const { data } = useSuspenseQuery(QUERY, {
+    context: { delay: 1000, error: "browser" },
+  });
   globalThis.hydrationFinished?.();
 
   return (
