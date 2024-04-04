@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from "rehackt";
+import React, { Suspense, use, useMemo } from "rehackt";
 import { outsideOf } from "../util/runInConditions.js";
 import assert from "node:assert";
 import test, { afterEach, describe } from "node:test";
@@ -24,17 +24,21 @@ const {
   InMemoryCache,
   WrapApolloProvider,
   DataTransportContext,
+  resetApolloSingletons,
 } = await import("#bundled");
 
-await describe(
+describe(
   "tests with DOM access",
   { skip: outsideOf("node", "browser") },
   async () => {
     // @ts-expect-error seems to have a wrong type?
     await import("global-jsdom/register");
-    const { render, cleanup } = await import("@testing-library/react");
+    const { render, cleanup, getQueriesForElement } = await import(
+      "@testing-library/react"
+    );
 
     afterEach(cleanup);
+    afterEach(resetApolloSingletons);
 
     const QUERY_ME: TypedDocumentNode<{ me: string }> = gql`
       query {
@@ -215,9 +219,9 @@ await describe(
         await findByText("User");
 
         assert.ok(attemptedRenderCount > 0);
-        // one render to rehydrate the server value
+        // will try with server value and immediately restart with client value
         // one rerender with the actual client value (which is hopefull equal)
-        assert.equal(finishedRenderCount, 2);
+        assert.equal(finishedRenderCount, 1);
 
         assert.deepStrictEqual(JSON.parse(JSON.stringify(client.extract())), {
           ROOT_QUERY: {
@@ -227,10 +231,127 @@ await describe(
         });
       }
     );
+
+    test(
+      "race condition: client ahead of server renders without hydration mismatch",
+      { skip: outsideOf("browser") },
+      async () => {
+        const { $RC, $RS, setBody, hydrateBody, appendToBody } = await import(
+          "../util/hydrationTest.js"
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
+        let useStaticValueRefStub = <T extends unknown>(): { current: T } => {
+          throw new Error("Should not be called yet!");
+        };
+
+        const client = new ApolloClient({
+          connectToDevTools: false,
+          cache: new InMemoryCache(),
+        });
+        const simulateRequestStart = client.onQueryStarted!;
+        const simulateRequestData = client.onQueryProgress!;
+
+        const Provider = WrapApolloProvider(({ children }) => {
+          return (
+            <DataTransportContext.Provider
+              value={useMemo(
+                () => ({
+                  useStaticValueRef() {
+                    return useStaticValueRefStub();
+                  },
+                }),
+                []
+              )}
+            >
+              {children}
+            </DataTransportContext.Provider>
+          );
+        });
+
+        const finishedRenders: any[] = [];
+
+        function Child() {
+          const { data } = useSuspenseQuery(QUERY_ME);
+          finishedRenders.push(data);
+          return <div id="user">{data.me}</div>;
+        }
+
+        const promise = Promise.resolve();
+        // suspends on the server, immediately resolved in browser
+        function ParallelSuspending() {
+          use(promise);
+          return <div id="parallel">suspending in parallel</div>;
+        }
+
+        const { findByText } = getQueriesForElement(document.body);
+
+        // server starts streaming
+        setBody`<!--$?--><template id="B:0"></template>Fallback<!--/$-->`;
+        // request started on the server
+        simulateRequestStart(EVENT_STARTED);
+
+        hydrateBody(
+          <Provider makeClient={() => client}>
+            <Suspense fallback={"Fallback"}>
+              <Child />
+              <ParallelSuspending />
+            </Suspense>
+          </Provider>
+        );
+
+        await findByText("Fallback");
+        // this is the div for the suspense boundary
+        appendToBody`<div hidden id="S:0"><template id="P:1"></template><template id="P:2"></template></div>`;
+        // request has finished on the server
+        simulateRequestData(EVENT_DATA);
+        simulateRequestData(EVENT_COMPLETE);
+        // `Child` component wants to transport data from SSR render to the browser
+        useStaticValueRefStub = () => ({ current: FIRST_HOOK_RESULT as any });
+        // `Child` finishes rendering on the server
+        appendToBody`<div hidden id="S:1"><div id="user">User</div></div>`;
+        $RS("S:1", "P:1");
+
+        // meanwhile, in the browser, the cache is modified
+        client.cache.writeQuery({
+          query: QUERY_ME,
+          data: {
+            me: "Future me.",
+          },
+        });
+
+        // `ParallelSuspending` finishes rendering
+        appendToBody`<div hidden id="S:2"><div id="parallel">suspending in parallel</div></div>`;
+        $RS("S:2", "P:2");
+
+        // everything in the suspense boundary finished rendering, so assemble HTML and take up React rendering again
+        $RC("B:0", "S:0");
+
+        // we expect the *new* value to appear after hydration finished, not the old value from the server
+        await findByText("Future me.");
+
+        // one render to rehydrate the server value
+        // one rerender with the actual client value (which is hopefull equal)
+        assert.deepStrictEqual(finishedRenders, [
+          { me: "User" },
+          { me: "Future me." },
+        ]);
+
+        assert.deepStrictEqual(JSON.parse(JSON.stringify(client.extract())), {
+          ROOT_QUERY: {
+            __typename: "Query",
+            me: "Future me.",
+          },
+        });
+        assert.equal(
+          document.body.innerHTML,
+          `<!--$--><div id="user">Future me.</div><div id="parallel">suspending in parallel</div><!--/$-->`
+        );
+      }
+    );
   }
 );
 
-await describe("document transforms are applied correctly", async () => {
+describe("document transforms are applied correctly", async () => {
   const untransformedQuery = gql`
     query Test {
       user {
