@@ -49,7 +49,14 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   static readonly info = bundle;
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
-    super(options);
+    super(
+      process.env.REACT_ENV === "rsc" || process.env.REACT_ENV === "ssr"
+        ? {
+            connectToDevTools: false,
+            ...options,
+          }
+        : options
+    );
 
     if (!(this.cache instanceof InMemoryCache)) {
       throw new Error(

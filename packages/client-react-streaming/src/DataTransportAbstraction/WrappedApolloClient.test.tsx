@@ -108,7 +108,6 @@ describe(
 
         const link = new MockSubscriptionLink();
         const client = new ApolloClient({
-          connectToDevTools: false,
           cache: new InMemoryCache(),
           link,
         });
