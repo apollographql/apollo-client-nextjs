@@ -20,9 +20,11 @@ export default function Page({ searchParams }: { searchParams?: any }) {
         }}
         getClient={getClient}
       >
-        <Suspense fallback={<>loading</>}>
-          <ClientChild />
-        </Suspense>
+        {(queryRef) => (
+          <Suspense fallback={<>loading</>}>
+            <ClientChild queryRef={queryRef} />
+          </Suspense>
+        )}
       </PreloadQuery>
     </ApolloWrapper>
   );

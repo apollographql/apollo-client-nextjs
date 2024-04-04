@@ -1,6 +1,10 @@
 import type { ReactNode } from "react";
 import { SimulatePreloadedQuery } from "./index.cc.js";
-import type { ApolloClient, QueryOptions } from "@apollo/client";
+import type {
+  ApolloClient,
+  QueryOptions,
+  QueryReference,
+} from "@apollo/client";
 import React from "react";
 
 export function PreloadQuery({
@@ -10,7 +14,7 @@ export function PreloadQuery({
 }: {
   options: QueryOptions;
   getClient: () => ApolloClient<any>;
-  children: ReactNode;
+  children: ReactNode | ((queryRef: QueryReference) => ReactNode);
 }) {
   const resultPromise = getClient()
     .query({
@@ -27,7 +31,12 @@ export function PreloadQuery({
   const cleanedOptions = JSON.parse(JSON.stringify(options));
   return (
     <SimulatePreloadedQuery options={cleanedOptions} result={resultPromise}>
-      {children}
+      {typeof children === "function"
+        ? children({
+            __transportedQueryRef: true,
+            options: cleanedOptions,
+          } as any as QueryReference)
+        : children}
     </SimulatePreloadedQuery>
   );
 }

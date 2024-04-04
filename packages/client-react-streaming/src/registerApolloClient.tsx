@@ -4,7 +4,7 @@ import { cache } from "react";
 /**
  * > This export is only available in React Server Components
  *
- * Ensures that you can always access the same instance of ApolloClient 
+ * Ensures that you can always access the same instance of ApolloClient
  * during RSC for an ongoing request, while always returning
  * a new instance for different requests.
  *
@@ -26,7 +26,7 @@ export function registerApolloClient(
   makeClient: () => Promise<ApolloClient<any>>
 ): { getClient: () => Promise<ApolloClient<any>> };
 /**
- * Ensures that you can always access the same instance of ApolloClient 
+ * Ensures that you can always access the same instance of ApolloClient
  * during RSC for an ongoing request, while always returning
  * a new instance for different requests.
  *
@@ -46,6 +46,8 @@ export function registerApolloClient(
  */
 export function registerApolloClient(makeClient: () => ApolloClient<any>): {
   getClient: () => ApolloClient<any>;
+  // TODO, with `getClient` prebound
+  PreloadQuery?: typeof import("./PreloadQuery.js").PreloadQuery;
 };
 export function registerApolloClient(
   makeClient: (() => Promise<ApolloClient<any>>) | (() => ApolloClient<any>)

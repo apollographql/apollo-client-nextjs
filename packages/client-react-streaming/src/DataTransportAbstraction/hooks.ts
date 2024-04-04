@@ -1,5 +1,15 @@
-import type { HookWrappers } from "@apollo/client/react/internal/index.js";
+import type {
+  HookWrappers,
+  QueryReference,
+} from "@apollo/client/react/internal/index.js";
 import { useTransportValue } from "./useTransportValue.js";
+import {
+  QueryOptions,
+  getApolloContext,
+  createQueryPreloader,
+  OperationVariables,
+} from "@apollo/client";
+import { use } from "react";
 
 export const hookWrappers: HookWrappers = {
   useFragment(orig_useFragment) {
@@ -18,8 +28,39 @@ export const hookWrappers: HookWrappers = {
     return wrap(orig_useSuspenseQuery, ["data", "networkStatus"]);
   },
   useReadQuery(orig_useReadQuery) {
-    return wrap(orig_useReadQuery, ["data", "networkStatus"]);
+    return wrap(
+      (queryRef) => {
+        if (isTransportedQueryRef(queryRef)) {
+          if (queryRef.__transportedQueryRef === true) {
+            const preloader = createQueryPreloader(
+              use(getApolloContext()).client!
+            );
+            const { query, ...options } = queryRef.options;
+            // TODO: discuss what to do with the fetchPolicy here
+            options.fetchPolicy = "cache-first";
+            queryRef.__transportedQueryRef = preloader(
+              query,
+              options as typeof options & { fetchPolicy: "cache-first" }
+            );
+          }
+          queryRef = queryRef.__transportedQueryRef;
+        }
+        return orig_useReadQuery(queryRef);
+      },
+      ["data", "networkStatus"]
+    );
   },
+};
+
+function isTransportedQueryRef(
+  queryRef: object
+): queryRef is TransportedQueryRef {
+  return "__transportedQueryRef" in queryRef;
+}
+
+type TransportedQueryRef = {
+  __transportedQueryRef: true | QueryReference<any, any>;
+  options: QueryOptions;
 };
 
 function wrap<T extends (...args: any[]) => any>(
