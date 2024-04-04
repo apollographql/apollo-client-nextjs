@@ -73,10 +73,10 @@ export function registerApolloClient(
     if (arguments.length) {
       throw new Error(
         `
-        You cannot pass arguments into \`getClient\`.
-        Passing arguments to \`getClient\` returns a different instance
-        of Apollo Client each time it is called with different arguments, potentially 
-        resulting in duplicate requests and a non-functional cache. 
+You cannot pass arguments into \`getClient\`.
+Passing arguments to \`getClient\` returns a different instance
+of Apollo Client each time it is called with different arguments, potentially 
+resulting in duplicate requests and a non-functional cache. 
       `.trim()
       );
     }

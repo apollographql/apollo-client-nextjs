@@ -1,5 +1,4 @@
 import { parseArgs } from "node:util";
-import { test } from "node:test";
 type Condition = "react-server" | "node" | "browser" | "default";
 
 /**
@@ -14,16 +13,8 @@ export function runInConditions(...validConditions: Condition[]) {
   }
 }
 
-export function testIn(...validConditions: Condition[]) {
-  if (conditionActive(validConditions)) {
-    return test;
-  }
-  return new Proxy(test, {
-    apply() {},
-    get() {
-      return function () {};
-    },
-  });
+export function outsideOf(...validConditions: Condition[]) {
+  return !conditionActive(validConditions);
 }
 
 function conditionActive(validConditions: Condition[]) {
