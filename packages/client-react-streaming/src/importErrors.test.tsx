@@ -37,7 +37,6 @@ test(
               // @ts-expect-error we want to test exactly this
               new upstreamPkg.ApolloClient({
                 cache: new upstreamPkg.InMemoryCache(),
-                connectToDevTools: false,
               }),
             children: null,
           })

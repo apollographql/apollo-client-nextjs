@@ -53,7 +53,6 @@ function drain(stream: ReturnType<typeof renderToPipeableStream>) {
 function makeClient() {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    connectToDevTools: false,
   });
 }
 
