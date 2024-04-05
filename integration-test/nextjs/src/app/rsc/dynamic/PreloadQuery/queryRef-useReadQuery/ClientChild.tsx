@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  QueryReference,
-  useBackgroundQuery,
-  useReadQuery,
-  useSuspenseQuery,
-} from "@apollo/client";
-import { QUERY } from "./shared";
+import { QueryReference, useReadQuery } from "@apollo/client";
 
 export function ClientChild({ queryRef }: { queryRef: QueryReference }) {
   const { data } = useReadQuery<any>(queryRef);

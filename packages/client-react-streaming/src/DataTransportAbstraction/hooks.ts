@@ -3,12 +3,8 @@ import type {
   QueryReference,
 } from "@apollo/client/react/internal/index.js";
 import { useTransportValue } from "./useTransportValue.js";
-import {
-  QueryOptions,
-  getApolloContext,
-  createQueryPreloader,
-  OperationVariables,
-} from "@apollo/client";
+import type { QueryOptions } from "@apollo/client";
+import { getApolloContext, createQueryPreloader } from "@apollo/client";
 import { use } from "react";
 
 export const hookWrappers: HookWrappers = {

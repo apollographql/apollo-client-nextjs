@@ -1,10 +1,10 @@
 import { ApolloWrapper } from "@/app/cc/ApolloWrapper";
 import { PreloadQuery } from "@apollo/client-react-streaming";
 import { ClientChild } from "./ClientChild";
-import { QUERY } from "./shared";
+import { QUERY } from "../shared";
 
 export const dynamic = "force-dynamic";
-import { getClient } from "../../client";
+import { getClient } from "../../../client";
 import { Suspense } from "react";
 
 export default function Page({ searchParams }: { searchParams?: any }) {
@@ -20,11 +20,9 @@ export default function Page({ searchParams }: { searchParams?: any }) {
         }}
         getClient={getClient}
       >
-        {(queryRef) => (
-          <Suspense fallback={<>loading</>}>
-            <ClientChild queryRef={queryRef} />
-          </Suspense>
-        )}
+        <Suspense fallback={<>loading</>}>
+          <ClientChild />
+        </Suspense>
       </PreloadQuery>
     </ApolloWrapper>
   );
