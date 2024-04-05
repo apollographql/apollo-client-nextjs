@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 
 export default function Page() {
   const { data } = useSuspenseQuery(QUERY, {
-    context: { delay: 1000, error: "browser" },
+    context: { delay: 1000 },
   });
   globalThis.hydrationFinished?.();
 

@@ -2,9 +2,9 @@ import { expect } from "@playwright/test";
 import { test } from "../../../../fixture";
 
 const regex_connection_closed_early =
-  /streaming connection closed before server query could be fully transported, rerunning/;
+  /streaming connection closed before server query could be fully transported, rerunning/i;
 const regex_query_error_restart =
-  /query failed on server, rerunning in browser/;
+  /query failed on server, rerunning in browser/i;
 
 test.describe("CC dynamic", () => {
   test.describe("useSuspenseQuery", () => {
