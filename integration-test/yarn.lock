@@ -44,7 +44,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:@apollo/client@0.0.0-pr-11757-20240405111250":
+"@apollo/client@npm:0.0.0-pr-11757-20240405111250":
   version: 0.0.0-pr-11757-20240405111250
   resolution: "@apollo/client@npm:0.0.0-pr-11757-20240405111250"
   dependencies:
@@ -2063,7 +2063,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/nextjs@workspace:nextjs"
   dependencies:
-    "@apollo/client": "npm:@apollo/client@0.0.0-pr-11757-20240405111250"
+    "@apollo/client": "npm:^3.9.6"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
