@@ -16,6 +16,7 @@ export interface ManualDataTransportOptions {
   /**
    * Prepare data for injecting into the stream by converting it into a string that can be parsed as JavaScript by the browser.
    * Could e.g. be `SuperJSON.stringify` or `serialize-javascript`.
+   * The default implementation act like a JSON.stringify that preserves `undefined`, but not do much on top of that.
    */
   stringifyForStream?: (value: any) => string;
   /**
