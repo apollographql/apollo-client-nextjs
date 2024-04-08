@@ -7,10 +7,7 @@ import type {
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
 
-import type {
-  TypedDocumentNode,
-  WatchQueryOptions,
-} from "@apollo/client/index.js";
+import type { TypedDocumentNode } from "@apollo/client/index.js";
 import { MockSubscriptionLink } from "@apollo/client/testing/core/mocking/mockSubscriptionLink.js";
 import {
   useSuspenseQuery,
@@ -18,6 +15,7 @@ import {
   DocumentTransform,
 } from "@apollo/client/index.js";
 import { visit, Kind, print, isDefinitionNode } from "graphql";
+import { printMinified } from "./printMinified.js";
 
 const {
   ApolloClient,
@@ -45,16 +43,15 @@ describe(
         me
       }
     `;
-    const FIRST_REQUEST: WatchQueryOptions = {
-      fetchPolicy: "cache-first",
-      nextFetchPolicy: undefined,
-      notifyOnNetworkStatusChange: false,
-      query: QUERY_ME,
-    };
     const EVENT_STARTED: QueryEvent = {
       type: "started",
       id: "1" as any,
-      options: FIRST_REQUEST,
+      options: {
+        fetchPolicy: "cache-first",
+        nextFetchPolicy: undefined,
+        notifyOnNetworkStatusChange: false,
+        query: printMinified(QUERY_ME),
+      },
     };
     const FIRST_RESULT = { me: "User" };
     const EVENT_DATA: QueryEvent = {
@@ -423,7 +420,7 @@ describe("document transforms are applied correctly", async () => {
         type: "started",
         id: "1" as TransportIdentifier,
         options: {
-          query: untransformedQuery,
+          query: printMinified(untransformedQuery),
         },
       });
       client.rerunSimulatedQueries!();
@@ -450,7 +447,7 @@ describe("document transforms are applied correctly", async () => {
         type: "started",
         id: "1" as TransportIdentifier,
         options: {
-          query: untransformedQuery,
+          query: printMinified(untransformedQuery),
         },
       });
       client.onQueryProgress!({
