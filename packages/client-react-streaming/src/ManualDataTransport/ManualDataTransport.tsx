@@ -5,18 +5,30 @@ import type { RehydrationCache, RehydrationContextValue } from "./types.js";
 import type { HydrationContextOptions } from "./RehydrationContext.js";
 import { buildApolloRehydrationContext } from "./RehydrationContext.js";
 import { registerDataTransport } from "./dataTransport.js";
+import { revive, stringify } from "./serialization.js";
 
-interface BuildArgs {
+export interface ManualDataTransportOptions {
   /**
    * A hook that allows for insertion into the stream.
    * Will only be called during SSR, doesn't need to actiually return something otherwise.
    */
   useInsertHtml(): (callbacks: () => React.ReactNode) => void;
+  /**
+   * Prepare data for injecting into the stream by converting it into a string that can be parsed as JavaScript by the browser.
+   * Could e.g. be `SuperJSON.stringify` or `serialize-javascript`.
+   */
+  stringifyForStream?: (value: any) => string;
+  /**
+   * If necessary, additional deserialization steps that need to be applied on top of executing the result of `stringifyForStream` in the browser.
+   * Could e.g. be `SuperJSON.deserialize`. (Not needed in the case of using `serialize-javascript`)
+   */
+  reviveFromStream?: (value: any) => any;
 }
 
 const buildManualDataTransportSSRImpl = ({
   useInsertHtml,
-}: BuildArgs): DataTransportProviderImplementation<HydrationContextOptions> =>
+  stringifyForStream = stringify,
+}: ManualDataTransportOptions): DataTransportProviderImplementation<HydrationContextOptions> =>
   function ManualDataTransportSSRImpl({
     extraScriptProps,
     children,
@@ -29,6 +41,7 @@ const buildManualDataTransportSSRImpl = ({
       rehydrationContext.current = buildApolloRehydrationContext({
         insertHtml,
         extraScriptProps,
+        stringify: stringifyForStream,
       });
     }
 
@@ -59,65 +72,64 @@ const buildManualDataTransportSSRImpl = ({
     );
   };
 
-const buildManualDataTransportBrowserImpl =
-  (): DataTransportProviderImplementation<HydrationContextOptions> =>
-    function ManualDataTransportBrowserImpl({
-      children,
-      onQueryEvent,
-      rerunSimulatedQueries,
-    }) {
-      const hookRehydrationCache = useRef<RehydrationCache>({});
-      registerDataTransport({
-        onQueryEvent: onQueryEvent!,
-        onRehydrate(rehydrate) {
-          Object.assign(hookRehydrationCache.current, rehydrate);
-        },
-      });
+const buildManualDataTransportBrowserImpl = ({
+  reviveFromStream = revive,
+}: ManualDataTransportOptions): DataTransportProviderImplementation<HydrationContextOptions> =>
+  function ManualDataTransportBrowserImpl({
+    children,
+    onQueryEvent,
+    rerunSimulatedQueries,
+  }) {
+    const hookRehydrationCache = useRef<RehydrationCache>({});
+    registerDataTransport({
+      onQueryEvent: onQueryEvent!,
+      onRehydrate(rehydrate) {
+        Object.assign(hookRehydrationCache.current, rehydrate);
+      },
+      revive: reviveFromStream,
+    });
 
-      useEffect(() => {
-        if (document.readyState !== "complete") {
-          // happens simulatenously to `readyState` changing to `"complete"`, see
-          // https://html.spec.whatwg.org/multipage/parsing.html#the-end (step 9.1 and 9.5)
-          window.addEventListener("load", rerunSimulatedQueries!, {
-            once: true,
-          });
-          return () =>
-            window.removeEventListener("load", rerunSimulatedQueries!);
+    useEffect(() => {
+      if (document.readyState !== "complete") {
+        // happens simulatenously to `readyState` changing to `"complete"`, see
+        // https://html.spec.whatwg.org/multipage/parsing.html#the-end (step 9.1 and 9.5)
+        window.addEventListener("load", rerunSimulatedQueries!, {
+          once: true,
+        });
+        return () => window.removeEventListener("load", rerunSimulatedQueries!);
+      } else {
+        rerunSimulatedQueries!();
+      }
+    }, [rerunSimulatedQueries]);
+
+    const useStaticValueRef = useCallback(function useStaticValueRef<T>(v: T) {
+      const id = useId();
+      const store = hookRehydrationCache.current;
+      const dataRef = useRef(UNINITIALIZED as T);
+      if (dataRef.current === UNINITIALIZED) {
+        if (store && id in store) {
+          dataRef.current = store[id] as T;
+          delete store[id];
         } else {
-          rerunSimulatedQueries!();
+          dataRef.current = v;
         }
-      }, [rerunSimulatedQueries]);
+      }
+      return dataRef;
+    }, []);
 
-      const useStaticValueRef = useCallback(function useStaticValueRef<T>(
-        v: T
-      ) {
-        const id = useId();
-        const store = hookRehydrationCache.current;
-        const dataRef = useRef(UNINITIALIZED as T);
-        if (dataRef.current === UNINITIALIZED) {
-          if (store && id in store) {
-            dataRef.current = store[id] as T;
-            delete store[id];
-          } else {
-            dataRef.current = v;
-          }
-        }
-        return dataRef;
-      }, []);
-
-      return (
-        <DataTransportContext.Provider
-          value={useMemo(
-            () => ({
-              useStaticValueRef,
-            }),
-            [useStaticValueRef]
-          )}
-        >
-          {children}
-        </DataTransportContext.Provider>
-      );
-    };
+    return (
+      <DataTransportContext.Provider
+        value={useMemo(
+          () => ({
+            useStaticValueRef,
+          }),
+          [useStaticValueRef]
+        )}
+      >
+        {children}
+      </DataTransportContext.Provider>
+    );
+  };
 
 const UNINITIALIZED = {};
 
@@ -170,7 +182,7 @@ const UNINITIALIZED = {};
  * @public
  */
 export const buildManualDataTransport: (
-  args: BuildArgs
+  args: ManualDataTransportOptions
 ) => DataTransportProviderImplementation<HydrationContextOptions> =
   process.env.REACT_ENV === "ssr"
     ? buildManualDataTransportSSRImpl

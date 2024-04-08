@@ -4,6 +4,7 @@ import { registerLateInitializingQueue } from "./lateInitializingQueue.js";
 import { invariant } from "ts-invariant";
 import { htmlEscapeJsonString } from "./htmlescape.js";
 import type { QueryEvent } from "@apollo/client-react-streaming";
+import type { Revive, Stringify } from "./serialization.js";
 
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 
@@ -15,7 +16,7 @@ type DataToTransport = {
 /**
  * Returns a string of JavaScript that can be used to transport data to the client.
  */
-export function transportDataToJS(data: DataToTransport) {
+export function transportDataToJS(data: DataToTransport, stringify: Stringify) {
   const key = Symbol.keyFor(ApolloSSRDataTransport);
   return `(window[Symbol.for("${key}")] ??= []).push(${htmlEscapeJsonString(
     stringify(data)
@@ -29,9 +30,11 @@ export function transportDataToJS(data: DataToTransport) {
 export function registerDataTransport({
   onQueryEvent,
   onRehydrate,
+  revive,
 }: {
   onQueryEvent(event: QueryEvent): void;
   onRehydrate(rehydrate: RehydrationCache): void;
+  revive: Revive;
 }) {
   registerLateInitializingQueue(ApolloSSRDataTransport, (data) => {
     const parsed = revive(data) as DataToTransport;
@@ -41,23 +44,4 @@ export function registerDataTransport({
       onQueryEvent(result);
     }
   });
-}
-
-/**
- * Stringifies a value to be injected into JavaScript "text" - preverves `undefined` values.
- */
-export function stringify(value: any) {
-  let undefinedPlaceholder = "$apollo.undefined$";
-
-  const stringified = JSON.stringify(value);
-  while (stringified.includes(JSON.stringify(undefinedPlaceholder))) {
-    undefinedPlaceholder = "$" + undefinedPlaceholder;
-  }
-  return JSON.stringify(value, (_, v) =>
-    v === undefined ? undefinedPlaceholder : v
-  ).replaceAll(JSON.stringify(undefinedPlaceholder), "undefined");
-}
-
-export function revive(value: any): any {
-  return value;
 }
