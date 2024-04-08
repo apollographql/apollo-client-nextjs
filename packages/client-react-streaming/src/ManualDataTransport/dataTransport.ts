@@ -5,8 +5,6 @@ import { invariant } from "ts-invariant";
 import { htmlEscapeJsonString } from "./htmlescape.js";
 import type { QueryEvent } from "@apollo/client-react-streaming";
 
-export type JSONResult = { undefined: string; value: any };
-
 export type DataTransport<T> = Array<T> | { push(...args: T[]): void };
 
 type DataToTransport = {
@@ -46,37 +44,20 @@ export function registerDataTransport({
 }
 
 /**
- * Stringifies a value. Pairs with `revive` to also preserve `undefined`.
+ * Stringifies a value to be injected into JavaScript "text" - preverves `undefined` values.
  */
 export function stringify(value: any) {
-  let undefinedPlaceholder = "$u";
+  let undefinedPlaceholder = "$apollo.undefined$";
 
   const stringified = JSON.stringify(value);
-  while (stringified.includes(`"${undefinedPlaceholder}"`)) {
+  while (stringified.includes(JSON.stringify(undefinedPlaceholder))) {
     undefinedPlaceholder = "$" + undefinedPlaceholder;
   }
-  return JSON.stringify(
-    { undefined: undefinedPlaceholder, value } satisfies JSONResult,
-    (_, v) => (v === undefined ? undefinedPlaceholder : v)
-  );
+  return JSON.stringify(value, (_, v) =>
+    v === undefined ? undefinedPlaceholder : v
+  ).replaceAll(JSON.stringify(undefinedPlaceholder), "undefined");
 }
 
-export function revive({
-  undefined: undefinedPlaceholder,
-  value,
-}: JSONResult): any {
-  // we create a clone so we can modify it
-  const cloned = structuredClone(value);
-  // use JSON.stringify for traversal
-  JSON.stringify(cloned, (_, v) => {
-    if (typeof v === "object") {
-      for (const k in v) {
-        if (v[k] === undefinedPlaceholder) {
-          v[k] = undefined;
-        }
-      }
-    }
-    return v;
-  });
-  return cloned;
+export function revive(value: any): any {
+  return value;
 }
