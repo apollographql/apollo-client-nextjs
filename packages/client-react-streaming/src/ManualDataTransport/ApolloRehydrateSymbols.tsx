@@ -1,8 +1,8 @@
-import type { DataTransport, JSONResult } from "./dataTransport.js";
+import type { DataTransport } from "./dataTransport.js";
 
 declare global {
   interface Window {
-    [ApolloSSRDataTransport]?: DataTransport<JSONResult>;
+    [ApolloSSRDataTransport]?: DataTransport<unknown>;
   }
 }
 export const ApolloSSRDataTransport = /*#__PURE__*/ Symbol.for(
