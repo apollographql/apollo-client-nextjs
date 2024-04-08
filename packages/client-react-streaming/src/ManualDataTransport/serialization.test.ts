@@ -12,22 +12,24 @@ describe(
     for (const [data, serialized] of [
       [{ a: 1, b: 2, c: 3 }, '{"undefined":"$u","value":{"a":1,"b":2,"c":3}}'],
       [
-        { a: "$u", b: 2, c: 3 },
-        '{"undefined":"$$u","value":{"a":"$u","b":2,"c":3}}',
+        { a: "$apollo.undefined$", b: 2, c: undefined },
+        '{"a":"$apollo.undefined$","b":2,"c":undefined}',
       ],
       [
-        { a: "a$u", b: undefined, c: 3 },
-        '{"undefined":"$u","value":{"a":"a$u","b":"$u","c":3}}',
+        { a: "a$apollo.undefined$", b: undefined, c: 3 },
+        '{"a":"a$apollo.undefined$","b":undefined,"c":3}',
       ],
       [
-        { a: "$u", b: 2, c: undefined },
-        '{"undefined":"$$u","value":{"a":"$u","b":2,"c":"$$u"}}',
+        {
+          a: "$$apollo.undefined$",
+          b: 2,
+          c: undefined,
+          d: "$apollo.undefined$",
+        },
+        '{"a":"$$apollo.undefined$","b":2,"c":undefined,"d":"$apollo.undefined$"}',
       ],
-      [
-        { a: undefined, b: 2, c: 3 },
-        '{"undefined":"$u","value":{"a":"$u","b":2,"c":3}}',
-      ],
-    ]) {
+      [{ a: undefined, b: 2, c: 3 }, '{"a":undefined,"b":2,"c":3}'],
+    ] as const) {
       test(JSON.stringify(data), () => {
         const stringified = stringify(data);
         const result = revive(eval(`(${htmlEscapeJsonString(stringified)})`));
