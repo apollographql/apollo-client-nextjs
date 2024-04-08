@@ -10,7 +10,7 @@ describe(
   { skip: outsideOf("node") },
   () => {
     for (const [data, serialized] of [
-      [{ a: 1, b: 2, c: 3 }, '{"undefined":"$u","value":{"a":1,"b":2,"c":3}}'],
+      [{ a: 1, b: 2, c: 3 }, '{"a":1,"b":2,"c":3}'],
       [
         { a: "$apollo.undefined$", b: 2, c: undefined },
         '{"a":"$apollo.undefined$","b":2,"c":undefined}',
