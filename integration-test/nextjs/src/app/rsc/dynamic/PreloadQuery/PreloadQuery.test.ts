@@ -18,6 +18,9 @@ test.describe("PreloadQuery", () => {
         await expect(page).toBeInitiallyLoading(true);
         await expect(page.getByText("loading")).not.toBeVisible();
         await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+        await expect(
+          page.getByText("Queried in RSC environment")
+        ).toBeVisible();
       });
 
       test("query errors on the server, restarts in the browser", async ({
@@ -42,7 +45,28 @@ test.describe("PreloadQuery", () => {
 
         await expect(page.getByText("loading")).not.toBeVisible();
         await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+        await expect(
+          page.getByText("Queried in Browser environment")
+        ).toBeVisible();
       });
     });
   }
+  test("queryRef works with useQueryRefHandlers", async ({ page }) => {
+    await page.goto(
+      `http://localhost:3000/rsc/dynamic/PreloadQuery/queryRef-useReadQuery`,
+      {
+        waitUntil: "commit",
+      }
+    );
+
+    await expect(page).toBeInitiallyLoading(true);
+    await expect(page.getByText("loading")).not.toBeVisible();
+    await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
+    await expect(page.getByText("Queried in RSC environment")).toBeVisible();
+
+    await page.getByRole("button", { name: "refetch" }).click();
+    await expect(
+      page.getByText("Queried in Browser environment")
+    ).toBeVisible();
+  });
 });

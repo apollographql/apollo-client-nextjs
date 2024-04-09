@@ -1,15 +1,18 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
 
-export const QUERY: TypedDocumentNode<{
+export interface DynamicProductResult {
   products: {
     id: string;
     title: string;
   }[];
-}> = gql`
+  env: string;
+}
+export const QUERY: TypedDocumentNode<DynamicProductResult> = gql`
   query dynamicProducts {
     products {
       id
       title
     }
+    env
   }
 `;

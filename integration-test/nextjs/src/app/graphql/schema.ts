@@ -1,5 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import gql from "graphql-tag";
+import * as entryPoint from "@apollo/client-react-streaming";
+import type { IResolvers } from "@graphql-tools/utils";
 
 const typeDefs = gql`
   type Product {
@@ -8,6 +10,7 @@ const typeDefs = gql`
   }
   type Query {
     products: [Product!]!
+    env: String!
   }
 `;
 
@@ -39,8 +42,20 @@ const resolvers = {
         title: "The Apollo Socks",
       },
     ],
+    env: (source, args, context, info) => {
+      console.log({ source, args, context, info });
+      return context && context.from === "network"
+        ? "browser"
+        : "built_for_ssr" in entryPoint
+          ? "SSR"
+          : "built_for_browser" in entryPoint
+            ? "Browser"
+            : "built_for_rsc" in entryPoint
+              ? "RSC"
+              : "unknown";
+    },
   },
-};
+} satisfies IResolvers;
 
 export const schema = makeExecutableSchema({
   typeDefs,

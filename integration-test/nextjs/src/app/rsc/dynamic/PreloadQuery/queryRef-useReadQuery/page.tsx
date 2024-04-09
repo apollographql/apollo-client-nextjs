@@ -22,7 +22,7 @@ export default function Page({ searchParams }: { searchParams?: any }) {
       >
         {(queryRef) => (
           <Suspense fallback={<>loading</>}>
-            <ClientChild queryRef={queryRef} />
+            <ClientChild queryRef={queryRef as any /*TODO*/} />
           </Suspense>
         )}
       </PreloadQuery>

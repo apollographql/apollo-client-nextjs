@@ -30,26 +30,36 @@ export const hookWrappers: HookWrappers = {
     return wrap(
       (queryRef) => {
         if (isTransportedQueryRef(queryRef)) {
-          if (queryRef.__transportedQueryRef === true) {
-            const preloader = createQueryPreloader(
-              use(getApolloContext()).client!
-            );
-            const { query, ...options } = queryRef.options;
-            // TODO: discuss what to do with the fetchPolicy here
-            options.fetchPolicy = "cache-first";
-            queryRef.__transportedQueryRef = preloader(
-              query,
-              options as typeof options & { fetchPolicy: "cache-first" }
-            );
-          }
-          queryRef = queryRef.__transportedQueryRef;
+          queryRef = reviveTransportedQueryRef(queryRef);
         }
         return orig_useReadQuery(queryRef);
       },
       ["data", "networkStatus"]
     );
   },
+  useQueryRefHandlers(orig_useQueryRefHandlers) {
+    return wrap((queryRef) => {
+      if (isTransportedQueryRef(queryRef)) {
+        queryRef = reviveTransportedQueryRef(queryRef);
+      }
+      return orig_useQueryRefHandlers(queryRef);
+    }, []);
+  },
 };
+
+function reviveTransportedQueryRef(queryRef: TransportedQueryRef) {
+  if (queryRef.__transportedQueryRef === true) {
+    const preloader = createQueryPreloader(use(getApolloContext()).client!);
+    const { query, ...options } = queryRef.options;
+    // TODO: discuss what to do with the fetchPolicy here
+    options.fetchPolicy = "cache-first";
+    queryRef.__transportedQueryRef = preloader(
+      query,
+      options as typeof options & { fetchPolicy: "cache-first" }
+    );
+  }
+  return queryRef.__transportedQueryRef;
+}
 
 function isTransportedQueryRef(
   queryRef: object
@@ -68,6 +78,9 @@ function wrap<T extends (...args: any[]) => any>(
 ): T {
   return ((...args: any[]) => {
     const result = useFn(...args);
+    if (transportKeys.length == 0) {
+      return result;
+    }
     const transported: Partial<typeof result> = {};
     for (const key of transportKeys) {
       transported[key] = result[key];

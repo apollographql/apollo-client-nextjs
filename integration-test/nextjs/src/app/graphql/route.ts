@@ -6,7 +6,13 @@ const server = new ApolloServer({
   schema,
 });
 
-const handler = startServerAndCreateNextHandler(server);
+const handler = startServerAndCreateNextHandler(server, {
+  context: async () => {
+    return {
+      from: "network",
+    };
+  },
+});
 
 export async function GET(request: Request) {
   return handler(request);
