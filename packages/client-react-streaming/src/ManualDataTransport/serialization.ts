@@ -1,5 +1,5 @@
 /**
- * Stringifies a value to be injected into JavaScript "text" - preverves `undefined` values.
+ * Stringifies a value to be injected into JavaScript "text" - preserves `undefined` values.
  */
 export function stringify(value: any) {
   let undefinedPlaceholder = "$apollo.undefined$";
