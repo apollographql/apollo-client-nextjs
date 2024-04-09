@@ -2,22 +2,27 @@ import type { ReactNode } from "react";
 import { SimulatePreloadedQuery } from "./index.cc.js";
 import type {
   ApolloClient,
+  OperationVariables,
   QueryOptions,
   QueryReference,
 } from "@apollo/client";
 import React from "react";
 
-export function PreloadQuery({
+export function PreloadQuery<TData, TVariables extends OperationVariables>({
   options,
   getClient,
   children,
 }: {
-  options: QueryOptions;
+  options: QueryOptions<TVariables, TData>;
   getClient: () => ApolloClient<any>;
-  children: ReactNode | ((queryRef: QueryReference) => ReactNode);
+  children:
+    | ReactNode
+    | ((
+        queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
+      ) => ReactNode);
 }) {
   const resultPromise = getClient()
-    .query({
+    .query<TData, TVariables>({
       ...options,
       // TODO: create a second Client instance only for `PreloadQuery` calls
       // We want to prevent "client" data from leaking into our "RSC" cache,
@@ -35,7 +40,7 @@ export function PreloadQuery({
         ? children({
             __transportedQueryRef: true,
             options: cleanedOptions,
-          } as any as QueryReference)
+          } as any as QueryReference<TData, TVariables>)
         : children}
     </SimulatePreloadedQuery>
   );
