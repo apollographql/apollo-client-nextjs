@@ -12,8 +12,8 @@ export function ClientChild({
 }: {
   queryRef: QueryReference<DynamicProductResult>;
 }) {
-  const { data } = useReadQuery(queryRef);
   const { refetch } = useQueryRefHandlers(queryRef);
+  const { data } = useReadQuery(queryRef);
   return (
     <>
       <ul>
