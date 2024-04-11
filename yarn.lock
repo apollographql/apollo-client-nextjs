@@ -71,8 +71,8 @@ __metadata:
     publint: "npm:0.2.7"
     react: "npm:18.3.0-canary-60a927d04-20240113"
     react-error-boundary: "npm:4.0.13"
+    react-server-dom-webpack: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
-    superjson: "npm:1.13.3"
     ts-invariant: "npm:^0.10.3"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.2"
@@ -5763,6 +5763,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn-loose@npm:^8.3.0":
+  version: 8.4.0
+  resolution: "acorn-loose@npm:8.4.0"
+  dependencies:
+    acorn: "npm:^8.11.0"
+  checksum: 10/a005b2bee62e2575963b311ab7c45701062115a62e4286162498b1b198a6f884ceea186592ce41a27d5f382a5b640f1dffb37dd0e6e7848a74dd36e4b0a55105
+  languageName: node
+  linkType: hard
+
 "acorn-walk@npm:^8.1.1, acorn-walk@npm:^8.3.2":
   version: 8.3.2
   resolution: "acorn-walk@npm:8.3.2"
@@ -5770,7 +5779,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.10.0, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.10.0, acorn@npm:^8.11.0, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.11.3
   resolution: "acorn@npm:8.11.3"
   bin:
@@ -7303,15 +7312,6 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 10/aae7911ddc5f444a9025fbd979ad1b5d60191011339bce48e555cb83343d0f98b865ff5c4d71fecdfb8555a5cafdc65632f6fce172f32aaf6936830a883a0380
-  languageName: node
-  linkType: hard
-
-"copy-anything@npm:^3.0.2":
-  version: 3.0.3
-  resolution: "copy-anything@npm:3.0.3"
-  dependencies:
-    is-what: "npm:^4.1.8"
-  checksum: 10/d376bfd5f657c96e9b0ef5e8709dcb52bc085c0af7b1c30c6c0337fa9ce56287bf0aaf4db13f9931b504ee5f6beb4494d9ca1b6e947a12995476ca288b3653c6
   languageName: node
   linkType: hard
 
@@ -10737,13 +10737,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-what@npm:^4.1.8":
-  version: 4.1.8
-  resolution: "is-what@npm:4.1.8"
-  checksum: 10/943eca6c1e64df487060857a4b6ac2e584b99e633a96e64c82bd49584a85d91f6f3e22d4a2d28c1243522152b261f50021db40a5ef7d98c754ebc7209c87b071
-  languageName: node
-  linkType: hard
-
 "is-windows@npm:^1.0.1":
   version: 1.0.2
   resolution: "is-windows@npm:1.0.2"
@@ -11832,7 +11825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"neo-async@npm:^2.6.2":
+"neo-async@npm:^2.6.1, neo-async@npm:^2.6.2":
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: 10/1a7948fea86f2b33ec766bc899c88796a51ba76a4afc9026764aedc6e7cde692a09067031e4a1bf6db4f978ccd99e7f5b6c03fe47ad9865c3d4f99050d67e002
@@ -13151,6 +13144,21 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10/f0646ac384ce3852d1f41e30a9f9e251b11cf3b430d1d114c937c8fa7f90a895c06378d0d6b6ff0b2d00cbccf15e845921944fd6074ae67a0fb347a718106d88
+  languageName: node
+  linkType: hard
+
+"react-server-dom-webpack@npm:18.3.0-canary-60a927d04-20240113":
+  version: 18.3.0-canary-60a927d04-20240113
+  resolution: "react-server-dom-webpack@npm:18.3.0-canary-60a927d04-20240113"
+  dependencies:
+    acorn-loose: "npm:^8.3.0"
+    loose-envify: "npm:^1.1.0"
+    neo-async: "npm:^2.6.1"
+  peerDependencies:
+    react: 18.3.0-canary-60a927d04-20240113
+    react-dom: 18.3.0-canary-60a927d04-20240113
+    webpack: ^5.59.0
+  checksum: 10/b52ca5befe8e4470a82b79602d10f9949b90d3a4fd90f2067774ad90b311ecb84bd767ec05e8c64df58b12daf37f8aa09349c41c321d13d062e669d04a91507f
   languageName: node
   linkType: hard
 
@@ -14600,15 +14608,6 @@ __metadata:
     sucrase: bin/sucrase
     sucrase-node: bin/sucrase-node
   checksum: 10/3f18c8db09fee863fc930b64bad738d8710d7aa56ecf900849e159f12ead68c09565ae7d5cef8341123950a035e95ed4d0f8474418623fb702164f4853bab57f
-  languageName: node
-  linkType: hard
-
-"superjson@npm:1.13.3":
-  version: 1.13.3
-  resolution: "superjson@npm:1.13.3"
-  dependencies:
-    copy-anything: "npm:^3.0.2"
-  checksum: 10/71a186c513a9821e58264c0563cd1b3cf07d3b5ba53a09cc5c1a604d8ffeacac976a6ba1b5d5b3c71b6ab5a1941dfba5a15e3f106ad3ef22fe8d5eee3e2be052
   languageName: node
   linkType: hard
 

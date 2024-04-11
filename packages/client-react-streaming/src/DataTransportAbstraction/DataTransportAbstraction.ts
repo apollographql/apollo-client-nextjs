@@ -74,7 +74,7 @@ export type TransportIdentifier = string & { __transportIdentifier: true };
 export type QueryEvent =
   | {
       type: "started";
-      options: WatchQueryOptions;
+      options: { query: string } & Omit<WatchQueryOptions, "query">;
       id: TransportIdentifier;
     }
   | {

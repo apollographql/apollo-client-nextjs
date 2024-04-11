@@ -14,7 +14,7 @@ import type { SubscriptionObserver } from "zen-observable-ts";
 const { DebounceMultipartResponsesLink: AccumulateMultipartResponsesLink } =
   await import("#bundled");
 
-await test("normal queries can resolve synchronously", () => {
+test("normal queries can resolve synchronously", () => {
   const query = gql`
     query {
       fastField
@@ -46,7 +46,7 @@ await test("normal queries can resolve synchronously", () => {
   });
 });
 
-await test("deferred query will complete synchonously if maxDelay is 0", () => {
+test("deferred query will complete synchonously if maxDelay is 0", () => {
   const query = gql`
     query {
       fastField
@@ -81,7 +81,7 @@ await test("deferred query will complete synchonously if maxDelay is 0", () => {
   });
 });
 
-await test("`next` call will be debounced and results will be merged together", () => {
+test("`next` call will be debounced and results will be merged together", () => {
   mock.timers.enable();
 
   const query = gql`

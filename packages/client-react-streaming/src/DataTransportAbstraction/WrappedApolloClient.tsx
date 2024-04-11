@@ -9,6 +9,7 @@ import type {
 import {
   ApolloClient as OrigApolloClient,
   Observable,
+  gql,
 } from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import { print } from "@apollo/client/utilities/index.js";
@@ -24,6 +25,7 @@ import type {
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
 import { bundle } from "../bundleInfo.js";
+import { printMinified } from "./printMinified.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
@@ -57,7 +59,14 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
   static readonly info = bundle;
 
   constructor(options: ApolloClientOptions<TCacheShape>) {
-    super(options);
+    super(
+      process.env.REACT_ENV === "rsc" || process.env.REACT_ENV === "ssr"
+        ? {
+            connectToDevTools: false,
+            ...options,
+          }
+        : options
+    );
 
     if (!(this.cache instanceof InMemoryCache)) {
       throw new Error(
@@ -113,9 +122,16 @@ export class ApolloClientClientBaseImpl<
     };
   }
 
-  onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
-    const { cacheKey, cacheKeyArr } = this.identifyUniqueQuery(options);
-    this.transportedQueryOptions.set(id, options);
+  onQueryStarted = ({
+    options,
+    id,
+  }: Extract<QueryEvent, { type: "started" }>) => {
+    const hydratedOptions = {
+      ...options,
+      query: gql(options.query),
+    };
+    const { cacheKey, cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
+    this.transportedQueryOptions.set(id, hydratedOptions);
 
     const queryManager = getQueryManager<TCacheShape>(this);
 
@@ -139,7 +155,11 @@ export class ApolloClientClientBaseImpl<
       const promise = new Promise<FetchResult>((resolve, reject) => {
         this.simulatedStreamingQueries.set(
           id,
-          (simulatedStreamingQuery = { resolve, reject, options })
+          (simulatedStreamingQuery = {
+            resolve,
+            reject,
+            options: hydratedOptions,
+          })
         );
       });
 
@@ -171,7 +191,7 @@ export class ApolloClientClientBaseImpl<
         })
       );
     }
-  }
+  };
 
   onQueryProgress = (event: Exclude<QueryEvent, { type: "started" }>) => {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
@@ -315,7 +335,10 @@ class ApolloClientSSRImpl<
       this.watchQueryQueue.push({
         event: {
           type: "started",
-          options: options as WatchQueryOptions<any>,
+          options: {
+            ...(options as WatchQueryOptions<any>),
+            query: printMinified(options.query),
+          },
           id,
         },
         observable: streamObservable,

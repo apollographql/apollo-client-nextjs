@@ -1,6 +1,6 @@
 {
   "name": "@apollo/client-react-streaming",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
@@ -134,8 +134,8 @@
     "publint": "0.2.7",
     "react": "18.3.0-canary-60a927d04-20240113",
     "react-error-boundary": "4.0.13",
+    "react-server-dom-webpack": "18.3.0-canary-60a927d04-20240113",
     "rimraf": "5.0.5",
-    "superjson": "1.13.3",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
     "tsx": "4.7.1",
@@ -147,7 +147,6 @@
     "react": "^18"
   },
   "dependencies": {
-    "superjson": "^1.12.2 || ^2.0.0",
     "ts-invariant": "^0.10.3"
   }
 }

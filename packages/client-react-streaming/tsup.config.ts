@@ -16,12 +16,7 @@ export default defineConfig((options) => {
         }
       : false,
     outDir: "dist/",
-    external: [
-      "@apollo/client-react-streaming",
-      "react",
-      "rehackt",
-      "superjson",
-    ],
+    external: ["@apollo/client-react-streaming", "react", "rehackt"],
     noExternal: ["@apollo/client"], // will be handled by `acModuleImports`
     esbuildPlugins: [acModuleImports],
   };
@@ -45,8 +40,11 @@ export default defineConfig((options) => {
       },
       footer(ctx) {
         return {
-          js: ctx.format === 'esm' ? `export const built_for_${env} = true;` : `exports.built_for_${env} = true;`
-        }
+          js:
+            ctx.format === "esm"
+              ? `export const built_for_${env} = true;`
+              : `exports.built_for_${env} = true;`,
+        };
       },
     };
   }
