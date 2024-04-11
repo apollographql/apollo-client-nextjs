@@ -2,6 +2,7 @@ import React from "react";
 import type { RehydrationContextValue } from "./types.js";
 import { transportDataToJS } from "./dataTransport.js";
 import { invariant } from "ts-invariant";
+import type { Stringify } from "./serialization.js";
 
 /**
  * @public
@@ -29,10 +30,12 @@ type ScriptProps = SerializableProps<
 >;
 
 export function buildApolloRehydrationContext({
-  extraScriptProps,
   insertHtml,
+  stringify,
+  extraScriptProps,
 }: HydrationContextOptions & {
   insertHtml: (callbacks: () => React.ReactNode) => void;
+  stringify: Stringify;
 }): RehydrationContextValue {
   function ensureInserted() {
     if (!rehydrationContext.currentlyInjected) {
@@ -59,15 +62,18 @@ export function buildApolloRehydrationContext({
       );
       invariant.debug("transporting events", rehydrationContext.incomingEvents);
 
-      const __html = transportDataToJS({
-        rehydrate: Object.fromEntries(
-          Object.entries(rehydrationContext.transportValueData).filter(
-            ([key, value]) =>
-              rehydrationContext.transportedValues[key] !== value
-          )
-        ),
-        events: rehydrationContext.incomingEvents,
-      });
+      const __html = transportDataToJS(
+        {
+          rehydrate: Object.fromEntries(
+            Object.entries(rehydrationContext.transportValueData).filter(
+              ([key, value]) =>
+                rehydrationContext.transportedValues[key] !== value
+            )
+          ),
+          events: rehydrationContext.incomingEvents,
+        },
+        stringify
+      );
       Object.assign(
         rehydrationContext.transportedValues,
         rehydrationContext.transportValueData

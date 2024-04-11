@@ -7,7 +7,6 @@
   ignoreDeps: [
     "react",
     "react-dom",
-    "superjson",
     "@apollo/experimental-nextjs-app-support",
     "@apollo/client-react-streaming",
     "@apollo/client",
