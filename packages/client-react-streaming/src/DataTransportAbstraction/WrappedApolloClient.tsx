@@ -122,10 +122,7 @@ export class ApolloClientClientBaseImpl<
     };
   }
 
-  onQueryStarted = ({
-    options,
-    id,
-  }: Extract<QueryEvent, { type: "started" }>) => {
+  onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
     const hydratedOptions = {
       ...options,
       query: gql(options.query),
@@ -191,7 +188,7 @@ export class ApolloClientClientBaseImpl<
         })
       );
     }
-  };
+  }
 
   onQueryProgress = (event: Exclude<QueryEvent, { type: "started" }>) => {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
@@ -349,7 +346,11 @@ class ApolloClientSSRImpl<
   }
 
   onQueryStarted(event: Extract<QueryEvent, { type: "started" }>) {
-    const { cacheKeyArr } = this.identifyUniqueQuery(event.options);
+    const hydratedOptions = {
+      ...event.options,
+      query: gql(event.options.query),
+    };
+    const { cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
     // this is a replay from another source and doesn't need to be transported
     // to the browser, since it will be replayed there, too.
     this.forwardedQueries.lookupArray(cacheKeyArr);

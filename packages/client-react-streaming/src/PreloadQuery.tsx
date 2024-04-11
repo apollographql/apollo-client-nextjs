@@ -7,6 +7,8 @@ import type {
   QueryReference,
 } from "@apollo/client";
 import React from "react";
+import { printMinified } from "./DataTransportAbstraction/printMinified.js";
+import type { TransportedOptions } from "./DataTransportAbstraction/DataTransportAbstraction.js";
 
 export function PreloadQuery<TData, TVariables extends OperationVariables>({
   options,
@@ -21,27 +23,34 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
         queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
-  const resultPromise = getClient()
-    .query<TData, TVariables>({
-      ...options,
-      // TODO: create a second Client instance only for `PreloadQuery` calls
-      // We want to prevent "client" data from leaking into our "RSC" cache,
-      // as that data should always be strictly separated.
-      fetchPolicy: "no-cache",
-    })
-    .then((result) => JSON.parse(JSON.stringify(result)));
-  // while they would serialize nicely over the boundary, React will
-  // confuse the GraphQL `Location` class with the browser `Location` and
-  // complain about `Location` objects not being serializable
-  const cleanedOptions = JSON.parse(JSON.stringify(options));
+  const resultPromise = getClient().query<TData, TVariables>({
+    ...options,
+    // TODO: create a second Client instance only for `PreloadQuery` calls
+    // We want to prevent "client" data from leaking into our "RSC" cache,
+    // as that data should always be strictly separated.
+    fetchPolicy: "no-cache",
+  });
+  const transportedOptions = preparePreloadedQueryOptions(options);
   return (
-    <SimulatePreloadedQuery options={cleanedOptions} result={resultPromise}>
+    <SimulatePreloadedQuery<TData>
+      options={transportedOptions}
+      result={resultPromise}
+    >
       {typeof children === "function"
         ? children({
             __transportedQueryRef: true,
-            options: cleanedOptions,
+            options: transportedOptions,
           } as any as QueryReference<TData, TVariables>)
         : children}
     </SimulatePreloadedQuery>
   );
+}
+
+function preparePreloadedQueryOptions(
+  options: Parameters<typeof PreloadQuery>[0]["options"]
+): TransportedOptions {
+  return {
+    ...options,
+    query: printMinified(options.query),
+  };
 }

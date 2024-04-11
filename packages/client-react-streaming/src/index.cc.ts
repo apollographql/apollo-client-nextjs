@@ -1,22 +1,25 @@
 "use client";
 
-import type { FetchResult, WatchQueryOptions } from "@apollo/client/index.js";
+import type { FetchResult } from "@apollo/client/index.js";
 import { useApolloClient } from "@apollo/client/index.js";
 import type { ApolloClient as WrappedApolloClient } from "./DataTransportAbstraction/WrappedApolloClient.js";
-import type { TransportIdentifier } from "./DataTransportAbstraction/DataTransportAbstraction.js";
+import type {
+  TransportIdentifier,
+  TransportedOptions,
+} from "./DataTransportAbstraction/DataTransportAbstraction.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import type { ReactNode } from "react";
 import invariant from "ts-invariant";
 
-const handledRequests = new WeakMap<WatchQueryOptions, TransportIdentifier>();
+const handledRequests = new WeakMap<TransportedOptions, TransportIdentifier>();
 
-export function SimulatePreloadedQuery({
+export function SimulatePreloadedQuery<T>({
   options,
   result,
   children,
 }: {
-  options: WatchQueryOptions;
-  result: Promise<FetchResult>;
+  options: TransportedOptions;
+  result: Promise<FetchResult<T>>;
   children: ReactNode;
 }) {
   const client = useApolloClient() as WrappedApolloClient<any>;
@@ -35,7 +38,7 @@ export function SimulatePreloadedQuery({
     });
 
     result.then(
-      (result) => {
+      (result: FetchResult<any>) => {
         invariant.debug(
           "Preloaded query %s finished on the server, simulating result",
           id

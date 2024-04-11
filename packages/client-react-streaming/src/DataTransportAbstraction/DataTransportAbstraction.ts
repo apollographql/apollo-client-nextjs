@@ -63,6 +63,11 @@ export type DataTransportProviderImplementation<
 
 export type TransportIdentifier = string & { __transportIdentifier: true };
 
+export type TransportedOptions = { query: string } & Omit<
+  WatchQueryOptions,
+  "query"
+>;
+
 /**
  * Events that will be emitted by a wrapped ApolloClient instance during
  * SSR on `DataTransportProviderImplementation.registerDispatchRequestStarted`,
@@ -74,7 +79,7 @@ export type TransportIdentifier = string & { __transportIdentifier: true };
 export type QueryEvent =
   | {
       type: "started";
-      options: { query: string } & Omit<WatchQueryOptions, "query">;
+      options: TransportedOptions;
       id: TransportIdentifier;
     }
   | {
