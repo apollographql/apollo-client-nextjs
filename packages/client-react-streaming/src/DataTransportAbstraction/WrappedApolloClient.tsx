@@ -9,6 +9,7 @@ import type {
 import {
   ApolloClient as OrigApolloClient,
   Observable,
+  gql,
 } from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import { print } from "@apollo/client/utilities/index.js";
@@ -24,6 +25,7 @@ import type {
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
 import { bundle } from "../bundleInfo.js";
+import { printMinified } from "./printMinified.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
@@ -123,7 +125,10 @@ class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
       this.watchQueryQueue.push({
         event: {
           type: "started",
-          options: options as WatchQueryOptions<any>,
+          options: {
+            ...(options as WatchQueryOptions<any>),
+            query: printMinified(options.query),
+          },
           id,
         },
         observable: streamObservable,
@@ -179,8 +184,13 @@ export class ApolloClientBrowserImpl<
     options,
     id,
   }: Extract<QueryEvent, { type: "started" }>) => {
-    const { query, varJson, cacheKey } = this.identifyUniqueQuery(options);
-    this.transportedQueryOptions.set(id, options);
+    const hydratedOptions = {
+      ...options,
+      query: gql(options.query),
+    };
+    const { query, varJson, cacheKey } =
+      this.identifyUniqueQuery(hydratedOptions);
+    this.transportedQueryOptions.set(id, hydratedOptions);
 
     if (!query) return;
     const printedServerQuery = print(query);
@@ -209,7 +219,11 @@ export class ApolloClientBrowserImpl<
       const promise = new Promise<FetchResult>((resolve, reject) => {
         this.simulatedStreamingQueries.set(
           id,
-          (simulatedStreamingQuery = { resolve, reject, options })
+          (simulatedStreamingQuery = {
+            resolve,
+            reject,
+            options: hydratedOptions,
+          })
         );
       });
 
