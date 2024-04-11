@@ -42,8 +42,7 @@ const resolvers = {
         title: "The Apollo Socks",
       },
     ],
-    env: (source, args, context, info) => {
-      console.log({ source, args, context, info });
+    env: (source, args, context) => {
       return context && context.from === "network"
         ? "browser"
         : "built_for_ssr" in entryPoint

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { SimulatePreloadedQuery } from "./index.cc.js";
 import type {
   ApolloClient,
+  FetchResult,
   OperationVariables,
   QueryOptions,
   QueryReference,
@@ -23,13 +24,15 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
         queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
-  const resultPromise = getClient().query<TData, TVariables>({
-    ...options,
-    // TODO: create a second Client instance only for `PreloadQuery` calls
-    // We want to prevent "client" data from leaking into our "RSC" cache,
-    // as that data should always be strictly separated.
-    fetchPolicy: "no-cache",
-  });
+  const resultPromise = getClient()
+    .query<TData, TVariables>({
+      ...options,
+      // TODO: create a second Client instance only for `PreloadQuery` calls
+      // We want to prevent "client" data from leaking into our "RSC" cache,
+      // as that data should always be strictly separated.
+      fetchPolicy: "no-cache",
+    })
+    .then(sanitizeForTransport);
   const transportedOptions = preparePreloadedQueryOptions(options);
   return (
     <SimulatePreloadedQuery<TData>
@@ -49,8 +52,13 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
 function preparePreloadedQueryOptions(
   options: Parameters<typeof PreloadQuery>[0]["options"]
 ): TransportedOptions {
-  return {
+  const transportedOptions = {
     ...options,
     query: printMinified(options.query),
   };
+  return sanitizeForTransport(transportedOptions);
+}
+
+function sanitizeForTransport<T>(value: T) {
+  return JSON.parse(JSON.stringify(value)) as T;
 }

@@ -7,6 +7,7 @@ import type { QueryOptions } from "@apollo/client";
 import {
   getApolloContext,
   createQueryPreloader,
+  gql,
 } from "@apollo/client/index.js";
 import { use } from "react";
 
@@ -54,7 +55,7 @@ function reviveTransportedQueryRef(queryRef: TransportedQueryRef) {
     // TODO: discuss what to do with the fetchPolicy here
     options.fetchPolicy = "cache-first";
     queryRef.__transportedQueryRef = preloader(
-      query,
+      gql(query),
       options as typeof options & { fetchPolicy: "cache-first" }
     );
   }
