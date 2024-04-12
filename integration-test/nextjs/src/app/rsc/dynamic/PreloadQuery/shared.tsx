@@ -7,9 +7,12 @@ export interface DynamicProductResult {
   }[];
   env: string;
 }
-export const QUERY: TypedDocumentNode<DynamicProductResult> = gql`
-  query dynamicProducts {
-    products {
+export const QUERY: TypedDocumentNode<
+  DynamicProductResult,
+  { someArgument?: string }
+> = gql`
+  query dynamicProducts($someArgument: String) {
+    products(someArgument: $someArgument) {
       id
       title
     }

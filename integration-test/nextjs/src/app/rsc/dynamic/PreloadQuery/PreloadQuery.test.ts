@@ -69,4 +69,19 @@ test.describe("PreloadQuery", () => {
       page.getByText("Queried in Browser environment")
     ).toBeVisible();
   });
+
+  test("queryRef: assumptions about referential equality", async ({ page }) => {
+    await page.goto(
+      `http://localhost:3000/rsc/dynamic/PreloadQuery/queryRef-refTest`,
+      {
+        waitUntil: "commit",
+      }
+    );
+
+    await page.getByRole("spinbutton").nth(11).waitFor();
+
+    for (let i = 0; i < 12; i++) {
+      await expect(page.getByRole("spinbutton").nth(i)).toHaveClass("valid");
+    }
+  });
 });
