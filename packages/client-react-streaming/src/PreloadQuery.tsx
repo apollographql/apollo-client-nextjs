@@ -2,21 +2,33 @@ import type { ReactNode } from "react";
 import { SimulatePreloadedQuery } from "./index.cc.js";
 import type {
   ApolloClient,
-  FetchResult,
   OperationVariables,
   QueryOptions,
   QueryReference,
 } from "@apollo/client";
-import React from "react";
-import { printMinified } from "./DataTransportAbstraction/printMinified.js";
-import type { TransportedOptions } from "./DataTransportAbstraction/DataTransportAbstraction.js";
+import React, { useId } from "react";
+import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
+import type { TransportedQueryRefOptions } from "./transportedQueryRef.js";
+import { createTransportedQueryRef } from "./transportedQueryRef.js";
+
+export type RestrictedPreloadOptions = {
+  fetchPolicy?: "cache-first";
+  returnPartialData?: false;
+  // TODO: what else goes in here?
+};
+
+export type PreloadQueryOptions<TVariables, TData> = QueryOptions<
+  TVariables,
+  TData
+> &
+  RestrictedPreloadOptions;
 
 export function PreloadQuery<TData, TVariables extends OperationVariables>({
   options,
   getClient,
   children,
 }: {
-  options: QueryOptions<TVariables, TData>;
+  options: PreloadQueryOptions<TVariables, TData>;
   getClient: () => ApolloClient<any>;
   children:
     | ReactNode
@@ -24,6 +36,7 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
         queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
+  // TODO: create `queryKey` uniquely for this component
   const resultPromise = getClient()
     .query<TData, TVariables>({
       ...options,
@@ -34,16 +47,22 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
     })
     .then(sanitizeForTransport);
   const transportedOptions = preparePreloadedQueryOptions(options);
+  const queryKey = useId();
   return (
     <SimulatePreloadedQuery<TData>
       options={transportedOptions}
       result={resultPromise}
+      queryKey={typeof children === "function" ? queryKey : undefined}
     >
       {typeof children === "function"
-        ? children({
-            __transportedQueryRef: true,
-            options: transportedOptions,
-          } as any as QueryReference<TData, TVariables>)
+        ? children(
+            createTransportedQueryRef(
+              transportedOptions,
+              queryKey
+              // we're lying to TypeScript and our users here.
+              // it's okay, they'll never know
+            ) as unknown as QueryReference<any, any>
+          )
         : children}
     </SimulatePreloadedQuery>
   );
@@ -51,11 +70,12 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
 
 function preparePreloadedQueryOptions(
   options: Parameters<typeof PreloadQuery>[0]["options"]
-): TransportedOptions {
+): TransportedQueryRefOptions {
   const transportedOptions = {
-    ...options,
-    query: printMinified(options.query),
-  };
+    ...serializeOptions(options),
+    fetchPolicy: "cache-first" as const,
+    returnPartialData: false,
+  } satisfies RestrictedPreloadOptions;
   return sanitizeForTransport(transportedOptions);
 }
 

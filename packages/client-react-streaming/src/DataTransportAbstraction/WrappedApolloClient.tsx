@@ -25,7 +25,7 @@ import type {
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
 import { bundle } from "../bundleInfo.js";
-import { printMinified } from "./printMinified.js";
+import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
@@ -332,10 +332,7 @@ class ApolloClientSSRImpl<
       this.watchQueryQueue.push({
         event: {
           type: "started",
-          options: {
-            ...(options as WatchQueryOptions<any>),
-            query: printMinified(options.query),
-          },
+          options: serializeOptions(options),
           id,
         },
         observable: streamObservable,
@@ -346,10 +343,7 @@ class ApolloClientSSRImpl<
   }
 
   onQueryStarted(event: Extract<QueryEvent, { type: "started" }>) {
-    const hydratedOptions = {
-      ...event.options,
-      query: gql(event.options.query),
-    };
+    const hydratedOptions = deserializeOptions(event.options);
     const { cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
     // this is a replay from another source and doesn't need to be transported
     // to the browser, since it will be replayed there, too.

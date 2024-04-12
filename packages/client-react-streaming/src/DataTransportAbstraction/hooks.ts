@@ -1,15 +1,6 @@
-import type {
-  HookWrappers,
-  QueryReference,
-} from "@apollo/client/react/internal/index.js";
+import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import { useTransportValue } from "./useTransportValue.js";
-import type { QueryOptions } from "@apollo/client";
-import {
-  getApolloContext,
-  createQueryPreloader,
-  gql,
-} from "@apollo/client/index.js";
-import { use } from "react";
+import { useWrapTransportedQueryRef } from "../transportedQueryRef.js";
 
 export const hookWrappers: HookWrappers = {
   useFragment(orig_useFragment) {
@@ -30,47 +21,18 @@ export const hookWrappers: HookWrappers = {
   useReadQuery(orig_useReadQuery) {
     return wrap(
       (queryRef) => {
-        if (isTransportedQueryRef(queryRef)) {
-          queryRef = reviveTransportedQueryRef(queryRef);
-        }
-        return orig_useReadQuery(queryRef);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return orig_useReadQuery(useWrapTransportedQueryRef(queryRef));
       },
       ["data", "networkStatus"]
     );
   },
   useQueryRefHandlers(orig_useQueryRefHandlers) {
     return wrap((queryRef) => {
-      if (isTransportedQueryRef(queryRef)) {
-        queryRef = reviveTransportedQueryRef(queryRef);
-      }
-      return orig_useQueryRefHandlers(queryRef);
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      return orig_useQueryRefHandlers(useWrapTransportedQueryRef(queryRef));
     }, []);
   },
-};
-
-function reviveTransportedQueryRef(queryRef: TransportedQueryRef) {
-  if (queryRef.__transportedQueryRef === true) {
-    const preloader = createQueryPreloader(use(getApolloContext()).client!);
-    const { query, ...options } = queryRef.options;
-    // TODO: discuss what to do with the fetchPolicy here
-    options.fetchPolicy = "cache-first";
-    queryRef.__transportedQueryRef = preloader(
-      gql(query),
-      options as typeof options & { fetchPolicy: "cache-first" }
-    );
-  }
-  return queryRef.__transportedQueryRef;
-}
-
-function isTransportedQueryRef(
-  queryRef: object
-): queryRef is TransportedQueryRef {
-  return "__transportedQueryRef" in queryRef;
-}
-
-type TransportedQueryRef = {
-  __transportedQueryRef: true | QueryReference<any, any>;
-  options: QueryOptions;
 };
 
 function wrap<T extends (...args: any[]) => any>(
