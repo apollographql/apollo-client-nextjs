@@ -9,7 +9,7 @@ const typeDefs = gql`
     title: String!
   }
   type Query {
-    products: [Product!]!
+    products(someArgument: String): [Product!]!
     env: String!
   }
 `;
