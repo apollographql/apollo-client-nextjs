@@ -44,6 +44,42 @@ export function registerApolloClient<
 ): {
   getClient: () => AC;
   query: Awaited<AC>["query"];
+  /**
+   * Preloads data in React Server Components to be hydrated
+   * in Client Components.
+   *
+   * ### Example with `queryRef`
+   * `ClientChild` would call `useReadQuery` with the `queryRef`, the `Suspense` boundary is optional:
+   * ```js
+   * <PreloadQuery
+   *    options={{
+   *      query: QUERY,
+   *      variables: { foo: 1 }
+   *    }}
+   *  >
+   *   {(queryRef) => (
+   *     <Suspense fallback={<>loading</>}>
+   *       <ClientChild queryRef={queryRef} />
+   *     </Suspense>
+   *   )}
+   * </PreloadQuery>
+   * ```
+   *
+   * ### Example for `useSuspenseQuery`
+   * `ClientChild` would call the same query with `useSuspenseQuery`, the `Suspense` boundary is optional:
+   *  ```js
+   *  <PreloadQuery
+   *    options={{
+   *      query: QUERY,
+   *      variables: { foo: 1 }
+   *    }}
+   *  >
+   *    <Suspense fallback={<>loading</>}>
+   *      <ClientChild />
+   *    </Suspense>
+   *  </PreloadQuery>
+   *  ```
+   */
   PreloadQuery: PreloadQueryComponent;
 } {
   const getClient = makeGetClient(makeClient);
@@ -121,10 +157,6 @@ interface PreloadQueryProps<TData, TVariables> {
 }
 
 interface PreloadQueryComponent {
-  /**
-   * Preloads data in React Server Components to be hydrated
-   * in Client Components.
-   */
   <TData, TVariables extends OperationVariables>(
     props: PreloadQueryProps<TData, TVariables>
   ): React.ReactNode;
