@@ -4,7 +4,7 @@
   "resolutions": {
     "@apollo/client-react-streaming": "exec:./shared/build-client-react-streaming.cjs",
     "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs",
-    "@integration-test/nextjs/@apollo/client": "0.0.0-pr-11771-20240409102352"
+    "@integration-test/nextjs/@apollo/client": "0.0.0-pr-11698-20240415134929"
   },
   "workspaces": [
     "*"
