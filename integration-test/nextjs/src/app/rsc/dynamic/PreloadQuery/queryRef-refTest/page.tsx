@@ -1,7 +1,6 @@
 import { QUERY } from "../shared";
 import { Suspense } from "react";
-import { getClient } from "@/app/rsc/client";
-import { PreloadQuery } from "@apollo/client-react-streaming";
+import { PreloadQuery } from "@/app/rsc/client";
 import { RefTestChild } from "./RefTestChild";
 import { ApolloWrapper } from "@/app/cc/ApolloWrapper";
 
@@ -23,7 +22,6 @@ export default function Page() {
               someArgument: "query1",
             },
           }}
-          getClient={getClient}
         >
           {(queryRef1) => (
             <>
@@ -42,7 +40,6 @@ export default function Page() {
               someArgument: "query2",
             },
           }}
-          getClient={getClient}
         >
           {(queryRef2) => (
             <Suspense fallback={<>loading</>}>

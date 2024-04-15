@@ -56,7 +56,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.5"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.73"
+    "@types/react": "npm:^18.2.78"
     "@typescript-eslint/eslint-plugin": "npm:7.5.0"
     "@typescript-eslint/parser": "npm:7.5.0"
     concurrently: "npm:8.2.2"
@@ -134,7 +134,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.5"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.73"
+    "@types/react": "npm:^18.2.78"
     "@typescript-eslint/eslint-plugin": "npm:7.5.0"
     "@typescript-eslint/parser": "npm:7.5.0"
     concurrently: "npm:8.2.2"
@@ -5139,13 +5139,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.73":
-  version: 18.2.73
-  resolution: "@types/react@npm:18.2.73"
+"@types/react@npm:^18.2.78":
+  version: 18.2.78
+  resolution: "@types/react@npm:18.2.78"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/799e30e73464dff40e04f4eb7499ebc31f99b1711a69263b9af340af738e35c9cdf53084e3dacc3b21c031aaa0cba1b51f4ba60490204b7abb75f115b841583f
+  checksum: 10/a4bf8104c580fab40535cc6058425ac6a47c19b8dad45b566cdb38aaafa3ffa1f24e7b65ec95e391a6c18ccf4a33738a591c1f723c00300f13d61fc456a1eb8d
   languageName: node
   linkType: hard
 
@@ -5987,7 +5987,7 @@ __metadata:
     "@graphql-codegen/typescript": "npm:3.0.4"
     "@graphql-codegen/typescript-resolvers": "npm:3.2.1"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.73"
+    "@types/react": "npm:^18.2.78"
     "@types/react-dom": "npm:18.2.23"
     "@vercel/kv": "npm:^0.1.1"
     autoprefixer: "npm:10.4.14"
@@ -6015,7 +6015,7 @@ __metadata:
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.73"
+    "@types/react": "npm:^18.2.78"
     "@types/react-dom": "npm:18.2.23"
     client-only: "npm:^0.0.1"
     encoding: "npm:^0.1.13"
@@ -9848,7 +9848,7 @@ __metadata:
     "@emotion/styled": "npm:^11.10.6"
     "@types/js-cookie": "npm:3.0.6"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.73"
+    "@types/react": "npm:^18.2.78"
     "@types/react-dom": "npm:18.2.23"
     eslint: "npm:8.38.0"
     eslint-config-next: "npm:13.3.0"

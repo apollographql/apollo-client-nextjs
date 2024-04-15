@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { SimulatePreloadedQuery } from "./index.cc.js";
 import type {
   ApolloClient,
@@ -6,9 +5,9 @@ import type {
   QueryOptions,
   QueryReference,
 } from "@apollo/client";
+import type { ReactNode } from "react";
 import React, { useId } from "react";
 import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
-import type { TransportedQueryRefOptions } from "./transportedQueryRef.js";
 import { createTransportedQueryRef } from "./transportedQueryRef.js";
 
 export type RestrictedPreloadOptions = {
@@ -23,31 +22,40 @@ export type PreloadQueryOptions<TVariables, TData> = QueryOptions<
 > &
   RestrictedPreloadOptions;
 
-export function PreloadQuery<TData, TVariables extends OperationVariables>({
+export async function PreloadQuery<
+  TData,
+  TVariables extends OperationVariables,
+>({
   options,
   getClient,
   children,
 }: {
   options: PreloadQueryOptions<TVariables, TData>;
-  getClient: () => ApolloClient<any>;
+  getClient: () => ApolloClient<any> | Promise<ApolloClient<any>>;
   children:
     | ReactNode
     | ((
         queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
-  // TODO: create `queryKey` uniquely for this component
-  const resultPromise = getClient()
-    .query<TData, TVariables>({
-      ...options,
-      // TODO: create a second Client instance only for `PreloadQuery` calls
-      // We want to prevent "client" data from leaking into our "RSC" cache,
-      // as that data should always be strictly separated.
-      fetchPolicy: "no-cache",
-    })
-    .then(sanitizeForTransport);
-  const transportedOptions = preparePreloadedQueryOptions(options);
+  // is this legal?
+  // https://twitter.com/phry/status/1779833984299532439
   const queryKey = useId();
+
+  const preloadOptions = {
+    ...options,
+    fetchPolicy: "cache-first" as const,
+    returnPartialData: false,
+  } satisfies RestrictedPreloadOptions;
+
+  const transportedOptions = sanitizeForTransport(
+    serializeOptions(preloadOptions)
+  );
+
+  const resultPromise = (await getClient())
+    .query<TData, TVariables>(preloadOptions)
+    .then(sanitizeForTransport);
+
   return (
     <SimulatePreloadedQuery<TData>
       options={transportedOptions}
@@ -66,17 +74,6 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
         : children}
     </SimulatePreloadedQuery>
   );
-}
-
-function preparePreloadedQueryOptions(
-  options: Parameters<typeof PreloadQuery>[0]["options"]
-): TransportedQueryRefOptions {
-  const transportedOptions = {
-    ...serializeOptions(options),
-    fetchPolicy: "cache-first" as const,
-    returnPartialData: false,
-  } satisfies RestrictedPreloadOptions;
-  return sanitizeForTransport(transportedOptions);
 }
 
 function sanitizeForTransport<T>(value: T) {

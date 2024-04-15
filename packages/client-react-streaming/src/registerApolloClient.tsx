@@ -1,5 +1,13 @@
-import type { ApolloClient } from "@apollo/client/index.js";
+import type {
+  ApolloClient,
+  OperationVariables,
+  QueryReference,
+} from "@apollo/client/index.js";
+import type React from "react";
 import { cache } from "react";
+import type { ReactNode } from "react";
+import type { PreloadQueryOptions } from "./PreloadQuery.js";
+import { PreloadQuery as UnboundPreloadQuery } from "./PreloadQuery.js";
 
 const seenWrappers = WeakSet
   ? new WeakSet<{ client: ApolloClient<any> | Promise<ApolloClient<any>> }>()
@@ -17,7 +25,7 @@ const seenClients = WeakSet
  *
  * @example
  * ```ts
- * export const { getClient } = registerApolloClient(() => {
+ * export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
  *   return new ApolloClient({
  *     cache: new InMemoryCache(),
  *     link: new HttpLink({
@@ -29,36 +37,33 @@ const seenClients = WeakSet
  *
  * @public
  */
-export function registerApolloClient(
-  makeClient: () => Promise<ApolloClient<any>>
-): { getClient: () => Promise<ApolloClient<any>> };
-/**
- * Ensures that you can always access the same instance of ApolloClient
- * during RSC for an ongoing request, while always returning
- * a new instance for different requests.
- *
- * @example
- * ```ts
- * export const { getClient } = registerApolloClient(() => {
- *   return new ApolloClient({
- *     cache: new InMemoryCache(),
- *     link: new HttpLink({
- *       uri: "http://example.com/api/graphql",
- *     }),
- *   });
- * });
- * ```
- *
- * @public
- */
-export function registerApolloClient(makeClient: () => ApolloClient<any>): {
-  getClient: () => ApolloClient<any>;
-  // TODO, with `getClient` prebound
-  PreloadQuery?: typeof import("./PreloadQuery.js").PreloadQuery;
-};
-export function registerApolloClient(
-  makeClient: (() => Promise<ApolloClient<any>>) | (() => ApolloClient<any>)
-) {
+export function registerApolloClient<
+  AC extends Promise<ApolloClient<any>> | ApolloClient<any>,
+>(
+  makeClient: () => AC
+): {
+  getClient: () => AC;
+  query: Awaited<AC>["query"];
+  PreloadQuery: PreloadQueryComponent;
+} {
+  const getClient = makeGetClient(makeClient);
+  /*
+  We create an independent instance of Apollo Client per request,
+  because we don't want to mix up RSC-specific data with Client-specific
+  data in the same `InMemoryCache` instance.
+  */
+  const getPreloadClient = makeGetClient(makeClient);
+  const PreloadQuery = makePreloadQuery(getPreloadClient);
+  return {
+    getClient,
+    query: async (...args) => (await getClient()).query(...args),
+    PreloadQuery,
+  };
+}
+
+function makeGetClient<
+  AC extends Promise<ApolloClient<any>> | ApolloClient<any>,
+>(makeClient: () => AC): () => AC {
   // React invalidates the cache on each server request, so the wrapping
   // object is needed to properly detect whether the client is a unique
   // reference or not. We can warn if `cachedMakeWrappedClient` creates a new "wrapper",
@@ -103,7 +108,35 @@ return a new instance every time \`makeClient\` is called.
     }
     return wrapper.client;
   }
-  return {
-    getClient,
+  return getClient;
+}
+
+interface PreloadQueryProps<TData, TVariables> {
+  options: PreloadQueryOptions<TVariables, TData>;
+  children:
+    | ReactNode
+    | ((
+        queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
+      ) => ReactNode);
+}
+
+interface PreloadQueryComponent {
+  /**
+   * Preloads data in React Server Components to be hydrated
+   * in Client Components.
+   */
+  <TData, TVariables extends OperationVariables>(
+    props: PreloadQueryProps<TData, TVariables>
+  ): React.ReactNode;
+}
+
+function makePreloadQuery(
+  getClient: () => Promise<ApolloClient<any>> | ApolloClient<any>
+) {
+  return function PreloadQuery<TData, TVariables extends OperationVariables>(
+    props: PreloadQueryProps<TData, TVariables>
+  ): React.ReactNode {
+    // we directly execute the bound component instead of returning JSX to keep the tree a bit tidier
+    return UnboundPreloadQuery({ ...props, getClient });
   };
 }
