@@ -4,7 +4,6 @@ import type {
   OperationVariables,
   QueryOptions,
   QueryReference,
-  FetchPolicy,
 } from "@apollo/client";
 import type { ReactNode } from "react";
 import React, { useId } from "react";
@@ -14,7 +13,7 @@ import { createTransportedQueryRef } from "./transportedQueryRef.js";
 export type RestrictedPreloadOptions = {
   fetchPolicy?: "cache-first";
   returnPartialData?: false;
-  nextFetchPolicy?: FetchPolicy | undefined;
+  nextFetchPolicy?: undefined;
   pollInterval?: undefined;
 };
 
@@ -42,6 +41,7 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
     fetchPolicy: "cache-first" as const,
     returnPartialData: false,
     pollInterval: undefined,
+    nextFetchPolicy: undefined,
   } satisfies RestrictedPreloadOptions;
 
   const transportedOptions = sanitizeForTransport(
