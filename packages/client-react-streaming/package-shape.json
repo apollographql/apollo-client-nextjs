@@ -7,7 +7,6 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "registerApolloClient",
-      "PreloadQuery",
       "built_for_rsc"
     ],
     "browser": [
