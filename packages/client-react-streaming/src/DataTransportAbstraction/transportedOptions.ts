@@ -43,7 +43,11 @@ export function deserializeOptions(
 ): WatchQueryOptions {
   return {
     ...options,
-    query: gql(options.query),
+    // `gql` memoizes results, but based on the input string.
+    // We parse-stringify-parse here to ensure that our minified query
+    // has the best chance of being the referential same query as the one used in
+    // client-side code.
+    query: gql(print(gql(options.query))),
   };
 }
 

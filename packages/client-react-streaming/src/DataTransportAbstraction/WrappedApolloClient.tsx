@@ -123,10 +123,7 @@ export class ApolloClientClientBaseImpl<
   }
 
   onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
-    const hydratedOptions = {
-      ...options,
-      query: gql(options.query),
-    };
+    const hydratedOptions = deserializeOptions(options);
     const { cacheKey, cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
     this.transportedQueryOptions.set(id, hydratedOptions);
 
