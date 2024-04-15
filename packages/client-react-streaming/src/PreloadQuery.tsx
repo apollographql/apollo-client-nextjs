@@ -22,10 +22,7 @@ export type PreloadQueryOptions<TVariables, TData> = QueryOptions<
 > &
   RestrictedPreloadOptions;
 
-export async function PreloadQuery<
-  TData,
-  TVariables extends OperationVariables,
->({
+export function PreloadQuery<TData, TVariables extends OperationVariables>({
   options,
   getClient,
   children,
@@ -38,10 +35,6 @@ export async function PreloadQuery<
         queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
-  // is this legal?
-  // https://twitter.com/phry/status/1779833984299532439
-  const queryKey = useId();
-
   const preloadOptions = {
     ...options,
     fetchPolicy: "cache-first" as const,
@@ -52,9 +45,11 @@ export async function PreloadQuery<
     serializeOptions(preloadOptions)
   );
 
-  const resultPromise = (await getClient())
-    .query<TData, TVariables>(preloadOptions)
+  const resultPromise = Promise.resolve(getClient())
+    .then((client) => client.query<TData, TVariables>(preloadOptions))
     .then(sanitizeForTransport);
+
+  const queryKey = useId();
 
   return (
     <SimulatePreloadedQuery<TData>
