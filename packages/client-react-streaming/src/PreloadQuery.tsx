@@ -6,7 +6,7 @@ import type {
   QueryReference,
 } from "@apollo/client";
 import type { ReactNode } from "react";
-import React, { useId } from "react";
+import React from "react";
 import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
 import { createTransportedQueryRef } from "./transportedQueryRef.js";
 
@@ -52,7 +52,7 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
     .then((client) => client.query<TData, TVariables>(preloadOptions))
     .then(sanitizeForTransport);
 
-  const queryKey = useId();
+  const queryKey = crypto.randomUUID();
 
   return (
     <SimulatePreloadedQuery<TData>
