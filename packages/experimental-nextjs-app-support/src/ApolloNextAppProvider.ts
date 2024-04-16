@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { use } from "react";
 import { buildManualDataTransport } from "@apollo/client-react-streaming/manual-transport";
 import { WrapApolloProvider } from "@apollo/client-react-streaming";
 import { ServerInsertedHTMLContext } from "next/navigation.js";
@@ -44,10 +44,13 @@ import { bundle } from "./bundleInfo.js";
 export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
   buildManualDataTransport({
     useInsertHtml() {
-      const insertHtml = useContext(ServerInsertedHTMLContext);
+      if (process.env.REACT_ENV === "browser") {
+        return () => {};
+      }
+      const insertHtml = use(ServerInsertedHTMLContext);
       if (!insertHtml) {
         throw new Error(
-          "ApolloNextAppProvider cannot be used outside of the Next App Router!"
+          "The SSR build of ApolloNextAppProvider cannot be used outside of the Next App Router!"
         );
       }
       return insertHtml;
