@@ -1,0 +1,47 @@
+name: Playwright Tests
+
+on:
+  deployment_status:
+jobs:
+  run-e2es:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    name: Run Playwright tests against Vercel deployment
+    defaults:
+      run:
+        working-directory: ./integration-test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+      - name: Install Packages (Root)
+        run: yarn install --immutable
+        working-directory: ./
+      - name: Install Packages (Integration Test)
+        run: |
+          yarn install
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: yarn why @playwright/test --json | jq '.children|to_entries[0].value.locator' --raw-output | sed 's/^.*npm:/PLAYWRIGHT_VERSION=/' >> $GITHUB_ENV
+      - name: Cache playwright binaries
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - run: npx playwright install-deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+
+      - name: "Run Playwright tests against Vercel deployment"
+        run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+        env:
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}

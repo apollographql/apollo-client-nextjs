@@ -9,7 +9,7 @@ const regex_query_error_restart =
 test.describe("CC dynamic", () => {
   test.describe("useSuspenseQuery", () => {
     test("one query", async ({ page, blockRequest, hydrationFinished }) => {
-      await page.goto("http://localhost:3000/cc/dynamic/useSuspenseQuery", {
+      await page.goto("/cc/dynamic/useSuspenseQuery", {
         waitUntil: "commit",
       });
 
@@ -30,12 +30,9 @@ test.describe("CC dynamic", () => {
         allLogs.push(message.text());
       });
 
-      await page.goto(
-        "http://localhost:3000/cc/dynamic/useSuspenseQueryWithError",
-        {
-          waitUntil: "commit",
-        }
-      );
+      await page.goto("/cc/dynamic/useSuspenseQueryWithError", {
+        waitUntil: "commit",
+      });
 
       await expect(page).toBeInitiallyLoading(true);
 
@@ -57,7 +54,7 @@ test.describe("CC dynamic", () => {
 
   test.describe("useBackgroundQuery + useReadQuery", () => {
     test("one query", async ({ page, blockRequest, hydrationFinished }) => {
-      await page.goto("http://localhost:3000/cc/dynamic/useBackgroundQuery", {
+      await page.goto("/cc/dynamic/useBackgroundQuery", {
         waitUntil: "commit",
       });
 
@@ -71,12 +68,9 @@ test.describe("CC dynamic", () => {
 
     // this will close the connection before the final result is received, so it can never be forwarded
     test("no `useReadQuery` on the server", async ({ page }) => {
-      await page.goto(
-        "http://localhost:3000/cc/dynamic/useBackgroundQueryWithoutSsrReadQuery",
-        {
-          waitUntil: "commit",
-        }
-      );
+      await page.goto("/cc/dynamic/useBackgroundQueryWithoutSsrReadQuery", {
+        waitUntil: "commit",
+      });
 
       await expect(page.getByText("rendered on server")).toBeVisible();
 
@@ -92,7 +86,7 @@ test.describe("CC dynamic", () => {
   });
   test.describe("useQuery", () => {
     test("without cache value", async ({ page }) => {
-      await page.goto("http://localhost:3000/cc/dynamic/useQuery", {
+      await page.goto("/cc/dynamic/useQuery", {
         waitUntil: "commit",
       });
 
@@ -102,7 +96,7 @@ test.describe("CC dynamic", () => {
     });
 
     test("with cache value", async ({ page }) => {
-      await page.goto("http://localhost:3000/cc/dynamic/useQueryWithCache", {
+      await page.goto("/cc/dynamic/useQueryWithCache", {
         waitUntil: "commit",
       });
 
@@ -112,12 +106,9 @@ test.describe("CC dynamic", () => {
   });
   test.describe("useSuspenseQuery with a nonce", () => {
     test("invalid: logs an error", async ({ page, blockRequest }) => {
-      await page.goto(
-        "http://localhost:3000/cc/dynamic/useSuspenseQuery?nonce=invalid",
-        {
-          waitUntil: "commit",
-        }
-      );
+      await page.goto("/cc/dynamic/useSuspenseQuery?nonce=invalid", {
+        waitUntil: "commit",
+      });
 
       await page.waitForEvent("console", (message) => {
         return /^Refused to execute inline script because it violates the following Content Security Policy/.test(
@@ -127,7 +118,7 @@ test.describe("CC dynamic", () => {
     });
     test("valid: does not log an error", async ({ page, blockRequest }) => {
       await page.goto(
-        "http://localhost:3000/cc/dynamic/useSuspenseQuery?nonce=8IBTHwOdqNKAWeKl7plt8g==",
+        "/cc/dynamic/useSuspenseQuery?nonce=8IBTHwOdqNKAWeKl7plt8g==",
         {
           waitUntil: "commit",
         }

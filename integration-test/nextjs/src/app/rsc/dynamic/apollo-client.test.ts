@@ -3,7 +3,7 @@ import { test } from "../../../../fixture";
 
 test.describe("RSC dynamic", () => {
   test("query (one query)", async ({ page, blockRequest }) => {
-    await page.goto("http://localhost:3000/rsc/dynamic/query", {
+    await page.goto("/rsc/dynamic/query", {
       waitUntil: "commit",
     });
 
