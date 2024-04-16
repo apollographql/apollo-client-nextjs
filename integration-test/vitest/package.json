@@ -4,7 +4,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "^3.10.0-rc.1",
     "@apollo/experimental-nextjs-app-support": "*",
     "@graphql-tools/schema": "^10.0.3",
     "graphql-tag": "^2.12.6",

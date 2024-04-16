@@ -1,5 +1,9 @@
 import { gql } from "@apollo/client/index.js";
-import type { WatchQueryOptions, DocumentNode } from "@apollo/client/index.js";
+import type {
+  WatchQueryOptions,
+  DocumentNode,
+  FetchPolicy,
+} from "@apollo/client/index.js";
 import { print } from "@apollo/client/utilities/index.js";
 import { stripIgnoredCharacters } from "graphql";
 
@@ -10,9 +14,15 @@ export type TransportedOptions = { query: string } & Omit<
 
 export function serializeOptions<T extends WatchQueryOptions<any, any>>(
   options: T
-): { query: string } & Omit<T, "query"> {
+): { query: string; nextFetchPolicy?: FetchPolicy | undefined } & Omit<
+  T,
+  "query"
+> {
   return {
-    ...options,
+    ...(options as typeof options & {
+      // little bit of a hack around the method signature, but the method signature would cause React to error anyways
+      nextFetchPolicy?: FetchPolicy | undefined;
+    }),
     query: printMinified(options.query),
   };
 }

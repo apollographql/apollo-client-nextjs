@@ -79,7 +79,7 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
-    "@apollo/client": "3.9.9",
+    "@apollo/client": "3.10.0-rc.1",
     "@apollo/client-react-streaming": "workspace:*",
     "@arethetypeswrong/cli": "0.15.2",
     "@microsoft/api-extractor": "7.43.0",
@@ -110,7 +110,7 @@
     "vitest": "1.4.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "^3.10.0-rc.1",
     "next": "^13.4.1 || ^14.0.0",
     "react": "^18"
   },

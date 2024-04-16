@@ -49,7 +49,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
   dependencies:
-    "@apollo/client": "npm:3.9.9"
+    "@apollo/client": "npm:3.10.0-rc.1"
     "@arethetypeswrong/cli": "npm:0.15.2"
     "@microsoft/api-extractor": "npm:7.43.0"
     "@testing-library/react": "npm:14.2.2"
@@ -80,14 +80,14 @@ __metadata:
     typescript: "npm:5.4.3"
     vitest: "npm:1.4.0"
   peerDependencies:
-    "@apollo/client": ^3.9.6
+    "@apollo/client": ^3.10.0-rc.1
     react: ^18
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:0.0.0-pr-11698-20240415134929":
-  version: 0.0.0-pr-11698-20240415134929
-  resolution: "@apollo/client@npm:0.0.0-pr-11698-20240415134929"
+"@apollo/client@npm:3.10.0-rc.1":
+  version: 3.10.0-rc.1
+  resolution: "@apollo/client@npm:3.10.0-rc.1"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -118,7 +118,44 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/af10a646b2be106e6d11ece358afaa73f838e465441a541c0928f915882df62e7669375c55cae4de3435fad7fdcd25894603752442c81119f0c17930b6600a7e
+  checksum: 10/001cd5925d97069d5d92a11f67d9c8a5217201b491d275d5565562b27abc0de49fdae0f24ae6113343a29c7dbc47eea71163874b33f23f506f42989cfc57180f
+  languageName: node
+  linkType: hard
+
+"@apollo/client@npm:^3.9.9":
+  version: 3.9.11
+  resolution: "@apollo/client@npm:3.9.11"
+  dependencies:
+    "@graphql-typed-document-node/core": "npm:^3.1.1"
+    "@wry/caches": "npm:^1.0.0"
+    "@wry/equality": "npm:^0.5.6"
+    "@wry/trie": "npm:^0.5.0"
+    graphql-tag: "npm:^2.12.6"
+    hoist-non-react-statics: "npm:^3.3.2"
+    optimism: "npm:^0.18.0"
+    prop-types: "npm:^15.7.2"
+    rehackt: "npm:0.0.6"
+    response-iterator: "npm:^0.2.6"
+    symbol-observable: "npm:^4.0.0"
+    ts-invariant: "npm:^0.10.3"
+    tslib: "npm:^2.3.0"
+    zen-observable-ts: "npm:^1.2.5"
+  peerDependencies:
+    graphql: ^15.0.0 || ^16.0.0
+    graphql-ws: ^5.5.5
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
+  peerDependenciesMeta:
+    graphql-ws:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    subscriptions-transport-ws:
+      optional: true
+  checksum: 10/d16a334c9675955c79388bbb8b0b7ebf702bb6a24cb907a723be7e08ed878891ab6bfb37e46c6a4568a4f254f511405962896f06dd766c1cb01af41bc39566cf
   languageName: node
   linkType: hard
 
@@ -126,7 +163,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
-    "@apollo/client": "npm:3.9.9"
+    "@apollo/client": "npm:3.10.0-rc.1"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.2"
     "@microsoft/api-extractor": "npm:7.43.0"
@@ -156,7 +193,7 @@ __metadata:
     typescript: "npm:5.4.3"
     vitest: "npm:1.4.0"
   peerDependencies:
-    "@apollo/client": ^3.9.6
+    "@apollo/client": ^3.10.0-rc.1
     next: ^13.4.1 || ^14.0.0
     react: ^18
   languageName: unknown

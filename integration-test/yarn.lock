@@ -37,15 +37,15 @@ __metadata:
   dependencies:
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
-    "@apollo/client": ^3.9.6
+    "@apollo/client": ^3.10.0-rc.1
     react: ^18
   checksum: 10/8e12155ebcb9672f5b645c364d356018014df750412c61613341121ebb4d4eabb5f42cd9018cc3a81ad988f1b425548d68254ca49ede19c31d0d9e5a9a4f240a
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:0.0.0-pr-11698-20240415134929":
-  version: 0.0.0-pr-11698-20240415134929
-  resolution: "@apollo/client@npm:0.0.0-pr-11698-20240415134929"
+"@apollo/client@npm:^3.10.0-rc.1":
+  version: 3.10.0-rc.1
+  resolution: "@apollo/client@npm:3.10.0-rc.1"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -76,44 +76,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/af10a646b2be106e6d11ece358afaa73f838e465441a541c0928f915882df62e7669375c55cae4de3435fad7fdcd25894603752442c81119f0c17930b6600a7e
-  languageName: node
-  linkType: hard
-
-"@apollo/client@npm:^3.9.6":
-  version: 3.9.6
-  resolution: "@apollo/client@npm:3.9.6"
-  dependencies:
-    "@graphql-typed-document-node/core": "npm:^3.1.1"
-    "@wry/caches": "npm:^1.0.0"
-    "@wry/equality": "npm:^0.5.6"
-    "@wry/trie": "npm:^0.5.0"
-    graphql-tag: "npm:^2.12.6"
-    hoist-non-react-statics: "npm:^3.3.2"
-    optimism: "npm:^0.18.0"
-    prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.6"
-    response-iterator: "npm:^0.2.6"
-    symbol-observable: "npm:^4.0.0"
-    ts-invariant: "npm:^0.10.3"
-    tslib: "npm:^2.3.0"
-    zen-observable-ts: "npm:^1.2.5"
-  peerDependencies:
-    graphql: ^15.0.0 || ^16.0.0
-    graphql-ws: ^5.5.5
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
-  peerDependenciesMeta:
-    graphql-ws:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    subscriptions-transport-ws:
-      optional: true
-  checksum: 10/8455e8fe6a2a757bff9c814aec0c152543a920587a4a4278acf44c86f373d4923e4f48912aa88582504d8a56cd6e305656d8f290d8d1357834ec83e63c0b9592
+  checksum: 10/001cd5925d97069d5d92a11f67d9c8a5217201b491d275d5565562b27abc0de49fdae0f24ae6113343a29c7dbc47eea71163874b33f23f506f42989cfc57180f
   languageName: node
   linkType: hard
 
@@ -123,7 +86,7 @@ __metadata:
   dependencies:
     "@apollo/client-react-streaming": "npm:0.10.0"
   peerDependencies:
-    "@apollo/client": ^3.9.6
+    "@apollo/client": ^3.10.0-rc.1
     next: ^13.4.1 || ^14.0.0
     react: ^18
   checksum: 10/505b723bac0f3a7f15287ea32fab9f2e8c0cd567149abf11d750855f8a9bfc0aa26e44179ad10c32f7d162ad86318717032413ef8e1a25385185178e022588fa
@@ -2015,7 +1978,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/experimental-react@workspace:experimental-react"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:^3.10.0-rc.1"
     "@apollo/client-react-streaming": "npm:*"
     "@playwright/test": "npm:^1.39.0"
     "@tsconfig/vite-react": "npm:^3.0.0"
@@ -2039,7 +2002,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/jest@workspace:jest"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:^3.10.0-rc.1"
     "@apollo/client-react-streaming": "workspace:*"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@babel/core": "npm:^7.24.0"
@@ -2062,7 +2025,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/nextjs@workspace:nextjs"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:^3.10.0-rc.1"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
@@ -2101,7 +2064,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/vite-streaming@workspace:vite-streaming"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:^3.10.0-rc.1"
     "@apollo/client-react-streaming": "npm:*"
     "@playwright/test": "npm:^1.39.0"
     "@tsconfig/vite-react": "npm:^3.0.0"
@@ -2125,7 +2088,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/vitest@workspace:vitest"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:^3.10.0-rc.1"
     "@apollo/experimental-nextjs-app-support": "npm:*"
     "@graphql-tools/schema": "npm:^10.0.3"
     "@testing-library/jest-dom": "npm:^6.4.2"

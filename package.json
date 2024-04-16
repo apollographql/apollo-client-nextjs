@@ -21,8 +21,7 @@
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
     "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
-    "@microsoft/api-documenter": "7.24.1",
-    "@apollo/client": "0.0.0-pr-11698-20240415134929"
+    "@microsoft/api-documenter": "7.24.1"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.1",
