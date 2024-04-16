@@ -9,7 +9,7 @@ test.describe("PreloadQuery", () => {
     test.describe(decription, () => {
       test("query resolves on the server", async ({ page, blockRequest }) => {
         await page.goto(
-          `http://localhost:3000/rsc/dynamic/PreloadQuery/${path}?errorIn=ssr,browser`,
+          `/rsc/dynamic/PreloadQuery/${path}?errorIn=ssr,browser`,
           {
             waitUntil: "commit",
           }
@@ -27,12 +27,9 @@ test.describe("PreloadQuery", () => {
         page,
       }) => {
         page.allowErrors?.();
-        await page.goto(
-          `http://localhost:3000/rsc/dynamic/PreloadQuery/${path}?errorIn=rsc`,
-          {
-            waitUntil: "commit",
-          }
-        );
+        await page.goto(`/rsc/dynamic/PreloadQuery/${path}?errorIn=rsc`, {
+          waitUntil: "commit",
+        });
 
         await expect(page).toBeInitiallyLoading(true);
 
@@ -52,12 +49,9 @@ test.describe("PreloadQuery", () => {
     });
   }
   test("queryRef works with useQueryRefHandlers", async ({ page }) => {
-    await page.goto(
-      `http://localhost:3000/rsc/dynamic/PreloadQuery/queryRef-useReadQuery`,
-      {
-        waitUntil: "commit",
-      }
-    );
+    await page.goto(`/rsc/dynamic/PreloadQuery/queryRef-useReadQuery`, {
+      waitUntil: "commit",
+    });
 
     await expect(page).toBeInitiallyLoading(true);
     await expect(page.getByText("loading")).not.toBeVisible();
@@ -71,12 +65,9 @@ test.describe("PreloadQuery", () => {
   });
 
   test("queryRef: assumptions about referential equality", async ({ page }) => {
-    await page.goto(
-      `http://localhost:3000/rsc/dynamic/PreloadQuery/queryRef-refTest`,
-      {
-        waitUntil: "commit",
-      }
-    );
+    await page.goto(`/rsc/dynamic/PreloadQuery/queryRef-refTest`, {
+      waitUntil: "commit",
+    });
 
     await page.getByRole("spinbutton").nth(11).waitFor();
 
