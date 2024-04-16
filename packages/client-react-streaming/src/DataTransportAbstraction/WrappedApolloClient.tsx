@@ -9,7 +9,6 @@ import type {
 import {
   ApolloClient as OrigApolloClient,
   Observable,
-  gql,
 } from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import { print } from "@apollo/client/utilities/index.js";
@@ -21,6 +20,7 @@ import { hookWrappers } from "./hooks.js";
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import type { QueryInfo } from "@apollo/client/core/QueryInfo.js";
 import type {
+  ProgressEvent,
   QueryEvent,
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
@@ -187,7 +187,7 @@ export class ApolloClientClientBaseImpl<
     }
   }
 
-  onQueryProgress = (event: Exclude<QueryEvent, { type: "started" }>) => {
+  onQueryProgress = (event: ProgressEvent) => {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
 
     if (event.type === "data") {

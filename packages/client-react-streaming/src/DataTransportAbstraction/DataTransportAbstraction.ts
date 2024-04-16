@@ -89,3 +89,5 @@ export type QueryEvent =
       type: "complete";
       id: TransportIdentifier;
     };
+
+export type ProgressEvent = Exclude<QueryEvent, { type: "started" }>;

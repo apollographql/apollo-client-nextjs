@@ -1,13 +1,15 @@
 "use client";
 
-import type { FetchResult } from "@apollo/client/index.js";
 import {
   skipToken,
   useApolloClient,
   useBackgroundQuery,
 } from "@apollo/client/index.js";
 import type { ApolloClient as WrappedApolloClient } from "./DataTransportAbstraction/WrappedApolloClient.js";
-import type { TransportIdentifier } from "./DataTransportAbstraction/DataTransportAbstraction.js";
+import type {
+  ProgressEvent,
+  TransportIdentifier,
+} from "./DataTransportAbstraction/DataTransportAbstraction.js";
 import {
   deserializeOptions,
   type TransportedOptions,
@@ -28,7 +30,7 @@ export function SimulatePreloadedQuery<T>({
   queryKey,
 }: {
   options: TransportedQueryRefOptions;
-  result: Promise<FetchResult<T>>;
+  result: Promise<Array<Omit<ProgressEvent, "id">>>;
   children: ReactNode;
   queryKey?: string;
 }) {
@@ -47,29 +49,12 @@ export function SimulatePreloadedQuery<T>({
       options,
     });
 
-    result.then(
-      (result: FetchResult<any>) => {
-        invariant.debug(
-          "Preloaded query %s finished on the server, simulating result",
-          id
-        );
-        client.onQueryProgress!({
-          type: "data",
-          id,
-          result,
-        });
-        client.onQueryProgress!({
-          type: "complete",
-          id,
-        });
-      },
-      () => {
-        client.onQueryProgress!({
-          type: "error",
-          id,
-        });
+    result.then((results) => {
+      invariant.debug("Preloaded query %s: received events: %o", id, results);
+      for (const event of results) {
+        client.onQueryProgress!({ ...event, id } as ProgressEvent);
       }
-    );
+    });
   }
 
   const bgQueryArgs = useMemo<Parameters<typeof useBackgroundQuery>>(() => {

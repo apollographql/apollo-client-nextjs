@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 import React from "react";
 import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
 import { createTransportedQueryRef } from "./transportedQueryRef.js";
+import type { ProgressEvent } from "./DataTransportAbstraction/DataTransportAbstraction.js";
 
 export type RestrictedPreloadOptions = {
   fetchPolicy?: "cache-first";
@@ -50,7 +51,13 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
 
   const resultPromise = Promise.resolve(getClient())
     .then((client) => client.query<TData, TVariables>(preloadOptions))
-    .then(sanitizeForTransport);
+    .then<Array<Omit<ProgressEvent, "id">>, Array<Omit<ProgressEvent, "id">>>(
+      (result) => [
+        { type: "data", result: sanitizeForTransport(result) },
+        { type: "complete" },
+      ],
+      () => [{ type: "error" }]
+    );
 
   const queryKey = crypto.randomUUID();
 
