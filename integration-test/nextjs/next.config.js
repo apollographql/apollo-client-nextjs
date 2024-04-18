@@ -20,12 +20,6 @@ module.exports = {
       );
     }
 
-    // Disable minification for debugging purposes
-    config.optimization.minimize = false;
     return config;
-  },
-  swcMinify: false,
-  experimental: {
-    serverMinification: false,
   },
 };
