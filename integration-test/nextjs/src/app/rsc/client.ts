@@ -13,7 +13,7 @@ setVerbosity("debug");
 loadDevMessages();
 loadErrorMessages();
 
-export const { getClient, PreloadQuery } = registerApolloClient(() => {
+export const { getClient, PreloadQuery, query } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: delayLink.concat(errorLink.concat(new SchemaLink({ schema }))),

@@ -1,6 +1,6 @@
 import type { TypedDocumentNode } from "@apollo/client";
 import { gql } from "@apollo/client";
-import { getClient } from "../../client";
+import { query } from "../../client";
 
 const QUERY: TypedDocumentNode<{
   products: {
@@ -19,7 +19,7 @@ const QUERY: TypedDocumentNode<{
 export const dynamic = "force-static";
 
 export default async function Home() {
-  const { data } = await getClient().query({ query: QUERY });
+  const { data } = await query({ query: QUERY });
   return (
     <ul>
       {data.products.map(({ id, title }) => (
