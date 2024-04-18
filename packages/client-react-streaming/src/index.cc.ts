@@ -63,6 +63,10 @@ export function SimulatePreloadedQuery<T>({
     ) as PreloadQueryOptions<any, T>;
     return [
       query,
+      // If we didn't pass in a `queryKey` prop, the user didn't use the render props form and we don't
+      // need to create a real `queryRef` => skip.
+      // Otherwise we call `useBackgroundQuery` with options in this component to create a `queryRef`
+      // and have it soft-retained in the SuspenseCache.
       queryKey
         ? {
             ...hydratedOptions,
