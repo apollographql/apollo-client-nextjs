@@ -166,13 +166,7 @@ export class ApolloClientClientBaseImpl<
             observer.complete();
           })
           .catch((err) => {
-            console.log(
-              "error from promise, waiting 100ms to make sure nothing else here throws"
-            );
-            setTimeout(() => {
-              console.log("error from promise, forwarding into the observable");
-              observer.error(err);
-            }, 100);
+            observer.error(err);
           });
       });
 
