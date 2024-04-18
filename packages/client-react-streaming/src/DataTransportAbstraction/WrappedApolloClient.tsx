@@ -26,7 +26,6 @@ import type {
 } from "./DataTransportAbstraction.js";
 import { bundle } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
-import { GraphQLError } from "graphql";
 
 function getQueryManager<TCacheShape>(
   client: OrigApolloClient<unknown>
@@ -229,9 +228,7 @@ export class ApolloClientClientBaseImpl<
             "Query failed upstream, we will fail it during SSR and rerun it in the browser:",
             queryInfo.options
           );
-          queryInfo?.resolve?.({
-            errors: [new GraphQLError("Query failed upstream.")],
-          });
+          queryInfo?.reject?.(new Error("Query failed upstream."));
         }
       }
       this.transportedQueryOptions.delete(event.id);
