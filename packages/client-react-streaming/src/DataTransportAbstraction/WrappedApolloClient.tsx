@@ -157,6 +157,7 @@ export class ApolloClientClientBaseImpl<
         );
       });
 
+      promise.catch(() => {});
       promise.finally(cleanup);
 
       const observable = new Observable<FetchResult>((observer) => {
