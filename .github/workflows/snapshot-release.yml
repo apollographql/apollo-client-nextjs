@@ -34,6 +34,7 @@ jobs:
         id: comment-branch
 
       - name: Get sha
+        if: github.event_name == 'issue_comment'
         id: parse-sha
         continue-on-error: true
         run: |
