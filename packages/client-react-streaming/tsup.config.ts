@@ -16,7 +16,12 @@ export default defineConfig((options) => {
         }
       : false,
     outDir: "dist/",
-    external: ["@apollo/client-react-streaming", "react", "rehackt"],
+    external: [
+      "@apollo/client-react-streaming",
+      "react",
+      "rehackt",
+      "react-dom",
+    ],
     noExternal: ["@apollo/client"], // will be handled by `acModuleImports`
     esbuildPlugins: [acModuleImports],
   };
@@ -64,6 +69,7 @@ export default defineConfig((options) => {
       "src/ManualDataTransport/index.ts",
       "manual-transport.browser"
     ),
+    entry("ssr", "src/stream-utils/index.ts", "stream-utils.node"),
   ];
 });
 
