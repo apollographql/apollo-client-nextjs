@@ -1,6 +1,10 @@
 import express from "express";
 import { renderToReadableStream } from "react-dom/server.edge";
 import { readFile } from "node:fs/promises";
+import {
+  createInjectionTransformStream,
+  pipeReaderToResponse,
+} from "@apollo/client-react-streaming/stream-utils";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
@@ -51,14 +55,14 @@ app.use("*", async (req, res) => {
     console.error("Fatal", error);
   });
 
-  const { createTransport, render } =
-    /** @type {import('./src/entry-server.jsx.js')}*/ (
-      await (isProduction
-        ? import("./dist/server/entry-server.js")
-        : vite.ssrLoadModule("/src/entry-server.jsx"))
-    );
+  const { render } = /** @type {import('./src/entry-server.jsx.js')}*/ (
+    await (isProduction
+      ? import("./dist/server/entry-server.js")
+      : vite.ssrLoadModule("/src/entry-server.jsx"))
+  );
 
-  const { injectIntoStream, transformStream } = createTransport();
+  const { injectIntoStream, transformStream } =
+    createInjectionTransformStream();
 
   const App = render({
     isProduction,
@@ -78,22 +82,6 @@ app.use("*", async (req, res) => {
     res
   );
 });
-
-async function pipeReaderToResponse(reader, res) {
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) {
-        res.end();
-        return;
-      } else {
-        res.write(value);
-      }
-    }
-  } catch (e) {
-    res.destroy(e);
-  }
-}
 
 // Start http server
 app.listen(port, () => {
