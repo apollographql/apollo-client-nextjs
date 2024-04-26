@@ -20,8 +20,10 @@
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run"
   },
   "resolutions": {
-    "react@18.2.0": "18.3.0-canary-60a927d04-20240113",
-    "react-dom@18.2.0": "18.3.0-canary-60a927d04-20240113",
+    "react": "19.0.0-beta-94eed63c49-20240425",
+    "react-dom": "19.0.0-beta-94eed63c49-20240425",
+    "@types/react": "npm:types-react@19.0.0-alpha.3",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
     "@microsoft/api-documenter": "7.24.1"
   },
   "devDependencies": {
