@@ -49,14 +49,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
   dependencies:
-    "@apollo/client": "npm:3.10.0-rc.1"
+    "@apollo/client": "npm:3.10.1"
     "@arethetypeswrong/cli": "npm:0.15.2"
     "@microsoft/api-extractor": "npm:7.43.0"
     "@testing-library/react": "npm:14.2.2"
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.5"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.78"
+    "@types/react": "npm:18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:7.5.0"
     "@typescript-eslint/parser": "npm:7.5.0"
     concurrently: "npm:8.2.2"
@@ -69,7 +69,7 @@ __metadata:
     graphql: "npm:16.8.1"
     jsdom: "npm:24.0.0"
     publint: "npm:0.2.7"
-    react: "npm:18.3.0-canary-60a927d04-20240113"
+    react: "npm:18.3.0"
     react-error-boundary: "npm:4.0.13"
     react-server-dom-webpack: "npm:18.3.0-canary-60a927d04-20240113"
     rimraf: "npm:5.0.5"
@@ -80,14 +80,14 @@ __metadata:
     typescript: "npm:5.4.3"
     vitest: "npm:1.4.0"
   peerDependencies:
-    "@apollo/client": ^3.10.0-rc.1
+    "@apollo/client": ^3.10.1
     react: ^18
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:3.10.0-rc.1":
-  version: 3.10.0-rc.1
-  resolution: "@apollo/client@npm:3.10.0-rc.1"
+"@apollo/client@npm:3.10.1":
+  version: 3.10.1
+  resolution: "@apollo/client@npm:3.10.1"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -97,7 +97,7 @@ __metadata:
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.6"
+    rehackt: "npm:^0.1.0"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
@@ -118,44 +118,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/001cd5925d97069d5d92a11f67d9c8a5217201b491d275d5565562b27abc0de49fdae0f24ae6113343a29c7dbc47eea71163874b33f23f506f42989cfc57180f
-  languageName: node
-  linkType: hard
-
-"@apollo/client@npm:^3.9.9":
-  version: 3.9.11
-  resolution: "@apollo/client@npm:3.9.11"
-  dependencies:
-    "@graphql-typed-document-node/core": "npm:^3.1.1"
-    "@wry/caches": "npm:^1.0.0"
-    "@wry/equality": "npm:^0.5.6"
-    "@wry/trie": "npm:^0.5.0"
-    graphql-tag: "npm:^2.12.6"
-    hoist-non-react-statics: "npm:^3.3.2"
-    optimism: "npm:^0.18.0"
-    prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.6"
-    response-iterator: "npm:^0.2.6"
-    symbol-observable: "npm:^4.0.0"
-    ts-invariant: "npm:^0.10.3"
-    tslib: "npm:^2.3.0"
-    zen-observable-ts: "npm:^1.2.5"
-  peerDependencies:
-    graphql: ^15.0.0 || ^16.0.0
-    graphql-ws: ^5.5.5
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
-  peerDependenciesMeta:
-    graphql-ws:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    subscriptions-transport-ws:
-      optional: true
-  checksum: 10/d16a334c9675955c79388bbb8b0b7ebf702bb6a24cb907a723be7e08ed878891ab6bfb37e46c6a4568a4f254f511405962896f06dd766c1cb01af41bc39566cf
+  checksum: 10/09ba47735f8e0211b1622341679aef3f05fdf1060900015b22db8f504b4b46bb4f4c6bcad0f88138486fd68e75fce42dcbd4d0e5b152405fb7cb7635417e2bff
   languageName: node
   linkType: hard
 
@@ -163,7 +126,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
-    "@apollo/client": "npm:3.10.0-rc.1"
+    "@apollo/client": "npm:3.10.1"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.2"
     "@microsoft/api-extractor": "npm:7.43.0"
@@ -171,7 +134,7 @@ __metadata:
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.5"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.78"
+    "@types/react": "npm:18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:7.5.0"
     "@typescript-eslint/parser": "npm:7.5.0"
     concurrently: "npm:8.2.2"
@@ -185,7 +148,7 @@ __metadata:
     jsdom: "npm:24.0.0"
     next: "npm:14.1.0"
     publint: "npm:0.2.7"
-    react: "npm:18.3.0-canary-60a927d04-20240113"
+    react: "npm:18.3.0"
     rimraf: "npm:5.0.5"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.2"
@@ -193,7 +156,7 @@ __metadata:
     typescript: "npm:5.4.3"
     vitest: "npm:1.4.0"
   peerDependencies:
-    "@apollo/client": ^3.10.0-rc.1
+    "@apollo/client": ^3.10.1
     next: ^13.4.1 || ^14.0.0
     react: ^18
   languageName: unknown
@@ -5147,12 +5110,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.23":
-  version: 18.2.23
-  resolution: "@types/react-dom@npm:18.2.23"
+"@types/react-dom@npm:18.3.0":
+  version: 18.3.0
+  resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10/8311c67767b0aafb5cd94176a90f801f0f5f6930731d57caaa04bb0d87fdef6bc6f723a116d9777d2082ec022682acaad7a62d04dc27e330e818cf34f2ef2703
+  checksum: 10/6ff53f5a7b7fba952a68e114d3b542ebdc1e87a794234785ebab0bcd9bde7fb4885f21ebaf93d26dc0a1b5b93287f42cad68b78ae04dddf6b20da7aceff0beaf
   languageName: node
   linkType: hard
 
@@ -5176,13 +5139,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.78":
-  version: 18.2.78
-  resolution: "@types/react@npm:18.2.78"
+"@types/react@npm:18.3.0":
+  version: 18.3.0
+  resolution: "@types/react@npm:18.3.0"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/a4bf8104c580fab40535cc6058425ac6a47c19b8dad45b566cdb38aaafa3ffa1f24e7b65ec95e391a6c18ccf4a33738a591c1f723c00300f13d61fc456a1eb8d
+  checksum: 10/2444294740016d61721df9adeb8635658c660c13b0782df9f067260ac6b0a4b71e68245089814ab53264843eb75f81d90f770253b94a13955cc1ddccf3593301
   languageName: node
   linkType: hard
 
@@ -6014,7 +5977,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": "npm:^3.9.9"
+    "@apollo/client": "npm:3.10.1"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@graphql-codegen/cli": "npm:3.3.1"
@@ -6024,8 +5987,8 @@ __metadata:
     "@graphql-codegen/typescript": "npm:3.0.4"
     "@graphql-codegen/typescript-resolvers": "npm:3.2.1"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.78"
-    "@types/react-dom": "npm:18.2.23"
+    "@types/react": "npm:18.3.0"
+    "@types/react-dom": "npm:18.3.0"
     "@vercel/kv": "npm:^0.1.1"
     autoprefixer: "npm:10.4.14"
     clsx: "npm:^1.2.1"
@@ -6036,8 +5999,8 @@ __metadata:
     graphql-tag: "npm:^2.12.6"
     next: "npm:^14.1.0"
     postcss: "npm:8.4.23"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
+    react: "npm:18.3.0"
+    react-dom: "npm:18.3.0"
     tailwindcss: "npm:3.3.2"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -6047,13 +6010,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": "npm:^3.9.9"
+    "@apollo/client": "npm:3.10.1"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.78"
-    "@types/react-dom": "npm:18.2.23"
+    "@types/react": "npm:18.3.0"
+    "@types/react-dom": "npm:18.3.0"
     client-only: "npm:^0.0.1"
     encoding: "npm:^0.1.13"
     eslint: "npm:8.36.0"
@@ -6061,8 +6024,8 @@ __metadata:
     graphql: "npm:^16.6.0"
     html-differ: "npm:^1.4.0"
     next: "npm:^14.1.0"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
+    react: "npm:18.3.0"
+    react-dom: "npm:18.3.0"
     server-only: "npm:^0.0.1"
     typescript: "npm:5.0.2"
   languageName: unknown
@@ -9874,7 +9837,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:^3.9.9"
+    "@apollo/client": "npm:3.10.1"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"
@@ -9885,16 +9848,16 @@ __metadata:
     "@emotion/styled": "npm:^11.10.6"
     "@types/js-cookie": "npm:3.0.6"
     "@types/node": "npm:20.12.2"
-    "@types/react": "npm:18.2.78"
-    "@types/react-dom": "npm:18.2.23"
+    "@types/react": "npm:18.3.0"
+    "@types/react-dom": "npm:18.3.0"
     eslint: "npm:8.38.0"
     eslint-config-next: "npm:13.3.0"
     framer-motion: "npm:^10.12.2"
     graphql: "npm:^16.6.0"
     js-cookie: "npm:^3.0.1"
     next: "npm:^14.1.0"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
+    react: "npm:18.3.0"
+    react-dom: "npm:18.3.0"
     react-icons: "npm:^4.8.0"
     react-rating-stars-component: "npm:^2.2.0"
     typescript: "npm:5.0.4"
@@ -13062,15 +13025,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.3.0-canary-60a927d04-20240113":
-  version: 18.3.0-canary-60a927d04-20240113
-  resolution: "react-dom@npm:18.3.0-canary-60a927d04-20240113"
+"react-dom@npm:18.3.0":
+  version: 18.3.0
+  resolution: "react-dom@npm:18.3.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
-    scheduler: "npm:0.24.0-canary-60a927d04-20240113"
+    scheduler: "npm:^0.23.1"
   peerDependencies:
-    react: 18.3.0-canary-60a927d04-20240113
-  checksum: 10/5a339f511e32d2690021458913d40fcf3671d4fe708026851b811420d958615a298d80352bb78ed4c635c3125ce491d30591213cb1086888bac8c426a2e98e65
+    react: ^18.3.0
+  checksum: 10/08d6a351fb4032c1b8cd6fc159b4d2d9f1e7ec967f3365f2585d808b381c9e83466dab9b15b72c2162c1a578776044fde641279a55af016473719be66c415408
   languageName: node
   linkType: hard
 
@@ -13216,12 +13179,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.3.0-canary-60a927d04-20240113":
-  version: 18.3.0-canary-60a927d04-20240113
-  resolution: "react@npm:18.3.0-canary-60a927d04-20240113"
+"react@npm:18.3.0":
+  version: 18.3.0
+  resolution: "react@npm:18.3.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/7da693ec8a4e4c33941f55c2cc042a4a1ea9360ab7b7fd227b7cddcc8949cac0058e585e557ea1a447dbb74e7865bcebb996ee975680e2b98c6d98e941847cb1
+  checksum: 10/17112377dad4e5c868b608be57c8e970a3f6ee6eb6269a5c4c23b11b8b4f393c42a8a046be0c9ddbc5f182b909330ddbecab905bcdea5051b05ec3914491fd79
   languageName: node
   linkType: hard
 
@@ -13322,9 +13285,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehackt@npm:0.0.6":
-  version: 0.0.6
-  resolution: "rehackt@npm:0.0.6"
+"rehackt@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "rehackt@npm:0.1.0"
   peerDependencies:
     "@types/react": "*"
     react: "*"
@@ -13333,7 +13296,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10/3897c93270836159406529e0fa983bf4a11c07d2efc5c8f6bdfd7f6821d3b84a30d911c3f3b9c689948739e6955c5835c8dd9d91579150bec5092f356c0d91df
+  checksum: 10/c81adead82c165dffc574cbf9e1de3605522782a56b48df48b68d53d45c4d8c9253df3790109335bf97072424e54ad2423bb9544ca3a985fa91995dda43452fc
   languageName: node
   linkType: hard
 
@@ -13849,12 +13812,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:0.24.0-canary-60a927d04-20240113":
-  version: 0.24.0-canary-60a927d04-20240113
-  resolution: "scheduler@npm:0.24.0-canary-60a927d04-20240113"
+"scheduler@npm:^0.23.1":
+  version: 0.23.1
+  resolution: "scheduler@npm:0.23.1"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/0289b2a5d20e4885c268a90765ebe7192eafb5b3a065888092c1684e25438932e06efd199a852b47dc8b57cc8741c609552e9f13de66e4492400e8dd4201b809
+  checksum: 10/6e194e726210c2d619cbf69a73fdb068cb0c9b0c99222de429ec5fc562c2f28e59a8cb3526e9104e16521e7e57c785a82bc44dd3f78fd0de86aea719a218f3c3
   languageName: node
   linkType: hard
 
