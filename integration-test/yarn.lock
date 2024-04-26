@@ -2068,8 +2068,8 @@ __metadata:
     "@apollo/client-react-streaming": "npm:*"
     "@playwright/test": "npm:^1.39.0"
     "@tsconfig/vite-react": "npm:^3.0.0"
-    "@types/react": "npm:18.3.0"
-    "@types/react-dom": "npm:18.3.0"
+    "@types/react": "npm:types-react@19.0.0-alpha.3"
+    "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3"
     "@vitejs/plugin-react": "npm:^4.2.1"
     compression: "npm:^1.7.4"
     cross-env: "npm:^7.0.3"
@@ -2077,8 +2077,8 @@ __metadata:
     graphql: "npm:^16.8.1"
     graphql-tag: "npm:^2.12.6"
     prettier: "npm:^3.2.5"
-    react: "npm:18.3.0"
-    react-dom: "npm:18.3.0"
+    react: "npm:19.0.0-beta-94eed63c49-20240425"
+    react-dom: "npm:19.0.0-beta-94eed63c49-20240425"
     sirv: "npm:^2.0.4"
     vite: "npm:^5.0.10"
   languageName: unknown
@@ -3051,6 +3051,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:types-react-dom@19.0.0-alpha.3":
+  version: 19.0.0-alpha.3
+  resolution: "types-react-dom@npm:19.0.0-alpha.3"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10/21f43e3cbdcf59bc2e6ac71e52161455039ccffab3e61cc0ccbb61fdce9a05d70abfce91ce490a6e63a8aae5f1974acc102dcc40c00b3876e2a0e00158a8533d
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*":
   version: 18.2.61
   resolution: "@types/react@npm:18.2.61"
@@ -3069,6 +3078,15 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10/2444294740016d61721df9adeb8635658c660c13b0782df9f067260ac6b0a4b71e68245089814ab53264843eb75f81d90f770253b94a13955cc1ddccf3593301
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:types-react@19.0.0-alpha.3":
+  version: 19.0.0-alpha.3
+  resolution: "types-react@npm:19.0.0-alpha.3"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10/637a0e905df8a2fc8f6a760e29d8a263dca72459e16e6a5c4bb1c950a3900ece1aaef8f6ca716e0c94a70c3172d8ed2e14e75cc72bedcd8aa6e10f7c7fb3552d
   languageName: node
   linkType: hard
 
@@ -7166,6 +7184,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:19.0.0-beta-94eed63c49-20240425":
+  version: 19.0.0-beta-94eed63c49-20240425
+  resolution: "react-dom@npm:19.0.0-beta-94eed63c49-20240425"
+  dependencies:
+    scheduler: "npm:0.25.0-beta-94eed63c49-20240425"
+  peerDependencies:
+    react: 19.0.0-beta-94eed63c49-20240425
+  checksum: 10/fe3eb846e83d0295b9efde71eb507ca3607c983bf4d13c9e21552abd3f20064a1fb7f14e7e9cf2cc4b34f7c4f0939d3d1d5d7cc0d21db36c861fe87538e318ce
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:@phryneas/experimental-react-dom@0.0.0-phryneas-a1c625c":
   version: 0.0.0-phryneas-a1c625c
   resolution: "@phryneas/experimental-react-dom@npm:0.0.0-phryneas-a1c625c"
@@ -7223,6 +7252,13 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10/17112377dad4e5c868b608be57c8e970a3f6ee6eb6269a5c4c23b11b8b4f393c42a8a046be0c9ddbc5f182b909330ddbecab905bcdea5051b05ec3914491fd79
+  languageName: node
+  linkType: hard
+
+"react@npm:19.0.0-beta-94eed63c49-20240425":
+  version: 19.0.0-beta-94eed63c49-20240425
+  resolution: "react@npm:19.0.0-beta-94eed63c49-20240425"
+  checksum: 10/fd6f6ef0340f9ec06f497e23eba019edccd724df280c88146ad11dd240c2ae4ee0762e6ecdf68c40a0ffa75be4f5d2e24d6222a0b544f76ac4ab1499b35fdbbd
   languageName: node
   linkType: hard
 
@@ -7494,6 +7530,13 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 10/97b50daf6ca3a153e89842efa18a862e446248296622b7473c169c84c823ee8a16e4a43bac2f73f11fc8cb9168c73fbb0d73340f26552bac17970e9052367aa9
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:0.25.0-beta-94eed63c49-20240425":
+  version: 0.25.0-beta-94eed63c49-20240425
+  resolution: "scheduler@npm:0.25.0-beta-94eed63c49-20240425"
+  checksum: 10/02a8c46af07e5cb5d80441e7a5a39d6ff29e799cb31f1cad0d396d8f714f945e6cc4df8277e68493ee2785c6e5963d2ab8c74f3bf60c646044759805d52b18e0
   languageName: node
   linkType: hard
 
