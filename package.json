@@ -22,6 +22,7 @@
   "resolutions": {
     "react": "19.0.0-beta-94eed63c49-20240425",
     "react-dom": "19.0.0-beta-94eed63c49-20240425",
+    "react-server-dom-webpack": "19.0.0-beta-94eed63c49-20240425",
     "@types/react": "npm:types-react@19.0.0-alpha.3",
     "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
     "@microsoft/api-documenter": "7.24.1"
