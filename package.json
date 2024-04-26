@@ -16,7 +16,8 @@
     "verify-package-shape": "node ./scripts/verify-package-shape.mjs",
     "matrix": "node ./scripts/test-matrix.js",
     "docs": "api-documenter markdown --input-folder temp --output-folder docs",
-    "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build"
+    "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build",
+    "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run"
   },
   "resolutions": {
     "react@18.2.0": "18.3.0-canary-60a927d04-20240113",

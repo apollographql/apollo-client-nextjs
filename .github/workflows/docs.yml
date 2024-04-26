@@ -39,8 +39,8 @@ jobs:
 
       - name: Create Docs
         run: |
-          yarn workspaces foreach --all --include "@apollo/*" run build
-          yarn workspaces foreach --all --include "@apollo/*" exec api-extractor run
+          yarn run build:libs
+          yarn run build:docmodel
           yarn workspace monorepo docs
 
       - name: Commit changes back
