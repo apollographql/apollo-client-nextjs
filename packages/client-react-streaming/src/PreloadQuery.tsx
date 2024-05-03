@@ -7,7 +7,7 @@ import type {
 import type { ReactNode } from "react";
 import React from "react";
 import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
-import type { TransportedQueryRef } from "./transportedQueryRef.js";
+import type { TransportedQueryReference } from "./transportedQueryRef.js";
 import { createTransportedQueryRef } from "./transportedQueryRef.js";
 import type { ProgressEvent } from "./DataTransportAbstraction/DataTransportAbstraction.js";
 
@@ -34,7 +34,7 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
   children:
     | ReactNode
     | ((
-        queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
+        queryRef: TransportedQueryReference<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
   const preloadOptions = {

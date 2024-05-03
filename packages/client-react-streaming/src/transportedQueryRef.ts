@@ -24,20 +24,39 @@ import type { RestrictedPreloadOptions } from "./PreloadQuery.js";
 export type TransportedQueryRefOptions = TransportedOptions &
   RestrictedPreloadOptions;
 
-export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
-  extends QueryReferenceBase<TData, TVariables> {
+/**
+ * A `TransportedQueryReference` is an opaque object accessible via renderProp within `PreloadQuery`.
+ *
+ * A child client component reading the `TransportedQueryReference` via useReadQuery will suspend until the promise resolves.
+ */
+export interface TransportedQueryReference<
+  TData = unknown,
+  TVariables = unknown,
+> extends QueryReferenceBase<TData, TVariables> {
+  /**
+   * Only available in React Server Components.
+   * Will be `undefined` after being passed to Client Components.
+   *
+   * Returns a promise that resolves back to the `TransportedQueryReference` that can be awaited in RSC to suspend a subtree until the originating query has been loaded.
+   */
+  toPromise?: () => Promise<TransportedQueryReference>;
+}
+
+export interface InternalTransportedQueryRef<
+  TData = unknown,
+  TVariables = unknown,
+> extends TransportedQueryReference<TData, TVariables> {
   __transportedQueryRef: true | QueryReference<any, any>;
   options: TransportedQueryRefOptions;
   queryKey: string;
-  toPromise?: () => Promise<TransportedQueryRef>;
 }
 
 export function createTransportedQueryRef<TData, TVariables>(
   options: TransportedQueryRefOptions,
   queryKey: string,
   promise: Promise<any>
-): TransportedQueryRef<TData, TVariables> {
-  const ref: TransportedQueryRef<TData, TVariables> = {
+): InternalTransportedQueryRef<TData, TVariables> {
+  const ref: InternalTransportedQueryRef<TData, TVariables> = {
     __transportedQueryRef: true,
     options,
     queryKey,
@@ -50,7 +69,7 @@ export function createTransportedQueryRef<TData, TVariables>(
 }
 
 export function reviveTransportedQueryRef(
-  queryRef: TransportedQueryRef,
+  queryRef: InternalTransportedQueryRef,
   client: ApolloClient<any>
 ): [QueryReference<any, any>, CacheKey] {
   const hydratedOptions = deserializeOptions(queryRef.options);
@@ -71,12 +90,12 @@ export function reviveTransportedQueryRef(
 
 function isTransportedQueryRef(
   queryRef: object
-): queryRef is TransportedQueryRef {
+): queryRef is InternalTransportedQueryRef {
   return "__transportedQueryRef" in queryRef;
 }
 
 export function useWrapTransportedQueryRef<TData, TVariables>(
-  queryRef: QueryReference<TData, TVariables> | TransportedQueryRef
+  queryRef: QueryReference<TData, TVariables> | InternalTransportedQueryRef
 ) {
   const client = useApolloClient();
   let cacheKey: CacheKey | undefined;

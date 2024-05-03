@@ -5,9 +5,10 @@ import { DynamicProductResult } from "../shared";
 import { useEffect, useState } from "react";
 import {
   InternalQueryReference,
-  QueryReferenceBase,
   unwrapQueryRef,
 } from "@apollo/client/react/internal";
+
+import { TransportedQueryReference } from "@apollo/experimental-nextjs-app-support/ssr";
 
 declare global {
   interface Window {
@@ -23,7 +24,7 @@ export function RefTestChild({
   queryRef,
   set,
 }: {
-  queryRef: QueryReferenceBase<DynamicProductResult>;
+  queryRef: TransportedQueryReference<DynamicProductResult>;
   set: "1" | "2";
 }) {
   const [isClient, setIsClient] = useState(false);

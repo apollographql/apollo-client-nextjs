@@ -5,4 +5,4 @@ export {
   ApolloClient,
   InMemoryCache,
 } from "./DataTransportAbstraction/index.js";
-export type { TransportedQueryRef } from "./transportedQueryRef.js";
+export type { TransportedQueryReference } from "./transportedQueryRef.js";
