@@ -35,12 +35,12 @@ const seenClients = WeakSet
  * @public
  */
 export function registerApolloClient<
-  AC extends Promise<ApolloClient<any>> | ApolloClient<any>,
+  ApolloClientOrPromise extends Promise<ApolloClient<any>> | ApolloClient<any>,
 >(
-  makeClient: () => AC
+  makeClient: () => ApolloClientOrPromise
 ): {
-  getClient: () => AC;
-  query: Awaited<AC>["query"];
+  getClient: () => ApolloClientOrPromise;
+  query: Awaited<ApolloClientOrPromise>["query"];
   /**
    * Preloads data in React Server Components to be hydrated
    * in Client Components.
@@ -49,9 +49,9 @@ export function registerApolloClient<
    * `ClientChild` would call `useReadQuery` with the `queryRef`, the `Suspense` boundary is optional:
    * ```js
    * <PreloadQuery
-   *    options={{
-   *      query: QUERY,
-   *      variables: { foo: 1 }
+   *    query={QUERY}
+   *    variables={{
+   *      foo: 1
    *    }}
    *  >
    *   {(queryRef) => (
@@ -66,9 +66,9 @@ export function registerApolloClient<
    * `ClientChild` would call the same query with `useSuspenseQuery`, the `Suspense` boundary is optional:
    *  ```js
    *  <PreloadQuery
-   *    options={{
-   *      query: QUERY,
-   *      variables: { foo: 1 }
+   *    query={QUERY}
+   *    variables={{
+   *      foo: 1
    *    }}
    *  >
    *    <Suspense fallback={<>loading</>}>
