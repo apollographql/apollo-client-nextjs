@@ -1,13 +1,10 @@
-import type {
-  ApolloClient,
-  OperationVariables,
-  QueryReference,
-} from "@apollo/client/index.js";
+import type { ApolloClient, OperationVariables } from "@apollo/client/index.js";
 import type React from "react";
 import { cache } from "react";
 import type { ReactNode } from "react";
 import type { PreloadQueryOptions } from "./PreloadQuery.js";
 import { PreloadQuery as UnboundPreloadQuery } from "./PreloadQuery.js";
+import type { QueryReferenceBase } from "@apollo/client/react/internal/index.js";
 
 const seenWrappers = WeakSet
   ? new WeakSet<{ client: ApolloClient<any> | Promise<ApolloClient<any>> }>()
@@ -152,7 +149,7 @@ interface PreloadQueryProps<TData, TVariables> {
   children:
     | ReactNode
     | ((
-        queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
+        queryRef: QueryReferenceBase<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }
 

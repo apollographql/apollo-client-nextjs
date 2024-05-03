@@ -3,11 +3,11 @@ import type {
   ApolloClient,
   OperationVariables,
   QueryOptions,
-  QueryReference,
 } from "@apollo/client";
 import type { ReactNode } from "react";
 import React from "react";
 import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
+import type { TransportedQueryRef } from "./transportedQueryRef.js";
 import { createTransportedQueryRef } from "./transportedQueryRef.js";
 import type { ProgressEvent } from "./DataTransportAbstraction/DataTransportAbstraction.js";
 
@@ -34,7 +34,7 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
   children:
     | ReactNode
     | ((
-        queryRef: QueryReference<NoInfer<TData>, NoInfer<TVariables>>
+        queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }) {
   const preloadOptions = {
@@ -69,12 +69,11 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
     >
       {typeof children === "function"
         ? children(
-            createTransportedQueryRef(
+            createTransportedQueryRef<TData, TVariables>(
               transportedOptions,
-              queryKey
-              // we're lying to TypeScript and our users here.
-              // it's okay, they'll never know
-            ) as unknown as QueryReference<any, any>
+              queryKey,
+              resultPromise
+            )
           )
         : children}
     </SimulatePreloadedQuery>

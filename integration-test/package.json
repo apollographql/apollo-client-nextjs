@@ -3,7 +3,8 @@
   "packageManager": "yarn@4.1.0",
   "resolutions": {
     "@apollo/client-react-streaming": "exec:./shared/build-client-react-streaming.cjs",
-    "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs"
+    "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs",
+    "@apollo/client": "0.0.0-pr-11824-20240503100254"
   },
   "workspaces": [
     "*"

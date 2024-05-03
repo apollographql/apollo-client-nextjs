@@ -1,16 +1,13 @@
 "use client";
 
-import {
-  QueryReference,
-  useQueryRefHandlers,
-  useReadQuery,
-} from "@apollo/client";
+import { useQueryRefHandlers, useReadQuery } from "@apollo/client";
 import { DynamicProductResult } from "../shared";
+import { QueryReferenceBase } from "@apollo/client/react/internal";
 
 export function ClientChild({
   queryRef,
 }: {
-  queryRef: QueryReference<DynamicProductResult>;
+  queryRef: QueryReferenceBase<DynamicProductResult>;
 }) {
   const { refetch } = useQueryRefHandlers(queryRef);
   const { data } = useReadQuery(queryRef);

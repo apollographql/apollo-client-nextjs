@@ -1,4 +1,7 @@
-import type { CacheKey } from "@apollo/client/react/internal/index.js";
+import type {
+  CacheKey,
+  QueryReferenceBase,
+} from "@apollo/client/react/internal/index.js";
 import {
   wrapQueryRef,
   getSuspenseCache,
@@ -21,21 +24,29 @@ import type { RestrictedPreloadOptions } from "./PreloadQuery.js";
 export type TransportedQueryRefOptions = TransportedOptions &
   RestrictedPreloadOptions;
 
-type TransportedQueryRef = {
+export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
+  extends QueryReferenceBase<TData, TVariables> {
   __transportedQueryRef: true | QueryReference<any, any>;
   options: TransportedQueryRefOptions;
   queryKey: string;
-};
+  toPromise?: () => Promise<TransportedQueryRef>;
+}
 
-export function createTransportedQueryRef(
+export function createTransportedQueryRef<TData, TVariables>(
   options: TransportedQueryRefOptions,
-  queryKey: string
-): TransportedQueryRef {
-  return {
+  queryKey: string,
+  promise: Promise<any>
+): TransportedQueryRef<TData, TVariables> {
+  const ref: TransportedQueryRef<TData, TVariables> = {
     __transportedQueryRef: true,
     options,
     queryKey,
   };
+  Object.defineProperty(ref, "toPromise", {
+    value: () => promise.then(() => ref),
+    enumerable: false,
+  });
+  return ref;
 }
 
 export function reviveTransportedQueryRef(

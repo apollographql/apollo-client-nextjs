@@ -5,6 +5,7 @@ import { DynamicProductResult } from "../shared";
 import { useEffect, useState } from "react";
 import {
   InternalQueryReference,
+  QueryReferenceBase,
   unwrapQueryRef,
 } from "@apollo/client/react/internal";
 
@@ -22,7 +23,7 @@ export function RefTestChild({
   queryRef,
   set,
 }: {
-  queryRef: QueryReference<DynamicProductResult>;
+  queryRef: QueryReferenceBase<DynamicProductResult>;
   set: "1" | "2";
 }) {
   const [isClient, setIsClient] = useState(false);
