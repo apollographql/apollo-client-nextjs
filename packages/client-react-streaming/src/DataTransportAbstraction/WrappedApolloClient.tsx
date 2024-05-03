@@ -225,7 +225,7 @@ export class ApolloClientClientBaseImpl<
           this.rerunSimulatedQuery(queryInfo);
         } else if (process.env.REACT_ENV === "ssr") {
           invariant.debug(
-            "Query failed upstream, we will fail it during SSR and rerun it in the browser:",
+            "Query failed upstream, will fail it during SSR and rerun it in the browser:",
             queryInfo.options
           );
           queryInfo?.reject?.(new Error("Query failed upstream."));
