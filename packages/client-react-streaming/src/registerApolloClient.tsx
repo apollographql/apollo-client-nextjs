@@ -144,8 +144,8 @@ return a new instance every time \`makeClient\` is called.
   return getClient;
 }
 
-interface PreloadQueryProps<TData, TVariables> {
-  options: PreloadQueryOptions<TVariables, TData>;
+interface PreloadQueryProps<TData, TVariables>
+  extends PreloadQueryOptions<TVariables, TData> {
   children:
     | ReactNode
     | ((

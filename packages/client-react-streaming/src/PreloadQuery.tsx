@@ -25,11 +25,10 @@ export type PreloadQueryOptions<TVariables, TData> = QueryOptions<
   RestrictedPreloadOptions;
 
 export function PreloadQuery<TData, TVariables extends OperationVariables>({
-  options,
   getClient,
   children,
-}: {
-  options: PreloadQueryOptions<TVariables, TData>;
+  ...options
+}: PreloadQueryOptions<TVariables, TData> & {
   getClient: () => ApolloClient<any> | Promise<ApolloClient<any>>;
   children:
     | ReactNode

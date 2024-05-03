@@ -10,12 +10,10 @@ export default function Page({ searchParams }: { searchParams?: any }) {
   return (
     <ApolloWrapper>
       <PreloadQuery
-        options={{
-          query: QUERY,
-          context: {
-            delay: 1000,
-            error: searchParams?.errorIn || undefined,
-          },
+        query={QUERY}
+        context={{
+          delay: 1000,
+          error: searchParams?.errorIn || undefined,
         }}
       >
         {(queryRef) => (

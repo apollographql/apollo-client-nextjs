@@ -13,14 +13,12 @@ export default function Page() {
     <ApolloWrapper>
       <form name="test">
         <PreloadQuery
-          options={{
-            query: QUERY,
-            context: {
-              delay: 100,
-            },
-            variables: {
-              someArgument: "query1",
-            },
+          query={QUERY}
+          context={{
+            delay: 100,
+          }}
+          variables={{
+            someArgument: "query1",
           }}
         >
           {(queryRef1) => (
@@ -31,14 +29,12 @@ export default function Page() {
           )}
         </PreloadQuery>
         <PreloadQuery
-          options={{
-            query: QUERY,
-            context: {
-              delay: 100,
-            },
-            variables: {
-              someArgument: "query2",
-            },
+          query={QUERY}
+          context={{
+            delay: 100,
+          }}
+          variables={{
+            someArgument: "query2",
           }}
         >
           {(queryRef2) => (
