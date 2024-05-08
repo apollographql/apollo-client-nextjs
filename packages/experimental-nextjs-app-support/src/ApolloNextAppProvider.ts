@@ -51,7 +51,8 @@ export const ApolloNextAppProvider = /*#__PURE__*/ WrapApolloProvider(
           return () => {};
         }
         throw new Error(
-          "The SSR build of ApolloNextAppProvider cannot be used outside of the Next App Router!"
+          "The SSR build of ApolloNextAppProvider cannot be used outside of the Next App Router!\n" +
+            'If you encounter this in a test, make sure that your tests are using the browser build by adding the "browser" import condition to your test setup.'
         );
       }
       return insertHtml;
