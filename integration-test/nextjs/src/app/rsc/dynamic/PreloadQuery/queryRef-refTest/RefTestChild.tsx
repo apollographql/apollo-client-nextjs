@@ -1,6 +1,6 @@
 "use client";
 
-import { QueryReference, useQueryRefHandlers } from "@apollo/client";
+import { QueryRef, useQueryRefHandlers } from "@apollo/client";
 import { DynamicProductResult } from "../shared";
 import { useEffect, useState } from "react";
 import {
@@ -8,7 +8,7 @@ import {
   unwrapQueryRef,
 } from "@apollo/client/react/internal";
 
-import { TransportedQueryReference } from "@apollo/experimental-nextjs-app-support/ssr";
+import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support/ssr";
 
 declare global {
   interface Window {
@@ -24,7 +24,7 @@ export function RefTestChild({
   queryRef,
   set,
 }: {
-  queryRef: TransportedQueryReference<DynamicProductResult>;
+  queryRef: TransportedQueryRef<DynamicProductResult>;
   set: "1" | "2";
 }) {
   const [isClient, setIsClient] = useState(false);
@@ -33,7 +33,7 @@ export function RefTestChild({
 
   useEffect(() => {
     const realQueryRef = queryRef as any as {
-      __transportedQueryRef: QueryReference<DynamicProductResult>;
+      __transportedQueryRef: QueryRef<DynamicProductResult>;
     };
     if (!window.testRefs) {
       window.testRefs = {
@@ -44,10 +44,10 @@ export function RefTestChild({
       };
     }
     window.testRefs[`uniqueQueryRefs${set}`].add(
-      unwrapQueryRef(realQueryRef.__transportedQueryRef)
+      unwrapQueryRef(realQueryRef.__transportedQueryRef)!
     );
     window.testRefs.distinctQueryRefs.add(
-      unwrapQueryRef(realQueryRef.__transportedQueryRef)
+      unwrapQueryRef(realQueryRef.__transportedQueryRef)!
     );
     window.testRefs.distinctObjectReferences.add(queryRef);
     setIsClient(true);

@@ -1,17 +1,15 @@
-import type {
-  CacheKey,
-  QueryReferenceBase,
-} from "@apollo/client/react/internal/index.js";
+import type { CacheKey } from "@apollo/client/react/internal/index.js";
 import {
   wrapQueryRef,
   getSuspenseCache,
   unwrapQueryRef,
+  assertWrappedQueryRef,
 } from "@apollo/client/react/internal/index.js";
 
 import {
   useApolloClient,
   type ApolloClient,
-  type QueryReference,
+  type QueryRef,
 } from "@apollo/client/index.js";
 import {
   deserializeOptions,
@@ -25,28 +23,26 @@ export type TransportedQueryRefOptions = TransportedOptions &
   RestrictedPreloadOptions;
 
 /**
- * A `TransportedQueryReference` is an opaque object accessible via renderProp within `PreloadQuery`.
+ * A `TransportedQueryRef` is an opaque object accessible via renderProp within `PreloadQuery`.
  *
- * A child client component reading the `TransportedQueryReference` via useReadQuery will suspend until the promise resolves.
+ * A child client component reading the `TransportedQueryRef` via useReadQuery will suspend until the promise resolves.
  */
-export interface TransportedQueryReference<
-  TData = unknown,
-  TVariables = unknown,
-> extends QueryReferenceBase<TData, TVariables> {
+export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
+  extends QueryRef<TData, TVariables> {
   /**
    * Only available in React Server Components.
    * Will be `undefined` after being passed to Client Components.
    *
-   * Returns a promise that resolves back to the `TransportedQueryReference` that can be awaited in RSC to suspend a subtree until the originating query has been loaded.
+   * Returns a promise that resolves back to the `TransportedQueryRef` that can be awaited in RSC to suspend a subtree until the originating query has been loaded.
    */
-  toPromise?: () => Promise<TransportedQueryReference>;
+  toPromise?: () => Promise<TransportedQueryRef>;
 }
 
 export interface InternalTransportedQueryRef<
   TData = unknown,
   TVariables = unknown,
-> extends TransportedQueryReference<TData, TVariables> {
-  __transportedQueryRef: true | QueryReference<any, any>;
+> extends TransportedQueryRef<TData, TVariables> {
+  __transportedQueryRef: true | QueryRef<any, any>;
   options: TransportedQueryRefOptions;
   queryKey: string;
 }
@@ -71,7 +67,7 @@ export function createTransportedQueryRef<TData, TVariables>(
 export function reviveTransportedQueryRef(
   queryRef: InternalTransportedQueryRef,
   client: ApolloClient<any>
-): [QueryReference<any, any>, CacheKey] {
+): [QueryRef<any, any>, CacheKey] {
   const hydratedOptions = deserializeOptions(queryRef.options);
   const cacheKey: CacheKey = [
     hydratedOptions.query,
@@ -95,15 +91,22 @@ function isTransportedQueryRef(
 }
 
 export function useWrapTransportedQueryRef<TData, TVariables>(
-  queryRef: QueryReference<TData, TVariables> | InternalTransportedQueryRef
-) {
+  queryRef: QueryRef<TData, TVariables> | InternalTransportedQueryRef
+): QueryRef<TData, TVariables> {
   const client = useApolloClient();
   let cacheKey: CacheKey | undefined;
-  if (isTransportedQueryRef(queryRef)) {
+  let isTransported: boolean;
+  if ((isTransported = isTransportedQueryRef(queryRef))) {
     [queryRef, cacheKey] = reviveTransportedQueryRef(queryRef, client);
   }
+  assertWrappedQueryRef(queryRef);
   const unwrapped = unwrapQueryRef<any>(queryRef);
+
   useEffect(() => {
+    // We only want this to execute if the queryRef is a transported query.
+    if (!isTransported) return;
+    // We want to always keep this queryRef in the suspense cache in case another component has another instance of this transported queryRef.
+    // This effect could be removed after https://github.com/facebook/react/pull/28996 has been merged and we've updated deps to that version.
     if (cacheKey) {
       if (unwrapped.disposed) {
         getSuspenseCache(client).add(cacheKey, unwrapped);
@@ -112,5 +115,12 @@ export function useWrapTransportedQueryRef<TData, TVariables>(
     // Omitting the deps is intentional. This avoids stale closures and the
     // conditional ensures we aren't running the logic on each render.
   });
+  // Soft-retaining because useQueryRefHandlers doesn't do it for us.
+  // This effect could be removed after https://github.com/facebook/react/pull/28996 has been merged and we've updated deps to that version.
+  useEffect(() => {
+    if (isTransported) {
+      return unwrapped.softRetain();
+    }
+  }, [isTransported, unwrapped]);
   return queryRef;
 }
