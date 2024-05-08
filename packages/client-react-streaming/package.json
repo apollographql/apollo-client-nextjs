@@ -113,11 +113,11 @@
   },
   "devDependencies": {
     "@apollo/client": "3.9.9",
-    "@arethetypeswrong/cli": "0.15.2",
-    "@microsoft/api-extractor": "7.43.0",
-    "@testing-library/react": "14.2.2",
+    "@arethetypeswrong/cli": "0.15.3",
+    "@microsoft/api-extractor": "7.43.2",
+    "@testing-library/react": "15.0.7",
     "@total-typescript/shoehorn": "0.1.2",
-    "@tsconfig/recommended": "1.0.5",
+    "@tsconfig/recommended": "1.0.6",
     "@types/node": "20.12.11",
     "@types/react": "18.3.1",
     "@typescript-eslint/eslint-plugin": "7.5.0",
@@ -139,9 +139,9 @@
     "superjson": "1.13.3",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
-    "tsx": "4.7.1",
-    "typescript": "5.4.3",
-    "vitest": "1.4.0"
+    "tsx": "4.9.3",
+    "typescript": "5.4.5",
+    "vitest": "1.6.0"
   },
   "peerDependencies": {
     "@apollo/client": "^3.9.6",
