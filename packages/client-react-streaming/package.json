@@ -1,6 +1,6 @@
 {
   "name": "@apollo/client-react-streaming",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
@@ -117,9 +117,9 @@
     "build": "rimraf dist; tsup",
     "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
     "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
-    "test:ssr": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=node\" yarn run test:base",
-    "test:browser": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=browser\" yarn run test:base",
-    "test:rsc": "NODE_OPTIONS=\"$NODE_OPTIONS --conditions=react-server\" yarn run test:base",
+    "test:ssr": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=node\" yarn run test:base",
+    "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
+    "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
@@ -132,13 +132,13 @@
   },
   "devDependencies": {
     "@apollo/client": "3.9.9",
-    "@arethetypeswrong/cli": "0.15.2",
-    "@microsoft/api-extractor": "7.43.0",
-    "@testing-library/react": "14.2.2",
+    "@arethetypeswrong/cli": "0.15.3",
+    "@microsoft/api-extractor": "7.43.2",
+    "@testing-library/react": "15.0.7",
     "@total-typescript/shoehorn": "0.1.2",
-    "@tsconfig/recommended": "1.0.5",
-    "@types/node": "20.12.2",
-    "@types/react": "18.2.73",
+    "@tsconfig/recommended": "1.0.6",
+    "@types/node": "20.12.11",
+    "@types/react": "18.3.1",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
     "concurrently": "8.2.2",
@@ -158,8 +158,8 @@
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
     "tsx": "4.7.1",
-    "typescript": "5.4.3",
-    "vitest": "1.4.0"
+    "typescript": "5.4.5",
+    "vitest": "1.6.0"
   },
   "peerDependencies": {
     "@apollo/client": "^3.9.6",
