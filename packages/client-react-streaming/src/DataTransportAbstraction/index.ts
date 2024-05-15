@@ -12,3 +12,4 @@ export {
   WrapApolloProvider,
   WrappedApolloProvider,
 } from "./WrapApolloProvider.js";
+export { enableSSRWaitForUseQuery } from "./hooks.js";
