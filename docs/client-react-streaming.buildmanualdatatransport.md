@@ -11,7 +11,7 @@ Creates a "manual" Data Transport, to be used with `WrapApolloProvider`<!-- -->.
 **Signature:**
 
 ```typescript
-buildManualDataTransport: (args: BuildArgs) => DataTransportProviderImplementation<HydrationContextOptions>
+buildManualDataTransport: (args: ManualDataTransportOptions) => DataTransportProviderImplementation<HydrationContextOptions>
 ```
 
 ## Parameters
@@ -39,7 +39,7 @@ args
 
 </td><td>
 
-BuildArgs
+ManualDataTransportOptions
 
 
 </td><td>

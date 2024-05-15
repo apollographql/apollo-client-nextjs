@@ -10,7 +10,7 @@ A version of `ApolloProvider` to be used with the Next.js App Router.
 
 As opposed to the normal `ApolloProvider`<!-- -->, this version does not require a `client` prop, but requires a `makeClient` prop instead.
 
-Use this component together with `NextSSRApolloClient` and `NextSSRInMemoryCache` to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
+Use this component together with `ApolloClient` and `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
 
 **Signature:**
 
@@ -23,13 +23,16 @@ ApolloNextAppProvider: _apollo_client_react_streaming.WrappedApolloProvider<_apo
 `app/ApolloWrapper.jsx`
 
 ```tsx
+import { HttpLink } from "@apollo/client";
+import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from "@apollo/experimental-nextjs-app-support";
+
 function makeClient() {
   const httpLink = new HttpLink({
     uri: "https://example.com/api/graphql",
   });
 
-  return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+  return new ApolloClient({
+    cache: new InMemoryCache(),
     link: httpLink,
   });
 }

@@ -11,7 +11,9 @@ Events that will be emitted by a wrapped ApolloClient instance during SSR on `Da
 ```typescript
 type QueryEvent = {
     type: "started";
-    options: WatchQueryOptions;
+    options: {
+        query: string;
+    } & Omit<WatchQueryOptions, "query">;
     id: TransportIdentifier;
 } | {
     type: "data";
