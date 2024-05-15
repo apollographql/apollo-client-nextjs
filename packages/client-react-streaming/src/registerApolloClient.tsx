@@ -47,7 +47,7 @@ export function registerApolloClient<
    *
    * ### Example with `queryRef`
    * `ClientChild` would call `useReadQuery` with the `queryRef`, the `Suspense` boundary is optional:
-   * ```js
+   * ```jsx
    * <PreloadQuery
    *    query={QUERY}
    *    variables={{
@@ -64,7 +64,7 @@ export function registerApolloClient<
    *
    * ### Example for `useSuspenseQuery`
    * `ClientChild` would call the same query with `useSuspenseQuery`, the `Suspense` boundary is optional:
-   *  ```js
+   * ```jsx
    *  <PreloadQuery
    *    query={QUERY}
    *    variables={{
@@ -75,7 +75,7 @@ export function registerApolloClient<
    *      <ClientChild />
    *    </Suspense>
    *  </PreloadQuery>
-   *  ```
+   * ```
    */
   PreloadQuery: PreloadQueryComponent;
 } {

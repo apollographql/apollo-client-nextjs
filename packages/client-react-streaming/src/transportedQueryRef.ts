@@ -26,6 +26,8 @@ export type TransportedQueryRefOptions = TransportedOptions &
  * A `TransportedQueryRef` is an opaque object accessible via renderProp within `PreloadQuery`.
  *
  * A child client component reading the `TransportedQueryRef` via useReadQuery will suspend until the promise resolves.
+ *
+ * @public
  */
 export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
   extends QueryRef<TData, TVariables> {
