@@ -50,8 +50,12 @@ npm install @apollo/client@latest @apollo/experimental-nextjs-app-support
 Create an `ApolloClient.js` file:
 
 ```js
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+import { HttpLink } from "@apollo/client";
+import {
+  registerApolloClient,
+  ApolloClient,
+  InMemoryCache,
+} from "@apollo/experimental-nextjs-app-support";
 
 export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
@@ -86,10 +90,10 @@ First, create a new file `app/ApolloWrapper.jsx`:
 import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
-  NextSSRInMemoryCache,
-  NextSSRApolloClient,
+  ApolloClient,
+  InMemoryCache,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+} from "@apollo/experimental-nextjs-app-support";
 
 // have a function to create a client for you
 function makeClient() {
@@ -105,21 +109,11 @@ function makeClient() {
     // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
   });
 
-  return new NextSSRApolloClient({
-    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
-    cache: new NextSSRInMemoryCache(),
-    link:
-      typeof window === "undefined"
-        ? ApolloLink.from([
-            // in a SSR environment, if you use multipart features like
-            // @defer, you need to decide how to handle these.
-            // This strips all interfaces with a `@defer` directive from your queries.
-            new SSRMultipartLink({
-              stripDefer: true,
-            }),
-            httpLink,
-          ])
-        : httpLink,
+  // use the `ApolloClient` from "@apollo/experimental-nextjs-app-support"
+  return new ApolloClient({
+    // use the `InMemoryCache` from "@apollo/experimental-nextjs-app-support"
+    cache: new InMemoryCache(),
+    link: httpLink,
   });
 }
 
@@ -167,9 +161,9 @@ This package uses some singleton instances on the Browser side - if you are writ
 For that, you can use the `resetNextSSRApolloSingletons` helper:
 
 ```ts
-import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support/ssr";
+import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
 
-afterEach(resetNextSSRApolloSingletons);
+afterEach(resetApolloClientSingletons);
 ```
 
 ## Handling Multipart responses in SSR

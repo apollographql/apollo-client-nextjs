@@ -1,1 +1,1 @@
-export { registerApolloClient } from "@apollo/client-react-streaming";
+export { registerApolloClient } from "@apollo/experimental-nextjs-app-support";

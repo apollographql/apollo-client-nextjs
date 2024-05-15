@@ -14,6 +14,7 @@ export default defineConfig((options) => {
     external: [
       "@apollo/client-react-streaming",
       "@apollo/client-react-streaming/manual-transport",
+      "@apollo/experimental-nextjs-app-support",
       "react",
       "rehackt",
     ],
@@ -50,7 +51,14 @@ export default defineConfig((options) => {
   }
 
   return [
+    {
+      ...entry("other", "src/combined.ts", "combined"),
+      dts: { only: true },
+    },
     entry("other", "src/empty.ts", "empty"),
+    entry("rsc", "src/index.rsc.ts", "index.rsc"),
+    entry("ssr", "src/index.ts", "index.ssr"),
+    entry("browser", "src/index.ts", "index.browser"),
     entry("rsc", "src/rsc/index.ts", "rsc/index"),
     entry("rsc", "src/ssr/index.rsc.ts", "ssr/index.rsc"),
     entry("ssr", "src/ssr/index.ts", "ssr/index.ssr"),

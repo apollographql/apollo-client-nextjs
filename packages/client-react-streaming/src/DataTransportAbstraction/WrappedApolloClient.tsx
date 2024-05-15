@@ -340,7 +340,7 @@ const ApolloClientImplementation =
       : ApolloClientBase;
 
 /**
- * A version of `ApolloClient` to be used with streaming SSR.
+ * A version of `ApolloClient` to be used with streaming SSR or in React Server Components.
  *
  * For more documentation, please see {@link https://www.apollographql.com/docs/react/api/core/ApolloClient | the Apollo Client API documentation}.
  *
