@@ -1,5 +1,11 @@
 import { ApolloLink, Observable } from "@apollo/client";
 
+declare module "@apollo/client" {
+  export interface DefaultContext {
+    delay?: number;
+  }
+}
+
 export const delayLink = new ApolloLink((operation, forward) => {
   if (operation.operationName?.includes("dynamic")) {
     operation.setContext({

@@ -7,6 +7,7 @@ export {
   SSRMultipartLink,
   DebounceMultipartResponsesLink,
   RemoveMultipartDirectivesLink,
+  type TransportedQueryRef,
 } from "@apollo/client-react-streaming";
 export {
   useBackgroundQuery,

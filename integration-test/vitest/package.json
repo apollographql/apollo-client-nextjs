@@ -4,12 +4,12 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "3.10.4",
     "@apollo/experimental-nextjs-app-support": "*",
     "@graphql-tools/schema": "^10.0.3",
     "graphql-tag": "^2.12.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "18.3.0",
+    "react-dom": "18.3.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",

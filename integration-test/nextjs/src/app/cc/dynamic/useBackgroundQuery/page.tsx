@@ -27,7 +27,9 @@ const QUERY: TypedDocumentNode<Data> = gql`
 export const dynamic = "force-dynamic";
 
 export default function Page() {
-  const [queryRef] = useBackgroundQuery(QUERY, { context: { delay: 2000 } });
+  const [queryRef] = useBackgroundQuery(QUERY, {
+    context: { delay: 2000, error: "browser" },
+  });
   return (
     <Suspense fallback={<p>loading</p>}>
       <DisplayData queryRef={queryRef} />

@@ -131,7 +131,7 @@
     "lint": "eslint --ext .ts,.tsx src"
   },
   "devDependencies": {
-    "@apollo/client": "3.9.9",
+    "@apollo/client": "^3.10.4",
     "@arethetypeswrong/cli": "0.15.3",
     "@microsoft/api-extractor": "7.43.2",
     "@testing-library/react": "15.0.7",
@@ -151,9 +151,9 @@
     "graphql": "16.8.1",
     "jsdom": "24.0.0",
     "publint": "0.2.7",
-    "react": "18.3.0-canary-60a927d04-20240113",
+    "react": "18.3.0",
     "react-error-boundary": "4.0.13",
-    "react-server-dom-webpack": "18.3.0-canary-60a927d04-20240113",
+    "react-server-dom-webpack": "0.0.1",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
@@ -162,7 +162,7 @@
     "vitest": "1.6.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "^3.10.4",
     "react": "^18"
   },
   "dependencies": {

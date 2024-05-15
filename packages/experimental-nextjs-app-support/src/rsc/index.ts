@@ -1,1 +1,4 @@
-export { registerApolloClient } from "@apollo/client-react-streaming";
+export {
+  registerApolloClient,
+  type TransportedQueryRef,
+} from "@apollo/client-react-streaming";
