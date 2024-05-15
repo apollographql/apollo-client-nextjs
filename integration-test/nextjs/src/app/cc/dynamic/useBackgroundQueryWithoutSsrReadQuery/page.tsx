@@ -1,10 +1,10 @@
 "use client";
 
-import {
+import type {
   useBackgroundQuery,
   useReadQuery,
-} from "@apollo/experimental-nextjs-app-support/ssr";
-import type { TypedDocumentNode } from "@apollo/client";
+  TypedDocumentNode,
+} from "@apollo/client";
 import { gql, QueryReference } from "@apollo/client";
 import { Suspense, useState, useEffect } from "react";
 

@@ -4,10 +4,9 @@ import "@testing-library/jest-dom";
 import { makeClient, QUERY } from "./App";
 import {
   ApolloNextAppProvider,
-  NextSSRApolloClient,
-  useQuery,
-  resetNextSSRApolloSingletons,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+  ApolloClient,
+  resetApolloClientSingletons,
+} from "@apollo/experimental-nextjs-app-support";
 import { Suspense } from "react";
 
 const wrapper = ({ children }) => (
@@ -16,7 +15,7 @@ const wrapper = ({ children }) => (
   </ApolloNextAppProvider>
 );
 
-afterEach(resetNextSSRApolloSingletons);
+afterEach(resetApolloClientSingletons);
 
 /**
  * We test that jest is using the "browser" build.
@@ -25,7 +24,7 @@ afterEach(resetNextSSRApolloSingletons);
  */
 test("uses the browser build", () => {
   let foundPrototype = false;
-  let proto = NextSSRApolloClient;
+  let proto = ApolloClient;
   while (proto) {
     if (proto.name === "ApolloClientBrowserImpl") {
       foundPrototype = true;
@@ -66,11 +65,11 @@ test("will set up the data transport", () => {
   expect(globalThis[Symbol.for("ApolloClientSingleton")]).toBeDefined();
 });
 
-test("resetNextSSRApolloSingletons tears down global singletons", () => {
+test("resetApolloClientSingletons tears down global singletons", () => {
   render(<></>, { wrapper });
   // wrappers are now set up, see last test
   // usually, we do this in `afterEach`
-  resetNextSSRApolloSingletons();
+  resetApolloClientSingletons();
   expect(globalThis[Symbol.for("ApolloSSRDataTransport")]).not.toBeDefined();
   expect(globalThis[Symbol.for("ApolloClientSingleton")]).not.toBeDefined();
 });

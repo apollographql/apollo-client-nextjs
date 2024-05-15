@@ -1,11 +1,12 @@
 "use client";
 
+import type { TypedDocumentNode } from "@apollo/client";
 import {
   useBackgroundQuery,
   useReadQuery,
-} from "@apollo/experimental-nextjs-app-support/ssr";
-import type { TypedDocumentNode } from "@apollo/client";
-import { gql, QueryReference } from "@apollo/client";
+  gql,
+  QueryReference,
+} from "@apollo/client";
 import { Suspense } from "react";
 
 interface Data {

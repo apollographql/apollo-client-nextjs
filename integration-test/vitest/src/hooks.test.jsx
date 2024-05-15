@@ -4,11 +4,11 @@ import "@testing-library/jest-dom";
 import { makeClient, QUERY } from "./App";
 import {
   ApolloNextAppProvider,
-  NextSSRApolloClient,
-  useQuery,
-  resetNextSSRApolloSingletons,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+  ApolloClient,
+  resetApolloClientSingletons,
+} from "@apollo/experimental-nextjs-app-support";
 import { Suspense } from "react";
+import { useQuery } from "@apollo/client";
 
 const wrapper = ({ children }) => (
   <ApolloNextAppProvider makeClient={makeClient}>
@@ -16,7 +16,7 @@ const wrapper = ({ children }) => (
   </ApolloNextAppProvider>
 );
 
-afterEach(resetNextSSRApolloSingletons);
+afterEach(resetApolloClientSingletons);
 
 /**
  * We test that jest is using the "browser" build.
@@ -25,7 +25,7 @@ afterEach(resetNextSSRApolloSingletons);
  */
 test("uses the browser build", () => {
   let foundPrototype = false;
-  let proto = NextSSRApolloClient;
+  let proto = ApolloClient;
   while (proto) {
     if (proto.name === "ApolloClientBrowserImpl") {
       foundPrototype = true;

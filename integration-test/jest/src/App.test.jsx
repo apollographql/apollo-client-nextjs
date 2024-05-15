@@ -3,9 +3,9 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
 import App from "./App";
-import { resetNextSSRApolloSingletons } from "@apollo/experimental-nextjs-app-support/ssr";
+import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
 
-afterEach(resetNextSSRApolloSingletons);
+afterEach(resetApolloClientSingletons);
 
 test("loads data", async () => {
   render(<App />);
