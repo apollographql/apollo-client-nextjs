@@ -58,7 +58,7 @@ export function WrapApolloProvider<ExtraProps>(
     children,
     ...extraProps
   }) => {
-    const clientRef = useRef<ApolloClient<any>>();
+    const clientRef = useRef<ApolloClient<any>>(undefined);
 
     if (process.env.REACT_ENV === "ssr") {
       if (!clientRef.current) {

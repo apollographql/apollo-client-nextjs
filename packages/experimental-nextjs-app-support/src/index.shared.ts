@@ -3,6 +3,7 @@ export {
   DebounceMultipartResponsesLink,
   RemoveMultipartDirectivesLink,
   InMemoryCache,
+  type TransportedQueryRef,
 } from "@apollo/client-react-streaming";
 import { bundle } from "./bundleInfo.js";
 import { ApolloClient as UpstreamApolloClient } from "@apollo/client-react-streaming";

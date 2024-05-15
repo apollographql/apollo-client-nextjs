@@ -37,7 +37,7 @@ const buildManualDataTransportSSRImpl = ({
   }) {
     const insertHtml = useInsertHtml();
 
-    const rehydrationContext = useRef<RehydrationContextValue>();
+    const rehydrationContext = useRef<RehydrationContextValue>(undefined);
     if (!rehydrationContext.current) {
       rehydrationContext.current = buildApolloRehydrationContext({
         insertHtml,

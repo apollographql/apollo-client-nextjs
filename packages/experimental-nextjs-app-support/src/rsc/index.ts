@@ -1,1 +1,4 @@
-export { registerApolloClient } from "@apollo/experimental-nextjs-app-support";
+export {
+  registerApolloClient,
+  type TransportedQueryRef,
+} from "@apollo/experimental-nextjs-app-support";

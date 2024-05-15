@@ -4,13 +4,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "3.10.4",
     "@apollo/client-react-streaming": "workspace:*",
     "@apollo/experimental-nextjs-app-support": "workspace:*",
     "@graphql-tools/schema": "^10.0.3",
     "graphql-tag": "^2.12.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "18.3.0",
+    "react-dom": "18.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

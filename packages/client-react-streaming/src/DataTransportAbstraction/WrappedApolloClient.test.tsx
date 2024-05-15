@@ -15,7 +15,7 @@ import {
   DocumentTransform,
 } from "@apollo/client/index.js";
 import { visit, Kind, print, isDefinitionNode } from "graphql";
-import { printMinified } from "./printMinified.js";
+import { serializeOptions } from "./transportedOptions.js";
 
 const {
   ApolloClient,
@@ -46,12 +46,12 @@ describe(
     const EVENT_STARTED: QueryEvent = {
       type: "started",
       id: "1" as any,
-      options: {
+      options: serializeOptions({
         fetchPolicy: "cache-first",
         nextFetchPolicy: undefined,
         notifyOnNetworkStatusChange: false,
-        query: printMinified(QUERY_ME),
-      },
+        query: QUERY_ME,
+      }),
     };
     const FIRST_RESULT = { me: "User" };
     const EVENT_DATA: QueryEvent = {
@@ -419,9 +419,9 @@ describe("document transforms are applied correctly", async () => {
       client.onQueryStarted!({
         type: "started",
         id: "1" as TransportIdentifier,
-        options: {
-          query: printMinified(untransformedQuery),
-        },
+        options: serializeOptions({
+          query: untransformedQuery,
+        }),
       });
       client.rerunSimulatedQueries!();
       await Promise.resolve();
@@ -446,9 +446,9 @@ describe("document transforms are applied correctly", async () => {
       client.onQueryStarted!({
         type: "started",
         id: "1" as TransportIdentifier,
-        options: {
-          query: printMinified(untransformedQuery),
-        },
+        options: serializeOptions({
+          query: untransformedQuery,
+        }),
       });
       client.onQueryProgress!({
         type: "error",

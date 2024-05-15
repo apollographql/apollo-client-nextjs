@@ -6,6 +6,7 @@ export {
   RemoveMultipartDirectivesLink,
   ApolloNextAppProvider,
   resetApolloClientSingletons as resetNextSSRApolloSingletons,
+  type TransportedQueryRef,
 } from "@apollo/experimental-nextjs-app-support";
 export {
   useBackgroundQuery,
