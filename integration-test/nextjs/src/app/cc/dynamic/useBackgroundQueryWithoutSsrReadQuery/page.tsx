@@ -1,10 +1,7 @@
 "use client";
 
-import type {
-  useBackgroundQuery,
-  useReadQuery,
-  TypedDocumentNode,
-} from "@apollo/client";
+import { useBackgroundQuery, useReadQuery } from "@apollo/client";
+import type { TypedDocumentNode } from "@apollo/client";
 import { gql, QueryReference } from "@apollo/client";
 import { Suspense, useState, useEffect } from "react";
 
