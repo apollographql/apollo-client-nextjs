@@ -131,7 +131,7 @@
     "lint": "eslint --ext .ts,.tsx src"
   },
   "devDependencies": {
-    "@apollo/client": "3.10.1",
+    "@apollo/client": "^3.10.4",
     "@arethetypeswrong/cli": "0.15.3",
     "@microsoft/api-extractor": "7.43.2",
     "@testing-library/react": "15.0.7",
@@ -162,7 +162,7 @@
     "vitest": "1.6.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.10.1",
+    "@apollo/client": "^3.10.4",
     "react": "^18"
   },
   "dependencies": {

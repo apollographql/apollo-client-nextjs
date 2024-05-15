@@ -49,7 +49,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
   dependencies:
-    "@apollo/client": "npm:3.10.1"
+    "@apollo/client": "npm:^3.10.4"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@microsoft/api-extractor": "npm:7.43.2"
     "@testing-library/react": "npm:15.0.7"
@@ -80,14 +80,14 @@ __metadata:
     typescript: "npm:5.4.5"
     vitest: "npm:1.6.0"
   peerDependencies:
-    "@apollo/client": ^3.10.1
+    "@apollo/client": ^3.10.4
     react: ^18
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:0.0.0-pr-11824-20240508093324":
-  version: 0.0.0-pr-11824-20240508093324
-  resolution: "@apollo/client@npm:0.0.0-pr-11824-20240508093324"
+"@apollo/client@npm:3.10.4, @apollo/client@npm:^3.10.4":
+  version: 3.10.4
+  resolution: "@apollo/client@npm:3.10.4"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -118,7 +118,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/341831fd9777aa2c9d336fda020a3149a0dcb093f09fffa4cf4e45a0c613144009fbc181a09c7773270ac9411c657636657dba7631d4187deba9e97c12c3dbb3
+  checksum: 10/8db77625bb96f3330187a6b45c9792edf338c42d4e48ed66f6b0ce38c7cea503db9a5de27f9987b7d83306201a57f90e8ef7ebc06c8a6899aaadb8a090b175cb
   languageName: node
   linkType: hard
 
@@ -126,7 +126,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
-    "@apollo/client": "npm:3.10.1"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@microsoft/api-extractor": "npm:7.43.2"
@@ -156,7 +156,7 @@ __metadata:
     typescript: "npm:5.4.5"
     vitest: "npm:1.6.0"
   peerDependencies:
-    "@apollo/client": ^3.10.1
+    "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0
     react: ^18
   languageName: unknown
@@ -6011,7 +6011,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": "npm:3.10.1"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@graphql-codegen/cli": "npm:3.3.1"
@@ -6044,7 +6044,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": "npm:3.10.1"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
@@ -9889,7 +9889,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:3.10.1"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"
