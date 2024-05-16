@@ -3,9 +3,9 @@ import React from "react";
 import { HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
-  NextSSRInMemoryCache,
-  NextSSRApolloClient,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+  InMemoryCache,
+  ApolloClient,
+} from "@apollo/experimental-nextjs-app-support";
 
 import { SchemaLink } from "@apollo/client/link/schema";
 
@@ -42,8 +42,8 @@ export function ApolloWrapper({
       uri: "/graphql",
     });
 
-    return new NextSSRApolloClient({
-      cache: new NextSSRInMemoryCache(),
+    return new ApolloClient({
+      cache: new InMemoryCache(),
       link: delayLink
         .concat(errorLink)
         .concat(

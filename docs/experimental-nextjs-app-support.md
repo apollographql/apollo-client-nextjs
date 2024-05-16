@@ -20,6 +20,19 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[ApolloClient](./experimental-nextjs-app-support.apolloclient.md)
+
+
+</td><td>
+
+A version of `ApolloClient` to be used with streaming SSR or in React Server Components.
+
+For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
 [DebounceMultipartResponsesLink](./experimental-nextjs-app-support.debouncemultipartresponseslink.md)
 
 
@@ -35,20 +48,7 @@ If `cutoffDelay` is `0`<!-- -->, the link will immediately return data as soon a
 </td></tr>
 <tr><td>
 
-[NextSSRApolloClient](./experimental-nextjs-app-support.nextssrapolloclient.md)
-
-
-</td><td>
-
-A version of `ApolloClient` to be used with streaming SSR.
-
-For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[NextSSRInMemoryCache](./experimental-nextjs-app-support.nextssrinmemorycache.md)
+[InMemoryCache](./experimental-nextjs-app-support.inmemorycache.md)
 
 
 </td><td>
@@ -139,7 +139,7 @@ Ensures that you can always access the same instance of ApolloClient during RSC 
 </td></tr>
 <tr><td>
 
-[resetNextSSRApolloSingletons()](./experimental-nextjs-app-support.resetnextssrapollosingletons.md)
+[resetApolloClientSingletons()](./experimental-nextjs-app-support.resetapolloclientsingletons.md)
 
 
 </td><td>
@@ -184,7 +184,7 @@ A version of `ApolloProvider` to be used with the Next.js App Router.
 
 As opposed to the normal `ApolloProvider`<!-- -->, this version does not require a `client` prop, but requires a `makeClient` prop instead.
 
-Use this component together with `NextSSRApolloClient` and `NextSSRInMemoryCache` to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
+Use this component together with `ApolloClient` and `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
 
 
 </td></tr>

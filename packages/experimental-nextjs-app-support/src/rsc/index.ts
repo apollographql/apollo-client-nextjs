@@ -1,4 +1,4 @@
 export {
   registerApolloClient,
   type TransportedQueryRef,
-} from "@apollo/client-react-streaming";
+} from "@apollo/experimental-nextjs-app-support";

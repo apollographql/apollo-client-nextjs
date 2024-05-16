@@ -1,8 +1,7 @@
 "use client";
 
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
-import { gql } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 
 const QUERY: TypedDocumentNode<{
   products: {
