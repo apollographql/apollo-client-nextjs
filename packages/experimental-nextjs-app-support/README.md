@@ -158,7 +158,7 @@ If you want to make the most of the streaming SSR features offered by React & th
 
 This package uses some singleton instances on the Browser side - if you are writing tests, you must reset them between tests.
 
-For that, you can use the `resetNextSSRApolloSingletons` helper:
+For that, you can use the `resetApolloClientSingletons ` helper:
 
 ```ts
 import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
