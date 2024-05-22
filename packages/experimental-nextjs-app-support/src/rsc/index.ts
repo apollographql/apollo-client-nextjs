@@ -21,4 +21,7 @@ export const registerApolloClient = _registerApolloClient;
  * import type { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
  * ```
  */
-export type TransportedQueryRef<T> = _TransportedQueryRef<T>;
+export type TransportedQueryRef<
+  TData = unknown,
+  TVariables = unknown,
+> = _TransportedQueryRef<TData, TVariables>;
