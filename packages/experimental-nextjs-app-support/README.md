@@ -79,7 +79,7 @@ const { data } = await getClient().query({ query: userQuery });
 const { data } = await query({ query: userQuery });
 ```
 
-For a description of `PreloadQuery`, see [Preloading data in RSC for usage in Client Components](#...)
+For a description of `PreloadQuery`, see [Preloading data in RSC for usage in Client Components](#preloading-data-in-rsc-for-usage-in-client-components)
 
 ### In Client Components and streaming SSR
 
