@@ -1,4 +1,6 @@
+import type { InMemoryCacheConfig } from "@apollo/client/index.js";
 import { InMemoryCache as OrigInMemoryCache } from "@apollo/client/index.js";
+import { bundle, sourceSymbol } from "../bundleInfo.js";
 /*
  * We just subclass `InMemoryCache` here so that `WrappedApolloClient`
  * can detect if it was initialized with an `InMemoryCache` instance that
@@ -15,4 +17,17 @@ import { InMemoryCache as OrigInMemoryCache } from "@apollo/client/index.js";
  *
  * @public
  */
-export class InMemoryCache extends OrigInMemoryCache {}
+export class InMemoryCache extends OrigInMemoryCache {
+  /**
+   * Information about the current package and it's export names, for use in error messages.
+   *
+   * @internal
+   */
+  static readonly info = bundle;
+  protected [sourceSymbol]: string;
+  constructor(config?: InMemoryCacheConfig | undefined) {
+    super(config);
+    const info = (this.constructor as typeof InMemoryCache).info;
+    this[sourceSymbol] = `${info.pkg}:InMemoryCache`;
+  }
+}

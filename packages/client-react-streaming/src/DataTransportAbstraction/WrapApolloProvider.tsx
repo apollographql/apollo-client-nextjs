@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { useRef } from "react";
-import { ApolloClient } from "./WrappedApolloClient.js";
+import type { ApolloClient } from "./WrappedApolloClient.js";
 import { ApolloProvider } from "@apollo/client/index.js";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";
 import { ApolloClientSingleton } from "./symbols.js";
-import { bundle } from "../bundleInfo.js";
+import { bundle, sourceSymbol } from "../bundleInfo.js";
 
 declare global {
   interface Window {
@@ -35,8 +35,6 @@ export interface WrappedApolloProvider<ExtraProps> {
    */
   info: {
     pkg: string;
-    client: string;
-    cache: string;
   };
 }
 
@@ -68,9 +66,12 @@ export function WrapApolloProvider<ExtraProps>(
       clientRef.current = window[ApolloClientSingleton] ??= makeClient();
     }
 
-    if (!(clientRef.current instanceof ApolloClient)) {
+    if (
+      clientRef.current[sourceSymbol] !==
+      `${WrappedApolloProvider.info.pkg}:ApolloClient`
+    ) {
       throw new Error(
-        `When using \`ApolloClient\` in streaming SSR, you must use the \`${WrappedApolloProvider.info.client}\` export provided by \`"${WrappedApolloProvider.info.pkg}"\`.`
+        `When using \`ApolloClient\` in streaming SSR, you must use the \`ApolloClient\` export provided by \`"${WrappedApolloProvider.info.pkg}"\`.`
       );
     }
 

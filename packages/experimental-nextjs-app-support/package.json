@@ -15,6 +15,22 @@
     "app"
   ],
   "type": "module",
+  "imports": {
+    "#bundled": {
+      "require": {
+        "types": "./dist/combined.d.cts",
+        "react-server": "./dist/index.rsc.cjs",
+        "browser": "./dist/index.browser.cjs",
+        "node": "./dist/index.ssr.cjs"
+      },
+      "import": {
+        "types": "./dist/combined.d.ts",
+        "react-server": "./dist/index.rsc.js",
+        "browser": "./dist/index.browser.js",
+        "node": "./dist/index.ssr.js"
+      }
+    }
+  },
   "exports": {
     ".": {
       "require": {
@@ -83,7 +99,11 @@
   ],
   "scripts": {
     "build": "rimraf dist; tsup",
-    "test": "true",
+    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
+    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
+    "test:ssr": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=node\" yarn run test:base",
+    "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
+    "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
@@ -98,6 +118,7 @@
     "@apollo/client": "3.10.4",
     "@apollo/client-react-streaming": "workspace:*",
     "@arethetypeswrong/cli": "0.15.3",
+    "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
     "@testing-library/react": "15.0.7",
     "@total-typescript/shoehorn": "0.1.2",

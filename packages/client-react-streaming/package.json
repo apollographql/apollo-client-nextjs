@@ -133,6 +133,7 @@
   "devDependencies": {
     "@apollo/client": "^3.10.4",
     "@arethetypeswrong/cli": "0.15.3",
+    "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
     "@testing-library/react": "15.0.7",
     "@total-typescript/shoehorn": "0.1.2",

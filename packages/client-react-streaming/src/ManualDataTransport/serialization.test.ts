@@ -1,6 +1,6 @@
 import test, { describe } from "node:test";
 import { revive, stringify } from "./serialization.js";
-import { outsideOf } from "../util/runInConditions.js";
+import { outsideOf } from "@internal/test-utils/runInConditions.js";
 import { htmlEscapeJsonString } from "./htmlescape.js";
 import assert from "node:assert";
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-inner-declarations */
 import { it } from "node:test";
 import assert from "node:assert";
-import { runInConditions } from "./util/runInConditions.js";
+import { runInConditions } from "@internal/test-utils/runInConditions.js";
 import { Writable } from "node:stream";
 
 runInConditions("react-server");

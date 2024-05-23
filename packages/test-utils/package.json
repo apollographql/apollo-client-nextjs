@@ -1,0 +1,7 @@
+{
+  "name": "@internal/test-utils",
+  "devDependencies": {
+    "typescript": "*"
+  },
+  "type": "module"
+}

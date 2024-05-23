@@ -1,4 +1,4 @@
-import assert from "node:assert";
+import * as assert from "node:assert";
 import { test } from "node:test";
 import { outsideOf } from "@internal/test-utils/runInConditions.js";
 import { browserEnv } from "@internal/test-utils/react.js";
@@ -16,36 +16,59 @@ test("Error message when `WrappedApolloClient` is instantiated with wrong `InMem
       }),
     {
       message:
-        'When using `InMemoryCache` in streaming SSR, you must use the `InMemoryCache` export provided by `"@apollo/client-react-streaming"`.',
+        'When using `InMemoryCache` in streaming SSR, you must use the `InMemoryCache` export provided by `"@apollo/experimental-nextjs-app-support"`.',
     }
   );
 });
 
 test(
-  "Error message when using `ManualDataTransport` with the wrong `ApolloClient`",
+  "Error message when using `ApolloNextAppProvider` with the wrong `ApolloClient`",
   { skip: outsideOf("node") },
   async () => {
-    const { WrapApolloProvider, ...bundled } = await import("#bundled");
+    const { ApolloNextAppProvider, ...bundled } = await import("#bundled");
+    const { ServerInsertedHTMLContext } = await import("next/navigation.js");
     const React = await import("react");
     const { renderToString } = await import("react-dom/server");
-
-    const Provider = WrapApolloProvider({} as any);
-
     await test("@apollo/client should error", async () => {
       const upstreamPkg = await import("@apollo/client/index.js");
       assert.throws(
         () =>
           renderToString(
-            <Provider
-              makeClient={() =>
-                // @ts-expect-error we want to test exactly this
-                new upstreamPkg.ApolloClient({
-                  cache: new upstreamPkg.InMemoryCache(),
-                })
-              }
-            >
-              {null}
-            </Provider>
+            <ServerInsertedHTMLContext.Provider value={() => {}}>
+              <ApolloNextAppProvider
+                makeClient={() =>
+                  // @ts-expect-error we want to test exactly this
+                  new upstreamPkg.ApolloClient({
+                    cache: new upstreamPkg.InMemoryCache(),
+                  })
+                }
+              >
+                {null}
+              </ApolloNextAppProvider>
+            </ServerInsertedHTMLContext.Provider>
+          ),
+        {
+          message:
+            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+        }
+      );
+    });
+    await test("@apollo/client-react-streaming should error", async () => {
+      const streamingPkg = await import("@apollo/client-react-streaming");
+      assert.throws(
+        () =>
+          renderToString(
+            <ServerInsertedHTMLContext.Provider value={() => {}}>
+              <ApolloNextAppProvider
+                makeClient={() =>
+                  new streamingPkg.ApolloClient({
+                    cache: new streamingPkg.InMemoryCache(),
+                  })
+                }
+              >
+                {null}
+              </ApolloNextAppProvider>
+            </ServerInsertedHTMLContext.Provider>
           ),
         {
           message:
@@ -55,15 +78,17 @@ test(
     });
     await test("this package should work", async () => {
       renderToString(
-        <Provider
-          makeClient={() =>
-            new bundled.ApolloClient({
-              cache: new bundled.InMemoryCache(),
-            })
-          }
-        >
-          {null}
-        </Provider>
+        <ServerInsertedHTMLContext.Provider value={() => {}}>
+          <ApolloNextAppProvider
+            makeClient={() =>
+              new bundled.ApolloClient({
+                cache: new bundled.InMemoryCache(),
+              })
+            }
+          >
+            {null}
+          </ApolloNextAppProvider>
+        </ServerInsertedHTMLContext.Provider>
       );
     });
   }
@@ -73,10 +98,9 @@ test(
   "Error message when using `ApolloNextAppProvider` with the wrong `ApolloClient`",
   { skip: outsideOf("browser") },
   async () => {
-    const { WrapApolloProvider, ...bundled } = await import("#bundled");
-
+    const { ApolloNextAppProvider, ...bundled } = await import("#bundled");
     const React = await import("react");
-    const Provider = WrapApolloProvider({} as any);
+
     const { ErrorBoundary } = await import("react-error-boundary");
     // Even with an error Boundary, React will still log to `console.error` - we avoid the noise here.
     using _restoreConsole = silenceConsoleErrors();
@@ -88,7 +112,7 @@ test(
         env.render(
           document.body,
           <ErrorBoundary onError={reject} fallback={<></>}>
-            <Provider
+            <ApolloNextAppProvider
               makeClient={() =>
                 // @ts-expect-error we want to test exactly this
                 new upstreamPkg.ApolloClient({
@@ -98,7 +122,7 @@ test(
               }
             >
               {null}
-            </Provider>
+            </ApolloNextAppProvider>
           </ErrorBoundary>
         );
       });
@@ -107,7 +131,31 @@ test(
           'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
       });
     });
-
+    await test("@apollo/client-react-streaming should error", async () => {
+      using env = await browserEnv();
+      const streamingPkg = await import("@apollo/client-react-streaming");
+      const promise = new Promise((_resolve, reject) => {
+        env.render(
+          document.body,
+          <ErrorBoundary onError={reject} fallback={<></>}>
+            <ApolloNextAppProvider
+              makeClient={() =>
+                new streamingPkg.ApolloClient({
+                  cache: new streamingPkg.InMemoryCache(),
+                  connectToDevTools: false,
+                })
+              }
+            >
+              {null}
+            </ApolloNextAppProvider>
+          </ErrorBoundary>
+        );
+      });
+      await assert.rejects(promise, {
+        message:
+          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+      });
+    });
     await test("this package should work", async () => {
       using env = await browserEnv();
       const promise = new Promise<void>((resolve, reject) => {
@@ -118,7 +166,7 @@ test(
         env.render(
           document.body,
           <ErrorBoundary onError={reject} fallback={<></>}>
-            <Provider
+            <ApolloNextAppProvider
               makeClient={() =>
                 new bundled.ApolloClient({
                   cache: new bundled.InMemoryCache(),
@@ -127,7 +175,7 @@ test(
               }
             >
               {<Child />}
-            </Provider>
+            </ApolloNextAppProvider>
           </ErrorBoundary>
         );
       });
