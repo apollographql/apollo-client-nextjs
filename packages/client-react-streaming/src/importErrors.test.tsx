@@ -29,7 +29,11 @@ test(
     const React = await import("react");
     const { renderToString } = await import("react-dom/server");
 
-    const Provider = WrapApolloProvider({} as any);
+    function FakeTransport({ children }: { children: any }) {
+      return children;
+    }
+    const Provider = WrapApolloProvider(FakeTransport);
+    console.log(Provider);
 
     await test("@apollo/client should error", async () => {
       const upstreamPkg = await import("@apollo/client/index.js");
@@ -49,7 +53,7 @@ test(
           ),
         {
           message:
-            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-react-streaming"`.',
         }
       );
     });
@@ -76,7 +80,10 @@ test(
     const { WrapApolloProvider, ...bundled } = await import("#bundled");
 
     const React = await import("react");
-    const Provider = WrapApolloProvider({} as any);
+    function FakeTransport({ children }: { children: any }) {
+      return children;
+    }
+    const Provider = WrapApolloProvider(FakeTransport);
     const { ErrorBoundary } = await import("react-error-boundary");
     // Even with an error Boundary, React will still log to `console.error` - we avoid the noise here.
     using _restoreConsole = silenceConsoleErrors();
@@ -104,7 +111,7 @@ test(
       });
       await assert.rejects(promise, {
         message:
-          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-react-streaming"`.',
       });
     });
 
