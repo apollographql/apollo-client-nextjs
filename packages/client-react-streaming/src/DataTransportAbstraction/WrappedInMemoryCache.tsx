@@ -24,7 +24,7 @@ export class InMemoryCache extends OrigInMemoryCache {
    * @internal
    */
   static readonly info = bundle;
-  protected [sourceSymbol]: string;
+  [sourceSymbol]: string;
   constructor(config?: InMemoryCacheConfig | undefined) {
     super(config);
     const info = (this.constructor as typeof InMemoryCache).info;

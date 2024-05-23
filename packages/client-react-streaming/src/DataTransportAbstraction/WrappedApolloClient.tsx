@@ -27,6 +27,7 @@ import type {
 } from "./DataTransportAbstraction.js";
 import { bundle, sourceSymbol } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
+import { assertInstance } from "../assertInstance.js";
 
 function getQueryManager(
   client: OrigApolloClient<unknown>
@@ -64,7 +65,7 @@ class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
    */
   static readonly info = bundle;
 
-  protected [sourceSymbol]: string;
+  [sourceSymbol]: string;
 
   constructor(options: WrappedApolloClientOptions) {
     super(
@@ -78,14 +79,11 @@ class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
     const info = (this.constructor as typeof ApolloClientBase).info;
     this[sourceSymbol] = `${info.pkg}:ApolloClient`;
 
-    if (
-      (this.cache as unknown as InMemoryCache)[sourceSymbol] !==
-      `${info.pkg}:InMemoryCache`
-    ) {
-      throw new Error(
-        `When using \`InMemoryCache\` in streaming SSR, you must use the \`InMemoryCache\` export provided by \`"${info.pkg}"\`.`
-      );
-    }
+    assertInstance(
+      this.cache as unknown as InMemoryCache,
+      info,
+      "InMemoryCache"
+    );
   }
 }
 
