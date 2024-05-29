@@ -13,7 +13,7 @@ import { bundle } from "./bundleInfo.js";
  * but requires a `makeClient` prop instead.
  *
  * Use this component together with `ApolloClient` and `InMemoryCache`
- * from the "@apollo/experimental-nextjs-app-support" package
+ * from the `"@apollo/experimental-nextjs-app-support"` package
  * to make an ApolloClient instance available to your Client Component hooks in the
  * Next.js App Router.
  *
