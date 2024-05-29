@@ -2,8 +2,7 @@
 
 import ProductCard from "../components/ProductCard";
 import { Heading, SimpleGrid, Stack, Text, VStack } from "@chakra-ui/react";
-import { gql, TypedDocumentNode } from "@apollo/client";
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useSuspenseQuery, gql, TypedDocumentNode } from "@apollo/client";
 
 const GET_LATEST_PRODUCTS: TypedDocumentNode<{
   products: { id: string }[];

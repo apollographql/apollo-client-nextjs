@@ -35,18 +35,17 @@ __metadata:
   version: 0.10.1
   resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=48b117&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
-    superjson: "npm:^1.12.2 || ^2.0.0"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
-    "@apollo/client": ^3.9.6
+    "@apollo/client": ^3.10.4
     react: ^18
   checksum: 10/8e12155ebcb9672f5b645c364d356018014df750412c61613341121ebb4d4eabb5f42cd9018cc3a81ad988f1b425548d68254ca49ede19c31d0d9e5a9a4f240a
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.9.6":
-  version: 3.9.6
-  resolution: "@apollo/client@npm:3.9.6"
+"@apollo/client@npm:3.10.4":
+  version: 3.10.4
+  resolution: "@apollo/client@npm:3.10.4"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -56,7 +55,7 @@ __metadata:
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.6"
+    rehackt: "npm:^0.1.0"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
@@ -77,7 +76,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/8455e8fe6a2a757bff9c814aec0c152543a920587a4a4278acf44c86f373d4923e4f48912aa88582504d8a56cd6e305656d8f290d8d1357834ec83e63c0b9592
+  checksum: 10/8db77625bb96f3330187a6b45c9792edf338c42d4e48ed66f6b0ce38c7cea503db9a5de27f9987b7d83306201a57f90e8ef7ebc06c8a6899aaadb8a090b175cb
   languageName: node
   linkType: hard
 
@@ -87,8 +86,8 @@ __metadata:
   dependencies:
     "@apollo/client-react-streaming": "npm:0.10.1"
   peerDependencies:
-    "@apollo/client": ^3.9.6
-    next: ^13.4.1 || ^14.0.0
+    "@apollo/client": ^3.10.4
+    next: ^13.4.1 || ^14.0.0 || 15.0.0-rc.0
     react: ^18
   checksum: 10/505b723bac0f3a7f15287ea32fab9f2e8c0cd567149abf11d750855f8a9bfc0aa26e44179ad10c32f7d162ad86318717032413ef8e1a25385185178e022588fa
   languageName: node
@@ -1979,7 +1978,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/experimental-react@workspace:experimental-react"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/client-react-streaming": "npm:*"
     "@playwright/test": "npm:^1.39.0"
     "@tsconfig/vite-react": "npm:^3.0.0"
@@ -2003,7 +2002,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/jest@workspace:jest"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/client-react-streaming": "workspace:*"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@babel/core": "npm:^7.24.0"
@@ -2017,8 +2016,8 @@ __metadata:
     graphql-tag: "npm:^2.12.6"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
+    react: "npm:18.3.0"
+    react-dom: "npm:18.3.0"
   languageName: unknown
   linkType: soft
 
@@ -2026,20 +2025,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/nextjs@workspace:nextjs"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "workspace:*"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@graphql-tools/schema": "npm:^10.0.0"
     "@playwright/test": "npm:^1.39.0"
     "@types/node": "npm:20.3.1"
-    "@types/react": "npm:^18.2.55"
-    "@types/react-dom": "npm:18.2.6"
+    "@types/react": "npm:18.3.0"
+    "@types/react-dom": "npm:18.3.0"
     graphql: "npm:^16.7.1"
     graphql-tag: "npm:^2.12.6"
     next: "npm:^14.1.0"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
+    react: "npm:18.3.0"
+    react-dom: "npm:18.3.0"
     react-error-boundary: "npm:^4.0.13"
     ssr-only-secrets: "npm:^0.0.5"
     typescript: "npm:5.1.3"
@@ -2065,12 +2064,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/vite-streaming@workspace:vite-streaming"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/client-react-streaming": "npm:*"
     "@playwright/test": "npm:^1.39.0"
     "@tsconfig/vite-react": "npm:^3.0.0"
-    "@types/react": "npm:^18.2.55"
-    "@types/react-dom": "npm:^18.2.18"
+    "@types/react": "npm:types-react@19.0.0-alpha.3"
+    "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3"
     "@vitejs/plugin-react": "npm:^4.2.1"
     compression: "npm:^1.7.4"
     cross-env: "npm:^7.0.3"
@@ -2078,8 +2077,8 @@ __metadata:
     graphql: "npm:^16.8.1"
     graphql-tag: "npm:^2.12.6"
     prettier: "npm:^3.2.5"
-    react: "npm:18.3.0-canary-60a927d04-20240113"
-    react-dom: "npm:18.3.0-canary-60a927d04-20240113"
+    react: "npm:19.0.0-beta-94eed63c49-20240425"
+    react-dom: "npm:19.0.0-beta-94eed63c49-20240425"
     sirv: "npm:^2.0.4"
     vite: "npm:^5.0.10"
   languageName: unknown
@@ -2089,15 +2088,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/vitest@workspace:vitest"
   dependencies:
-    "@apollo/client": "npm:^3.9.6"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "npm:*"
     "@graphql-tools/schema": "npm:^10.0.3"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^14.2.1"
     "@vitejs/plugin-react": "npm:^4.2.1"
     graphql-tag: "npm:^2.12.6"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
+    react: "npm:18.3.0"
+    react-dom: "npm:18.3.0"
     vitest: "npm:^1.3.1"
   languageName: unknown
   linkType: soft
@@ -3034,16 +3033,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.6":
-  version: 18.2.6
-  resolution: "@types/react-dom@npm:18.2.6"
+"@types/react-dom@npm:18.3.0, @types/react-dom@npm:^18.2.18":
+  version: 18.3.0
+  resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10/dbdf98d127db58130f3e4394f23a6b4b200703049579e97a4e6049c0f47f871c7731cec37e2067afb62cc7c5486bd1b151fc0ef672b9ea7369c40d811592b948
+  checksum: 10/6ff53f5a7b7fba952a68e114d3b542ebdc1e87a794234785ebab0bcd9bde7fb4885f21ebaf93d26dc0a1b5b93287f42cad68b78ae04dddf6b20da7aceff0beaf
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.18":
+"@types/react-dom@npm:^18.0.0":
   version: 18.2.19
   resolution: "@types/react-dom@npm:18.2.19"
   dependencies:
@@ -3052,7 +3051,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.55":
+"@types/react-dom@npm:types-react-dom@19.0.0-alpha.3":
+  version: 19.0.0-alpha.3
+  resolution: "types-react-dom@npm:19.0.0-alpha.3"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10/21f43e3cbdcf59bc2e6ac71e52161455039ccffab3e61cc0ccbb61fdce9a05d70abfce91ce490a6e63a8aae5f1974acc102dcc40c00b3876e2a0e00158a8533d
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:*":
   version: 18.2.61
   resolution: "@types/react@npm:18.2.61"
   dependencies:
@@ -3060,6 +3068,25 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10/74c2920ccca83fc51190ed4eda1066fa6a644197839dd37765fcce93cbd50b7a52b75815ce0083bb95195f886c80b57745314dd49ecbf235fa93d753ae2260bc
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.3.0, @types/react@npm:^18.2.55":
+  version: 18.3.0
+  resolution: "@types/react@npm:18.3.0"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10/2444294740016d61721df9adeb8635658c660c13b0782df9f067260ac6b0a4b71e68245089814ab53264843eb75f81d90f770253b94a13955cc1ddccf3593301
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:types-react@19.0.0-alpha.3":
+  version: 19.0.0-alpha.3
+  resolution: "types-react@npm:19.0.0-alpha.3"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10/637a0e905df8a2fc8f6a760e29d8a263dca72459e16e6a5c4bb1c950a3900ece1aaef8f6ca716e0c94a70c3172d8ed2e14e75cc72bedcd8aa6e10f7c7fb3552d
   languageName: node
   linkType: hard
 
@@ -3970,15 +3997,6 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 10/aae7911ddc5f444a9025fbd979ad1b5d60191011339bce48e555cb83343d0f98b865ff5c4d71fecdfb8555a5cafdc65632f6fce172f32aaf6936830a883a0380
-  languageName: node
-  linkType: hard
-
-"copy-anything@npm:^3.0.2":
-  version: 3.0.5
-  resolution: "copy-anything@npm:3.0.5"
-  dependencies:
-    is-what: "npm:^4.1.8"
-  checksum: 10/4c41385a94a1cff6352a954f9b1c05b6bb1b70713a2d31f4c7b188ae7187ce00ddcc9c09bd58d24cd35b67fc6dd84df5954c0be86ea10700ff74e677db3cb09c
   languageName: node
   linkType: hard
 
@@ -5402,13 +5420,6 @@ __metadata:
     call-bind: "npm:^1.0.2"
     get-intrinsic: "npm:^1.1.1"
   checksum: 10/8f2ddb9639716fd7936784e175ea1183c5c4c05274c34f34f6a53175313cb1c9c35a8b795623306995e2f7cc8f25aa46302f15a2113e51c5052d447be427195c
-  languageName: node
-  linkType: hard
-
-"is-what@npm:^4.1.8":
-  version: 4.1.16
-  resolution: "is-what@npm:4.1.16"
-  checksum: 10/f6400634bae77be6903365dc53817292e1c4d8db1b467515d0c842505b8388ee8e558326d5e6952cb2a9d74116eca2af0c6adb8aa7e9d5c845a130ce9328bf13
   languageName: node
   linkType: hard
 
@@ -7161,27 +7172,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
+"react-dom@npm:18.3.0":
+  version: 18.3.0
+  resolution: "react-dom@npm:18.3.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
+    scheduler: "npm:^0.23.1"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10/ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
+    react: ^18.3.0
+  checksum: 10/08d6a351fb4032c1b8cd6fc159b4d2d9f1e7ec967f3365f2585d808b381c9e83466dab9b15b72c2162c1a578776044fde641279a55af016473719be66c415408
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.3.0-canary-60a927d04-20240113":
-  version: 18.3.0-canary-60a927d04-20240113
-  resolution: "react-dom@npm:18.3.0-canary-60a927d04-20240113"
+"react-dom@npm:19.0.0-beta-94eed63c49-20240425":
+  version: 19.0.0-beta-94eed63c49-20240425
+  resolution: "react-dom@npm:19.0.0-beta-94eed63c49-20240425"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:0.24.0-canary-60a927d04-20240113"
+    scheduler: "npm:0.25.0-beta-94eed63c49-20240425"
   peerDependencies:
-    react: 18.3.0-canary-60a927d04-20240113
-  checksum: 10/5a339f511e32d2690021458913d40fcf3671d4fe708026851b811420d958615a298d80352bb78ed4c635c3125ce491d30591213cb1086888bac8c426a2e98e65
+    react: 19.0.0-beta-94eed63c49-20240425
+  checksum: 10/fe3eb846e83d0295b9efde71eb507ca3607c983bf4d13c9e21552abd3f20064a1fb7f14e7e9cf2cc4b34f7c4f0939d3d1d5d7cc0d21db36c861fe87538e318ce
   languageName: node
   linkType: hard
 
@@ -7236,21 +7246,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
+"react@npm:18.3.0":
+  version: 18.3.0
+  resolution: "react@npm:18.3.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
+  checksum: 10/17112377dad4e5c868b608be57c8e970a3f6ee6eb6269a5c4c23b11b8b4f393c42a8a046be0c9ddbc5f182b909330ddbecab905bcdea5051b05ec3914491fd79
   languageName: node
   linkType: hard
 
-"react@npm:18.3.0-canary-60a927d04-20240113":
-  version: 18.3.0-canary-60a927d04-20240113
-  resolution: "react@npm:18.3.0-canary-60a927d04-20240113"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/7da693ec8a4e4c33941f55c2cc042a4a1ea9360ab7b7fd227b7cddcc8949cac0058e585e557ea1a447dbb74e7865bcebb996ee975680e2b98c6d98e941847cb1
+"react@npm:19.0.0-beta-94eed63c49-20240425":
+  version: 19.0.0-beta-94eed63c49-20240425
+  resolution: "react@npm:19.0.0-beta-94eed63c49-20240425"
+  checksum: 10/fd6f6ef0340f9ec06f497e23eba019edccd724df280c88146ad11dd240c2ae4ee0762e6ecdf68c40a0ffa75be4f5d2e24d6222a0b544f76ac4ab1499b35fdbbd
   languageName: node
   linkType: hard
 
@@ -7342,9 +7350,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehackt@npm:0.0.6":
-  version: 0.0.6
-  resolution: "rehackt@npm:0.0.6"
+"rehackt@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "rehackt@npm:0.1.0"
   peerDependencies:
     "@types/react": "*"
     react: "*"
@@ -7353,7 +7361,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10/3897c93270836159406529e0fa983bf4a11c07d2efc5c8f6bdfd7f6821d3b84a30d911c3f3b9c689948739e6955c5835c8dd9d91579150bec5092f356c0d91df
+  checksum: 10/c81adead82c165dffc574cbf9e1de3605522782a56b48df48b68d53d45c4d8c9253df3790109335bf97072424e54ad2423bb9544ca3a985fa91995dda43452fc
   languageName: node
   linkType: hard
 
@@ -7525,21 +7533,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:0.24.0-canary-60a927d04-20240113":
-  version: 0.24.0-canary-60a927d04-20240113
-  resolution: "scheduler@npm:0.24.0-canary-60a927d04-20240113"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/0289b2a5d20e4885c268a90765ebe7192eafb5b3a065888092c1684e25438932e06efd199a852b47dc8b57cc8741c609552e9f13de66e4492400e8dd4201b809
+"scheduler@npm:0.25.0-beta-94eed63c49-20240425":
+  version: 0.25.0-beta-94eed63c49-20240425
+  resolution: "scheduler@npm:0.25.0-beta-94eed63c49-20240425"
+  checksum: 10/02a8c46af07e5cb5d80441e7a5a39d6ff29e799cb31f1cad0d396d8f714f945e6cc4df8277e68493ee2785c6e5963d2ab8c74f3bf60c646044759805d52b18e0
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
+"scheduler@npm:^0.23.0, scheduler@npm:^0.23.1":
+  version: 0.23.1
+  resolution: "scheduler@npm:0.23.1"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/0c4557aa37bafca44ff21dc0ea7c92e2dbcb298bc62eae92b29a39b029134f02fb23917d6ebc8b1fa536b4184934314c20d8864d156a9f6357f3398aaf7bfda8
+  checksum: 10/6e194e726210c2d619cbf69a73fdb068cb0c9b0c99222de429ec5fc562c2f28e59a8cb3526e9104e16521e7e57c785a82bc44dd3f78fd0de86aea719a218f3c3
   languageName: node
   linkType: hard
 
@@ -7956,15 +7962,6 @@ __metadata:
     babel-plugin-macros:
       optional: true
   checksum: 10/4f6a5d0010770fdeea1183d919d528fd46c484e23c0535ef3e1dd49488116f639c594f3bd4440e3bc8a8686c9f8d53c5761599870ff039ede11a5c3bfe08a4be
-  languageName: node
-  linkType: hard
-
-"superjson@npm:^1.12.2 || ^2.0.0":
-  version: 2.2.1
-  resolution: "superjson@npm:2.2.1"
-  dependencies:
-    copy-anything: "npm:^3.0.2"
-  checksum: 10/bb8743a87c97f7845e0c27af1af0731d3185b32099ebce2aee0e67ac9a6ae9a7c4b9edfca7e1fe48693a78b56d5922d1cd13ef80c2fa12b788d3fc0ca25afe47
   languageName: node
   linkType: hard
 

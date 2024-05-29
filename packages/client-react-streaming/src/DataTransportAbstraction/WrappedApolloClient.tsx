@@ -5,6 +5,7 @@ import type {
   WatchQueryOptions,
   FetchResult,
   DocumentNode,
+  NormalizedCacheObject,
 } from "@apollo/client/index.js";
 import {
   ApolloClient as OrigApolloClient,
@@ -15,22 +16,33 @@ import { print } from "@apollo/client/utilities/index.js";
 import { canonicalStringify } from "@apollo/client/cache/index.js";
 import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
-import { InMemoryCache } from "./WrappedInMemoryCache.js";
+import type { InMemoryCache } from "./WrappedInMemoryCache.js";
 import { hookWrappers } from "./hooks.js";
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import type { QueryInfo } from "@apollo/client/core/QueryInfo.js";
 import type {
+  ProgressEvent,
   QueryEvent,
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
-import { bundle } from "../bundleInfo.js";
+import { bundle, sourceSymbol } from "../bundleInfo.js";
+import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
+import { assertInstance } from "../assertInstance.js";
 
-function getQueryManager<TCacheShape>(
+function getQueryManager(
   client: OrigApolloClient<unknown>
-): QueryManager<TCacheShape> & {
+): QueryManager<NormalizedCacheObject> & {
   [wrappers]: HookWrappers;
 } {
   return client["queryManager"];
+}
+
+/**
+ * Returns the `Trie` constructor without adding a direct dependency on `@wry/trie`.
+ */
+function getTrieConstructor(client: OrigApolloClient<unknown>) {
+  return getQueryManager(client)["inFlightLinkObservables"]
+    .constructor as typeof import("@wry/trie").Trie;
 }
 
 type SimulatedQueryInfo = {
@@ -39,8 +51,13 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
+interface WrappedApolloClientOptions
+  extends Omit<ApolloClientOptions<NormalizedCacheObject>, "cache"> {
+  cache: InMemoryCache;
+}
+
 const wrappers = Symbol.for("apollo.hook.wrappers");
-class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
+class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
   /**
    * Information about the current package and it's export names, for use in error messages.
    *
@@ -48,7 +65,9 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
    */
   static readonly info = bundle;
 
-  constructor(options: ApolloClientOptions<TCacheShape>) {
+  [sourceSymbol]: string;
+
+  constructor(options: WrappedApolloClientOptions) {
     super(
       process.env.REACT_ENV === "rsc" || process.env.REACT_ENV === "ssr"
         ? {
@@ -57,88 +76,21 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
           }
         : options
     );
+    const info = (this.constructor as typeof ApolloClientBase).info;
+    this[sourceSymbol] = `${info.pkg}:ApolloClient`;
 
-    if (!(this.cache instanceof InMemoryCache)) {
-      throw new Error(
-        `When using \`InMemoryCache\` in streaming SSR, you must use the \`${(this.constructor as typeof ApolloClientBase).info.cache}\` export provided by \`"${(this.constructor as typeof ApolloClientBase).info.pkg}"\`.`
-      );
-    }
+    assertInstance(
+      this.cache as unknown as InMemoryCache,
+      info,
+      "InMemoryCache"
+    );
   }
 }
 
-class ApolloClientSSRImpl<TCacheShape> extends ApolloClientBase<TCacheShape> {
-  constructor(options: ApolloClientOptions<TCacheShape>) {
+export class ApolloClientClientBaseImpl extends ApolloClientBase {
+  constructor(options: WrappedApolloClientOptions) {
     super(options);
-
-    getQueryManager(this)[wrappers] = hookWrappers;
-  }
-
-  watchQueryQueue = createBackpressuredCallback<{
-    event: Extract<QueryEvent, { type: "started" }>;
-    observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
-  }>();
-
-  watchQuery<
-    T = any,
-    TVariables extends OperationVariables = OperationVariables,
-  >(options: WatchQueryOptions<TVariables, T>) {
-    if (
-      options.fetchPolicy !== "cache-only" &&
-      options.fetchPolicy !== "standby"
-    ) {
-      const observableQuery = super.watchQuery(options);
-      const queryInfo = observableQuery["queryInfo"] as QueryInfo;
-      const id = queryInfo.queryId as TransportIdentifier;
-
-      const streamObservable = new Observable<
-        Exclude<QueryEvent, { type: "started" }>
-      >((subscriber) => {
-        const { markResult, markError, markReady } = queryInfo;
-        queryInfo.markResult = function (result: FetchResult<any>) {
-          subscriber.next({
-            type: "data",
-            id,
-            result,
-          });
-          return markResult.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markError = function () {
-          subscriber.next({
-            type: "error",
-            id,
-          });
-          subscriber.complete();
-          return markError.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markReady = function () {
-          subscriber.next({
-            type: "complete",
-            id,
-          });
-          subscriber.complete();
-          return markReady.apply(queryInfo, arguments as any);
-        };
-      });
-
-      this.watchQueryQueue.push({
-        event: {
-          type: "started",
-          options: options as WatchQueryOptions<any>,
-          id,
-        },
-        observable: streamObservable,
-      });
-      return observableQuery;
-    }
-    return super.watchQuery(options);
-  }
-}
-
-export class ApolloClientBrowserImpl<
-  TCacheShape,
-> extends ApolloClientBase<TCacheShape> {
-  constructor(options: ApolloClientOptions<TCacheShape>) {
-    super(options);
+    this.onQueryStarted = this.onQueryStarted.bind(this);
 
     getQueryManager(this)[wrappers] = hookWrappers;
   }
@@ -152,14 +104,14 @@ export class ApolloClientBrowserImpl<
     WatchQueryOptions
   >();
 
-  private identifyUniqueQuery(options: {
+  protected identifyUniqueQuery(options: {
     query: DocumentNode;
     variables?: unknown;
   }) {
     const transformedDocument = this.documentTransform.transformDocument(
       options.query
     );
-    const queryManager = getQueryManager<TCacheShape>(this);
+    const queryManager = getQueryManager(this);
     // Calling `transformDocument` will add __typename but won't remove client
     // directives, so we need to get the `serverQuery`.
     const { serverQuery } = queryManager.getDocumentInfo(transformedDocument);
@@ -170,24 +122,24 @@ export class ApolloClientBrowserImpl<
 
     const canonicalVariables = canonicalStringify(options.variables || {});
 
-    const cacheKey = [print(serverQuery), canonicalVariables].toString();
+    const cacheKeyArr = [print(serverQuery), canonicalVariables];
+    const cacheKey = JSON.stringify(cacheKeyArr);
 
-    return { query: serverQuery, cacheKey, varJson: canonicalVariables };
+    return {
+      cacheKey,
+      cacheKeyArr,
+    };
   }
 
-  onQueryStarted = ({
-    options,
-    id,
-  }: Extract<QueryEvent, { type: "started" }>) => {
-    const { query, varJson, cacheKey } = this.identifyUniqueQuery(options);
-    this.transportedQueryOptions.set(id, options);
+  onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
+    const hydratedOptions = deserializeOptions(options);
+    const { cacheKey, cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
+    this.transportedQueryOptions.set(id, hydratedOptions);
 
-    if (!query) return;
-    const printedServerQuery = print(query);
-    const queryManager = getQueryManager<TCacheShape>(this);
+    const queryManager = getQueryManager(this);
 
     if (
-      !queryManager["inFlightLinkObservables"].peek(printedServerQuery, varJson)
+      !queryManager["inFlightLinkObservables"].peekArray(cacheKeyArr)
         ?.observable
     ) {
       let simulatedStreamingQuery: SimulatedQueryInfo,
@@ -197,10 +149,7 @@ export class ApolloClientBrowserImpl<
         if (queryManager["fetchCancelFns"].get(cacheKey) === fetchCancelFn)
           queryManager["fetchCancelFns"].delete(cacheKey);
 
-        queryManager["inFlightLinkObservables"].remove(
-          printedServerQuery,
-          varJson
-        );
+        queryManager["inFlightLinkObservables"].removeArray(cacheKeyArr);
 
         if (this.simulatedStreamingQueries.get(id) === simulatedStreamingQuery)
           this.simulatedStreamingQueries.delete(id);
@@ -209,11 +158,15 @@ export class ApolloClientBrowserImpl<
       const promise = new Promise<FetchResult>((resolve, reject) => {
         this.simulatedStreamingQueries.set(
           id,
-          (simulatedStreamingQuery = { resolve, reject, options })
+          (simulatedStreamingQuery = {
+            resolve,
+            reject,
+            options: hydratedOptions,
+          })
         );
       });
 
-      promise.finally(cleanup);
+      promise.then(cleanup, cleanup);
 
       const observable = new Observable<FetchResult>((observer) => {
         promise
@@ -226,9 +179,8 @@ export class ApolloClientBrowserImpl<
           });
       });
 
-      queryManager["inFlightLinkObservables"].lookup(
-        printedServerQuery,
-        varJson
+      queryManager["inFlightLinkObservables"].lookupArray(
+        cacheKeyArr
       ).observable = observable;
 
       queryManager["fetchCancelFns"].set(
@@ -242,9 +194,9 @@ export class ApolloClientBrowserImpl<
         })
       );
     }
-  };
+  }
 
-  onQueryProgress = (event: Exclude<QueryEvent, { type: "started" }>) => {
+  onQueryProgress = (event: ProgressEvent) => {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
 
     if (event.type === "data") {
@@ -274,11 +226,19 @@ export class ApolloClientBrowserImpl<
        */
       if (queryInfo) {
         this.simulatedStreamingQueries.delete(event.id);
-        invariant.debug(
-          "query failed on server, rerunning in browser:",
-          queryInfo.options
-        );
-        this.rerunSimulatedQuery(queryInfo);
+        if (process.env.REACT_ENV === "browser") {
+          invariant.debug(
+            "Query failed on server, rerunning in browser:",
+            queryInfo.options
+          );
+          this.rerunSimulatedQuery(queryInfo);
+        } else if (process.env.REACT_ENV === "ssr") {
+          invariant.debug(
+            "Query failed upstream, will fail it during SSR and rerun it in the browser:",
+            queryInfo.options
+          );
+          queryInfo?.reject?.(new Error("Query failed upstream."));
+        }
       }
       this.transportedQueryOptions.delete(event.id);
     } else if (event.type === "complete") {
@@ -318,6 +278,86 @@ export class ApolloClientBrowserImpl<
   };
 }
 
+class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
+  private forwardedQueries = new (getTrieConstructor(this))();
+
+  watchQueryQueue = createBackpressuredCallback<{
+    event: Extract<QueryEvent, { type: "started" }>;
+    observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
+  }>();
+
+  watchQuery<
+    T = any,
+    TVariables extends OperationVariables = OperationVariables,
+  >(options: WatchQueryOptions<TVariables, T>) {
+    const { cacheKeyArr } = this.identifyUniqueQuery(options);
+
+    if (
+      options.fetchPolicy !== "cache-only" &&
+      options.fetchPolicy !== "standby" &&
+      !this.forwardedQueries.peekArray(cacheKeyArr)
+    ) {
+      // don't transport the same query over twice
+      this.forwardedQueries.lookupArray(cacheKeyArr);
+      const observableQuery = super.watchQuery(options);
+      const queryInfo = observableQuery["queryInfo"] as QueryInfo;
+      const id = queryInfo.queryId as TransportIdentifier;
+
+      const streamObservable = new Observable<
+        Exclude<QueryEvent, { type: "started" }>
+      >((subscriber) => {
+        const { markResult, markError, markReady } = queryInfo;
+        queryInfo.markResult = function (result: FetchResult<any>) {
+          subscriber.next({
+            type: "data",
+            id,
+            result,
+          });
+          return markResult.apply(queryInfo, arguments as any);
+        };
+        queryInfo.markError = function () {
+          subscriber.next({
+            type: "error",
+            id,
+          });
+          subscriber.complete();
+          return markError.apply(queryInfo, arguments as any);
+        };
+        queryInfo.markReady = function () {
+          subscriber.next({
+            type: "complete",
+            id,
+          });
+          subscriber.complete();
+          return markReady.apply(queryInfo, arguments as any);
+        };
+      });
+
+      this.watchQueryQueue.push({
+        event: {
+          type: "started",
+          options: serializeOptions(options),
+          id,
+        },
+        observable: streamObservable,
+      });
+      return observableQuery;
+    }
+    return super.watchQuery(options);
+  }
+
+  onQueryStarted(event: Extract<QueryEvent, { type: "started" }>) {
+    const hydratedOptions = deserializeOptions(event.options);
+    const { cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
+    // this is a replay from another source and doesn't need to be transported
+    // to the browser, since it will be replayed there, too.
+    this.forwardedQueries.lookupArray(cacheKeyArr);
+    super.onQueryStarted(event);
+  }
+}
+
+export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {}
+
 const ApolloClientImplementation =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
     ? ApolloClientSSRImpl
@@ -326,26 +366,28 @@ const ApolloClientImplementation =
       : ApolloClientBase;
 
 /**
- * A version of `ApolloClient` to be used with streaming SSR.
+ * A version of `ApolloClient` to be used with streaming SSR or in React Server Components.
  *
  * For more documentation, please see {@link https://www.apollographql.com/docs/react/api/core/ApolloClient | the Apollo Client API documentation}.
  *
  * @public
  */
-export class ApolloClient<TCacheShape>
-  extends (ApolloClientImplementation as typeof ApolloClientBase)<TCacheShape>
-  implements
-    Partial<ApolloClientBrowserImpl<TCacheShape>>,
-    Partial<ApolloClientSSRImpl<TCacheShape>>
+export class ApolloClient<
+    // this generic is obsolete as we require a `InMemoryStore`, which fixes this generic to `NormalizedCacheObject` anyways
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Ignored = NormalizedCacheObject,
+  >
+  extends (ApolloClientImplementation as typeof ApolloClientBase)
+  implements Partial<ApolloClientBrowserImpl>, Partial<ApolloClientSSRImpl>
 {
   /** @internal */
-  declare onQueryStarted?: ApolloClientBrowserImpl<TCacheShape>["onQueryStarted"];
+  declare onQueryStarted?: ApolloClientBrowserImpl["onQueryStarted"];
   /** @internal */
-  declare onQueryProgress?: ApolloClientBrowserImpl<TCacheShape>["onQueryProgress"];
+  declare onQueryProgress?: ApolloClientBrowserImpl["onQueryProgress"];
   /** @internal */
-  declare rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
+  declare rerunSimulatedQueries?: ApolloClientBrowserImpl["rerunSimulatedQueries"];
   /** @internal */
-  declare rerunSimulatedQuery?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQuery"];
+  declare rerunSimulatedQuery?: ApolloClientBrowserImpl["rerunSimulatedQuery"];
   /** @internal */
-  declare watchQueryQueue?: ApolloClientSSRImpl<TCacheShape>["watchQueryQueue"];
+  declare watchQueryQueue?: ApolloClientSSRImpl["watchQueryQueue"];
 }

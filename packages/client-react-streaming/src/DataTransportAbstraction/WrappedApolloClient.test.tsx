@@ -1,5 +1,5 @@
 import React, { Suspense, use, useMemo } from "rehackt";
-import { outsideOf } from "../util/runInConditions.js";
+import { outsideOf } from "@internal/test-utils/runInConditions.js";
 import assert from "node:assert";
 import test, { afterEach, describe } from "node:test";
 import type {
@@ -7,10 +7,7 @@ import type {
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
 
-import type {
-  TypedDocumentNode,
-  WatchQueryOptions,
-} from "@apollo/client/index.js";
+import type { TypedDocumentNode } from "@apollo/client/index.js";
 import { MockSubscriptionLink } from "@apollo/client/testing/core/mocking/mockSubscriptionLink.js";
 import {
   useSuspenseQuery,
@@ -18,6 +15,7 @@ import {
   DocumentTransform,
 } from "@apollo/client/index.js";
 import { visit, Kind, print, isDefinitionNode } from "graphql";
+import { serializeOptions } from "./transportedOptions.js";
 
 const {
   ApolloClient,
@@ -45,16 +43,15 @@ describe(
         me
       }
     `;
-    const FIRST_REQUEST: WatchQueryOptions = {
-      fetchPolicy: "cache-first",
-      nextFetchPolicy: undefined,
-      notifyOnNetworkStatusChange: false,
-      query: QUERY_ME,
-    };
     const EVENT_STARTED: QueryEvent = {
       type: "started",
       id: "1" as any,
-      options: FIRST_REQUEST,
+      options: serializeOptions({
+        fetchPolicy: "cache-first",
+        nextFetchPolicy: undefined,
+        notifyOnNetworkStatusChange: false,
+        query: QUERY_ME,
+      }),
     };
     const FIRST_RESULT = { me: "User" };
     const EVENT_DATA: QueryEvent = {
@@ -236,7 +233,7 @@ describe(
       { skip: outsideOf("browser") },
       async () => {
         const { $RC, $RS, setBody, hydrateBody, appendToBody } = await import(
-          "../util/hydrationTest.js"
+          "@internal/test-utils/hydrationTest.js"
         );
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
         let useStaticValueRefStub = <T extends unknown>(): { current: T } => {
@@ -422,9 +419,9 @@ describe("document transforms are applied correctly", async () => {
       client.onQueryStarted!({
         type: "started",
         id: "1" as TransportIdentifier,
-        options: {
+        options: serializeOptions({
           query: untransformedQuery,
-        },
+        }),
       });
       client.rerunSimulatedQueries!();
       await Promise.resolve();
@@ -449,9 +446,9 @@ describe("document transforms are applied correctly", async () => {
       client.onQueryStarted!({
         type: "started",
         id: "1" as TransportIdentifier,
-        options: {
+        options: serializeOptions({
           query: untransformedQuery,
-        },
+        }),
       });
       client.onQueryProgress!({
         type: "error",

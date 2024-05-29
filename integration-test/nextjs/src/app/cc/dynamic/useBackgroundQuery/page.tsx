@@ -1,11 +1,12 @@
 "use client";
 
+import type { TypedDocumentNode } from "@apollo/client";
 import {
   useBackgroundQuery,
   useReadQuery,
-} from "@apollo/experimental-nextjs-app-support/ssr";
-import type { TypedDocumentNode } from "@apollo/client";
-import { gql, QueryReference } from "@apollo/client";
+  gql,
+  QueryReference,
+} from "@apollo/client";
 import { Suspense } from "react";
 
 interface Data {
@@ -27,7 +28,9 @@ const QUERY: TypedDocumentNode<Data> = gql`
 export const dynamic = "force-dynamic";
 
 export default function Page() {
-  const [queryRef] = useBackgroundQuery(QUERY, { context: { delay: 2000 } });
+  const [queryRef] = useBackgroundQuery(QUERY, {
+    context: { delay: 2000, error: "browser" },
+  });
   return (
     <Suspense fallback={<p>loading</p>}>
       <DisplayData queryRef={queryRef} />

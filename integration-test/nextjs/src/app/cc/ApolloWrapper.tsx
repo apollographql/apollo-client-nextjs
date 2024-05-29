@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { ApolloLink, HttpLink, Observable } from "@apollo/client";
+import { HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
-  NextSSRInMemoryCache,
-  NextSSRApolloClient,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+  InMemoryCache,
+  ApolloClient,
+} from "@apollo/experimental-nextjs-app-support";
 
 import { SchemaLink } from "@apollo/client/link/schema";
 
@@ -15,28 +15,11 @@ import { delayLink } from "@/shared/delayLink";
 import { schema } from "../graphql/schema";
 
 import { useSSROnlySecret } from "ssr-only-secrets";
-import { GraphQLError } from "graphql";
+import { errorLink } from "../../shared/errorLink";
 
 setVerbosity("debug");
 loadDevMessages();
 loadErrorMessages();
-
-const errorLink = new ApolloLink((operation, forward) => {
-  const context = operation.getContext();
-  if (
-    context.error === "always" ||
-    (typeof window === "undefined" && context.error === "ssr") ||
-    (typeof window !== "undefined" && context.error === "browser")
-  ) {
-    return new Observable((subscriber) => {
-      subscriber.next({
-        data: null,
-        errors: [new GraphQLError("Simulated error")],
-      });
-    });
-  }
-  return forward(operation);
-});
 
 export function ApolloWrapper({
   children,
@@ -59,8 +42,8 @@ export function ApolloWrapper({
       uri: "/graphql",
     });
 
-    return new NextSSRApolloClient({
-      cache: new NextSSRInMemoryCache(),
+    return new ApolloClient({
+      cache: new InMemoryCache(),
       link: delayLink
         .concat(errorLink)
         .concat(

@@ -1,8 +1,7 @@
 "use client";
 
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import type { TypedDocumentNode } from "@apollo/client";
-import { gql } from "@apollo/client";
+import { useSuspenseQuery, gql } from "@apollo/client";
 
 const QUERY: TypedDocumentNode<{
   products: {
@@ -21,7 +20,9 @@ const QUERY: TypedDocumentNode<{
 export const dynamic = "force-dynamic";
 
 export default function Page() {
-  const { data } = useSuspenseQuery(QUERY);
+  const { data } = useSuspenseQuery(QUERY, {
+    context: { delay: 1000 },
+  });
   globalThis.hydrationFinished?.();
 
   return (

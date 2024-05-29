@@ -76,12 +76,31 @@
         "node": "./dist/manual-transport.ssr.js"
       }
     },
+    "./stream-utils": {
+      "require": {
+        "types": "./dist/stream-utils.node.d.cts",
+        "edge-light": "./dist/stream-utils.node.cjs",
+        "react-server": "./dist/empty.cjs",
+        "browser": "./dist/empty.cjs",
+        "node": "./dist/stream-utils.node.cjs"
+      },
+      "import": {
+        "types": "./dist/stream-utils.node.d.ts",
+        "edge-light": "./dist/stream-utils.node.js",
+        "react-server": "./dist/empty.js",
+        "browser": "./dist/empty.js",
+        "node": "./dist/stream-utils.node.js"
+      }
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "manual-transport": [
         "./dist/manual-transport.ssr.d.ts"
+      ],
+      "stream-utils": [
+        "./dist/stream-utils.node.d.ts"
       ]
     }
   },
@@ -112,8 +131,9 @@
     "lint": "eslint --ext .ts,.tsx src"
   },
   "devDependencies": {
-    "@apollo/client": "3.9.9",
+    "@apollo/client": "^3.10.4",
     "@arethetypeswrong/cli": "0.15.3",
+    "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
     "@testing-library/react": "15.0.7",
     "@total-typescript/shoehorn": "0.1.2",
@@ -132,11 +152,10 @@
     "graphql": "16.8.1",
     "jsdom": "24.0.0",
     "publint": "0.2.7",
-    "react": "18.3.0-canary-60a927d04-20240113",
+    "react": "18.3.0",
     "react-error-boundary": "4.0.13",
-    "react-server-dom-webpack": "18.3.0-canary-60a927d04-20240113",
+    "react-server-dom-webpack": "0.0.1",
     "rimraf": "5.0.5",
-    "superjson": "1.13.3",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
     "tsx": "4.7.1",
@@ -144,11 +163,10 @@
     "vitest": "1.6.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "^3.10.4",
     "react": "^18"
   },
   "dependencies": {
-    "superjson": "^1.12.2 || ^2.0.0",
     "ts-invariant": "^0.10.3"
   }
 }

@@ -1,10 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import {
-  useFragment,
-  useQuery,
-  useSuspenseQuery,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+import { useFragment, useQuery, useSuspenseQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
 import { HtmlChangesObserver } from "@/components/HtmlChangesObserver";
 

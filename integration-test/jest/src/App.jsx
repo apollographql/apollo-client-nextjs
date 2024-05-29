@@ -1,12 +1,16 @@
 import { Suspense, useState } from "react";
 import {
   ApolloNextAppProvider,
-  NextSSRApolloClient,
-  NextSSRInMemoryCache,
-  useSuspenseQuery,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+  ApolloClient,
+  InMemoryCache,
+} from "@apollo/experimental-nextjs-app-support";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
-import { gql, ApolloLink, Observable } from "@apollo/client/index.js";
+import {
+  useSuspenseQuery,
+  gql,
+  ApolloLink,
+  Observable,
+} from "@apollo/client/index.js";
 import { schema } from "./schema";
 
 const delayLink = new ApolloLink((operation, forward) => {
@@ -22,8 +26,8 @@ const delayLink = new ApolloLink((operation, forward) => {
 });
 
 export const makeClient = () => {
-  return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+  return new ApolloClient({
+    cache: new InMemoryCache(),
     link: delayLink.concat(new SchemaLink({ schema })),
   });
 };

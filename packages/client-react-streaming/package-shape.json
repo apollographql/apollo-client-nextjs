@@ -60,5 +60,19 @@
       "resetManualSSRApolloSingletons",
       "built_for_ssr"
     ]
+  },
+  "@apollo/client-react-streaming/stream-utils": {
+    "react-server": ["built_for_other"],
+    "browser": ["built_for_other"],
+    "node": [
+      "built_for_ssr",
+      "createInjectionTransformStream",
+      "pipeReaderToResponse"
+    ],
+    "edge-light,worker,browser": [
+      "built_for_ssr",
+      "createInjectionTransformStream",
+      "pipeReaderToResponse"
+    ]
   }
 }

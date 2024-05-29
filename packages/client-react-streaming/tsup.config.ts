@@ -20,7 +20,7 @@ export default defineConfig((options) => {
       "@apollo/client-react-streaming",
       "react",
       "rehackt",
-      "superjson",
+      "react-dom",
     ],
     noExternal: ["@apollo/client"], // will be handled by `acModuleImports`
     esbuildPlugins: [acModuleImports],
@@ -45,8 +45,11 @@ export default defineConfig((options) => {
       },
       footer(ctx) {
         return {
-          js: ctx.format === 'esm' ? `export const built_for_${env} = true;` : `exports.built_for_${env} = true;`
-        }
+          js:
+            ctx.format === "esm"
+              ? `export const built_for_${env} = true;`
+              : `exports.built_for_${env} = true;`,
+        };
       },
     };
   }
@@ -66,6 +69,11 @@ export default defineConfig((options) => {
       "src/ManualDataTransport/index.ts",
       "manual-transport.browser"
     ),
+    entry("ssr", "src/stream-utils/index.ts", "stream-utils.node"),
+    {
+      ...entry("browser", "src/index.cc.ts", "index.cc"),
+      treeshake: false, // would remove the "use client" directive
+    },
   ];
 });
 
@@ -76,6 +84,16 @@ const acModuleImports: Plugin = {
       if (build.initialOptions.define["TSUP_FORMAT"] === '"cjs"') {
         // remove trailing `/index.js` in CommonJS builds
         return { path: args.path.replace(/\/index.js$/, ""), external: true };
+      }
+      return { path: args.path, external: true };
+    });
+    // handle "client component" boundary imports
+    build.onResolve({ filter: /\.cc\.js$/ }, async (args) => {
+      if (build.initialOptions.define["TSUP_FORMAT"] === '"cjs"') {
+        return {
+          path: args.path.replace(/\.cc\.js$/, ".cc.cjs"),
+          external: true,
+        };
       }
       return { path: args.path, external: true };
     });

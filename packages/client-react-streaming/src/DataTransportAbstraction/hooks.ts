@@ -1,5 +1,6 @@
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import { useTransportValue } from "./useTransportValue.js";
+import { useWrapTransportedQueryRef } from "../transportedQueryRef.js";
 
 export const hookWrappers: HookWrappers = {
   useFragment(orig_useFragment) {
@@ -18,7 +19,19 @@ export const hookWrappers: HookWrappers = {
     return wrap(orig_useSuspenseQuery, ["data", "networkStatus"]);
   },
   useReadQuery(orig_useReadQuery) {
-    return wrap(orig_useReadQuery, ["data", "networkStatus"]);
+    return wrap(
+      (queryRef) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return orig_useReadQuery(useWrapTransportedQueryRef(queryRef));
+      },
+      ["data", "networkStatus"]
+    );
+  },
+  useQueryRefHandlers(orig_useQueryRefHandlers) {
+    return wrap((queryRef) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      return orig_useQueryRefHandlers(useWrapTransportedQueryRef(queryRef));
+    }, []);
   },
 };
 
@@ -28,6 +41,9 @@ function wrap<T extends (...args: any[]) => any>(
 ): T {
   return ((...args: any[]) => {
     const result = useFn(...args);
+    if (transportKeys.length == 0) {
+      return result;
+    }
     const transported: Partial<typeof result> = {};
     for (const key of transportKeys) {
       transported[key] = result[key];

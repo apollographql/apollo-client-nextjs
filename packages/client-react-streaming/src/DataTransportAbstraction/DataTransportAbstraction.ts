@@ -1,10 +1,7 @@
 import type React from "react";
-import type {
-  FetchResult,
-  Observable,
-  WatchQueryOptions,
-} from "@apollo/client/index.js";
+import type { FetchResult, Observable } from "@apollo/client/index.js";
 import { createContext } from "react";
+import type { TransportedOptions } from "./transportedOptions.js";
 
 interface DataTransportAbstraction {
   /**
@@ -74,7 +71,7 @@ export type TransportIdentifier = string & { __transportIdentifier: true };
 export type QueryEvent =
   | {
       type: "started";
-      options: WatchQueryOptions;
+      options: TransportedOptions;
       id: TransportIdentifier;
     }
   | {
@@ -92,3 +89,5 @@ export type QueryEvent =
       type: "complete";
       id: TransportIdentifier;
     };
+
+export type ProgressEvent = Exclude<QueryEvent, { type: "started" }>;

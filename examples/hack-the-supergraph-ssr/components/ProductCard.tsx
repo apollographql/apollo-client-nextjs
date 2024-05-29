@@ -9,8 +9,7 @@ import {
   usePrefersReducedMotion,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { TypedDocumentNode, gql } from "@apollo/client";
-import { useFragment } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useFragment, TypedDocumentNode, gql } from "@apollo/client";
 
 const ProductCardProductFragment: TypedDocumentNode<{
   id: string;
