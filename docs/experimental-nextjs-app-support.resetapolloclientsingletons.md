@@ -2,7 +2,7 @@
 
 [Home](./index.md) &gt; [@apollo/experimental-nextjs-app-support](./experimental-nextjs-app-support.md) &gt; [resetApolloClientSingletons](./experimental-nextjs-app-support.resetapolloclientsingletons.md)
 
-## resetApolloClientSingletons() function
+## resetApolloClientSingletons variable
 
 &gt; This export is only available in React Client Components
 
@@ -11,15 +11,11 @@ Resets the singleton instances created for the Apollo SSR data transport and cac
 To be used in testing only, like
 
 ```ts
-afterEach(resetManualSSRApolloSingletons);
+afterEach(resetApolloClientSingletons);
 ```
 
 **Signature:**
 
 ```typescript
-declare function resetManualSSRApolloSingletons(): void;
+resetApolloClientSingletons: typeof resetManualSSRApolloSingletons
 ```
-**Returns:**
-
-void
-

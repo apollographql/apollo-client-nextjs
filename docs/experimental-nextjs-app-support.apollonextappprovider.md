@@ -10,7 +10,7 @@ A version of `ApolloProvider` to be used with the Next.js App Router.
 
 As opposed to the normal `ApolloProvider`<!-- -->, this version does not require a `client` prop, but requires a `makeClient` prop instead.
 
-Use this component together with `ApolloClient` and `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
+Use this component together with `ApolloClient` and `InMemoryCache` from the `"@apollo/experimental-nextjs-app-support"` package to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
 
 **Signature:**
 

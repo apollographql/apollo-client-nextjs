@@ -28,7 +28,7 @@ Description
 
 </td><td>
 
-A version of `ApolloClient` to be used with streaming SSR.
+A version of `ApolloClient` to be used with streaming SSR or in React Server Components.
 
 For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.
 
@@ -144,17 +144,6 @@ Ensures that you can always access the same instance of ApolloClient during RSC 
 </td></tr>
 <tr><td>
 
-[registerApolloClient(makeClient)](./client-react-streaming.registerapolloclient_1.md)
-
-
-</td><td>
-
-Ensures that you can always access the same instance of ApolloClient during RSC for an ongoing request, while always returning a new instance for different requests.
-
-
-</td></tr>
-<tr><td>
-
 [resetApolloSingletons()](./client-react-streaming.resetapollosingletons.md)
 
 
@@ -226,6 +215,19 @@ Description
 
 </td><td>
 
+
+
+</td></tr>
+<tr><td>
+
+[TransportedQueryRef](./client-react-streaming.transportedqueryref.md)
+
+
+</td><td>
+
+A `TransportedQueryRef` is an opaque object accessible via renderProp within `PreloadQuery`<!-- -->.
+
+A child client component reading the `TransportedQueryRef` via useReadQuery will suspend until the promise resolves.
 
 
 </td></tr>

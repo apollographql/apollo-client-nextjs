@@ -11,7 +11,5 @@ Information about the current package and it's export names, for use in error me
 ```typescript
 info: {
         pkg: string;
-        client: string;
-        cache: string;
     };
 ```

@@ -126,33 +126,31 @@ Ensures that you can always access the same instance of ApolloClient during RSC 
 
 
 </td></tr>
-<tr><td>
+</tbody></table>
 
-[registerApolloClient(makeClient)](./experimental-nextjs-app-support.registerapolloclient_1.md)
+## Interfaces
+
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[TransportedQueryRef](./experimental-nextjs-app-support.transportedqueryref.md)
 
 
 </td><td>
 
-Ensures that you can always access the same instance of ApolloClient during RSC for an ongoing request, while always returning a new instance for different requests.
+A `TransportedQueryRef` is an opaque object accessible via renderProp within `PreloadQuery`<!-- -->.
 
-
-</td></tr>
-<tr><td>
-
-[resetApolloClientSingletons()](./experimental-nextjs-app-support.resetapolloclientsingletons.md)
-
-
-</td><td>
-
-&gt; This export is only available in React Client Components
-
-Resets the singleton instances created for the Apollo SSR data transport and caches.
-
-To be used in testing only, like
-
-```ts
-afterEach(resetManualSSRApolloSingletons);
-```
+A child client component reading the `TransportedQueryRef` via useReadQuery will suspend until the promise resolves.
 
 
 </td></tr>
@@ -184,7 +182,26 @@ A version of `ApolloProvider` to be used with the Next.js App Router.
 
 As opposed to the normal `ApolloProvider`<!-- -->, this version does not require a `client` prop, but requires a `makeClient` prop instead.
 
-Use this component together with `ApolloClient` and `InMemoryCache` from the `@apollo/experimental-nextjs-app-support` package to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
+Use this component together with `ApolloClient` and `InMemoryCache` from the `"@apollo/experimental-nextjs-app-support"` package to make an ApolloClient instance available to your Client Component hooks in the Next.js App Router.
+
+
+</td></tr>
+<tr><td>
+
+[resetApolloClientSingletons](./experimental-nextjs-app-support.resetapolloclientsingletons.md)
+
+
+</td><td>
+
+&gt; This export is only available in React Client Components
+
+Resets the singleton instances created for the Apollo SSR data transport and caches.
+
+To be used in testing only, like
+
+```ts
+afterEach(resetApolloClientSingletons);
+```
 
 
 </td></tr>

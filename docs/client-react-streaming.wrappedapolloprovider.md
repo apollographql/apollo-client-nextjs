@@ -47,7 +47,7 @@ Description
 
 </td><td>
 
-{ pkg: string; client: string; cache: string; }
+{ pkg: string; }
 
 
 </td><td>

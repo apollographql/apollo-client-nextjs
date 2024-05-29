@@ -4,16 +4,16 @@
 
 ## ApolloClient class
 
-A version of `ApolloClient` to be used with streaming SSR.
+A version of `ApolloClient` to be used with streaming SSR or in React Server Components.
 
 For more documentation, please see [the Apollo Client API documentation](https://www.apollographql.com/docs/react/api/core/ApolloClient)<!-- -->.
 
 **Signature:**
 
 ```typescript
-declare class ApolloClient<TCacheShape> extends ApolloClient_base<TCacheShape> implements Partial<ApolloClientBrowserImpl<TCacheShape>>, Partial<ApolloClientSSRImpl<TCacheShape>> 
+declare class ApolloClient<Ignored = NormalizedCacheObject> extends ApolloClient_base implements Partial<ApolloClientBrowserImpl>, Partial<ApolloClientSSRImpl> 
 ```
-**Extends:** ApolloClient\_base&lt;TCacheShape&gt;
+**Extends:** ApolloClient\_base
 
-**Implements:** Partial&lt;ApolloClientBrowserImpl&lt;TCacheShape&gt;&gt;, Partial&lt;ApolloClientSSRImpl&lt;TCacheShape&gt;&gt;
+**Implements:** Partial&lt;ApolloClientBrowserImpl&gt;, Partial&lt;ApolloClientSSRImpl&gt;
 
