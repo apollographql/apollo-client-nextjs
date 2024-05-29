@@ -6,6 +6,7 @@ import {
 /**
  * @deprecated
  * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ *
  * Please update your import to
  * ```ts
  * import { registerApolloClient } from "@apollo/experimental-nextjs-app-support";
@@ -16,6 +17,7 @@ export const registerApolloClient = _registerApolloClient;
 /**
  * @deprecated
  * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ *
  * Please update your import to
  * ```ts
  * import type { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
