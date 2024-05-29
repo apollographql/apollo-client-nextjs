@@ -9,8 +9,8 @@
 > This cannot be addressed from our side, but would need API changes in Next.js or React itself.  
 > If you do not use suspense in your application, this will not be a problem to you.
 
-| ☑️  Apollo Client User Survey |
-| :----- |
+| ☑️ Apollo Client User Survey                                                                                                                                                                                                                                                                                                                                                             |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | What do you like best about Apollo Client? What needs to be improved? Please tell us by taking a [one-minute survey](https://docs.google.com/forms/d/e/1FAIpQLSczNDXfJne3ZUOXjk9Ursm9JYvhTh1_nFTDfdq3XBAFWCzplQ/viewform?usp=pp_url&entry.1170701325=Apollo+Client&entry.204965213=Readme). Your responses will help us understand Apollo Client usage and allow us to serve you better. |
 
 ## Detailed technical breakdown
@@ -57,7 +57,7 @@ import {
   InMemoryCache,
 } from "@apollo/experimental-nextjs-app-support";
 
-export const { getClient } = registerApolloClient(() => {
+export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
@@ -75,9 +75,13 @@ You can then use that `getClient` function in your server components:
 
 ```js
 const { data } = await getClient().query({ query: userQuery });
+// `query` is a shortcut for `getClient().query`
+const { data } = await query({ query: userQuery });
 ```
 
-### In SSR
+For a description of `PreloadQuery`, see [Preloading data in RSC for usage in Client Components](#preloading-data-in-rsc-for-usage-in-client-components)
+
+### In Client Components and streaming SSR
 
 If you use the `app` directory, each Client Component _will_ be SSR-rendered for the initial request. So you will need to use this package.
 
@@ -153,6 +157,91 @@ export default function RootLayout({
 > It just makes sure that all Client Components will have access to the same Apollo Client instance, shared through the `ApolloNextAppProvider`.
 
 If you want to make the most of the streaming SSR features offered by React & the Next.js App Router, consider using the [`useSuspenseQuery`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usesuspensequery_experimental) and [`useFragment`](https://www.apollographql.com/docs/react/api/react/hooks-experimental/#using-usefragment_experimental) hooks.
+
+### Preloading data in RSC for usage in Client Components
+
+Starting with version 0.11, you can preload data in RSC to populate the cache of your Client Components.
+
+For that, follow the setup steps for both RSC and Client Components as laid out in the last two paragraphs. Then you can use the `PreloadQuery` component in your React Server Components:
+
+```jsx
+<PreloadQuery
+  query={QUERY}
+  variables={{
+    foo: 1,
+  }}
+>
+  <Suspense fallback={<>loading</>}>
+    <ClientChild />
+  </Suspense>
+</PreloadQuery>
+```
+
+And you can use `useSuspenseQuery` in your `ClientChild` component with the same QUERY:
+
+```jsx
+"use client";
+
+import { useSuspenseQuery } from "@apollo/client";
+// ...
+
+export function ClientChild() {
+  const { data } = useSuspenseQuery(QUERY);
+  return <div>...</div>;
+}
+```
+
+> [!TIP]
+> The `Suspense` boundary here is optional and only for demonstration purposes to show that something suspenseful is going on.  
+> Place `Suspense` boundaries at meaningful places in your UI, where they give your users the best user experience.
+
+This example will fetch a query in RSC, and then transport the data into the Client Component cache.
+Before the child `ClientChild` in the example renders, a "simulated network request" for this query is started in your Client Components.
+That way, if you repeat the query in your Client Component using `useSuspenseQuery` (or even `useQuery`!), it will wait for the network request in your Server Component to finish instead of making it's own network request.
+
+> [!IMPORTANT]
+> Keep in mind that we don't recommend mixing data between Client Components and Server Components. Data fetched this way should be considered client data and never be referenced in your Server Components. `PreloadQuery` prevents mixing server data and client data by creating a separate `ApolloClient` instance using the `makeClient` function passed into `registerApolloClient`.
+
+#### Usage with `useReadQuery`.
+
+You can also use this approach in combination with `useReadQuery` in Client Components. Use the render prop approach to get a `QueryRef` that you can pass to your Client Component:
+
+```jsx
+<PreloadQuery
+  query={QUERY}
+  variables={{
+    foo: 1,
+  }}
+>
+  {(queryRef) => (
+    <Suspense fallback={<>loading</>}>
+      <ClientChild queryRef={queryRef} />
+    </Suspense>
+  )}
+</PreloadQuery>
+```
+
+Inside of `ClientChild`, you could then call `useReadQuery` with the `queryRef` prop.
+
+```jsx
+"use client";
+
+import { useQueryRefHandlers, useReadQuery, QueryRef } from "@apollo/client";
+
+export function ClientChild({ queryRef }: { queryRef: QueryRef<TQueryData> }) {
+  const { refetch } = useQueryRefHandlers(queryRef);
+  const { data } = useReadQuery(queryRef);
+  return <div>...</div>;
+}
+```
+
+> [!TIP]
+> The `Suspense` boundary here is optional and only for demonstration purposes to show that something suspenseful is going on.  
+> Place `Suspense` boundaries at meaningful places in your UI, where they give your users the best user experience.
+
+#### Caveat
+
+Keep in mind that this will look like a "current network request" to your Client Component and as such will update data that is already in your Client Component cache, so make sure that the data you pass from your Server Components is not outdated, e.g. because of other caching layers you might be using, like the Next.js fetch cache.
 
 ### Resetting singletons between tests.
 
