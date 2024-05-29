@@ -177,7 +177,23 @@ For that, follow the setup steps for both RSC and Client Components as laid out 
 </PreloadQuery>
 ```
 
-> The `Suspense` boundary here is optional.
+And you can use `useSuspenseQuery` in your `ClientChild` component with the same QUERY:
+
+```jsx
+"use client";
+
+import { useSuspenseQuery } from "@apollo/client";
+// ...
+
+export function ClientChild() {
+  const { data } = useSuspenseQuery(QUERY);
+  return <div>...</div>;
+}
+```
+
+> [!TIP]
+> The `Suspense` boundary here is optional and only for demonstration purposes to show that something suspenseful is going on.  
+> Place `Suspense` boundaries at meaningful places in your UI, where they give your users the best user experience.
 
 This example will fetch a query in RSC, and then transport the data into the Client Component cache.
 Before the child `ClientChild` in the example renders, a "simulated network request" for this query is started in your Client Components.
@@ -205,7 +221,23 @@ You can also use this approach in combination with `useReadQuery` in Client Comp
 </PreloadQuery>
 ```
 
-Inside of `ClientChild`, you could then call `useReadQuery` with the `queryRef` prop. The `Suspense` boundary in the example is optional.
+Inside of `ClientChild`, you could then call `useReadQuery` with the `queryRef` prop.
+
+```jsx
+"use client";
+
+import { useQueryRefHandlers, useReadQuery, QueryRef } from "@apollo/client";
+
+export function ClientChild({ queryRef }: { queryRef: QueryRef<TQueryData> }) {
+  const { refetch } = useQueryRefHandlers(queryRef);
+  const { data } = useReadQuery(queryRef);
+  return <div>...</div>;
+}
+```
+
+> [!TIP]
+> The `Suspense` boundary here is optional and only for demonstration purposes to show that something suspenseful is going on.  
+> Place `Suspense` boundaries at meaningful places in your UI, where they give your users the best user experience.
 
 #### Caveat
 
