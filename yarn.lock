@@ -51,6 +51,7 @@ __metadata:
   dependencies:
     "@apollo/client": "npm:^3.10.4"
     "@arethetypeswrong/cli": "npm:0.15.3"
+    "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
     "@testing-library/react": "npm:15.0.7"
     "@total-typescript/shoehorn": "npm:0.1.2"
@@ -129,6 +130,7 @@ __metadata:
     "@apollo/client": "npm:3.10.4"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.3"
+    "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
     "@testing-library/react": "npm:15.0.7"
     "@total-typescript/shoehorn": "npm:0.1.2"
@@ -3622,6 +3624,14 @@ __metadata:
   checksum: 10/ef915e3e2f34652f3d383b28a9a99cfea476fa991482370889ab14aac8ecd2b38d47cc21932526c6d949da0daf4a4a6bf629d30f41b0caca25e146819cbfa70e
   languageName: node
   linkType: hard
+
+"@internal/test-utils@workspace:^, @internal/test-utils@workspace:packages/test-utils":
+  version: 0.0.0-use.local
+  resolution: "@internal/test-utils@workspace:packages/test-utils"
+  dependencies:
+    typescript: "npm:*"
+  languageName: unknown
+  linkType: soft
 
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
@@ -9537,16 +9547,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-tsconfig@npm:^4.2.0":
-  version: 4.7.2
-  resolution: "get-tsconfig@npm:4.7.2"
-  dependencies:
-    resolve-pkg-maps: "npm:^1.0.0"
-  checksum: 10/f21135848fb5d16012269b7b34b186af7a41824830f8616aba17a15eb4d9e54fdc876833f1e21768395215a826c8145582f5acd594ae2b4de3284d10b38d20f8
-  languageName: node
-  linkType: hard
-
-"get-tsconfig@npm:^4.7.2":
+"get-tsconfig@npm:^4.2.0, get-tsconfig@npm:^4.7.2":
   version: 4.7.5
   resolution: "get-tsconfig@npm:4.7.5"
   dependencies:
@@ -15346,6 +15347,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:*, typescript@npm:5.4.5":
+  version: 5.4.5
+  resolution: "typescript@npm:5.4.5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/d04a9e27e6d83861f2126665aa8d84847e8ebabcea9125b9ebc30370b98cb38b5dff2508d74e2326a744938191a83a69aa9fddab41f193ffa43eabfdf3f190a5
+  languageName: node
+  linkType: hard
+
 "typescript@npm:5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
@@ -15366,13 +15377,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.4.5":
+"typescript@patch:typescript@npm%3A*#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>":
   version: 5.4.5
-  resolution: "typescript@npm:5.4.5"
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/d04a9e27e6d83861f2126665aa8d84847e8ebabcea9125b9ebc30370b98cb38b5dff2508d74e2326a744938191a83a69aa9fddab41f193ffa43eabfdf3f190a5
+  checksum: 10/760f7d92fb383dbf7dee2443bf902f4365db2117f96f875cf809167f6103d55064de973db9f78fe8f31ec08fff52b2c969aee0d310939c0a3798ec75d0bca2e1
   languageName: node
   linkType: hard
 
@@ -15393,16 +15404,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/f5f9a4133c2670761f0166eae5b3bafbc4a3fc24f0f42a93c9c893d9e9d6e66ea066969c5e7483fa66b4ae0e99125592553f3b92fd3599484de8be13b0615176
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>":
-  version: 5.4.5
-  resolution: "typescript@patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/760f7d92fb383dbf7dee2443bf902f4365db2117f96f875cf809167f6103d55064de973db9f78fe8f31ec08fff52b2c969aee0d310939c0a3798ec75d0bca2e1
   languageName: node
   linkType: hard
 

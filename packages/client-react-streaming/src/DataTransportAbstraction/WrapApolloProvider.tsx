@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { useRef } from "react";
-import { ApolloClient } from "./WrappedApolloClient.js";
+import type { ApolloClient } from "./WrappedApolloClient.js";
 import { ApolloProvider } from "@apollo/client/index.js";
 import type { DataTransportProviderImplementation } from "./DataTransportAbstraction.js";
 import { ApolloClientSingleton } from "./symbols.js";
 import { bundle } from "../bundleInfo.js";
+import { assertInstance } from "../assertInstance.js";
 
 declare global {
   interface Window {
@@ -35,8 +36,6 @@ export interface WrappedApolloProvider<ExtraProps> {
    */
   info: {
     pkg: string;
-    client: string;
-    cache: string;
   };
 }
 
@@ -59,18 +58,16 @@ export function WrapApolloProvider<ExtraProps>(
     ...extraProps
   }) => {
     const clientRef = useRef<ApolloClient<any>>(undefined);
-
-    if (process.env.REACT_ENV === "ssr") {
-      if (!clientRef.current) {
+    if (!clientRef.current) {
+      if (process.env.REACT_ENV === "ssr") {
         clientRef.current = makeClient();
+      } else {
+        clientRef.current = window[ApolloClientSingleton] ??= makeClient();
       }
-    } else {
-      clientRef.current = window[ApolloClientSingleton] ??= makeClient();
-    }
-
-    if (!(clientRef.current instanceof ApolloClient)) {
-      throw new Error(
-        `When using \`ApolloClient\` in streaming SSR, you must use the \`${WrappedApolloProvider.info.client}\` export provided by \`"${WrappedApolloProvider.info.pkg}"\`.`
+      assertInstance(
+        clientRef.current,
+        WrappedApolloProvider.info,
+        "ApolloClient"
       );
     }
 

@@ -5,6 +5,7 @@ import type {
   WatchQueryOptions,
   FetchResult,
   DocumentNode,
+  NormalizedCacheObject,
 } from "@apollo/client/index.js";
 import {
   ApolloClient as OrigApolloClient,
@@ -15,7 +16,7 @@ import { print } from "@apollo/client/utilities/index.js";
 import { canonicalStringify } from "@apollo/client/cache/index.js";
 import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
-import { InMemoryCache } from "./WrappedInMemoryCache.js";
+import type { InMemoryCache } from "./WrappedInMemoryCache.js";
 import { hookWrappers } from "./hooks.js";
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import type { QueryInfo } from "@apollo/client/core/QueryInfo.js";
@@ -24,12 +25,13 @@ import type {
   QueryEvent,
   TransportIdentifier,
 } from "./DataTransportAbstraction.js";
-import { bundle } from "../bundleInfo.js";
+import { bundle, sourceSymbol } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
+import { assertInstance } from "../assertInstance.js";
 
-function getQueryManager<TCacheShape>(
+function getQueryManager(
   client: OrigApolloClient<unknown>
-): QueryManager<TCacheShape> & {
+): QueryManager<NormalizedCacheObject> & {
   [wrappers]: HookWrappers;
 } {
   return client["queryManager"];
@@ -49,8 +51,13 @@ type SimulatedQueryInfo = {
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
+interface WrappedApolloClientOptions
+  extends Omit<ApolloClientOptions<NormalizedCacheObject>, "cache"> {
+  cache: InMemoryCache;
+}
+
 const wrappers = Symbol.for("apollo.hook.wrappers");
-class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
+class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
   /**
    * Information about the current package and it's export names, for use in error messages.
    *
@@ -58,7 +65,9 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
    */
   static readonly info = bundle;
 
-  constructor(options: ApolloClientOptions<TCacheShape>) {
+  [sourceSymbol]: string;
+
+  constructor(options: WrappedApolloClientOptions) {
     super(
       process.env.REACT_ENV === "rsc" || process.env.REACT_ENV === "ssr"
         ? {
@@ -67,19 +76,19 @@ class ApolloClientBase<TCacheShape> extends OrigApolloClient<TCacheShape> {
           }
         : options
     );
+    const info = (this.constructor as typeof ApolloClientBase).info;
+    this[sourceSymbol] = `${info.pkg}:ApolloClient`;
 
-    if (!(this.cache instanceof InMemoryCache)) {
-      throw new Error(
-        `When using \`InMemoryCache\` in streaming SSR, you must use the \`${(this.constructor as typeof ApolloClientBase).info.cache}\` export provided by \`"${(this.constructor as typeof ApolloClientBase).info.pkg}"\`.`
-      );
-    }
+    assertInstance(
+      this.cache as unknown as InMemoryCache,
+      info,
+      "InMemoryCache"
+    );
   }
 }
 
-export class ApolloClientClientBaseImpl<
-  TCacheShape,
-> extends ApolloClientBase<TCacheShape> {
-  constructor(options: ApolloClientOptions<TCacheShape>) {
+export class ApolloClientClientBaseImpl extends ApolloClientBase {
+  constructor(options: WrappedApolloClientOptions) {
     super(options);
     this.onQueryStarted = this.onQueryStarted.bind(this);
 
@@ -102,7 +111,7 @@ export class ApolloClientClientBaseImpl<
     const transformedDocument = this.documentTransform.transformDocument(
       options.query
     );
-    const queryManager = getQueryManager<TCacheShape>(this);
+    const queryManager = getQueryManager(this);
     // Calling `transformDocument` will add __typename but won't remove client
     // directives, so we need to get the `serverQuery`.
     const { serverQuery } = queryManager.getDocumentInfo(transformedDocument);
@@ -127,7 +136,7 @@ export class ApolloClientClientBaseImpl<
     const { cacheKey, cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
     this.transportedQueryOptions.set(id, hydratedOptions);
 
-    const queryManager = getQueryManager<TCacheShape>(this);
+    const queryManager = getQueryManager(this);
 
     if (
       !queryManager["inFlightLinkObservables"].peekArray(cacheKeyArr)
@@ -269,9 +278,7 @@ export class ApolloClientClientBaseImpl<
   };
 }
 
-class ApolloClientSSRImpl<
-  TCacheShape,
-> extends ApolloClientClientBaseImpl<TCacheShape> {
+class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   private forwardedQueries = new (getTrieConstructor(this))();
 
   watchQueryQueue = createBackpressuredCallback<{
@@ -349,9 +356,7 @@ class ApolloClientSSRImpl<
   }
 }
 
-export class ApolloClientBrowserImpl<
-  TCacheShape,
-> extends ApolloClientClientBaseImpl<TCacheShape> {}
+export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {}
 
 const ApolloClientImplementation =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
@@ -367,20 +372,22 @@ const ApolloClientImplementation =
  *
  * @public
  */
-export class ApolloClient<TCacheShape>
-  extends (ApolloClientImplementation as typeof ApolloClientBase)<TCacheShape>
-  implements
-    Partial<ApolloClientBrowserImpl<TCacheShape>>,
-    Partial<ApolloClientSSRImpl<TCacheShape>>
+export class ApolloClient<
+    // this generic is obsolete as we require a `InMemoryStore`, which fixes this generic to `NormalizedCacheObject` anyways
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Ignored = NormalizedCacheObject,
+  >
+  extends (ApolloClientImplementation as typeof ApolloClientBase)
+  implements Partial<ApolloClientBrowserImpl>, Partial<ApolloClientSSRImpl>
 {
   /** @internal */
-  declare onQueryStarted?: ApolloClientBrowserImpl<TCacheShape>["onQueryStarted"];
+  declare onQueryStarted?: ApolloClientBrowserImpl["onQueryStarted"];
   /** @internal */
-  declare onQueryProgress?: ApolloClientBrowserImpl<TCacheShape>["onQueryProgress"];
+  declare onQueryProgress?: ApolloClientBrowserImpl["onQueryProgress"];
   /** @internal */
-  declare rerunSimulatedQueries?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQueries"];
+  declare rerunSimulatedQueries?: ApolloClientBrowserImpl["rerunSimulatedQueries"];
   /** @internal */
-  declare rerunSimulatedQuery?: ApolloClientBrowserImpl<TCacheShape>["rerunSimulatedQuery"];
+  declare rerunSimulatedQuery?: ApolloClientBrowserImpl["rerunSimulatedQuery"];
   /** @internal */
-  declare watchQueryQueue?: ApolloClientSSRImpl<TCacheShape>["watchQueryQueue"];
+  declare watchQueryQueue?: ApolloClientSSRImpl["watchQueryQueue"];
 }

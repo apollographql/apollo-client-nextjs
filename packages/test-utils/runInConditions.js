@@ -1,23 +1,30 @@
 import { parseArgs } from "node:util";
-type Condition = "react-server" | "node" | "browser" | "default";
+/**
+ * @typedef {"react-server" | "node" | "browser" | "default"} Condition
+ */
 
 /**
  * To be used in test files. This will skip the test if the node runner has not been started matching at least one of the passed conditions.
  * If node has been started with `node --conditions=node --test`, and `runCondition("node", "browser")` is called, the test will run.
  * If node has been started with `node --conditions=react-server --test`, and `runCondition("node", "browser")` is called, the test will not run.
- * @param validConditions
+ * @param  {Condition[]} validConditions
  */
-export function runInConditions(...validConditions: Condition[]) {
+export function runInConditions(...validConditions) {
   if (!conditionActive(validConditions)) {
     process.exit(0);
   }
 }
 
-export function outsideOf(...validConditions: Condition[]) {
+/**
+ * @param  {Condition[]} validConditions
+ */
+export function outsideOf(...validConditions) {
   return !conditionActive(validConditions);
 }
-
-function conditionActive(validConditions: Condition[]) {
+/**
+ * @param  {Condition[]} validConditions
+ */
+function conditionActive(validConditions) {
   const args = parseArgs({
     args: (process.env.NODE_OPTIONS || "").split(" ").concat(process.execArgv),
     options: {

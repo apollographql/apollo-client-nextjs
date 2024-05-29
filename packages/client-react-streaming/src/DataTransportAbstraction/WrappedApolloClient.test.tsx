@@ -1,5 +1,5 @@
 import React, { Suspense, use, useMemo } from "rehackt";
-import { outsideOf } from "../util/runInConditions.js";
+import { outsideOf } from "@internal/test-utils/runInConditions.js";
 import assert from "node:assert";
 import test, { afterEach, describe } from "node:test";
 import type {
@@ -233,7 +233,7 @@ describe(
       { skip: outsideOf("browser") },
       async () => {
         const { $RC, $RS, setBody, hydrateBody, appendToBody } = await import(
-          "../util/hydrationTest.js"
+          "@internal/test-utils/hydrationTest.js"
         );
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
         let useStaticValueRefStub = <T extends unknown>(): { current: T } => {

@@ -1,5 +1,5 @@
 export const bundle = {
   pkg: "@apollo/client-react-streaming",
-  client: "ApolloClient",
-  cache: "InMemoryCache",
 };
+
+export const sourceSymbol = Symbol.for("apollo.source_package");
