@@ -241,7 +241,7 @@ export function ClientChild({ queryRef }: { queryRef: QueryRef<TQueryData> }) {
 
 #### Caveat
 
-Keep in mind that this will look like a "new network request" to your Client Component, so make sure that the data you pass from your Server Components is not outdated, e.g. because of other caching layers you might be using.
+Keep in mind that this will look like a "current network request" to your Client Component and as such will update data that is already in your Client Component cache, so make sure that the data you pass from your Server Components is not outdated, e.g. because of other caching layers you might be using, like the Next.js fetch cache.
 
 ### Resetting singletons between tests.
 
