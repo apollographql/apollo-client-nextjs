@@ -160,11 +160,9 @@ If you want to make the most of the streaming SSR features offered by React & th
 
 ### Preloading data in RSC for usage in Client Components
 
-You can also preload data in RSC to populate the cache of your Client Components.
+Starting with version 0.11, you can preload data in RSC to populate the cache of your Client Components.
 
-For that, follow the setup steps for both RSC and Client Components as laid out in the last two paragraphs.
-
-Then you can use the `PreloadQuery` component in your React Server Components:
+For that, follow the setup steps for both RSC and Client Components as laid out in the last two paragraphs. Then you can use the `PreloadQuery` component in your React Server Components:
 
 ```jsx
 <PreloadQuery
@@ -181,15 +179,16 @@ Then you can use the `PreloadQuery` component in your React Server Components:
 
 > The `Suspense` boundary here is optional.
 
-This example will fetch your query in RSC, and then transport the data into your Client Component cache.
-Before the child `ClientComponent` in the example renders, a "simulated network request" for this query is started in your Client Components.
+This example will fetch a query in RSC, and then transport the data into the Client Component cache.
+Before the child `ClientChild` in the example renders, a "simulated network request" for this query is started in your Client Components.
 That way, if you repeat the query in your Client Component using `useSuspenseQuery` (or even `useQuery`!), it will wait for the network request in your Server Component to finish instead of making it's own network request.
 
-> Keep in mind that we recommend not to mix "client data" and "RSC data". Data fetched this way should be considerd "client data" and never be referenced in your Server Components. In fact, `PreloadQuery` will create a separate `ApolloClient` instance from the instance normally used in RSC, to prevent mixing data.
+> [!IMPORTANT]
+> Keep in mind that we don't recommend mixing data between Client Components and Server Components. Data fetched this way should be considered client data and never be referenced in your Server Components. `PreloadQuery` prevents mixing server data and client data by creating a separate `ApolloClient` instance using the `makeClient` function passed into `registerApolloClient`.
 
 #### Usage with `useReadQuery`.
 
-You can also use this approach in combination with `useReadQuery` on the client. For that, you can use this "render prop" approach to get a transportable `QueryRef` that you can pass down into your Client Components:
+You can also use this approach in combination with `useReadQuery` in Client Components. Use the render prop approach to get a `QueryRef` that you can pass to your Client Component:
 
 ```jsx
 <PreloadQuery
