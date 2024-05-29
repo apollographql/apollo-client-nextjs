@@ -33,7 +33,6 @@ test(
       return children;
     }
     const Provider = WrapApolloProvider(FakeTransport);
-    console.log(Provider);
 
     await test("@apollo/client should error", async () => {
       const upstreamPkg = await import("@apollo/client/index.js");
