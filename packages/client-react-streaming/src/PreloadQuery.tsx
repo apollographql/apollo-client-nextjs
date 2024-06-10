@@ -35,7 +35,7 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
     | ((
         queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
-}) {
+}): React.ReactElement {
   const preloadOptions = {
     ...options,
     fetchPolicy: "cache-first" as const,
