@@ -53,7 +53,7 @@ makeClient
 </tbody></table>
 **Returns:**
 
-{ getClient: () =&gt; ApolloClientOrPromise; query: Awaited&lt;ApolloClientOrPromise&gt;\["query"\]; PreloadQuery: PreloadQueryComponent; }
+{ getClient: () =&gt; ApolloClientOrPromise; query: Awaited&lt;ApolloClientOrPromise&gt;\["query"\]; PreloadQuery: [PreloadQueryComponent](./experimental-nextjs-app-support.preloadquerycomponent.md)<!-- -->; }
 
 ## Example
 

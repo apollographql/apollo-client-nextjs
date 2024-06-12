@@ -144,7 +144,12 @@ return a new instance every time \`makeClient\` is called.
   return getClient;
 }
 
-interface PreloadQueryProps<TData, TVariables>
+/**
+ * Props for `PreloadQueryComponent`
+ * @see {@link PreloadQueryComponent}
+ * @public
+ */
+export interface PreloadQueryProps<TData, TVariables>
   extends PreloadQueryOptions<TVariables, TData> {
   children:
     | ReactNode
@@ -153,7 +158,45 @@ interface PreloadQueryProps<TData, TVariables>
       ) => ReactNode);
 }
 
-interface PreloadQueryComponent {
+/**
+ * Preloads data in React Server Components to be hydrated
+ * in Client Components.
+ *
+ * ### Example with `queryRef`
+ * `ClientChild` would call `useReadQuery` with the `queryRef`, the `Suspense` boundary is optional:
+ * ```jsx
+ * <PreloadQuery
+ *    query={QUERY}
+ *    variables={{
+ *      foo: 1
+ *    }}
+ *  >
+ *   {(queryRef) => (
+ *     <Suspense fallback={<>loading</>}>
+ *       <ClientChild queryRef={queryRef} />
+ *     </Suspense>
+ *   )}
+ * </PreloadQuery>
+ * ```
+ *
+ * ### Example for `useSuspenseQuery`
+ * `ClientChild` would call the same query with `useSuspenseQuery`, the `Suspense` boundary is optional:
+ * ```jsx
+ *  <PreloadQuery
+ *    query={QUERY}
+ *    variables={{
+ *      foo: 1
+ *    }}
+ *  >
+ *    <Suspense fallback={<>loading</>}>
+ *      <ClientChild />
+ *    </Suspense>
+ *  </PreloadQuery>
+ * ```
+ *
+ * @public
+ */
+export interface PreloadQueryComponent {
   <TData, TVariables extends OperationVariables>(
     props: PreloadQueryProps<TData, TVariables>
   ): React.ReactElement;
