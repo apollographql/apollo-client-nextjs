@@ -32,12 +32,11 @@ export type TransportedQueryRefOptions = TransportedOptions &
 export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
   extends QueryRef<TData, TVariables> {
   /**
-   * Only available in React Server Components.
-   * Will be `undefined` after being passed to Client Components.
+   * Temporarily disabled - see https://github.com/apollographql/apollo-client-nextjs/issues/332
    *
-   * Returns a promise that resolves back to the `TransportedQueryRef` that can be awaited in RSC to suspend a subtree until the originating query has been loaded.
+   * Will now be be `undefined` both in React Server Components and Client Components until we can find a better resolution.
    */
-  toPromise?: () => Promise<TransportedQueryRef>;
+  toPromise?: undefined;
 }
 
 export interface InternalTransportedQueryRef<
@@ -52,17 +51,24 @@ export interface InternalTransportedQueryRef<
 export function createTransportedQueryRef<TData, TVariables>(
   options: TransportedQueryRefOptions,
   queryKey: string,
-  promise: Promise<any>
+  _promise: Promise<any>
 ): InternalTransportedQueryRef<TData, TVariables> {
   const ref: InternalTransportedQueryRef<TData, TVariables> = {
     __transportedQueryRef: true,
     options,
     queryKey,
   };
-  Object.defineProperty(ref, "toPromise", {
-    value: () => promise.then(() => ref),
-    enumerable: false,
-  });
+  /*
+  Temporarily disabled - see https://github.com/apollographql/apollo-client-nextjs/issues/332
+  This causes a dev-mode warning:
+      Warning: Only plain objects can be passed to Client Components from Server Components. Classes or other objects with methods are not supported.
+      <... queryRef={{__transportedQueryRef: true, options: ..., queryKey: ...}}>
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  */
+  // Object.defineProperty(ref, "toPromise", {
+  //   value: () => promise.then(() => ref),
+  //   enumerable: false,
+  // });
   return ref;
 }
 
