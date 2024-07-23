@@ -177,7 +177,7 @@ For that, follow the setup steps for both RSC and Client Components as laid out 
 </PreloadQuery>
 ```
 
-And you can use `useSuspenseQuery` in your `ClientChild` component with the same QUERY:
+And you can use `useSuspenseQuery` in your `ClientChild` component with the same QUERY and variables:
 
 ```jsx
 "use client";
@@ -186,7 +186,7 @@ import { useSuspenseQuery } from "@apollo/client";
 // ...
 
 export function ClientChild() {
-  const { data } = useSuspenseQuery(QUERY);
+  const { data } = useSuspenseQuery(QUERY, { variables: { foo: 1 } });
   return <div>...</div>;
 }
 ```
@@ -204,7 +204,7 @@ That way, if you repeat the query in your Client Component using `useSuspenseQue
 
 #### Usage with `useReadQuery`.
 
-You can also use this approach in combination with `useReadQuery` in Client Components. Use the render prop approach to get a `QueryRef` that you can pass to your Client Component:
+Just like using `useBackgroundQuery` with `useReadQuery` in place of `useSuspenseQuery` [to avoid request waterfalls](https://www.apollographql.com/docs/react/data/suspense#avoiding-request-waterfalls), you can also use `PreloadQuery` in combination with `useReadQuery` in Client Components to achieve a similar result. Use the render prop notation to get a `QueryRef` that you can pass to your Client Component:
 
 ```jsx
 <PreloadQuery
