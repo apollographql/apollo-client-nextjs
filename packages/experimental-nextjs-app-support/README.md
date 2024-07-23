@@ -204,7 +204,7 @@ That way, if you repeat the query in your Client Component using `useSuspenseQue
 
 #### Usage with `useReadQuery`.
 
-Just like using `useBackgroundQuery` and `useReadQuery` in place of `useSuspenseQuery` (see [the suspense documentation](https://www.apollographql.com/docs/react/data/suspense#avoiding-request-waterfalls)), you can also use `PreloadQuery` in combination with `useReadQuery` in Client Components. Use the render prop notation to get a `QueryRef` that you can pass to your Client Component:
+Just like using `useBackgroundQuery` with `useReadQuery` in place of `useSuspenseQuery` [to avoid request waterfalls](https://www.apollographql.com/docs/react/data/suspense#avoiding-request-waterfalls), you can also use `PreloadQuery` in combination with `useReadQuery` in Client Components to achieve a similar result. Use the render prop notation to get a `QueryRef` that you can pass to your Client Component:
 
 ```jsx
 <PreloadQuery
