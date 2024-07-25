@@ -91,12 +91,11 @@ First, create a new file `app/ApolloWrapper.jsx`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import { ApolloLink, HttpLink } from "@apollo/client";
+import { HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   ApolloClient,
   InMemoryCache,
-  SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support";
 
 // have a function to create a client for you
