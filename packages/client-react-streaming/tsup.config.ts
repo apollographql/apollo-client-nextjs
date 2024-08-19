@@ -71,7 +71,15 @@ export default defineConfig((options) => {
     ),
     entry("ssr", "src/stream-utils/index.ts", "stream-utils.node"),
     {
-      ...entry("browser", "src/index.cc.ts", "index.cc"),
+      ...entry("browser", "src/index.cc.tsx", "index.cc"),
+      treeshake: false, // would remove the "use client" directive
+    },
+    {
+      ...entry(
+        "browser",
+        "src/SimulatePreloadedQuery.cc.ts",
+        "SimulatePreloadedQuery.cc"
+      ),
       treeshake: false, // would remove the "use client" directive
     },
   ];
