@@ -1,4 +1,3 @@
-import { SimulatePreloadedQuery } from "./index.cc.js";
 import type {
   ApolloClient,
   OperationVariables,
@@ -23,6 +22,13 @@ export type PreloadQueryOptions<TVariables, TData> = QueryOptions<
   TData
 > &
   RestrictedPreloadOptions;
+
+const SimulatePreloadedQuery: typeof import("./index.cc.js").SimulatePreloadedQuery =
+  React.lazy(() =>
+    import("./index.cc.js").then((pkg) => ({
+      default: pkg.SimulatePreloadedQuery,
+    }))
+  );
 
 export function PreloadQuery<TData, TVariables extends OperationVariables>({
   getClient,
