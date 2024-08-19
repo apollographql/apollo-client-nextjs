@@ -91,12 +91,11 @@ First, create a new file `app/ApolloWrapper.jsx`:
 "use client";
 // ^ this file needs the "use client" pragma
 
-import { ApolloLink, HttpLink } from "@apollo/client";
+import { HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   ApolloClient,
   InMemoryCache,
-  SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support";
 
 // have a function to create a client for you
@@ -202,7 +201,7 @@ That way, if you repeat the query in your Client Component using `useSuspenseQue
 > [!IMPORTANT]
 > Keep in mind that we don't recommend mixing data between Client Components and Server Components. Data fetched this way should be considered client data and never be referenced in your Server Components. `PreloadQuery` prevents mixing server data and client data by creating a separate `ApolloClient` instance using the `makeClient` function passed into `registerApolloClient`.
 
-#### Usage with `useReadQuery`.
+#### Usage with `useReadQuery`
 
 Just like using `useBackgroundQuery` with `useReadQuery` in place of `useSuspenseQuery` [to avoid request waterfalls](https://www.apollographql.com/docs/react/data/suspense#avoiding-request-waterfalls), you can also use `PreloadQuery` in combination with `useReadQuery` in Client Components to achieve a similar result. Use the render prop notation to get a `QueryRef` that you can pass to your Client Component:
 
@@ -243,11 +242,11 @@ export function ClientChild({ queryRef }: { queryRef: QueryRef<TQueryData> }) {
 
 Keep in mind that this will look like a "current network request" to your Client Component and as such will update data that is already in your Client Component cache, so make sure that the data you pass from your Server Components is not outdated, e.g. because of other caching layers you might be using, like the Next.js fetch cache.
 
-### Resetting singletons between tests.
+### Resetting singletons between tests
 
 This package uses some singleton instances on the Browser side - if you are writing tests, you must reset them between tests.
 
-For that, you can use the `resetApolloClientSingletons ` helper:
+For that, you can use the `resetApolloClientSingletons` helper:
 
 ```ts
 import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
