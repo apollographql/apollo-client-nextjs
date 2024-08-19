@@ -23,12 +23,7 @@ export type PreloadQueryOptions<TVariables, TData> = QueryOptions<
 > &
   RestrictedPreloadOptions;
 
-const SimulatePreloadedQuery: typeof import("./index.cc.js").SimulatePreloadedQuery =
-  React.lazy(() =>
-    import("./index.cc.js").then((pkg) => ({
-      default: pkg.SimulatePreloadedQuery,
-    }))
-  );
+let SimulatePreloadedQuery: typeof import("./index.cc.js").SimulatePreloadedQuery;
 
 export function PreloadQuery<TData, TVariables extends OperationVariables>({
   getClient,
@@ -42,6 +37,13 @@ export function PreloadQuery<TData, TVariables extends OperationVariables>({
         queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
       ) => ReactNode);
 }): React.ReactElement {
+  if (!SimulatePreloadedQuery) {
+    SimulatePreloadedQuery = React.lazy(() =>
+      import("./index.cc.js").then((pkg) => ({
+        default: pkg.SimulatePreloadedQuery,
+      }))
+    );
+  }
   const preloadOptions = {
     ...options,
     fetchPolicy: "cache-first" as const,
