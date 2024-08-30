@@ -4,12 +4,12 @@
 
 ## TransportedQueryRef.toPromise property
 
-Only available in React Server Components. Will be `undefined` after being passed to Client Components.
+Temporarily disabled - see https://github.com/apollographql/apollo-client-nextjs/issues/332
 
-Returns a promise that resolves back to the `TransportedQueryRef` that can be awaited in RSC to suspend a subtree until the originating query has been loaded.
+Will now be be `undefined` both in React Server Components and Client Components until we can find a better resolution.
 
 **Signature:**
 
 ```typescript
-toPromise?: () => Promise<TransportedQueryRef>;
+toPromise?: undefined;
 ```
