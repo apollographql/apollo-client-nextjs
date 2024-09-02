@@ -23,7 +23,7 @@ import type { PreloadQueryOptions } from "./PreloadQuery.js";
 
 const handledRequests = new WeakMap<TransportedOptions, TransportIdentifier>();
 
-export function SimulatePreloadedQuery<T>({
+export default function SimulatePreloadedQuery<T>({
   options,
   result,
   children,
