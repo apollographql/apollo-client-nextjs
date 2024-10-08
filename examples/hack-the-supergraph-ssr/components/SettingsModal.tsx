@@ -1,3 +1,4 @@
+"use client";
 import DelaySlider from "./DelaySlider";
 import {
   Button,

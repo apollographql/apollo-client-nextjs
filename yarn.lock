@@ -45,7 +45,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
+"@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:^, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
   dependencies:
@@ -86,9 +86,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:3.10.4, @apollo/client@npm:^3.10.4":
-  version: 3.10.4
-  resolution: "@apollo/client@npm:3.10.4"
+"@apollo/client@https://pkg.pr.new/@apollo/client@12066":
+  version: 3.11.8
+  resolution: "@apollo/client@https://pkg.pr.new/@apollo/client@12066"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -107,8 +107,8 @@ __metadata:
   peerDependencies:
     graphql: ^15.0.0 || ^16.0.0
     graphql-ws: ^5.5.5
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0
     subscriptions-transport-ws: ^0.9.0 || ^0.11.0
   peerDependenciesMeta:
     graphql-ws:
@@ -119,7 +119,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/8db77625bb96f3330187a6b45c9792edf338c42d4e48ed66f6b0ce38c7cea503db9a5de27f9987b7d83306201a57f90e8ef7ebc06c8a6899aaadb8a090b175cb
+  checksum: 10/07390b7bb044f64f5228844a8e5cfa1aa9c13c419afc7d0f32b4d20831a995c0d0c2a044e59211923a33f6407e8131a811587a18fb4adb20137cd134b8e8789e
   languageName: node
   linkType: hard
 
@@ -10093,7 +10093,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:3.10.4"
+    "@apollo/client": "https://pkg.pr.new/@apollo/client@12066"
+    "@apollo/client-react-streaming": "workspace:^"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:^2.1.2"

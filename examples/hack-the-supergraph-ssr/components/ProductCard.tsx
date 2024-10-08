@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Button from "./Button";
 import ReviewRating from "./ReviewRating";
 import {
@@ -9,22 +10,33 @@ import {
   usePrefersReducedMotion,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useFragment, TypedDocumentNode, gql } from "@apollo/client";
+import { useSuspenseFragment, TypedDocumentNode, gql } from "@apollo/client";
 
 const ProductCardProductFragment: TypedDocumentNode<{
   id: string;
   title: string;
   description: string;
   mediaUrl: string;
-  averageRating: number;
 }> = gql`
   fragment ProductCardProductFragment on Product {
     id
     title
     description
     mediaUrl
-    ... @defer {
-      averageRating
+  }
+`;
+
+const ReviewsFragment: TypedDocumentNode<{
+  id: string;
+  description: string;
+  reviews: Array<{
+    rating: number;
+  }>;
+}> = gql`
+  fragment ReviewsFragment on Product {
+    description
+    reviews {
+      rating
     }
   }
 `;
@@ -32,7 +44,7 @@ const ProductCardProductFragment: TypedDocumentNode<{
 function ProductCard({ id }: { id: string }) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const { data } = useFragment({
+  const { data } = useSuspenseFragment({
     fragment: ProductCardProductFragment,
     from: `Product:${id}`,
   });
@@ -60,23 +72,51 @@ function ProductCard({ id }: { id: string }) {
         <Heading as="h2" size="md" my="4">
           {data?.title}
         </Heading>
-        {data?.averageRating ? (
-          <Flex direction="column" minH="100px" justify="space-between">
-            <Text as="i" noOfLines={2}>{`"${data?.description}"`}</Text>
-            <Flex direction="row" py="4" justify="space-between">
-              <ReviewRating isHalf rating={data?.averageRating} size={20} />
-              <Button>Read More</Button>
-            </Flex>
-          </Flex>
-        ) : (
-          <Flex direction="row" justify="right">
-            <Button>Leave a Review</Button>
-          </Flex>
-        )}
+        <Suspense fallback="Loading">
+          <Reviews id={data?.id} />
+        </Suspense>
       </Flex>
     </Box>
   );
 }
+
+export function Reviews({ id }: { id: string }) {
+  const { data } = useSuspenseFragment({
+    fragment: ReviewsFragment,
+    from: `Product:${id}`,
+  });
+
+  // console.log({ data });
+
+  const average = (array: Array<number>) =>
+    array.reduce((a, b) => a + b) / array.length;
+
+  const averageRating = data.reviews.length
+    ? average(data.reviews.map((review) => review.rating))
+    : 0;
+
+  // console.log({ averageRating });
+
+  return (
+    <>
+      {averageRating ? (
+        <Flex direction="column" minH="100px" justify="space-between">
+          <Text as="i" noOfLines={2}>{`"${data?.description}"`}</Text>
+          <Flex direction="row" py="4" justify="space-between">
+            <ReviewRating isHalf rating={averageRating} size={20} />
+            <Button>Read More</Button>
+          </Flex>
+        </Flex>
+      ) : (
+        <Flex direction="row" justify="right">
+          <Button>Leave a Review</Button>
+        </Flex>
+      )}
+    </>
+  );
+}
+
+Reviews.fragments = { ReviewsFragment };
 
 ProductCard.fragments = {
   ProductCardProductFragment,
