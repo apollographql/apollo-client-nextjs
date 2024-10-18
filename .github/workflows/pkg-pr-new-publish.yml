@@ -26,4 +26,4 @@ jobs:
         run: yarn install
 
       - name: Build and publish to pkg.pr.new
-        run: yarn dlx pkg-pr-new publish --no-template --compact packages/client-react-streaming packages/experimental-nextjs-app-support
+        run: yarn dlx pkg-pr-new publish --no-template packages/client-react-streaming packages/experimental-nextjs-app-support
