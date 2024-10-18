@@ -2,7 +2,10 @@ export { buildManualDataTransport } from "./ManualDataTransport.js";
 
 export type { HydrationContextOptions } from "./RehydrationContext.js";
 
-import { ApolloSSRDataTransport } from "./ApolloRehydrateSymbols.js";
+import {
+  ApolloHookRehydrationCache,
+  ApolloSSRDataTransport,
+} from "./ApolloRehydrateSymbols.js";
 import { resetApolloSingletons } from "@apollo/client-react-streaming";
 
 /**
@@ -19,5 +22,6 @@ import { resetApolloSingletons } from "@apollo/client-react-streaming";
  */
 export function resetManualSSRApolloSingletons() {
   resetApolloSingletons();
+  delete window[ApolloHookRehydrationCache];
   delete window[ApolloSSRDataTransport];
 }
