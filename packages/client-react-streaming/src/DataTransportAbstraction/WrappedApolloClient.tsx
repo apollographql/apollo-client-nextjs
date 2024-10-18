@@ -52,7 +52,10 @@ type SimulatedQueryInfo = {
 };
 
 interface WrappedApolloClientOptions
-  extends Omit<ApolloClientOptions<NormalizedCacheObject>, "cache"> {
+  extends Omit<
+    ApolloClientOptions<NormalizedCacheObject>,
+    "cache" | "ssrMode" | "ssrForceFetchDelay"
+  > {
   cache: InMemoryCache;
 }
 
@@ -68,6 +71,19 @@ class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
   [sourceSymbol]: string;
 
   constructor(options: WrappedApolloClientOptions) {
+    const warnings: string[] = [];
+    if ("ssrMode" in options) {
+      delete options.ssrMode;
+      warnings.push(
+        "The `ssrMode` option is not supported in %s. Please remove it from your %s constructor options."
+      );
+    }
+    if ("ssrForceFetchDelay" in options) {
+      delete options.ssrForceFetchDelay;
+      warnings.push(
+        "The `ssrForceFetchDelay` option is not supported in %s. Please remove it from your %s constructor options."
+      );
+    }
     super(
       process.env.REACT_ENV === "rsc" || process.env.REACT_ENV === "ssr"
         ? {
@@ -78,6 +94,10 @@ class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
     );
     const info = (this.constructor as typeof ApolloClientBase).info;
     this[sourceSymbol] = `${info.pkg}:ApolloClient`;
+
+    for (const warning of warnings) {
+      console.warn(warning, info.pkg, "ApolloClient");
+    }
 
     assertInstance(
       this.cache as unknown as InMemoryCache,
