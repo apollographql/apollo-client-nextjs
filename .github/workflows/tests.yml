@@ -123,7 +123,7 @@ jobs:
       # Upload webpack-stats.json to use on relative-ci.yaml workflow
       - name: Upload webpack stats artifact
         if: matrix.version == 'latest'
-        uses: relative-ci/agent-upload-artifact-action@v1
+        uses: relative-ci/agent-upload-artifact-action@v2
         with:
           webpackStatsFile: ./integration-test/nextjs/webpack-stats.json
 
