@@ -25,7 +25,7 @@ export default function DelaySlider() {
       <Heading fontSize="md">
         Custom <code>@defer</code> Delay: {delay}ms
       </Heading>
-      <Slider min={0} max={500} value={delay} onChange={setDelay}>
+      <Slider min={0} max={5000} value={delay} onChange={setDelay}>
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>

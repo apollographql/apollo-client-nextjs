@@ -15,7 +15,7 @@ import {
   type TransportedOptions,
 } from "./DataTransportAbstraction/transportedOptions.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import type { ReactNode } from "react";
 import invariant from "ts-invariant";
 import type { TransportedQueryRefOptions } from "./transportedQueryRef.js";
@@ -30,11 +30,13 @@ export default function SimulatePreloadedQuery<T>({
   queryKey,
 }: {
   options: TransportedQueryRefOptions;
-  result: Promise<Array<Omit<ProgressEvent, "id">>>;
+  // result: Promise<Array<Omit<ProgressEvent, "id">>>;
+  result: AsyncGenerator<Omit<ProgressEvent, "id">>;
   children: ReactNode;
   queryKey?: string;
 }) {
   const client = useApolloClient() as WrappedApolloClient<any>;
+
   if (!handledRequests.has(options)) {
     const id =
       `preloadedQuery:${(client["queryManager"] as QueryManager<any>).generateQueryId()}` as TransportIdentifier;
@@ -49,12 +51,15 @@ export default function SimulatePreloadedQuery<T>({
       options,
     });
 
-    result.then((results) => {
-      invariant.debug("Preloaded query %s: received events: %o", id, results);
-      for (const event of results) {
-        client.onQueryProgress!({ ...event, id } as ProgressEvent);
+    // eslint-disable-next-line no-inner-declarations
+    async function consume() {
+      for await (const chunk of result) {
+        invariant.debug("Preloaded query %s: received events: %o", id, chunk);
+        client.onQueryProgress!({ ...chunk, id } as ProgressEvent);
       }
-    });
+    }
+
+    consume();
   }
 
   const bgQueryArgs = useMemo<Parameters<typeof useBackgroundQuery>>(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import ProductCard from "../components/ProductCard";
+import ProductCard, { Reviews } from "../components/ProductCard";
 import { Heading, SimpleGrid, Stack, Text, VStack } from "@chakra-ui/react";
 import { useSuspenseQuery, gql, TypedDocumentNode } from "@apollo/client";
 
@@ -11,14 +11,15 @@ const GET_LATEST_PRODUCTS: TypedDocumentNode<{
     products {
       id
       ...ProductCardProductFragment
+      ...ReviewsFragment @defer
     }
   }
   ${ProductCard.fragments.ProductCardProductFragment}
+  ${Reviews.fragments.ReviewsFragment}
 `;
 export default function HomePage() {
-  const { data } = useSuspenseQuery(GET_LATEST_PRODUCTS, {
-    fetchPolicy: "cache-first",
-  });
+  const { data } = useSuspenseQuery(GET_LATEST_PRODUCTS);
+
   return (
     <Stack direction="column" spacing="12">
       <VStack direction="column" spacing="2" py="10">

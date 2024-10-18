@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "yarn workspace @apollo/experimental-nextjs-app-support run build",
+    "prebuild": "yarn workspace @apollo/experimental-nextjs-app-support run build && yarn workspace @apollo/client-react-streaming run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "3.10.4",
+    "@apollo/client": "https://pkg.pr.new/@apollo/client@12066",
+    "@apollo/client-react-streaming": "workspace:^",
     "@apollo/experimental-nextjs-app-support": "workspace:^",
     "@apollo/space-kit": "^9.11.0",
     "@chakra-ui/next-js": "^2.1.2",

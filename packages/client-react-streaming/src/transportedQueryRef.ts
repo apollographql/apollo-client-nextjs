@@ -50,8 +50,8 @@ export interface InternalTransportedQueryRef<
 
 export function createTransportedQueryRef<TData, TVariables>(
   options: TransportedQueryRefOptions,
-  queryKey: string,
-  _promise: Promise<any>
+  queryKey: string
+  // _promise: Promise<any>
 ): InternalTransportedQueryRef<TData, TVariables> {
   const ref: InternalTransportedQueryRef<TData, TVariables> = {
     __transportedQueryRef: true,
