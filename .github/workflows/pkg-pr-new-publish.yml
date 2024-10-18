@@ -25,5 +25,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Prebuild libs
+        run: yarn build:libs
+
       - name: Build and publish to pkg.pr.new
         run: yarn dlx pkg-pr-new publish --no-template packages/client-react-streaming packages/experimental-nextjs-app-support
