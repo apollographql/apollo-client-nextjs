@@ -1,5 +1,8 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+import {
+  ApolloClient,
+  InMemoryCache,
+  registerApolloClient,
+} from "@apollo/experimental-nextjs-app-support";
 
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
