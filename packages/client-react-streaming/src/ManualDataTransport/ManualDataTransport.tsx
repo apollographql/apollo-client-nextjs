@@ -6,6 +6,7 @@ import type { HydrationContextOptions } from "./RehydrationContext.js";
 import { buildApolloRehydrationContext } from "./RehydrationContext.js";
 import { registerDataTransport } from "./dataTransport.js";
 import { revive, stringify } from "./serialization.js";
+import { ApolloHookRehydrationCache } from "./ApolloRehydrateSymbols.js";
 
 export interface ManualDataTransportOptions {
   /**
@@ -81,7 +82,9 @@ const buildManualDataTransportBrowserImpl = ({
     onQueryEvent,
     rerunSimulatedQueries,
   }) {
-    const hookRehydrationCache = useRef<RehydrationCache>({});
+    const hookRehydrationCache = useRef<RehydrationCache>(
+      (window[ApolloHookRehydrationCache] ??= {})
+    );
     registerDataTransport({
       onQueryEvent: onQueryEvent!,
       onRehydrate(rehydrate) {
