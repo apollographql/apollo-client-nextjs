@@ -31,7 +31,6 @@ const GET_PRODUCT_DETAILS: TypedDocumentNode<{
   };
 }> = gql`
   fragment ProductFragment on Product {
-    averageRating
     reviews {
       content
       rating

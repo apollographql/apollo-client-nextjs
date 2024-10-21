@@ -20,6 +20,7 @@
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run"
   },
   "resolutions": {
+    "@apollo/client": "https://pkg.pr.new/@apollo/client@12066",
     "react": "19.0.0-rc-935180c7e0-20240524",
     "react-dom": "19.0.0-rc-935180c7e0-20240524",
     "react-server-dom-webpack": "19.0.0-beta-94eed63c49-20240425",
