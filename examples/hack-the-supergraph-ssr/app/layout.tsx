@@ -8,7 +8,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const delay = Number(cookieStore.get("apollo-x-custom-delay")?.value ?? 1000);
 
   return (
