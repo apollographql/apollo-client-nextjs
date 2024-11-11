@@ -298,6 +298,25 @@ export class ApolloClientClientBaseImpl extends ApolloClientBase {
   };
 }
 
+const skipDataTransportKey = Symbol.for("apollo.dataTransport.skip");
+interface InternalContext {
+  [skipDataTransportKey]?: boolean;
+}
+
+/**
+ * Apply to a context to prevent this operation from being transported over the SSR data transport mechanism.
+ * @param readableStream
+ * @param context
+ * @returns
+ */
+export function skipDataTransport<T extends Record<string, any>>(
+  context: T
+): T & InternalContext {
+  return Object.assign(context, {
+    [skipDataTransportKey]: true,
+  });
+}
+
 class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   private forwardedQueries = new (getTrieConstructor(this))();
 
@@ -315,6 +334,9 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
     if (
       options.fetchPolicy !== "cache-only" &&
       options.fetchPolicy !== "standby" &&
+      !(options.context as InternalContext | undefined)?.[
+        skipDataTransportKey
+      ] &&
       !this.forwardedQueries.peekArray(cacheKeyArr)
     ) {
       // don't transport the same query over twice
