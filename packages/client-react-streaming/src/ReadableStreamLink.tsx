@@ -1,14 +1,14 @@
 import { ApolloLink, Observable } from "@apollo/client/index.js";
 import type { FetchResult } from "@apollo/client/index.js";
 
-export type StreamLinkEvent =
+export type ReadableStreamLinkEvent =
   | { type: "next"; value: FetchResult }
   | { type: "completed" }
   | { type: "error" };
 
 interface InternalContext {
-  [teeToReadableStreamKey]?: ReadableStreamDefaultController<StreamLinkEvent>;
-  [readFromReadableStreamKey]?: ReadableStream<StreamLinkEvent>;
+  [teeToReadableStreamKey]?: ReadableStreamDefaultController<ReadableStreamLinkEvent>;
+  [readFromReadableStreamKey]?: ReadableStream<ReadableStreamLinkEvent>;
 }
 
 const teeToReadableStreamKey = Symbol.for(
@@ -23,7 +23,7 @@ const readFromReadableStreamKey = Symbol.for("apollo.read.readableStream");
  * @returns
  */
 export function teeToReadableStream<T extends Record<string, any>>(
-  controller: ReadableStreamDefaultController<StreamLinkEvent>,
+  controller: ReadableStreamDefaultController<ReadableStreamLinkEvent>,
   context: T
 ): T & InternalContext {
   return Object.assign(context, {
@@ -38,7 +38,7 @@ export function teeToReadableStream<T extends Record<string, any>>(
  * @returns
  */
 export function readFromReadableStream<T extends Record<string, any>>(
-  readableStream: ReadableStream<StreamLinkEvent>,
+  readableStream: ReadableStream<ReadableStreamLinkEvent>,
   context: T
 ): T & InternalContext {
   return Object.assign(context, {
@@ -104,8 +104,9 @@ export const ReadFromReadableStreamLink = new ApolloLink(
         };
 
         async function consumeReader() {
-          let event: ReadableStreamReadResult<StreamLinkEvent> | undefined =
-            undefined;
+          let event:
+            | ReadableStreamReadResult<ReadableStreamLinkEvent>
+            | undefined = undefined;
           while (!aborted && !event?.done) {
             event = await reader.read();
             if (aborted) break;
