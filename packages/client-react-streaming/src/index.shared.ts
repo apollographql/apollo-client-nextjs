@@ -11,4 +11,5 @@ export {
   TeeToReadableStreamLink,
   readFromReadableStream,
   teeToReadableStream,
+  type ReadableStreamLinkEvent,
 } from "./ReadableStreamLink.js";
