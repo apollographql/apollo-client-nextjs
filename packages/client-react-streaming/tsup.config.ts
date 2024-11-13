@@ -69,6 +69,7 @@ export default defineConfig((options) => {
       "src/ManualDataTransport/index.ts",
       "manual-transport.browser"
     ),
+    entry("ssr", "src/stream-utils/index.ssr.ts", "stream-utils.ssr"),
     entry("other", "src/stream-utils/index.ts", "stream-utils"),
     {
       ...entry("browser", "src/index.cc.tsx", "index.cc"),

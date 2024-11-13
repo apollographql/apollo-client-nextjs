@@ -98,10 +98,12 @@ export const ReadFromReadableStreamLink = new ApolloLink(
         const reader = eventSteam.getReader();
         consumeReader();
 
-        return () => {
+        let onAbort = () => {
           aborted = true;
           reader.cancel();
         };
+
+        return () => onAbort();
 
         async function consumeReader() {
           let event:
@@ -119,11 +121,20 @@ export const ReadFromReadableStreamLink = new ApolloLink(
                   observer.complete();
                   break;
                 case "error":
-                  observer.error(
-                    new Error(
-                      "Error from event stream. Redacted for security concerns."
-                    )
-                  );
+                  // in case a network error happened on the sending side,
+                  if (process.env.REACT_ENV === "ssr") {
+                    // we want to fail SSR for this tree
+                    observer.error(
+                      new Error(
+                        "Error from event stream. Redacted for security concerns."
+                      )
+                    );
+                  } else {
+                    // we want to retry the operation on the receiving side
+                    onAbort();
+                    const subscription = forward(operation).subscribe(observer);
+                    onAbort = () => subscription.unsubscribe();
+                  }
                   break;
               }
             }

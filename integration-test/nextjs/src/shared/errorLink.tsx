@@ -1,5 +1,5 @@
 import { ApolloLink, Observable } from "@apollo/client";
-import { GraphQLError } from "graphql";
+import { GraphQLError, GraphQLFormattedError } from "graphql";
 import * as entryPoint from "@apollo/client-react-streaming";
 
 declare module "@apollo/client" {
@@ -22,7 +22,11 @@ export const errorLink = new ApolloLink((operation, forward) => {
     return new Observable((subscriber) => {
       subscriber.next({
         data: null,
-        errors: [new GraphQLError("Simulated error")],
+        errors: [
+          {
+            message: "Simulated error",
+          } satisfies GraphQLFormattedError as GraphQLError,
+        ],
       });
     });
   }

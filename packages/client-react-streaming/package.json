@@ -78,12 +78,18 @@
     },
     "./stream-utils": {
       "require": {
-        "types": "./dist/stream-utils.node.d.cts",
-        "default": "./dist/stream-utils.cjs"
+        "types": "./dist/stream-utils.ssr.d.cts",
+        "react-server": "./dist/stream-utils.cjs",
+        "edge-light": "./dist/stream-utils.ssr.cjs",
+        "browser": "./dist/stream-utils.cjs",
+        "node": "./dist/stream-utils.ssr.cjs"
       },
       "import": {
-        "types": "./dist/stream-utils.node.d.ts",
-        "default": "./dist/stream-utils.js"
+        "types": "./dist/stream-utils.rsc.d.ts",
+        "react-server": "./dist/stream-utils.js",
+        "edge-light": "./dist/stream-utils.ssr.js",
+        "browser": "./dist/stream-utils.js",
+        "node": "./dist/stream-utils.ssr.js"
       }
     },
     "./package.json": "./package.json"
