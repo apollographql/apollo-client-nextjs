@@ -10,12 +10,22 @@
     "sourceMap": true,
     "jsx": "react",
     "declarationMap": true,
-    "types": ["react/canary", "node"],
+    "types": [
+      "react/canary",
+      "node"
+    ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@apollo/client-react-streaming": ["./src/combined.ts"]
+      "@apollo/client-react-streaming": [
+        "./src/combined.ts"
+      ],
+      "@apollo/client-react-streaming/stream-utils": [
+        "./src/stream-utils/index.ts"
+      ]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

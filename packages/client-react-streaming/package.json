@@ -79,17 +79,11 @@
     "./stream-utils": {
       "require": {
         "types": "./dist/stream-utils.node.d.cts",
-        "edge-light": "./dist/stream-utils.node.cjs",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/empty.cjs",
-        "node": "./dist/stream-utils.node.cjs"
+        "default": "./dist/stream-utils.cjs"
       },
       "import": {
         "types": "./dist/stream-utils.node.d.ts",
-        "edge-light": "./dist/stream-utils.node.js",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/empty.js",
-        "node": "./dist/stream-utils.node.js"
+        "default": "./dist/stream-utils.js"
       }
     },
     "./package.json": "./package.json"

@@ -10,8 +10,6 @@ import { renderToString } from "react-dom/server";
 import * as React from "react";
 
 /**
- * > This export is only available in streaming SSR Server environments
- *
  * Used to create a `TransformStream` that can be used for piping a React stream rendered by
  * `renderToReadableStream` and using the callback to insert chunks of HTML between React Chunks.
  */
