@@ -7,16 +7,11 @@ import type {
 } from "@apollo/client";
 import type { ReactNode } from "react";
 import React from "react";
-import { serializeOptions } from "./DataTransportAbstraction/transportedOptions.js";
 import type {
   PreloadTransportedQueryOptions,
   TransportedQueryRef,
 } from "./transportedQueryRef.js";
-import {
-  createTransportedQueryPreloader,
-  createTransportedQueryRef,
-} from "./transportedQueryRef.js";
-import type { ProgressEvent } from "./DataTransportAbstraction/DataTransportAbstraction.js";
+import { createTransportedQueryPreloader } from "./transportedQueryRef.js";
 
 export type PreloadQueryOptions<TVariables, TData> =
   PreloadTransportedQueryOptions<TVariables, TData> & {
