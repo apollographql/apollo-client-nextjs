@@ -75,6 +75,7 @@ export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
       );
 
       return () => {
+        controller.close();
         subscription.unsubscribe();
       };
     });

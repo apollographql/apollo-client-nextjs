@@ -114,19 +114,23 @@ export function createTransportedQueryPreloader(
 
     // Instead of creating the queryRef, we kick off a query that will feed the network response
     // into our custom event stream.
-    client.query({
-      query,
-      ...options,
-      // ensure that this query makes it to the network
-      fetchPolicy: "network-only",
-      context: skipDataTransport(
-        teeToReadableStream(__injectIntoStream!, {
-          ...options?.context,
-          // we want to do this even if the query is already running for another reason
-          queryDeduplication: false,
-        })
-      ),
-    });
+    client
+      .query({
+        query,
+        ...options,
+        // ensure that this query makes it to the network
+        fetchPolicy: "network-only",
+        context: skipDataTransport(
+          teeToReadableStream(__injectIntoStream!, {
+            ...options?.context,
+            // we want to do this even if the query is already running for another reason
+            queryDeduplication: false,
+          })
+        ),
+      })
+      .catch(() => {
+        /* we want to avoid any floating promise rejections */
+      });
 
     return createTransportedQueryRef<any, any>(
       query,
