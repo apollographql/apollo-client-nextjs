@@ -11,23 +11,36 @@ declare module "@apollo/client" {
 
 export const errorLink = new ApolloLink((operation, forward) => {
   const context = operation.getContext();
+  const errorConditions = context.error?.split(",") || [];
   if (
-    context.error === "always" ||
-    ("built_for_ssr" in entryPoint &&
-      context.error?.split(",").includes("ssr")) ||
+    errorConditions.includes("always") ||
+    ("built_for_ssr" in entryPoint && errorConditions.includes("ssr")) ||
     ("built_for_browser" in entryPoint &&
-      context.error?.split(",").includes("browser")) ||
-    ("built_for_rsc" in entryPoint && context.error?.split(",").includes("rsc"))
+      errorConditions.includes("browser")) ||
+    ("built_for_rsc" in entryPoint && errorConditions.includes("rsc"))
   ) {
+    const env =
+      "built_for_ssr" in entryPoint
+        ? "SSR"
+        : "built_for_browser" in entryPoint
+          ? "Browser"
+          : "built_for_rsc" in entryPoint
+            ? "RSC"
+            : "unknown";
+
     return new Observable((subscriber) => {
-      subscriber.next({
-        data: null,
-        errors: [
-          {
-            message: "Simulated error",
-          } satisfies GraphQLFormattedError as GraphQLError,
-        ],
-      });
+      if (errorConditions.includes("network_error")) {
+        subscriber.error(new Error(`Simulated link chain error (${env})`));
+      } else {
+        subscriber.next({
+          data: null,
+          errors: [
+            {
+              message: `Simulated error (${env})`,
+            } satisfies GraphQLFormattedError as GraphQLError,
+          ],
+        });
+      }
     });
   }
   return forward(operation);

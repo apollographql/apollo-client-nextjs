@@ -56,6 +56,13 @@ export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
   const controller = context[teeToReadableStreamKey];
 
   if (controller) {
+    const tryClose = () => {
+      try {
+        controller.close();
+      } catch {
+        // maybe we already tried to close the stream, nothing to worry about
+      }
+    };
     return new Observable((observer) => {
       const subscription = forward(operation).subscribe(
         (result) => {
@@ -64,18 +71,18 @@ export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
         },
         (error) => {
           controller.enqueue({ type: "error" });
-          controller.close();
+          tryClose();
           observer.error(error);
         },
         () => {
           controller.enqueue({ type: "completed" });
-          controller.close();
+          tryClose();
           observer.complete();
         }
       );
 
       return () => {
-        controller.close();
+        tryClose();
         subscription.unsubscribe();
       };
     });
