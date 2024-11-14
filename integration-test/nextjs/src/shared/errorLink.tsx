@@ -5,7 +5,7 @@ import * as entryPoint from "@apollo/client-react-streaming";
 declare module "@apollo/client" {
   type Env = "ssr" | "browser" | "rsc";
   export interface DefaultContext {
-    error?: "always" | Env | `${Env},${Env}`;
+    error?: `${"always" | Env | `${Env},${Env}`}${"" | ",network_error"}`;
   }
 }
 
