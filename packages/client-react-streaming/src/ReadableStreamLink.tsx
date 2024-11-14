@@ -95,8 +95,26 @@ export const ReadFromReadableStreamLink = new ApolloLink(
     if (eventSteam) {
       return new Observable((observer) => {
         let aborted = false as boolean;
-        const reader = eventSteam.getReader();
-        consumeReader();
+        const reader = (() => {
+          try {
+            return eventSteam.getReader();
+          } catch {
+            /**
+             * The reader could not be created, usually because the stream has
+             * already been consumed.
+             * This would be the case if we call `refetch` on a queryRef that has
+             * the `readFromReadableStreamKey` property in context.
+             * In that case, we want to do a normal network request.
+             */
+          }
+        })();
+
+        if (!reader) {
+          // if we can't create a reader, we want to do a normal network request
+          const subscription = forward(operation).subscribe(observer);
+          return () => subscription.unsubscribe();
+        }
+        consume(reader);
 
         let onAbort = () => {
           aborted = true;
@@ -105,7 +123,9 @@ export const ReadFromReadableStreamLink = new ApolloLink(
 
         return () => onAbort();
 
-        async function consumeReader() {
+        async function consume(
+          reader: ReadableStreamDefaultReader<ReadableStreamLinkEvent>
+        ) {
           let event:
             | ReadableStreamReadResult<ReadableStreamLinkEvent>
             | undefined = undefined;

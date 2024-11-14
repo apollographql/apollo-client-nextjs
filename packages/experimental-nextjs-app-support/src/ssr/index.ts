@@ -14,6 +14,7 @@ import {
   useQuery as _useQuery,
   useReadQuery as _useReadQuery,
   useSuspenseQuery as _useSuspenseQuery,
+  OperationVariables,
 } from "@apollo/client/index.js";
 
 /**
@@ -97,7 +98,7 @@ export const ApolloNextAppProvider = _ApolloNextAppProvider;
  */
 export type TransportedQueryRef<
   TData = unknown,
-  TVariables = unknown,
+  TVariables extends OperationVariables = OperationVariables,
 > = _TransportedQueryRef<TData, TVariables>;
 /**
  * @deprecated

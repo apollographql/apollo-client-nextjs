@@ -55,8 +55,10 @@ export type TransportedQueryRefOptions = TransportedOptions &
  *
  * @public
  */
-export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
-  extends QueryRef<TData, TVariables> {
+export interface TransportedQueryRef<
+  TData = unknown,
+  TVariables extends OperationVariables = OperationVariables,
+> extends QueryRef<TData, TVariables> {
   /**
    * Temporarily disabled - see https://github.com/apollographql/apollo-client-nextjs/issues/332
    *

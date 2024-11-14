@@ -149,7 +149,7 @@ return a new instance every time \`makeClient\` is called.
  * @see {@link PreloadQueryComponent}
  * @public
  */
-export interface PreloadQueryProps<TData, TVariables>
+export interface PreloadQueryProps<TData, TVariables extends OperationVariables>
   extends PreloadQueryOptions<TVariables, TData> {
   children:
     | ReactNode
