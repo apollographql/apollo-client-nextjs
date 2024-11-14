@@ -70,7 +70,15 @@ export default defineConfig((options) => {
       "manual-transport.browser"
     ),
     entry("ssr", "src/stream-utils/index.ssr.ts", "stream-utils.ssr"),
-    entry("other", "src/stream-utils/index.ts", "stream-utils"),
+    entry("browser", "src/stream-utils/index.ts", "stream-utils"),
+    {
+      ...entry(
+        "other",
+        "src/stream-utils/combined.ts",
+        "stream-utils.combined"
+      ),
+      dts: { only: true },
+    },
     {
       ...entry("browser", "src/index.cc.tsx", "index.cc"),
       treeshake: false, // would remove the "use client" directive

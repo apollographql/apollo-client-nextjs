@@ -21,7 +21,7 @@
         "./src/combined.ts"
       ],
       "@apollo/client-react-streaming/stream-utils": [
-        "./src/stream-utils/index.ts"
+        "src/stream-utils/index.shared.ts"
       ]
     }
   },

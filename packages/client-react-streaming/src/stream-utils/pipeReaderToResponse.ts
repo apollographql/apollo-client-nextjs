@@ -1,4 +1,6 @@
 /**
+ * > This export is only available in streaming SSR Server environments
+ *
  * Used to pipe a `ReadableStreamDefaultReader` to a `ServerResponse`.
  *
  * @example

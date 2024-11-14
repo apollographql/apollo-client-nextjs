@@ -78,14 +78,14 @@
     },
     "./stream-utils": {
       "require": {
-        "types": "./dist/stream-utils.ssr.d.cts",
+        "types": "./dist/stream-utils.combined.d.cts",
         "react-server": "./dist/stream-utils.cjs",
         "edge-light": "./dist/stream-utils.ssr.cjs",
         "browser": "./dist/stream-utils.cjs",
         "node": "./dist/stream-utils.ssr.cjs"
       },
       "import": {
-        "types": "./dist/stream-utils.rsc.d.ts",
+        "types": "./dist/stream-utils.combined.d.ts",
         "react-server": "./dist/stream-utils.js",
         "edge-light": "./dist/stream-utils.ssr.js",
         "browser": "./dist/stream-utils.js",
@@ -100,7 +100,7 @@
         "./dist/manual-transport.ssr.d.ts"
       ],
       "stream-utils": [
-        "./dist/stream-utils.node.d.ts"
+        "./dist/stream-utils.combined.d.ts"
       ]
     }
   },
