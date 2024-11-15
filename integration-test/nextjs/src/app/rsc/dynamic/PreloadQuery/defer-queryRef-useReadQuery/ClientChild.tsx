@@ -1,12 +1,9 @@
 "use client";
 
-import {
-  useApolloClient,
-  useQueryRefHandlers,
-  useReadQuery,
-} from "@apollo/client";
+import { useQueryRefHandlers, useReadQuery } from "@apollo/client";
 import { DeferredDynamicProductResult } from "../shared";
 import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
+import { useTransition } from "react";
 
 export function ClientChild({
   queryRef,
@@ -14,9 +11,9 @@ export function ClientChild({
   queryRef: TransportedQueryRef<DeferredDynamicProductResult>;
 }) {
   const { refetch } = useQueryRefHandlers(queryRef);
-  const client = useApolloClient();
+  const [refetching, startTransition] = useTransition();
   const { data } = useReadQuery(queryRef);
-  console.log(data);
+
   return (
     <>
       <ul>
@@ -24,29 +21,25 @@ export function ClientChild({
           <li key={id}>
             {title}
             <br />
-            Rating: {rating || "..."}
+            Rating:{" "}
+            <div style={{ display: "inline-block", verticalAlign: "text-top" }}>
+              {rating?.value || ""}
+              <br />
+              {rating ? `Queried in ${rating.env} environment` : "loading..."}
+            </div>
           </li>
         ))}
       </ul>
       <p>Queried in {data.env} environment</p>
       <button
+        disabled={refetching}
         onClick={() => {
-          client.cache.batch({
-            update(cache) {
-              for (const product of data.products) {
-                cache.modify({
-                  id: cache.identify(product),
-                  fields: {
-                    rating: () => null,
-                  },
-                });
-              }
-            },
+          startTransition(() => {
+            refetch();
           });
-          refetch();
         }}
       >
-        refetch
+        {refetching ? "refetching..." : "refetch"}
       </button>
     </>
   );

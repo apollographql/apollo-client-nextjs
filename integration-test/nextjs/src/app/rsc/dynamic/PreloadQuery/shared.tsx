@@ -24,7 +24,7 @@ export interface DeferredDynamicProductResult {
   products: {
     id: string;
     title: string;
-    rating: string | undefined;
+    rating: undefined | { value: string; env: string };
   }[];
   env: string;
 }
@@ -37,7 +37,10 @@ export const DEFERRED_QUERY: TypedDocumentNode<
       id
       title
       ... @defer {
-        rating(delay: $delayDeferred)
+        rating(delay: $delayDeferred) {
+          value
+          env
+        }
       }
     }
     env

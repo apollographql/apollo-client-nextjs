@@ -9,10 +9,15 @@ const typeDefs = gql`
     label: String
   ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
 
+  type RatingWithEnv {
+    value: String!
+    env: String!
+  }
+
   type Product {
     id: String!
     title: String!
-    rating(delay: Int!): String!
+    rating(delay: Int!): RatingWithEnv!
   }
 
   type Query {
@@ -54,29 +59,30 @@ const products = [
   },
 ];
 
+function getEnv(context?: any) {
+  return context && context.from === "network"
+    ? "browser"
+    : "built_for_ssr" in entryPoint
+      ? "SSR"
+      : "built_for_browser" in entryPoint
+        ? "Browser"
+        : "built_for_rsc" in entryPoint
+          ? "RSC"
+          : "unknown";
+}
+
 const resolvers = {
   Query: {
     products: async () => products.map(({ id, title }) => ({ id, title })),
-    env: (source, args, context) => {
-      return context && context.from === "network"
-        ? "browser"
-        : "built_for_ssr" in entryPoint
-          ? "SSR"
-          : "built_for_browser" in entryPoint
-            ? "Browser"
-            : "built_for_rsc" in entryPoint
-              ? "RSC"
-              : "unknown";
-    },
+    env: (source, args, context) => getEnv(context),
   },
   Product: {
-    rating: (source, args) => {
+    rating: (source, args, context) => {
       return new Promise((resolve) =>
-        setTimeout(
-          resolve,
-          Math.random() * 2 * args.delay,
-          products.find((p) => p.id === source.id)?.rating
-        )
+        setTimeout(resolve, Math.random() * 2 * args.delay, {
+          value: products.find((p) => p.id === source.id)?.rating,
+          env: getEnv(context),
+        })
       );
     },
   },

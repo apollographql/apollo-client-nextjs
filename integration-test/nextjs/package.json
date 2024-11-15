@@ -10,7 +10,7 @@
     "test": "yarn playwright test"
   },
   "dependencies": {
-    "@apollo/client": "3.10.4",
+    "@apollo/client": "^3.11.10",
     "@apollo/experimental-nextjs-app-support": "workspace:*",
     "@apollo/server": "^4.11.2",
     "@as-integrations/next": "^3.2.0",
