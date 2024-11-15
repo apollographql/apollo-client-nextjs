@@ -78,18 +78,18 @@
     },
     "./stream-utils": {
       "require": {
-        "types": "./dist/stream-utils.node.d.cts",
-        "edge-light": "./dist/stream-utils.node.cjs",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/empty.cjs",
-        "node": "./dist/stream-utils.node.cjs"
+        "types": "./dist/stream-utils.combined.d.cts",
+        "react-server": "./dist/stream-utils.cjs",
+        "edge-light": "./dist/stream-utils.ssr.cjs",
+        "browser": "./dist/stream-utils.cjs",
+        "node": "./dist/stream-utils.ssr.cjs"
       },
       "import": {
-        "types": "./dist/stream-utils.node.d.ts",
-        "edge-light": "./dist/stream-utils.node.js",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/empty.js",
-        "node": "./dist/stream-utils.node.js"
+        "types": "./dist/stream-utils.combined.d.ts",
+        "react-server": "./dist/stream-utils.js",
+        "edge-light": "./dist/stream-utils.ssr.js",
+        "browser": "./dist/stream-utils.js",
+        "node": "./dist/stream-utils.ssr.js"
       }
     },
     "./package.json": "./package.json"
@@ -100,7 +100,7 @@
         "./dist/manual-transport.ssr.d.ts"
       ],
       "stream-utils": [
-        "./dist/stream-utils.node.d.ts"
+        "./dist/stream-utils.combined.d.ts"
       ]
     }
   },

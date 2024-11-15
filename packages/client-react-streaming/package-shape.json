@@ -81,17 +81,25 @@
     ]
   },
   "@apollo/client-react-streaming/stream-utils": {
-    "react-server": ["built_for_other"],
-    "browser": ["built_for_other"],
+    "react-server": [
+      "built_for_browser",
+      "JSONDecodeStream",
+      "JSONEncodeStream"
+    ],
+    "browser": ["built_for_browser", "JSONDecodeStream", "JSONEncodeStream"],
     "node": [
       "built_for_ssr",
       "createInjectionTransformStream",
-      "pipeReaderToResponse"
+      "pipeReaderToResponse",
+      "JSONDecodeStream",
+      "JSONEncodeStream"
     ],
     "edge-light,worker,browser": [
       "built_for_ssr",
       "createInjectionTransformStream",
-      "pipeReaderToResponse"
+      "pipeReaderToResponse",
+      "JSONDecodeStream",
+      "JSONEncodeStream"
     ]
   }
 }

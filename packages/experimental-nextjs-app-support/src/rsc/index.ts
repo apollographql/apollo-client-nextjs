@@ -1,3 +1,4 @@
+import type { OperationVariables } from "@apollo/client/index.js";
 import {
   registerApolloClient as _registerApolloClient,
   type TransportedQueryRef as _TransportedQueryRef,
@@ -25,5 +26,5 @@ export const registerApolloClient = _registerApolloClient;
  */
 export type TransportedQueryRef<
   TData = unknown,
-  TVariables = unknown,
+  TVariables extends OperationVariables = OperationVariables,
 > = _TransportedQueryRef<TData, TVariables>;
