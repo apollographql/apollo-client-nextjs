@@ -6,6 +6,8 @@ import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { renderToPipeableStream } from "react-dom/server";
+import { makeClient } from "./apollo";
+import { ApolloProvider } from "@apollo/client/index.js";
 
 const ABORT_DELAY = 5_000;
 
@@ -27,12 +29,17 @@ export default function handleRequest(
         ? "onAllReady"
         : "onShellReady";
 
+    // TODO
+    const client =
+      makeClient() as any as import("@apollo/client/index.js").ApolloClient<any>;
     const { pipe, abort } = renderToPipeableStream(
-      <ServerRouter
-        context={routerContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
+      <ApolloProvider client={client}>
+        <ServerRouter
+          context={routerContext}
+          url={request.url}
+          abortDelay={ABORT_DELAY}
+        />
+      </ApolloProvider>,
       {
         [readyOption]() {
           shellRendered = true;

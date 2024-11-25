@@ -9306,6 +9306,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-router@workspace:react-router"
   dependencies:
+    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client-react-streaming": "npm:^0.11.6"
     "@react-router/dev": "npm:^7.0.1"
     "@react-router/node": "npm:^7.0.1"
     "@react-router/serve": "npm:^7.0.1"
