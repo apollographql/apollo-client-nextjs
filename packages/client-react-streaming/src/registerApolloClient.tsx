@@ -154,10 +154,10 @@ return a new instance every time \`makeClient\` is called.
 export interface PreloadQueryProps<TData, TVariables>
   extends PreloadQueryOptions<TVariables, TData> {
   children:
-  | ReactNode
-  | ((
-    queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
-  ) => ReactNode);
+    | ReactNode
+    | ((
+        queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
+      ) => ReactNode);
 }
 
 /**
