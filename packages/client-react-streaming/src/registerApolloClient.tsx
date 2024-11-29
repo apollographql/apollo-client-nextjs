@@ -41,6 +41,7 @@ export function registerApolloClient<
 ): {
   getClient: () => ApolloClientOrPromise;
   query: Awaited<ApolloClientOrPromise>["query"];
+  mutate: Awaited<ApolloClientOrPromise>["mutate"];
   /**
    * Preloads data in React Server Components to be hydrated
    * in Client Components.
@@ -90,6 +91,7 @@ export function registerApolloClient<
   return {
     getClient,
     query: async (...args) => (await getClient()).query(...args),
+    mutate: async (...args) => (await getClient()).mutate(...args),
     PreloadQuery,
   };
 }
@@ -152,10 +154,10 @@ return a new instance every time \`makeClient\` is called.
 export interface PreloadQueryProps<TData, TVariables>
   extends PreloadQueryOptions<TVariables, TData> {
   children:
-    | ReactNode
-    | ((
-        queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
-      ) => ReactNode);
+  | ReactNode
+  | ((
+    queryRef: TransportedQueryRef<NoInfer<TData>, NoInfer<TVariables>>
+  ) => ReactNode);
 }
 
 /**

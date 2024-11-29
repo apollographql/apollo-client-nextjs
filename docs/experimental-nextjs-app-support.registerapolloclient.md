@@ -14,6 +14,7 @@ Ensures that you can always access the same instance of ApolloClient during RSC 
 declare function registerApolloClient<ApolloClientOrPromise extends Promise<ApolloClient$1<any>> | ApolloClient$1<any>>(makeClient: () => ApolloClientOrPromise): {
     getClient: () => ApolloClientOrPromise;
     query: Awaited<ApolloClientOrPromise>["query"];
+    mutate: Awaited<ApolloClientOrPromise>["mutate"];
     PreloadQuery: PreloadQueryComponent;
 };
 ```
@@ -53,7 +54,7 @@ makeClient
 </tbody></table>
 **Returns:**
 
-{ getClient: () =&gt; ApolloClientOrPromise; query: Awaited&lt;ApolloClientOrPromise&gt;\["query"\]; PreloadQuery: [PreloadQueryComponent](./experimental-nextjs-app-support.preloadquerycomponent.md)<!-- -->; }
+{ getClient: () =&gt; ApolloClientOrPromise; query: Awaited&lt;ApolloClientOrPromise&gt;\["query"\]; mutate: Awaited&lt;ApolloClientOrPromise&gt;\["mutate"\]; PreloadQuery: [PreloadQueryComponent](./experimental-nextjs-app-support.preloadquerycomponent.md)<!-- -->; }
 
 ## Example
 
