@@ -54,25 +54,22 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
-    "@testing-library/react": "npm:15.0.7"
+    "@testing-library/dom": "npm:^10.4.0"
+    "@testing-library/react": "npm:^16.1.0"
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.6"
     "@types/node": "npm:20.12.11"
-    "@types/react": "npm:18.3.1"
-    "@typescript-eslint/eslint-plugin": "npm:7.5.0"
-    "@typescript-eslint/parser": "npm:7.5.0"
+    "@types/react": "npm:^19.0.0"
     concurrently: "npm:8.2.2"
     eslint: "npm:8.57.0"
-    eslint-plugin-react: "npm:7.34.1"
-    eslint-plugin-react-hooks: "npm:4.6.0"
     glob: "npm:10.3.12"
     global-jsdom: "npm:24.0.0"
     globstar: "npm:1.0.0"
     graphql: "npm:16.8.1"
     jsdom: "npm:24.0.0"
-    next: "npm:^15.0.0"
     publint: "npm:0.2.7"
-    react: "npm:18.3.0"
+    react: "npm:^19.0.0"
+    react-router: "npm:^7.0.2"
     rimraf: "npm:5.0.5"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.2"
@@ -80,9 +77,8 @@ __metadata:
     typescript: "npm:5.4.5"
     vitest: "npm:1.6.0"
   peerDependencies:
-    "@apollo/client": ^3.10.4
-    next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
-    react: ^18 || >=19.0.0-rc <19.0.0
+    react: ^19
+    react-router: ^7.0.2
   languageName: unknown
   linkType: soft
 
@@ -94,11 +90,12 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
-    "@testing-library/react": "npm:15.0.7"
+    "@testing-library/dom": "npm:^10.4.0"
+    "@testing-library/react": "npm:^16.1.0"
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.6"
     "@types/node": "npm:20.12.11"
-    "@types/react": "npm:18.3.1"
+    "@types/react": "npm:^19.0.0"
     concurrently: "npm:8.2.2"
     eslint: "npm:8.57.0"
     glob: "npm:10.3.12"
@@ -107,9 +104,9 @@ __metadata:
     graphql: "npm:16.8.1"
     jsdom: "npm:24.0.0"
     publint: "npm:0.2.7"
-    react: "npm:18.3.0"
+    react: "npm:^19.0.0"
     react-error-boundary: "npm:4.0.13"
-    react-server-dom-webpack: "npm:0.0.1"
+    react-server-dom-webpack: "npm:^19.0.0"
     rimraf: "npm:5.0.5"
     ts-invariant: "npm:^0.10.3"
     ts-node: "npm:10.9.2"
@@ -169,11 +166,12 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
-    "@testing-library/react": "npm:15.0.7"
+    "@testing-library/dom": "npm:^10.4.0"
+    "@testing-library/react": "npm:^16.1.0"
     "@total-typescript/shoehorn": "npm:0.1.2"
     "@tsconfig/recommended": "npm:1.0.6"
     "@types/node": "npm:20.12.11"
-    "@types/react": "npm:18.3.1"
+    "@types/react": "npm:^19.0.0"
     concurrently: "npm:8.2.2"
     eslint: "npm:8.57.0"
     glob: "npm:10.3.12"
@@ -183,7 +181,7 @@ __metadata:
     jsdom: "npm:24.0.0"
     next: "npm:^15.0.0"
     publint: "npm:0.2.7"
-    react: "npm:18.3.0"
+    react: "npm:^19.0.0"
     rimraf: "npm:5.0.5"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.0.2"
@@ -500,13 +498,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.23.5":
+"@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.23.5":
   version: 7.23.5
   resolution: "@babel/code-frame@npm:7.23.5"
   dependencies:
     "@babel/highlight": "npm:^7.23.4"
     chalk: "npm:^2.4.2"
   checksum: 10/44e58529c9d93083288dc9e649c553c5ba997475a7b0758cc3ddc4d77b8a7d985dbe78cc39c9bbc61f26d50af6da1ddf0a3427eae8cc222a9370619b671ed8f5
+  languageName: node
+  linkType: hard
+
+"@babel/code-frame@npm:^7.10.4":
+  version: 7.26.2
+  resolution: "@babel/code-frame@npm:7.26.2"
+  dependencies:
+    "@babel/helper-validator-identifier": "npm:^7.25.9"
+    js-tokens: "npm:^4.0.0"
+    picocolors: "npm:^1.0.0"
+  checksum: 10/db2c2122af79d31ca916755331bb4bac96feb2b334cdaca5097a6b467fdd41963b89b14b6836a14f083de7ff887fc78fa1b3c10b14e743d33e12dbfe5ee3d223
   languageName: node
   linkType: hard
 
@@ -720,6 +729,13 @@ __metadata:
   version: 7.22.20
   resolution: "@babel/helper-validator-identifier@npm:7.22.20"
   checksum: 10/df882d2675101df2d507b95b195ca2f86a3ef28cb711c84f37e79ca23178e13b9f0d8b522774211f51e40168bf5142be4c1c9776a150cddb61a0d5bf3e95750b
+  languageName: node
+  linkType: hard
+
+"@babel/helper-validator-identifier@npm:^7.25.9":
+  version: 7.25.9
+  resolution: "@babel/helper-validator-identifier@npm:7.25.9"
+  checksum: 10/3f9b649be0c2fd457fa1957b694b4e69532a668866b8a0d81eabfa34ba16dbf3107b39e0e7144c55c3c652bf773ec816af8df4a61273a2bb4eb3145ca9cf478e
   languageName: node
   linkType: hard
 
@@ -1563,17 +1579,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/next-js@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@chakra-ui/next-js@npm:2.1.2"
+"@chakra-ui/next-js@npm:2.4.2":
+  version: 2.4.2
+  resolution: "@chakra-ui/next-js@npm:2.4.2"
   dependencies:
-    "@emotion/cache": "npm:^11.10.5"
+    "@emotion/cache": "npm:^11.11.0"
   peerDependencies:
     "@chakra-ui/react": ">=2.4.0"
     "@emotion/react": ">=11"
     next: ">=13"
     react: ">=18"
-  checksum: 10/36ce56464aa0702b2968976466ec4288c465a220c7d1343bb5cf3726cfcc9068b84259aaf8c06fb27c2e7700e7ead80abbbad4b222209e33ad64cb26b49f97da
+  checksum: 10/a99a1a1f05a577c2392a477e34be19fc3dac9211b81aa0d64d8d9a1af48e740a03a1a3c78f7accf56dc81e24378bc0d941befa21b7ec7b0a31596cfdffb04c1c
   languageName: node
   linkType: hard
 
@@ -5060,9 +5076,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^10.0.0":
-  version: 10.1.0
-  resolution: "@testing-library/dom@npm:10.1.0"
+"@testing-library/dom@npm:^10.4.0":
+  version: 10.4.0
+  resolution: "@testing-library/dom@npm:10.4.0"
   dependencies:
     "@babel/code-frame": "npm:^7.10.4"
     "@babel/runtime": "npm:^7.12.5"
@@ -5072,25 +5088,27 @@ __metadata:
     dom-accessibility-api: "npm:^0.5.9"
     lz-string: "npm:^1.5.0"
     pretty-format: "npm:^27.0.2"
-  checksum: 10/6d6ef942deedf547180c76d4cc2c43fe8e52a98ef68be6ba7382a43d3b1e1e5696d9c32ae0b2df12c92ea50023187d132ad2542fc118ba4b900f149e97d019e0
+  checksum: 10/05825ee9a15b88cbdae12c137db7111c34069ed3c7a1bd03b6696cb1b37b29f6f2d2de581ebf03033e7df1ab7ebf08399310293f440a4845d95c02c0a9ecc899
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:15.0.7":
-  version: 15.0.7
-  resolution: "@testing-library/react@npm:15.0.7"
+"@testing-library/react@npm:^16.1.0":
+  version: 16.1.0
+  resolution: "@testing-library/react@npm:16.1.0"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
-    "@testing-library/dom": "npm:^10.0.0"
-    "@types/react-dom": "npm:^18.0.0"
   peerDependencies:
-    "@types/react": ^18.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
+    "@testing-library/dom": ^10.0.0
+    "@types/react": ^18.0.0 || ^19.0.0
+    "@types/react-dom": ^18.0.0 || ^19.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/a9342ad09b019b0f99688fb50265899bc93adfe23c22aa6743fd920635b43fdc66877e66d95f240923aa6f7d3aa360837f5b053fb363a31975788974dff7bc93
+    "@types/react-dom":
+      optional: true
+  checksum: 10/2a20e0dbfadbc93d45a84e82281ed47deed54a6a5fc1461a523172d7fbc0481e8502cf98a2080f38aba94290b3d745671a1c9e320e6f76ad6afcca67c580b963
   languageName: node
   linkType: hard
 
@@ -5201,6 +5219,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10/fe81351470f2d3165e8b12ce33542eef89ea893e36dd62e8f7d72566dfb7e448376ae962f9f3ea888547ce8b55a40020ca0e01d637fab5d99567673084542641
+  languageName: node
+  linkType: hard
+
+"@types/cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 10/b883348d5bf88695fbc2c2276b1c49859267a55cae3cf11ea1dccc1b3be15b466e637ce3242109ba27d616c77c6aa4efe521e3d557110b4fdd9bc332a12445c2
   languageName: node
   linkType: hard
 
@@ -5391,21 +5416,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:types-react-dom@19.0.0-rc.0":
-  version: 19.0.0-rc.0
-  resolution: "types-react-dom@npm:19.0.0-rc.0"
+"@types/react-dom@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "@types/react-dom@npm:19.0.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10/edcf0d1f1d9c1186f627a08cccf3f9c60cd3ad3f678a420572184ce09d99ee0dc7db31dc76e00069cfcd60aeb48f49bf4ccad9334eace4895ecc3c180d3e30a6
+  checksum: 10/86945c4d4c4cd82e993acdd380c3d9d8e8ca297228aa72c0fa6af4620abb145e7b12235c9165d569f1b25b5f72d1dbe4b4e3f2419432248de9838b22e94295a2
   languageName: node
   linkType: hard
 
-"@types/react@npm:types-react@19.0.0-rc.0":
-  version: 19.0.0-rc.0
-  resolution: "types-react@npm:19.0.0-rc.0"
+"@types/react@npm:*, @types/react@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "@types/react@npm:19.0.0"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10/e7d9357f8e0b7b48fea99a5254976c97ded9aa21527ebb7649a1035d0ca47d2b520bee9b5ee90b1d0133f5e848e9f1d6e8a3e48b51a431476163dbd60f4e5929
+  checksum: 10/5596d9a2c9c982d5e86add54f5d9b115153c4d47073dd3f8f8369a5e5b7f3088d614a935f85a2cf26eb6631d7ebebc7b913c5d22bf880847370070f2e60e63e6
   languageName: node
   linkType: hard
 
@@ -6032,12 +6057,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.10.0, acorn@npm:^8.11.0, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.10.0, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.11.3
   resolution: "acorn@npm:8.11.3"
   bin:
     acorn: bin/acorn
   checksum: 10/b688e7e3c64d9bfb17b596e1b35e4da9d50553713b3b3630cf5690f2b023a84eac90c56851e6912b483fe60e8b4ea28b254c07e92f17ef83d72d78745a8352dd
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.11.0":
+  version: 8.14.0
+  resolution: "acorn@npm:8.14.0"
+  bin:
+    acorn: bin/acorn
+  checksum: 10/6df29c35556782ca9e632db461a7f97947772c6c1d5438a81f0c873a3da3a792487e83e404d1c6c25f70513e91aa18745f6eafb1fcc3a43ecd1920b21dd173d2
   languageName: node
   linkType: hard
 
@@ -6240,8 +6274,8 @@ __metadata:
     "@graphql-codegen/typescript": "npm:3.0.4"
     "@graphql-codegen/typescript-resolvers": "npm:3.2.1"
     "@types/node": "npm:20.12.11"
-    "@types/react": "npm:18.3.3"
-    "@types/react-dom": "npm:19.0.0-alpha.3"
+    "@types/react": "npm:^19.0.0"
+    "@types/react-dom": "npm:^19.0.0"
     "@vercel/kv": "npm:^0.1.1"
     autoprefixer: "npm:10.4.14"
     clsx: "npm:^1.2.1"
@@ -6252,8 +6286,8 @@ __metadata:
     graphql-tag: "npm:^2.12.6"
     next: "npm:^15.0.0"
     postcss: "npm:8.4.23"
-    react: "npm:18.3.0"
-    react-dom: "npm:18.3.0"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
     tailwindcss: "npm:3.3.2"
     typescript: "npm:5.4.5"
   languageName: unknown
@@ -6268,8 +6302,8 @@ __metadata:
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@types/node": "npm:20.12.11"
-    "@types/react": "npm:18.3.1"
-    "@types/react-dom": "npm:18.3.0"
+    "@types/react": "npm:^19.0.0"
+    "@types/react-dom": "npm:^19.0.0"
     client-only: "npm:^0.0.1"
     encoding: "npm:^0.1.13"
     eslint: "npm:8.36.0"
@@ -6277,8 +6311,8 @@ __metadata:
     graphql: "npm:^16.6.0"
     html-differ: "npm:^1.4.0"
     next: "npm:^15.0.0"
-    react: "npm:18.3.0"
-    react-dom: "npm:18.3.0"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
     server-only: "npm:^0.0.1"
     typescript: "npm:5.4.5"
   languageName: unknown
@@ -7594,6 +7628,13 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 10/aae7911ddc5f444a9025fbd979ad1b5d60191011339bce48e555cb83343d0f98b865ff5c4d71fecdfb8555a5cafdc65632f6fce172f32aaf6936830a883a0380
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^1.0.1":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 10/f5817cdc84d8977761b12549eba29435e675e65c7fef172bc31737788cd8adc83796bf8abe6d950554e7987325ad2d9ac2971c5bd8ff0c4f81c145f82e4ab1be
   languageName: node
   linkType: hard
 
@@ -10129,7 +10170,7 @@ __metadata:
     "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
-    "@chakra-ui/next-js": "npm:^2.1.2"
+    "@chakra-ui/next-js": "npm:2.4.2"
     "@chakra-ui/react": "npm:^2.5.5"
     "@emotion/cache": "npm:^11.11.0"
     "@emotion/core": "npm:^11.0.0"
@@ -10137,16 +10178,16 @@ __metadata:
     "@emotion/styled": "npm:^11.10.6"
     "@types/js-cookie": "npm:3.0.6"
     "@types/node": "npm:20.12.11"
-    "@types/react": "npm:18.3.1"
-    "@types/react-dom": "npm:18.3.0"
+    "@types/react": "npm:^19.0.0"
+    "@types/react-dom": "npm:^19.0.0"
     eslint: "npm:8.38.0"
     eslint-config-next: "npm:13.3.0"
     framer-motion: "npm:^10.12.2"
     graphql: "npm:^16.6.0"
     js-cookie: "npm:^3.0.1"
     next: "npm:^15.0.0"
-    react: "npm:18.3.0"
-    react-dom: "npm:18.3.0"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
     react-icons: "npm:^4.8.0"
     react-rating-stars-component: "npm:^2.2.0"
     typescript: "npm:5.4.5"
@@ -13339,14 +13380,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:19.0.0-rc-935180c7e0-20240524":
-  version: 19.0.0-rc-935180c7e0-20240524
-  resolution: "react-dom@npm:19.0.0-rc-935180c7e0-20240524"
+"react-dom@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "react-dom@npm:19.0.0"
   dependencies:
-    scheduler: "npm:0.25.0-rc-935180c7e0-20240524"
+    scheduler: "npm:^0.25.0"
   peerDependencies:
-    react: 19.0.0-rc-935180c7e0-20240524
-  checksum: 10/65c465756ac1d474ee9694083fd9df40e18b71752e126936bb4f63008c8f1850986256a572a488f24e8cdb008aa681474419ab92b860d6ab84174c4f7561dfc0
+    react: ^19.0.0
+  checksum: 10/aa64a2f1991042f516260e8b0eca0ae777b6c8f1aa2b5ae096e80bbb6ac9b005aef2bca697969841d34f7e1819556263476bdfea36c35092e8d9aefde3de2d9a
   languageName: node
   linkType: hard
 
@@ -13460,17 +13501,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-server-dom-webpack@npm:19.0.0-beta-94eed63c49-20240425":
-  version: 19.0.0-beta-94eed63c49-20240425
-  resolution: "react-server-dom-webpack@npm:19.0.0-beta-94eed63c49-20240425"
+"react-router@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "react-router@npm:7.0.2"
+  dependencies:
+    "@types/cookie": "npm:^0.6.0"
+    cookie: "npm:^1.0.1"
+    set-cookie-parser: "npm:^2.6.0"
+    turbo-stream: "npm:2.4.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 10/f8bf5f7810388d4da81444d5e816135306aadd0340a26d645eb171e2b4c4a6d7f5a810f1d27e25ae0f006b949f7cf66fcf399f2af79f48341752a6651b2b30cb
+  languageName: node
+  linkType: hard
+
+"react-server-dom-webpack@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "react-server-dom-webpack@npm:19.0.0"
   dependencies:
     acorn-loose: "npm:^8.3.0"
     neo-async: "npm:^2.6.1"
+    webpack-sources: "npm:^3.2.0"
   peerDependencies:
-    react: 19.0.0-beta-94eed63c49-20240425
-    react-dom: 19.0.0-beta-94eed63c49-20240425
+    react: ^19.0.0
+    react-dom: ^19.0.0
     webpack: ^5.59.0
-  checksum: 10/8b4048fa632b5fe714dc6aab4e8801681a7a8cf9dbf9718ad26dbd05f77df8eb7d4389b4de637dff1f40838208666bb39317057470ca12203530531552a741fa
+  checksum: 10/ab6478303befbe1e6331dd1ca3fc5d9aa76081dee6fad6a3debe0712ffd85eb063d39f1f7ba785a6591fc641ca4b1fc1f24e3215cbd6d26851a8f76ea085d326
   languageName: node
   linkType: hard
 
@@ -13491,10 +13551,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:19.0.0-rc-935180c7e0-20240524":
-  version: 19.0.0-rc-935180c7e0-20240524
-  resolution: "react@npm:19.0.0-rc-935180c7e0-20240524"
-  checksum: 10/c201f2e7fc9661766332b57c46f2af81e8ceb0963ad95260565e0ee72ebefec72d8b4ae5bc1affeeb44d40f909ca8f1ad0d082add918a353b0a527d9a007f083
+"react@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "react@npm:19.0.0"
+  checksum: 10/2490969c503f644703c88990d20e4011fa6119ddeca451e9de48f6d7ab058d670d2852a5fcd3aa3cd90a923ab2815d532637bd4a814add402ae5c0d4f129ee71
   languageName: node
   linkType: hard
 
@@ -14122,10 +14182,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:0.25.0-rc-935180c7e0-20240524":
-  version: 0.25.0-rc-935180c7e0-20240524
-  resolution: "scheduler@npm:0.25.0-rc-935180c7e0-20240524"
-  checksum: 10/bf78b33a294e216b3bf64a935775430d445c6a963298a8b898dda730ff7bcc4f41cbcf5d163eb246f29b2c81219d8a38697f5b5715111e3e18d690e33545f244
+"scheduler@npm:^0.25.0":
+  version: 0.25.0
+  resolution: "scheduler@npm:0.25.0"
+  checksum: 10/e661e38503ab29a153429a99203fefa764f28b35c079719eb5efdd2c1c1086522f6653d8ffce388209682c23891a6d1d32fa6badf53c35fb5b9cd0c55ace42de
   languageName: node
   linkType: hard
 
@@ -14262,6 +14322,13 @@ __metadata:
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
   checksum: 10/8980ebf7ae9eb945bb036b6e283c547ee783a1ad557a82babf758a065e2fb6ea337fd82cac30dd565c1e606e423f30024a19fff7afbf4977d784720c4026a8ef
+  languageName: node
+  linkType: hard
+
+"set-cookie-parser@npm:^2.6.0":
+  version: 2.7.1
+  resolution: "set-cookie-parser@npm:2.7.1"
+  checksum: 10/c92b1130032693342bca13ea1b1bc93967ab37deec4387fcd8c2a843c0ef2fd9a9f3df25aea5bb3976cd05a91c2cf4632dd6164d6e1814208fb7d7e14edd42b4
   languageName: node
   linkType: hard
 
@@ -15546,6 +15613,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"turbo-stream@npm:2.4.0":
+  version: 2.4.0
+  resolution: "turbo-stream@npm:2.4.0"
+  checksum: 10/7079bbc82b58340f783144cd669cc7e598288523103a8d68bb8a4c6bb28c64eccb71d389b33aab07788d3a9030638b795709e15cb8486f722b1cdac59cb58afc
+  languageName: node
+  linkType: hard
+
 "type-check@npm:^0.4.0, type-check@npm:~0.4.0":
   version: 0.4.0
   resolution: "type-check@npm:0.4.0"
@@ -16231,7 +16305,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^3.2.3":
+"webpack-sources@npm:^3.2.0, webpack-sources@npm:^3.2.3":
   version: 3.2.3
   resolution: "webpack-sources@npm:3.2.3"
   checksum: 10/a661f41795d678b7526ae8a88cd1b3d8ce71a7d19b6503da8149b2e667fc7a12f9b899041c1665d39e38245ed3a59ab68de648ea31040c3829aa695a5a45211d

@@ -17,7 +17,7 @@ const delayLink = new ApolloLink((operation, forward) => {
   return new Observable((observer) => {
     const handle = setTimeout(() => {
       forward(operation).subscribe(observer);
-    }, 20);
+    }, 100);
 
     return () => {
       clearTimeout(handle);
