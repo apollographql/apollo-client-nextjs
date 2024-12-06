@@ -7,6 +7,10 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "registerApolloClient",
+      "ReadFromReadableStreamLink",
+      "TeeToReadableStreamLink",
+      "readFromReadableStream",
+      "teeToReadableStream",
       "built_for_rsc"
     ],
     "browser": [
@@ -17,7 +21,12 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
+      "skipDataTransport",
       "resetApolloSingletons",
+      "ReadFromReadableStreamLink",
+      "TeeToReadableStreamLink",
+      "readFromReadableStream",
+      "teeToReadableStream",
       "built_for_browser"
     ],
     "node": [
@@ -28,7 +37,12 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
+      "skipDataTransport",
       "resetApolloSingletons",
+      "ReadFromReadableStreamLink",
+      "TeeToReadableStreamLink",
+      "readFromReadableStream",
+      "teeToReadableStream",
       "built_for_ssr"
     ],
     "edge-light,worker,browser": [
@@ -39,7 +53,12 @@
       "RemoveMultipartDirectivesLink",
       "SSRMultipartLink",
       "WrapApolloProvider",
+      "skipDataTransport",
       "resetApolloSingletons",
+      "ReadFromReadableStreamLink",
+      "TeeToReadableStreamLink",
+      "readFromReadableStream",
+      "teeToReadableStream",
       "built_for_ssr"
     ]
   },

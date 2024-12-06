@@ -1,5 +1,5 @@
 export { InMemoryCache } from "./WrappedInMemoryCache.js";
-export { ApolloClient } from "./WrappedApolloClient.js";
+export { ApolloClient, skipDataTransport } from "./WrappedApolloClient.js";
 
 export { resetApolloSingletons } from "./testHelpers.js";
 
