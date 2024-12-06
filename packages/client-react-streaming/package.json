@@ -160,7 +160,7 @@
   },
   "peerDependencies": {
     "@apollo/client": "^3.10.4",
-    "react": "^18 || >=19.0.0-rc <19.0.0"
+    "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
     "ts-invariant": "^0.10.3"
