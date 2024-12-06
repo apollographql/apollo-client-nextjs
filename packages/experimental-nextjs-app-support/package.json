@@ -120,6 +120,7 @@
     "@arethetypeswrong/cli": "0.15.3",
     "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.1.0",
     "@total-typescript/shoehorn": "0.1.2",
     "@tsconfig/recommended": "1.0.6",
