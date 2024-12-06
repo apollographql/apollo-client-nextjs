@@ -1530,17 +1530,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/next-js@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@chakra-ui/next-js@npm:2.1.2"
+"@chakra-ui/next-js@npm:2.4.2":
+  version: 2.4.2
+  resolution: "@chakra-ui/next-js@npm:2.4.2"
   dependencies:
-    "@emotion/cache": "npm:^11.10.5"
+    "@emotion/cache": "npm:^11.11.0"
   peerDependencies:
     "@chakra-ui/react": ">=2.4.0"
     "@emotion/react": ">=11"
     next: ">=13"
     react: ">=18"
-  checksum: 10/36ce56464aa0702b2968976466ec4288c465a220c7d1343bb5cf3726cfcc9068b84259aaf8c06fb27c2e7700e7ead80abbbad4b222209e33ad64cb26b49f97da
+  checksum: 10/a99a1a1f05a577c2392a477e34be19fc3dac9211b81aa0d64d8d9a1af48e740a03a1a3c78f7accf56dc81e24378bc0d941befa21b7ec7b0a31596cfdffb04c1c
   languageName: node
   linkType: hard
 
@@ -10050,7 +10050,7 @@ __metadata:
     "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
-    "@chakra-ui/next-js": "npm:^2.1.2"
+    "@chakra-ui/next-js": "npm:2.4.2"
     "@chakra-ui/react": "npm:^2.5.5"
     "@emotion/cache": "npm:^11.11.0"
     "@emotion/core": "npm:^11.0.0"

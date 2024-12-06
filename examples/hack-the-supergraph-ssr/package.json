@@ -13,7 +13,7 @@
     "@apollo/client": "3.10.4",
     "@apollo/experimental-nextjs-app-support": "workspace:^",
     "@apollo/space-kit": "^9.11.0",
-    "@chakra-ui/next-js": "^2.1.2",
+    "@chakra-ui/next-js": "2.4.2",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/cache": "^11.11.0",
     "@emotion/core": "^11.0.0",
