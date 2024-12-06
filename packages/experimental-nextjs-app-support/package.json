@@ -1,6 +1,6 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.11.6",
+  "version": "0.11.7",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
@@ -153,6 +153,6 @@
     "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.6"
+    "@apollo/client-react-streaming": "0.11.7"
   }
 }
