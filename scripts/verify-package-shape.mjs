@@ -54,7 +54,7 @@ async function verifyESM(condition, entryPoint, pkg, shape) {
   child.stdout?.on("data", (data) => (result += data.toString()));
   child.stderr?.pipe(process.stderr);
   await new Promise((resolve) => child.on("exit", resolve));
-  assert.deepStrictEqual(JSON.parse(result).sort(), shape);
+  assert.deepStrictEqual(JSON.parse(result).sort(), shape.sort());
 }
 
 /**

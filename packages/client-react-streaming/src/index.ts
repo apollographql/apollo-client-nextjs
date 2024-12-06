@@ -6,4 +6,5 @@ export {
   QueryEvent,
   WrapApolloProvider,
   WrappedApolloProvider,
+  skipDataTransport,
 } from "./DataTransportAbstraction/index.js";

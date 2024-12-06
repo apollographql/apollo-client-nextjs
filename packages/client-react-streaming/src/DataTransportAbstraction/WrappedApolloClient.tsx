@@ -6,6 +6,7 @@ import type {
   FetchResult,
   DocumentNode,
   NormalizedCacheObject,
+  ApolloLink,
 } from "@apollo/client/index.js";
 import {
   ApolloClient as OrigApolloClient,
@@ -28,6 +29,10 @@ import type {
 import { bundle, sourceSymbol } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
 import { assertInstance } from "../assertInstance.js";
+import {
+  ReadFromReadableStreamLink,
+  TeeToReadableStreamLink,
+} from "../ReadableStreamLink.js";
 
 function getQueryManager(
   client: OrigApolloClient<unknown>
@@ -298,8 +303,36 @@ export class ApolloClientClientBaseImpl extends ApolloClientBase {
   };
 }
 
+const skipDataTransportKey = Symbol.for("apollo.dataTransport.skip");
+interface InternalContext {
+  [skipDataTransportKey]?: boolean;
+}
+
+/**
+ * Apply to a context to prevent this operation from being transported over the SSR data transport mechanism.
+ * @param readableStream
+ * @param context
+ * @returns
+ */
+export function skipDataTransport<T extends Record<string, any>>(
+  context: T
+): T & InternalContext {
+  return Object.assign(context, {
+    [skipDataTransportKey]: true,
+  });
+}
+
 class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   private forwardedQueries = new (getTrieConstructor(this))();
+
+  constructor(options: WrappedApolloClientOptions) {
+    super(options);
+    this.setLink(this.link);
+  }
+
+  setLink(newLink: ApolloLink) {
+    super.setLink.call(this, ReadFromReadableStreamLink.concat(newLink));
+  }
 
   watchQueryQueue = createBackpressuredCallback<{
     event: Extract<QueryEvent, { type: "started" }>;
@@ -315,6 +348,9 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
     if (
       options.fetchPolicy !== "cache-only" &&
       options.fetchPolicy !== "standby" &&
+      !(options.context as InternalContext | undefined)?.[
+        skipDataTransportKey
+      ] &&
       !this.forwardedQueries.peekArray(cacheKeyArr)
     ) {
       // don't transport the same query over twice
@@ -376,14 +412,34 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   }
 }
 
-export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {}
+export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {
+  constructor(options: WrappedApolloClientOptions) {
+    super(options);
+    this.setLink(this.link);
+  }
+
+  setLink(newLink: ApolloLink) {
+    super.setLink.call(this, ReadFromReadableStreamLink.concat(newLink));
+  }
+}
+
+export class ApolloClientRSCImpl extends ApolloClientBase {
+  constructor(options: WrappedApolloClientOptions) {
+    super(options);
+    this.setLink(this.link);
+  }
+
+  setLink(newLink: ApolloLink) {
+    super.setLink.call(this, TeeToReadableStreamLink.concat(newLink));
+  }
+}
 
 const ApolloClientImplementation =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
     ? ApolloClientSSRImpl
     : process.env.REACT_ENV === "browser"
       ? ApolloClientBrowserImpl
-      : ApolloClientBase;
+      : ApolloClientRSCImpl;
 
 /**
  * A version of `ApolloClient` to be used with streaming SSR or in React Server Components.
