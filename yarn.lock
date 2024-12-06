@@ -82,7 +82,7 @@ __metadata:
     vitest: "npm:1.6.0"
   peerDependencies:
     "@apollo/client": ^3.10.4
-    react: ^18 || >=19.0.0-rc <19.0.0
+    react: ^18 || >=19.0.0-rc
   languageName: unknown
   linkType: soft
 
@@ -160,7 +160,7 @@ __metadata:
   peerDependencies:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
-    react: ^18 || >=19.0.0-rc <19.0.0
+    react: ^18 || >=19.0.0-rc
   languageName: unknown
   linkType: soft
 
