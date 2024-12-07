@@ -20,13 +20,13 @@
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run"
   },
   "resolutions": {
-    "@microsoft/api-documenter": "7.24.1"
+    "@microsoft/api-documenter": "7.26.1"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "7.24.3",
-    "@size-limit/file": "11.1.2",
-    "@size-limit/webpack": "11.1.2",
-    "@size-limit/webpack-why": "11.1.2",
-    "size-limit": "11.1.2"
+    "@microsoft/api-documenter": "7.26.1",
+    "@size-limit/file": "11.1.6",
+    "@size-limit/webpack": "11.1.6",
+    "@size-limit/webpack-why": "11.1.6",
+    "size-limit": "11.1.6"
   }
 }
