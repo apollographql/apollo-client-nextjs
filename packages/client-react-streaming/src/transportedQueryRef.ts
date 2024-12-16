@@ -89,7 +89,7 @@ export interface TransportedQueryRef<
 export interface PreloadTransportedQueryFunction {
   <TData = unknown, TVariables extends OperationVariables = OperationVariables>(
     query: DocumentNode | TypedDocumentNode<TData, TVariables>,
-    options: PreloadTransportedQueryOptions<NoInfer<TVariables>, TData>
+    options?: PreloadTransportedQueryOptions<NoInfer<TVariables>, TData>
   ): TransportedQueryRef<TData, TVariables>;
 }
 

@@ -1,13 +1,16 @@
 import type { CreateServerLoaderArgs } from "react-router/route-module";
 import type { ApolloClient } from "./ApolloClient.js";
-import type { PreloadedQueryRef, QueryRef } from "@apollo/client/index.js";
-import type { PreloadTransportedQueryFunction } from "@apollo/client-react-streaming";
+import type { QueryRef } from "@apollo/client/index.js";
+import type {
+  PreloadTransportedQueryFunction,
+  TransportedQueryRef,
+} from "@apollo/client-react-streaming";
 import { createTransportedQueryPreloader } from "@apollo/client-react-streaming";
-// @ts-expect-error waiting for https://github.com/remix-run/react-router/pull/12264
+// still requires a patch, waiting for https://github.com/remix-run/react-router/pull/12264
 import type { SerializesTo } from "react-router/route-module";
 
 type MarkedForSerialization<T> =
-  T extends PreloadedQueryRef<infer Data, infer Variables>
+  T extends TransportedQueryRef<infer Data, infer Variables>
     ? SerializesTo<QueryRef<Data, Variables>>
     : { [K in keyof T]: MarkedForSerialization<T[K]> };
 
