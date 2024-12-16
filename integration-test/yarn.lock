@@ -8887,7 +8887,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:^7.0.2":
+"react-router@npm:7.0.2":
   version: 7.0.2
   resolution: "react-router@npm:7.0.2"
   dependencies:
@@ -8902,6 +8902,24 @@ __metadata:
     react-dom:
       optional: true
   checksum: 10/f8bf5f7810388d4da81444d5e816135306aadd0340a26d645eb171e2b4c4a6d7f5a810f1d27e25ae0f006b949f7cf66fcf399f2af79f48341752a6651b2b30cb
+  languageName: node
+  linkType: hard
+
+"react-router@patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch":
+  version: 7.0.2
+  resolution: "react-router@patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch::version=7.0.2&hash=c518b8"
+  dependencies:
+    "@types/cookie": "npm:^0.6.0"
+    cookie: "npm:^1.0.1"
+    set-cookie-parser: "npm:^2.6.0"
+    turbo-stream: "npm:2.4.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 10/80a72cad438b52ac86793e381e37285a8b8212cce65fbe9d8e465b55c228b3907688973582bfa19b0fb4f2e0ea76de55b79538b76976980408cd19b3541d8873
   languageName: node
   linkType: hard
 
@@ -8923,7 +8941,7 @@ __metadata:
     postcss: "npm:^8.4.49"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    react-router: "npm:^7.0.2"
+    react-router: "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
     tailwindcss: "npm:^3.4.15"
     typescript: "npm:^5.6.3"
     vite: "npm:^5.4.11"
