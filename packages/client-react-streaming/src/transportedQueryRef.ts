@@ -86,7 +86,7 @@ export interface TransportedQueryRef<
   _hydrated?: CacheKey;
 }
 
-interface PreloadTransportedQueryFunction {
+export interface PreloadTransportedQueryFunction {
   <TData = unknown, TVariables extends OperationVariables = OperationVariables>(
     query: DocumentNode | TypedDocumentNode<TData, TVariables>,
     options: PreloadTransportedQueryOptions<NoInfer<TVariables>, TData>
