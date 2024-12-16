@@ -11,6 +11,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_rsc"
     ],
     "browser": [
@@ -27,6 +30,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_browser"
     ],
     "node": [
@@ -43,6 +49,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_ssr"
     ],
     "edge-light,worker,browser": [
@@ -59,6 +68,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_ssr"
     ]
   },
