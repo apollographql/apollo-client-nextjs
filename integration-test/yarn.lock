@@ -38,8 +38,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
+  version: 0.11.5
+  resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=b41c48&locator=%40integration-test%2Froot%40workspace%3A."
+  dependencies:
+    "@apollo/client-react-streaming": "npm:0.11.5"
+  peerDependencies:
+    react: ^19
+    react-router: ^7.0.2
+  checksum: 10/f4a99fd74eb11f04425c3522b7b61ecd2859272c7046113fe7fa84dc444a8ba12b16f0444be15f3cf28e7d16aeb738a3857647803c61203003a6051524dfa912
+  languageName: node
+  linkType: hard
+
 "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.6
+  version: 0.11.7
   resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=48b117&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     ts-invariant: "npm:^0.10.3"
@@ -88,15 +100,15 @@ __metadata:
   linkType: hard
 
 "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.6
-  resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=fd83cc&locator=%40integration-test%2Froot%40workspace%3A."
+  version: 0.11.7
+  resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=fa2496&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.11.6"
+    "@apollo/client-react-streaming": "npm:0.11.7"
   peerDependencies:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
-  checksum: 10/505b723bac0f3a7f15287ea32fab9f2e8c0cd567149abf11d750855f8a9bfc0aa26e44179ad10c32f7d162ad86318717032413ef8e1a25385185178e022588fa
+  checksum: 10/ab92be4c933fb08593b00937628b94547cc9e13bfeb008c8dc9e58fc22ef63e1b9601712fd15c00f257b6af05d756087f040281d7f98530e44541378e8db830b
   languageName: node
   linkType: hard
 
@@ -8898,6 +8910,7 @@ __metadata:
   resolution: "react-router@workspace:react-router"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
+    "@apollo/client-integration-react-router": "npm:*"
     "@apollo/client-react-streaming": "npm:^0.11.6"
     "@react-router/dev": "npm:^7.0.1"
     "@react-router/node": "npm:^7.0.1"

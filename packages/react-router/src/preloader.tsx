@@ -1,9 +1,9 @@
 import type { CreateServerLoaderArgs } from "react-router/route-module";
-import type { ApolloClient } from "./ApolloClient";
+import type { ApolloClient } from "./ApolloClient.js";
 import type { PreloadedQueryRef, QueryRef } from "@apollo/client/index.js";
-import { type PreloadQueryFunction } from "@apollo/client/index.js";
-import { createTransportedQueryPreloader } from "./createQueryPreloader";
-// @ts-ignore waiting for https://github.com/remix-run/react-router/pull/12264
+import type { PreloadTransportedQueryFunction } from "@apollo/client-react-streaming";
+import { createTransportedQueryPreloader } from "@apollo/client-react-streaming";
+// @ts-expect-error waiting for https://github.com/remix-run/react-router/pull/12264
 import type { SerializesTo } from "react-router/route-module";
 
 type MarkedForSerialization<T> =
@@ -16,7 +16,7 @@ type ApolloLoader = <LoaderArgs extends CreateServerLoaderArgs<any>>() => <
 >(
   loader: (
     args: LoaderArgs & {
-      preloadQuery: PreloadQueryFunction;
+      preloadQuery: PreloadTransportedQueryFunction;
     }
   ) => ReturnValue
 ) => (args: LoaderArgs) => MarkedForSerialization<ReturnValue>;

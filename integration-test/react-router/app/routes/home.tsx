@@ -40,6 +40,7 @@ export const loader = apolloLoader<Route.LoaderArgs>()(({ preloadQuery }) => {
 
 export default function Home() {
   const { postsRef } = useLoaderData<typeof loader>();
+
   const posts = useReadQuery(postsRef).data.posts.data;
 
   return (

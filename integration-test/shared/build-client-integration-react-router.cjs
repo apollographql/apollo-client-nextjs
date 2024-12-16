@@ -7,7 +7,6 @@ the package.
 
 const { execFileSync } = require("node:child_process");
 const { join, dirname } = require("node:path");
-
 const monorepoRoot = dirname(
   require.resolve("monorepo", { paths: [process.env.INIT_CWD] })
 );
@@ -16,18 +15,9 @@ const pathToArchive = join(execEnv.tempDir, "archive.tgz");
 setTimeout(() => {
   execFileSync(
     `yarn`,
-    [`workspace`, `@apollo/client-react-streaming`, `build`],
-    {
-      stdio: `inherit`,
-      cwd: monorepoRoot,
-    }
-  );
-
-  execFileSync(
-    `yarn`,
     [
       `workspace`,
-      `@apollo/experimental-nextjs-app-support`,
+      `@apollo/client-integration-react-router`,
       `pack`,
       `--out`,
       pathToArchive,

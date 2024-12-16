@@ -1,6 +1,8 @@
-import { InMemoryCache } from "@apollo/client-react-streaming";
-import { ApolloClient } from "./apollo/ApolloClient";
-import { createApolloLoaderHandler } from "./apollo/preloader";
+import { InMemoryCache } from "@apollo/client/index.js";
+import {
+  createApolloLoaderHandler,
+  ApolloClient,
+} from "@apollo/client-integration-react-router";
 
 export const makeClient = (request?: Request) => {
   return new ApolloClient({
