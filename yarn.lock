@@ -45,11 +45,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
+"@apollo/client-integration-react-router@workspace:packages/react-router":
   version: 0.0.0-use.local
-  resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
+  resolution: "@apollo/client-integration-react-router@workspace:packages/react-router"
   dependencies:
-    "@apollo/client": "npm:^3.10.4"
+    "@apollo/client": "npm:3.10.4"
+    "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
@@ -64,6 +65,42 @@ __metadata:
     eslint: "npm:8.57.0"
     eslint-plugin-react: "npm:7.34.1"
     eslint-plugin-react-hooks: "npm:4.6.0"
+    glob: "npm:10.3.12"
+    global-jsdom: "npm:24.0.0"
+    globstar: "npm:1.0.0"
+    graphql: "npm:16.8.1"
+    jsdom: "npm:24.0.0"
+    next: "npm:^15.0.0"
+    publint: "npm:0.2.7"
+    react: "npm:18.3.0"
+    rimraf: "npm:5.0.5"
+    ts-node: "npm:10.9.2"
+    tsup: "npm:8.0.2"
+    tsx: "npm:4.7.1"
+    typescript: "npm:5.4.5"
+    vitest: "npm:1.6.0"
+  peerDependencies:
+    "@apollo/client": ^3.10.4
+    next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
+    react: ^18 || >=19.0.0-rc <19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
+  version: 0.0.0-use.local
+  resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
+  dependencies:
+    "@apollo/client": "npm:^3.10.4"
+    "@arethetypeswrong/cli": "npm:0.15.3"
+    "@internal/test-utils": "workspace:^"
+    "@microsoft/api-extractor": "npm:7.43.2"
+    "@testing-library/react": "npm:15.0.7"
+    "@total-typescript/shoehorn": "npm:0.1.2"
+    "@tsconfig/recommended": "npm:1.0.6"
+    "@types/node": "npm:20.12.11"
+    "@types/react": "npm:18.3.1"
+    concurrently: "npm:8.2.2"
+    eslint: "npm:8.57.0"
     glob: "npm:10.3.12"
     global-jsdom: "npm:24.0.0"
     globstar: "npm:1.0.0"
@@ -137,12 +174,8 @@ __metadata:
     "@tsconfig/recommended": "npm:1.0.6"
     "@types/node": "npm:20.12.11"
     "@types/react": "npm:18.3.1"
-    "@typescript-eslint/eslint-plugin": "npm:7.5.0"
-    "@typescript-eslint/parser": "npm:7.5.0"
     concurrently: "npm:8.2.2"
     eslint: "npm:8.57.0"
-    eslint-plugin-react: "npm:7.34.1"
-    eslint-plugin-react-hooks: "npm:4.6.0"
     glob: "npm:10.3.12"
     global-jsdom: "npm:24.0.0"
     globstar: "npm:1.0.0"
@@ -12723,6 +12756,18 @@ __metadata:
   checksum: 10/f8a8e9a7693659383f06aec604ad5ead237c7a261c18048a6e1b5b85a5f8a067e469aa24f5bc009b991ea3b058a87f5065ef4176793a200d4917349881216cae
   languageName: node
   linkType: hard
+
+"packages-shared@workspace:packages":
+  version: 0.0.0-use.local
+  resolution: "packages-shared@workspace:packages"
+  dependencies:
+    "@typescript-eslint/eslint-plugin": "npm:7.5.0"
+    "@typescript-eslint/parser": "npm:7.5.0"
+    eslint: "npm:8.57.0"
+    eslint-plugin-react: "npm:7.34.1"
+    eslint-plugin-react-hooks: "npm:4.6.0"
+  languageName: unknown
+  linkType: soft
 
 "pako@npm:^2.1.0":
   version: 2.1.0
