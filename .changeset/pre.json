@@ -9,8 +9,5 @@
     "@apollo/experimental-nextjs-app-support": "0.11.7",
     "@internal/test-utils": "0.0.0"
   },
-  "changesets": [
-    "honest-roses-train",
-    "nine-maps-exist"
-  ]
+  "changesets": ["nine-maps-exist"]
 }
