@@ -75,3 +75,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Archive npm failure logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: npm-logs
+          path: ~/.npm/_logs
