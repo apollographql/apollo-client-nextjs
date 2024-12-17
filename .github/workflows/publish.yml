@@ -1,22 +1,16 @@
-name: Publish Package to npmjs
+name: Release
+
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "The version to publish"
-        required: true
-      tag:
-        description: "Tag"
-        required: true
-        default: "latest"
-        type: choice
-        options:
-          - latest
-          - snapshot
-          - next
+  push:
+    branches:
+      - main
+      - next
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   publish:
+    if: github.repository == 'apollographql/apollo-client-nextjs'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -36,6 +30,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ steps.github-actions-bot-app-token.outputs.token }}
+          # Fetch entire git history so  Changesets can generate changelogs
+          # with the correct commits
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -44,30 +41,33 @@ jobs:
           cache: "yarn"
       - run: yarn install --immutable --mode=skip-build
 
-      - name: "@apollo/client-react-streaming: update version"
+      - name: Alpha branch - Enter prerelease mode (alpha by default)
+        # If .changeset/pre.json does not exist and we did not recently exit
+        # prerelease mode, enter prerelease mode with tag alpha
+        if: github.ref_name == 'next' && !contains(github.event.head_commit.message, 'Exit prerelease')
         run: |
-          yarn workspace @apollo/client-react-streaming exec npm pkg set "version=${{ inputs.version }}"
-          yarn workspace @apollo/client-react-streaming exec jq '{ version: .version, dependencies: .dependencies, peerDependencies: .peerDependencies }' package.json
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          npx changeset pre enter alpha
+          git add -A
+          git commit -m 'Enter prerelease mode'
+          git push
 
-      - name: "@apollo/experimental-nextjs-app-support: update version and dependencies"
+      - name: Append NPM token to .npmrc
         run: |
-          yarn workspace @apollo/experimental-nextjs-app-support exec npm pkg set "dependencies[@apollo/client-react-streaming]=${{ inputs.version }}" "version=${{ inputs.version }}"
-          yarn workspace @apollo/experimental-nextjs-app-support exec jq '{ version: .version, dependencies: .dependencies, peerDependencies: .peerDependencies }' package.json
+          cat << EOF > "$HOME/.npmrc"
+            provenance=true
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Commit changes back
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
         with:
-          commit_message: "Release version ${{ inputs.version }}@${{ inputs.tag}} to npm"
-          push_options: ""
-          skip_dirty_check: false
-          tagging_message: "v.${{ inputs.version }}"
-
-      - name: "@apollo/client-react-streaming: publish"
-        run: yarn workspace @apollo/client-react-streaming exec npm publish --access public --tag ${{ inputs.tag }} --provenance
+          version: yarn changeset version
+          publish: yarn changeset publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: "@apollo/experimental-nextjs-app-support: publish"
-        run: yarn workspace @apollo/experimental-nextjs-app-support exec npm publish --access public --tag ${{ inputs.tag }} --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.github-actions-bot-app-token.outputs.token }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
