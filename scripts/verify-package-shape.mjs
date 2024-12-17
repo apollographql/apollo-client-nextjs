@@ -45,7 +45,7 @@ async function verifyESM(condition, entryPoint, pkg, shape) {
     .join(" ");
   console.log(`Checking ESM: ${entryPoint} with ${conditionFlags}`);
   const child = exec(
-    `node --input-type=module ${conditionFlags} --eval 'console.log(JSON.stringify(Object.keys(await import("${entryPoint}"))))'`,
+    `node --input-type=module ${conditionFlags} --eval 'console.log(JSON.stringify(Object.keys(await import("${entryPoint}"))));process.exit(0)'`,
     {
       cwd: dirname(pkg),
     }
@@ -71,7 +71,7 @@ async function verifyCJS(condition, entryPoint, pkg, shape) {
     .join(" ");
   console.log(`Checking CJS: ${entryPoint} with ${conditionFlags}`);
   const child = exec(
-    `node --input-type=commonjs ${conditionFlags} --eval 'console.log(JSON.stringify(Object.keys(require("${entryPoint}"))))'`,
+    `node --input-type=commonjs ${conditionFlags} --eval 'console.log(JSON.stringify(Object.keys(require("${entryPoint}"))));process.exit(0)'`,
     {
       cwd: dirname(pkg),
     }

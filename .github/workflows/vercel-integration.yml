@@ -18,7 +18,7 @@ jobs:
           node-version: "20.x"
           cache: "yarn"
       - name: Install Packages (Root)
-        run: yarn install --immutable
+        run: yarn install --immutable --mode=skip-build
         working-directory: ./
       - name: Install Packages (Integration Test)
         run: |

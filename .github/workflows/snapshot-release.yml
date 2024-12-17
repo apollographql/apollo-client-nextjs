@@ -84,7 +84,7 @@ jobs:
           node-version: "20.11.0"
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
-      - run: yarn install --immutable
+      - run: yarn install --immutable --mode=skip-build
       # 0.0.0             : to sort lower than any other release
       # -commit-release   : to sort higher than the already released 0.0.0-commit-<hash>,
       # .0                : format specifier (if the following identifiers will change format, increase this number)
