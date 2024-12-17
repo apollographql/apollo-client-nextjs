@@ -13,37 +13,43 @@ const monorepoRoot = dirname(
 );
 const pathToArchive = join(execEnv.tempDir, "archive.tgz");
 
-execFileSync(`yarn`, [`workspace`, `@apollo/client-react-streaming`, `build`], {
-  stdio: `inherit`,
-  cwd: monorepoRoot,
-});
+setTimeout(() => {
+  execFileSync(
+    `yarn`,
+    [`workspace`, `@apollo/client-react-streaming`, `build`],
+    {
+      stdio: `inherit`,
+      cwd: monorepoRoot,
+    }
+  );
 
-execFileSync(
-  `yarn`,
-  [
-    `workspace`,
-    `@apollo/experimental-nextjs-app-support`,
-    `pack`,
-    `--out`,
-    pathToArchive,
-  ],
-  {
-    stdio: `inherit`,
-    cwd: monorepoRoot,
-  }
-);
-execFileSync(
-  `tar`,
-  [
-    `-x`,
-    `-z`,
-    `--strip-components=1`,
-    `-f`,
-    pathToArchive,
-    `-C`,
-    execEnv.buildDir,
-  ],
-  {
-    stdio: `inherit`,
-  }
-);
+  execFileSync(
+    `yarn`,
+    [
+      `workspace`,
+      `@apollo/experimental-nextjs-app-support`,
+      `pack`,
+      `--out`,
+      pathToArchive,
+    ],
+    {
+      stdio: `inherit`,
+      cwd: monorepoRoot,
+    }
+  );
+  execFileSync(
+    `tar`,
+    [
+      `-x`,
+      `-z`,
+      `--strip-components=1`,
+      `-f`,
+      pathToArchive,
+      `-C`,
+      execEnv.buildDir,
+    ],
+    {
+      stdio: `inherit`,
+    }
+  );
+}, 3000);
