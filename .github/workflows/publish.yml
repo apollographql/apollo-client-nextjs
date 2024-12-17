@@ -57,7 +57,7 @@ jobs:
 
       - name: Append NPM token to .npmrc
         run: |
-          cat << EOF > "$HOME/.npmrc"
+          cat << EOF > "$NPM_CONFIG_USERCONFIG"
             provenance=true
             //registry.npmjs.org/:_authToken=$NPM_TOKEN
           EOF
