@@ -9,5 +9,5 @@
     "@apollo/experimental-nextjs-app-support": "0.11.7",
     "@internal/test-utils": "0.0.0"
   },
-  "changesets": []
+  "changesets": ["nine-maps-exist"]
 }
