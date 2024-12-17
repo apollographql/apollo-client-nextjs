@@ -40,8 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - "latest"
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
