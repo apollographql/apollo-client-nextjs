@@ -16,6 +16,7 @@ on:
 jobs:
   matrix:
     name: Determine if the `next` tag is higher than the `latest` tag
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.matrix }}
@@ -34,8 +35,6 @@ jobs:
   test:
     name: Unit Tests
     needs: matrix
-    if: |
-      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -54,7 +53,6 @@ jobs:
   packageShapes:
     name: Test Bundles
     needs: matrix
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -72,7 +70,6 @@ jobs:
   tests_playwright:
     name: Integration Tests
     needs: matrix
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
