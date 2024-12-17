@@ -57,22 +57,22 @@ export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
 
   if (controller) {
     return new Observable((observer) => {
-      const subscription = forward(operation).subscribe(
-        (result) => {
+      const subscription = forward(operation).subscribe({
+        next(result) {
           controller.enqueue({ type: "next", value: result });
           observer.next(result);
         },
-        (error) => {
+        error(error) {
           controller.enqueue({ type: "error" });
           controller.close();
           observer.error(error);
         },
-        () => {
+        complete() {
           controller.enqueue({ type: "completed" });
           controller.close();
           observer.complete();
-        }
-      );
+        },
+      });
 
       return () => {
         subscription.unsubscribe();
