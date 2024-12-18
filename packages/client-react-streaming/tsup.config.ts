@@ -18,6 +18,7 @@ export default defineConfig((options) => {
     outDir: "dist/",
     external: [
       "@apollo/client-react-streaming",
+      "graphql",
       "react",
       "rehackt",
       "react-dom",

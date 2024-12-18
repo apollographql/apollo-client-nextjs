@@ -23,7 +23,7 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable --mode=skip-build
 
       - name: Prebuild libs
         run: yarn build:libs

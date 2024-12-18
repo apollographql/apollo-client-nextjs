@@ -16,6 +16,7 @@ on:
 jobs:
   matrix:
     name: Determine if the `next` tag is higher than the `latest` tag
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.matrix }}
@@ -26,7 +27,7 @@ jobs:
         with:
           node-version: "20.x"
           cache: "yarn"
-      - run: yarn install --immutable
+      - run: yarn install --immutable --mode=skip-build
       - name: Calculate Matrix
         id: version
         run: yarn matrix | tee $GITHUB_OUTPUT
@@ -34,8 +35,6 @@ jobs:
   test:
     name: Unit Tests
     needs: matrix
-    if: |
-      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -47,14 +46,13 @@ jobs:
         with:
           node-version: "20.11.0"
           cache: "yarn"
-      - run: yarn install --immutable
+      - run: yarn install --immutable --mode=skip-build
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
       - run: yarn workspaces foreach --all --include "@apollo/*" run build
       - run: yarn workspaces foreach --all --include "@apollo/*" run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   packageShapes:
     name: Test Bundles
     needs: matrix
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -66,13 +64,12 @@ jobs:
         with:
           node-version: "20.x"
           cache: "yarn"
-      - run: yarn install --immutable
+      - run: yarn install --immutable --mode=skip-build
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
       - run: yarn workspaces foreach --all --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   tests_playwright:
     name: Integration Tests
     needs: matrix
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -88,7 +85,7 @@ jobs:
           node-version: "20.x"
           cache: "yarn"
       - name: Install Packages (Root)
-        run: yarn install --immutable
+        run: yarn install --immutable --mode=skip-build
         working-directory: ./
       - name: Set target version of Apollo Client (Root)
         run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}

@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "app-dir": "0.1.0",
+    "hack-the-supergraph-ssr": "0.1.0",
+    "apollo-next-13-demo": "0.1.0",
+    "@apollo/client-react-streaming": "0.11.7",
+    "@apollo/experimental-nextjs-app-support": "0.11.7",
+    "@internal/test-utils": "0.0.0"
+  },
+  "changesets": ["nine-maps-exist"]
+}
