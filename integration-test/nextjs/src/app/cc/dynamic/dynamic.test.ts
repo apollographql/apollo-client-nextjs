@@ -40,9 +40,7 @@ test.describe("CC dynamic", () => {
         return regex_query_error_restart.test(message.text());
       });
       await page.waitForEvent("pageerror", (error) => {
-        // this changed with Next 15 and seems like a bug in Next or React?
-        return error.message === "undefined";
-        // return error.message.includes("Minified React error #419");
+        return error.message.includes("Minified React error #419");
       });
 
       await hydrationFinished;

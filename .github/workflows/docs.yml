@@ -35,7 +35,7 @@ jobs:
           node-version: "18.x"
           cache: "yarn"
 
-      - run: yarn install --immutable
+      - run: yarn install --immutable --mode=skip-build
 
       - name: Create Docs
         run: |

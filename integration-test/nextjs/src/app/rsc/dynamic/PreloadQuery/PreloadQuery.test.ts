@@ -34,12 +34,10 @@ test.describe("PreloadQuery", () => {
         await expect(page).toBeInitiallyLoading(true);
 
         await page.waitForEvent("pageerror", (error) => {
-          // this changed with Next 15 and seems like a bug in Next or React?
-          return error.message === "undefined";
-          // return (
-          //   /* prod */ error.message.includes("Minified React error #419") ||
-          //   /* dev */ error.message.includes("Query failed upstream.")
-          // );
+          return (
+            /* prod */ error.message.includes("Minified React error #419") ||
+            /* dev */ error.message.includes("Query failed upstream.")
+          );
         });
 
         await expect(page.getByText("loading")).not.toBeVisible();

@@ -1,8 +1,8 @@
 {
   "name": "@apollo/client-react-streaming",
-  "version": "0.11.5",
+  "version": "0.11.8-alpha.1",
   "repository": {
-    "url": "git+https://github.com/apollographql/apollo-client-nextjs"
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
   },
   "keywords": [
     "apollo",
@@ -122,6 +122,7 @@
     "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "postpublish": "touch .published",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
     "test-bundle:attw": "attw --pack .",
     "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
@@ -135,11 +136,12 @@
     "@arethetypeswrong/cli": "0.15.3",
     "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
-    "@testing-library/react": "15.0.7",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
     "@total-typescript/shoehorn": "0.1.2",
     "@tsconfig/recommended": "1.0.6",
     "@types/node": "20.12.11",
-    "@types/react": "18.3.1",
+    "@types/react": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
     "concurrently": "8.2.2",
@@ -152,9 +154,9 @@
     "graphql": "16.8.1",
     "jsdom": "24.0.0",
     "publint": "0.2.7",
-    "react": "18.3.0",
+    "react": "^19.0.0",
     "react-error-boundary": "4.0.13",
-    "react-server-dom-webpack": "0.0.1",
+    "react-server-dom-webpack": "^19.0.0",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
@@ -164,7 +166,7 @@
   },
   "peerDependencies": {
     "@apollo/client": "^3.10.4",
-    "react": "^18 || >=19.0.0-rc <19.0.0"
+    "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
     "ts-invariant": "^0.10.3"
