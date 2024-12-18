@@ -1,7 +1,7 @@
 {
   "name": "monorepo",
   "private": true,
-  "packageManager": "yarn@4.2.2",
+  "packageManager": "yarn@4.5.3",
   "workspaces": [
     "packages/*",
     "examples/*"
