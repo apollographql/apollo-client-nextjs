@@ -6,3 +6,10 @@ export {
   InMemoryCache,
 } from "./DataTransportAbstraction/index.js";
 export type { TransportedQueryRef } from "./transportedQueryRef.js";
+export {
+  ReadFromReadableStreamLink,
+  TeeToReadableStreamLink,
+  readFromReadableStream,
+  teeToReadableStream,
+  type ReadableStreamLinkEvent,
+} from "./ReadableStreamLink.js";
