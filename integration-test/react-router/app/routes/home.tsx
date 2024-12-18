@@ -1,51 +1,70 @@
-import { useLoaderData, type MetaFunction } from "react-router";
+import { useLoaderData } from "react-router";
 import type { Route } from "./+types/home";
-import type { TypedDocumentNode } from "@apollo/client/index.js";
-import { gql, useReadQuery } from "@apollo/client/index.js";
+import {
+  useApolloClient,
+  useQueryRefHandlers,
+  useReadQuery,
+} from "@apollo/client/index.js";
 import { apolloLoader } from "~/apollo";
-
-interface Posts {
-  posts: {
-    data: Array<{
-      id: string;
-      title: string;
-    }>;
-  };
-}
-const GET_POSTS: TypedDocumentNode<Posts> = gql`
-  query GetPosts {
-    posts(options: { paginate: { page: 1, limit: 5 } }) {
-      data {
-        id
-        title
-      }
-    }
-  }
-`;
+import { DEFERRED_QUERY } from "@integration-test/shared/queries";
+import { useTransition } from "react";
 
 export const loader = apolloLoader<Route.LoaderArgs>()(({ preloadQuery }) => {
-  const postsRef = preloadQuery(GET_POSTS);
+  const queryRef = preloadQuery(DEFERRED_QUERY, {
+    variables: { delayDeferred: 500 },
+  });
   return {
-    postsRef,
+    queryRef,
   };
 });
 
 export default function Home() {
-  const { postsRef } = useLoaderData<typeof loader>();
+  const { queryRef } = useLoaderData<typeof loader>();
 
-  const posts = useReadQuery(postsRef).data.posts.data;
+  const { refetch } = useQueryRefHandlers(queryRef);
+  const [refetching, startTransition] = useTransition();
+  const { data } = useReadQuery(queryRef);
+  const client = useApolloClient();
 
   return (
-    <div>
+    <>
       <ul>
-        {posts.map((post) => {
-          return (
-            <li key={post.id} className="whitespace-nowrap">
-              <div>{post.title.substring(0, 20)}</div>
-            </li>
-          );
-        })}
+        {data.products.map(({ id, title, rating }) => (
+          <li key={id}>
+            {title}
+            <br />
+            Rating:{" "}
+            <div style={{ display: "inline-block", verticalAlign: "text-top" }}>
+              {rating?.value || ""}
+              <br />
+              {rating ? `Queried in ${rating.env} environment` : "loading..."}
+            </div>
+          </li>
+        ))}
       </ul>
-    </div>
+      <p>Queried in {data.env} environment</p>
+      <button
+        disabled={refetching}
+        onClick={() => {
+          client.cache.batch({
+            update(cache) {
+              for (const product of data.products) {
+                cache.modify({
+                  id: cache.identify(product),
+                  fields: {
+                    rating: () => null,
+                  },
+                });
+              }
+            },
+          });
+          startTransition(() => {
+            refetch();
+          });
+        }}
+      >
+        {refetching ? "refetching..." : "refetch"}
+      </button>
+    </>
   );
 }
