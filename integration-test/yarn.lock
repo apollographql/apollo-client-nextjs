@@ -2723,6 +2723,7 @@ __metadata:
     "@apollo/server": "npm:^4.11.2"
     "@as-integrations/next": "npm:^3.2.0"
     "@graphql-tools/schema": "npm:^10.0.0"
+    "@integration-test/shared": "workspace:^"
     "@playwright/test": "npm:^1.49.1"
     "@types/node": "npm:20.3.1"
     "@types/react": "npm:^19.0.0"
@@ -2747,9 +2748,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@integration-test/shared@workspace:shared":
+"@integration-test/shared@workspace:^, @integration-test/shared@workspace:shared":
   version: 0.0.0-use.local
   resolution: "@integration-test/shared@workspace:shared"
+  peerDependencies:
+    "@apollo/client": "*"
+    graphql: "*"
   languageName: unknown
   linkType: soft
 

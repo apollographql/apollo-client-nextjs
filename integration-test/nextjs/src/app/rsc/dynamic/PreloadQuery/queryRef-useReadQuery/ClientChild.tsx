@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryRefHandlers, useReadQuery } from "@apollo/client";
-import { DynamicProductResult } from "../shared";
+import { DynamicProductResult } from "@integration-test/shared/queries";
 import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
 
 export function ClientChild({

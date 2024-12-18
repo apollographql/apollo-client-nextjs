@@ -1,6 +1,6 @@
 import { ApolloWrapper } from "@/app/cc/ApolloWrapper";
 import { ClientChild } from "./ClientChild";
-import { QUERY } from "../shared";
+import { QUERY } from "@integration-test/shared/queries";
 
 export const dynamic = "force-dynamic";
 import { PreloadQuery } from "../../../client";
