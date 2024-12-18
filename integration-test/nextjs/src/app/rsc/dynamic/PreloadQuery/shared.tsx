@@ -19,3 +19,30 @@ export const QUERY: TypedDocumentNode<
     env
   }
 `;
+
+export interface DeferredDynamicProductResult {
+  products: {
+    id: string;
+    title: string;
+    rating: undefined | { value: string; env: string };
+  }[];
+  env: string;
+}
+export const DEFERRED_QUERY: TypedDocumentNode<
+  DeferredDynamicProductResult,
+  { someArgument?: string; delayDeferred: number }
+> = gql`
+  query dynamicProducts($delayDeferred: Int!, $someArgument: String) {
+    products(someArgument: $someArgument) {
+      id
+      title
+      ... @defer {
+        rating(delay: $delayDeferred) {
+          value
+          env
+        }
+      }
+    }
+    env
+  }
+`;

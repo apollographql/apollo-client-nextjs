@@ -1,10 +1,8 @@
-import type { ServerResponse } from "node:http";
 /**
- /**
  * > This export is only available in streaming SSR Server environments
  *
  * Used to pipe a `ReadableStreamDefaultReader` to a `ServerResponse`.
- * 
+ *
  * @example
  * ```js
  * const { injectIntoStream, transformStream } = createInjectionTransformStream();
@@ -18,7 +16,11 @@ import type { ServerResponse } from "node:http";
  */
 export async function pipeReaderToResponse(
   reader: ReadableStreamDefaultReader<any>,
-  res: ServerResponse
+  res: {
+    write: (chunk: any) => void;
+    end: () => void;
+    destroy: (e: Error) => void;
+  }
 ) {
   try {
     // eslint-disable-next-line no-constant-condition
