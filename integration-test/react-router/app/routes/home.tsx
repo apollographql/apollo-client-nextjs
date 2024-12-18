@@ -1,16 +1,8 @@
 import { useLoaderData, type MetaFunction } from "react-router";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 import type { TypedDocumentNode } from "@apollo/client/index.js";
 import { gql, useReadQuery } from "@apollo/client/index.js";
 import { apolloLoader } from "~/apollo";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-};
 
 interface Posts {
   posts: {
@@ -44,8 +36,8 @@ export default function Home() {
   const posts = useReadQuery(postsRef).data.posts.data;
 
   return (
-    <div className="p-2 flex gap-2">
-      <ul className="list-disc pl-4">
+    <div>
+      <ul>
         {posts.map((post) => {
           return (
             <li key={post.id} className="whitespace-nowrap">
@@ -54,8 +46,6 @@ export default function Home() {
           );
         })}
       </ul>
-      <hr />
-      <Welcome />
     </div>
   );
 }
