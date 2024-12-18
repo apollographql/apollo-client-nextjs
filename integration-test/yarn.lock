@@ -40,25 +40,25 @@ __metadata:
 
 "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
   version: 0.11.5
-  resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=b41c48&locator=%40integration-test%2Froot%40workspace%3A."
+  resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=0070dd&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     "@apollo/client-react-streaming": "npm:0.11.5"
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
-  checksum: 10/f4a99fd74eb11f04425c3522b7b61ecd2859272c7046113fe7fa84dc444a8ba12b16f0444be15f3cf28e7d16aeb738a3857647803c61203003a6051524dfa912
+  checksum: 10/657719d5b7fa4fc09301dd05f765a4fe456efaa1126533cab82de7e38c12bf7128a500aa3a19e669b419c76959cea61a3b3c2bfe7aa97edf6c10a10409f51483
   languageName: node
   linkType: hard
 
 "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.7
-  resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=48b117&locator=%40integration-test%2Froot%40workspace%3A."
+  version: 0.11.8-alpha.1
+  resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=4f1b75&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.10.4
     react: ^18 || >=19.0.0-rc
-  checksum: 10/8e12155ebcb9672f5b645c364d356018014df750412c61613341121ebb4d4eabb5f42cd9018cc3a81ad988f1b425548d68254ca49ede19c31d0d9e5a9a4f240a
+  checksum: 10/007511fdca6df20b5329c20839271de5408b73f7aeedc7bd0e50b02316525c5e25a7ad33b435bcfc11aef1abddc20cd6d7d05df907e1e0d396ee21b405941cc5
   languageName: node
   linkType: hard
 
@@ -100,15 +100,15 @@ __metadata:
   linkType: hard
 
 "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.7
-  resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=fa2496&locator=%40integration-test%2Froot%40workspace%3A."
+  version: 0.11.8-alpha.1
+  resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=db9e8a&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.11.7"
+    "@apollo/client-react-streaming": "npm:0.11.8-alpha.1"
   peerDependencies:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
-  checksum: 10/ab92be4c933fb08593b00937628b94547cc9e13bfeb008c8dc9e58fc22ef63e1b9601712fd15c00f257b6af05d756087f040281d7f98530e44541378e8db830b
+  checksum: 10/dfb4cd61c0ef9e667cd80bbf4941ce2d8a0dc7d93b34f0f388014ebf3763527499b6df1b6f2d0059b03f8be633087a556fc27c5d2d917320f0bac0187965c8a3
   languageName: node
   linkType: hard
 
@@ -2672,7 +2672,7 @@ __metadata:
   dependencies:
     "@apollo/client": "npm:^3.11.10"
     "@apollo/client-react-streaming": "npm:*"
-    "@playwright/test": "npm:^1.39.0"
+    "@playwright/test": "npm:^1.49.1"
     "@tsconfig/vite-react": "npm:^3.0.0"
     "@types/react": "npm:^19.0.0"
     "@types/react-dom": "npm:^19.0.0"
@@ -2723,7 +2723,7 @@ __metadata:
     "@apollo/server": "npm:^4.11.2"
     "@as-integrations/next": "npm:^3.2.0"
     "@graphql-tools/schema": "npm:^10.0.0"
-    "@playwright/test": "npm:^1.39.0"
+    "@playwright/test": "npm:^1.49.1"
     "@types/node": "npm:20.3.1"
     "@types/react": "npm:^19.0.0"
     "@types/react-dom": "npm:^19.0.0"
@@ -2759,7 +2759,7 @@ __metadata:
   dependencies:
     "@apollo/client": "npm:^3.11.10"
     "@apollo/client-react-streaming": "npm:*"
-    "@playwright/test": "npm:^1.39.0"
+    "@playwright/test": "npm:^1.49.1"
     "@tsconfig/vite-react": "npm:^3.0.0"
     "@types/react": "npm:^19.0.0"
     "@types/react-dom": "npm:^19.0.0"
@@ -3276,14 +3276,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.39.0":
-  version: 1.42.0
-  resolution: "@playwright/test@npm:1.42.0"
+"@playwright/test@npm:^1.49.1":
+  version: 1.49.1
+  resolution: "@playwright/test@npm:1.49.1"
   dependencies:
-    playwright: "npm:1.42.0"
+    playwright: "npm:1.49.1"
   bin:
     playwright: cli.js
-  checksum: 10/bb696e89da47dd1ab46201fa4652f331bea3b75e9c804e358f83216f69d83a972a302d249a8e4c08cbc8fc72110a6e62562e679a474b5ed6246f09a9fc9bda6b
+  checksum: 10/bb0d5eda58ee0b5bbca732d2aa57782fadf420d101e08e16d5760179459c667907bd8d224ee3d6f43f3088378e377ef63d32ed605fec37605debf217c3efe8da
   languageName: node
   linkType: hard
 
@@ -8509,27 +8509,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.42.0":
-  version: 1.42.0
-  resolution: "playwright-core@npm:1.42.0"
+"playwright-core@npm:1.49.1":
+  version: 1.49.1
+  resolution: "playwright-core@npm:1.49.1"
   bin:
     playwright-core: cli.js
-  checksum: 10/18caeb7e0a1194be7a0c6178d49a5960c55230958dea16be14da2c1f5426427f9f195b59a4c481d0f530d585fa381fc5fc7c82f2a45edd3628ee745df63e9e69
+  checksum: 10/baa39a53024ec7744708410f2b952ac3aa2e1a6d311dabfa303523712848eba142fce5c20f1b2ed2a66fbd9a415d22ea8642b0f70423360aaebd4b41c47d364e
   languageName: node
   linkType: hard
 
-"playwright@npm:1.42.0":
-  version: 1.42.0
-  resolution: "playwright@npm:1.42.0"
+"playwright@npm:1.49.1":
+  version: 1.49.1
+  resolution: "playwright@npm:1.49.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.42.0"
+    playwright-core: "npm:1.49.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10/a900d377e20106f539ae3fde0e89468089d1bcdb766ecf00b883de49f6f164254df568971994eecec339238430656a17c8cbf28f881ceea42a62a143347bfa5c
+  checksum: 10/49fb063f4a107b8090f66d2d351ebd51fbb66843a8f95a161fa0c0e0b5156515961e75cc10f4249f61b9d2af51f762dda505c62b096d8f61cd47d1ff73ab39d2
   languageName: node
   linkType: hard
 

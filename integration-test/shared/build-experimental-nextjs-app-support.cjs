@@ -8,9 +8,7 @@ the package.
 const { execFileSync } = require("node:child_process");
 const { join, dirname } = require("node:path");
 
-const monorepoRoot = dirname(
-  require.resolve("monorepo", { paths: [process.env.INIT_CWD] })
-);
+const monorepoRoot = join(process.env.PROJECT_CWD, "..");
 const pathToArchive = join(execEnv.tempDir, "archive.tgz");
 
 setTimeout(() => {

@@ -1,8 +1,8 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.11.7",
+  "version": "0.11.8-alpha.1",
   "repository": {
-    "url": "git+https://github.com/apollographql/apollo-client-nextjs"
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
   },
   "keywords": [
     "apollo",
@@ -105,7 +105,7 @@
     "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
     "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
-    "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "prepublishOnly": "wait-on ../client-react-streaming/.published --delay 3000 --timeout 30000 && yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
     "test-bundle:attw": "attw --pack .",
     "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
@@ -141,7 +141,8 @@
     "tsup": "8.0.2",
     "tsx": "4.7.1",
     "typescript": "5.4.5",
-    "vitest": "1.6.0"
+    "vitest": "1.6.0",
+    "wait-on": "^8.0.1"
   },
   "peerDependencies": {
     "@apollo/client": "^3.10.4",
@@ -149,6 +150,6 @@
     "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.7"
+    "@apollo/client-react-streaming": "0.11.8-alpha.1"
   }
 }
