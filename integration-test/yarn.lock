@@ -10250,10 +10250,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-stream@npm:@phryneas/turbo-stream@2.4.1-pr.51.1.3fa62cb":
-  version: 2.4.1-pr.51.1.3fa62cb
-  resolution: "@phryneas/turbo-stream@npm:2.4.1-pr.51.1.3fa62cb"
-  checksum: 10/b3e3bbec3374afc82de9d4f29e955eaec2037cf7d6bff044ea9a256d9615d977f841daa935306b0c9031cc8552d1b8efd27c5084f6a43babd36fc1323af3c08e
+"turbo-stream@npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e":
+  version: 2.4.1-pr.51.1.d24f66e
+  resolution: "@phryneas/turbo-stream@npm:2.4.1-pr.51.1.d24f66e"
+  checksum: 10/09fdd86c894cb050ebe942a4ecaa86e10093d81a1d082df306d0c6513328258ac7159d6ac3ec769d3fb9e4e5e367b8f8b78467ae0f6279714c19231dec836d06
   languageName: node
   linkType: hard
 

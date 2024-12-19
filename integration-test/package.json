@@ -6,7 +6,7 @@
     "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs",
     "@apollo/client-integration-react-router": "exec:./shared/build-client-integration-react-router.cjs",
     "graphql": "17.0.0-alpha.2",
-    "turbo-stream": "npm:@phryneas/turbo-stream@2.4.1-pr.51.1.3fa62cb"
+    "turbo-stream": "npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e"
   },
   "workspaces": [
     "*"
