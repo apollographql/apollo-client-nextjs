@@ -15,6 +15,7 @@
     "@apollo/server": "^4.11.2",
     "@as-integrations/next": "^3.2.0",
     "@graphql-tools/schema": "^10.0.0",
+    "@integration-test/shared": "workspace:^",
     "@types/node": "20.3.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

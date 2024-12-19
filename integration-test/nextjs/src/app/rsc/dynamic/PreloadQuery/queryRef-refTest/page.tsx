@@ -1,4 +1,4 @@
-import { QUERY } from "../shared";
+import { QUERY } from "@integration-test/shared/queries";
 import { Suspense } from "react";
 import { PreloadQuery } from "@/app/rsc/client";
 import { RefTestChild } from "./RefTestChild";

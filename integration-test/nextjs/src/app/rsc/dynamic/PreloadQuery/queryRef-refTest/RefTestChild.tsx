@@ -1,7 +1,7 @@
 "use client";
 
 import { QueryRef, useQueryRefHandlers } from "@apollo/client";
-import { DynamicProductResult } from "../shared";
+import { DynamicProductResult } from "@integration-test/shared/queries";
 import { useEffect, useState } from "react";
 import {
   InternalQueryReference,

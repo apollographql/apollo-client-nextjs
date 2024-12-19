@@ -3,6 +3,7 @@
   "private": true,
   "packageManager": "yarn@4.2.2",
   "workspaces": [
+    "packages",
     "packages/*",
     "examples/*"
   ],

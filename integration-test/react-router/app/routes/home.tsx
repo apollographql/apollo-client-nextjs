@@ -1,19 +1,26 @@
-"use client";
-
+import { useLoaderData } from "react-router";
+import type { Route } from "./+types/home";
 import {
   useApolloClient,
   useQueryRefHandlers,
   useReadQuery,
-} from "@apollo/client";
-import { DeferredDynamicProductResult } from "@integration-test/shared/queries";
-import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client/index.js";
+import { apolloLoader } from "~/apollo";
+import { DEFERRED_QUERY } from "@integration-test/shared/queries";
 import { useTransition } from "react";
 
-export function ClientChild({
-  queryRef,
-}: {
-  queryRef: TransportedQueryRef<DeferredDynamicProductResult>;
-}) {
+export const loader = apolloLoader<Route.LoaderArgs>()(({ preloadQuery }) => {
+  const queryRef = preloadQuery(DEFERRED_QUERY, {
+    variables: { delayDeferred: 500 },
+  });
+  return {
+    queryRef,
+  };
+});
+
+export default function Home() {
+  const { queryRef } = useLoaderData<typeof loader>();
+
   const { refetch } = useQueryRefHandlers(queryRef);
   const [refetching, startTransition] = useTransition();
   const { data } = useReadQuery(queryRef);
