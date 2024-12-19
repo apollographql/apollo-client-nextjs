@@ -8836,19 +8836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.2"
-  peerDependencies:
-    react: ^18.3.1
-  checksum: 10/3f4b73a3aa083091173b29812b10394dd06f4ac06aff410b74702cfb3aa29d7b0ced208aab92d5272919b612e5cda21aeb1d54191848cf6e46e9e354f3541f81
-  languageName: node
-  linkType: hard
-
-"react-dom@npm:^19.0.0":
+"react-dom@npm:^19, react-dom@npm:^19.0.0":
   version: 19.0.0
   resolution: "react-dom@npm:19.0.0"
   dependencies:
@@ -8944,8 +8932,8 @@ __metadata:
     autoprefixer: "npm:^10.4.20"
     isbot: "npm:^5.1.17"
     postcss: "npm:^8.4.49"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
+    react: "npm:^19"
+    react-dom: "npm:^19"
     react-router: "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
     tailwindcss: "npm:^3.4.15"
     typescript: "npm:^5.6.3"
@@ -8963,16 +8951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/261137d3f3993eaa2368a83110466fc0e558bc2c7f7ae7ca52d94f03aac945f45146bd85e5f481044db1758a1dbb57879e2fcdd33924e2dde1bdc550ce73f7bf
-  languageName: node
-  linkType: hard
-
-"react@npm:^19.0.0":
+"react@npm:^19, react@npm:^19.0.0":
   version: 19.0.0
   resolution: "react@npm:19.0.0"
   checksum: 10/2490969c503f644703c88990d20e4011fa6119ddeca451e9de48f6d7ab058d670d2852a5fcd3aa3cd90a923ab2815d532637bd4a814add402ae5c0d4f129ee71
@@ -9360,15 +9339,6 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10/6e194e726210c2d619cbf69a73fdb068cb0c9b0c99222de429ec5fc562c2f28e59a8cb3526e9104e16521e7e57c785a82bc44dd3f78fd0de86aea719a218f3c3
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.23.2":
-  version: 0.23.2
-  resolution: "scheduler@npm:0.23.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/e8d68b89d18d5b028223edf090092846868a765a591944760942b77ea1f69b17235f7e956696efbb62c8130ab90af7e0949bfb8eba7896335507317236966bc9
   languageName: node
   linkType: hard
 
