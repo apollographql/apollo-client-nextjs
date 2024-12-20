@@ -50,4 +50,4 @@ setTimeout(() => {
       stdio: `inherit`,
     }
   );
-}, 3000);
+}, 5000);
