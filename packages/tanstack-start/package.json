@@ -1,0 +1,102 @@
+{
+  "name": "@apollo/client-integration-react-router",
+  "version": "0.11.5",
+  "repository": {
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs"
+  },
+  "keywords": [
+    "apollo",
+    "react-router",
+    "apollo-client",
+    "graphql",
+    "ssr"
+  ],
+  "type": "module",
+  "imports": {
+    "#bundled": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "typings": "./dist/index.d.ts",
+  "author": "packages@apollographql.com",
+  "license": "MIT",
+  "files": [
+    "dist/",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rimraf dist; tsup",
+    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
+    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
+    "test:ssr": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=node\" yarn run test:base",
+    "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
+    "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
+    "prepack": "yarn build",
+    "prepublishOnly": "wait-on ../client-react-streaming/.published --delay 3000 --timeout 30000 && yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
+    "test-bundle:attw": "attw --pack .",
+    "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
+    "test-bundle:publint": "publint --strict",
+    "test-bundle:shape": "yarn workspace monorepo verify-package-shape $PWD/package-shape.json",
+    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
+    "lint": "eslint --ext .ts,.tsx ."
+  },
+  "devDependencies": {
+    "@apollo/client": "3.10.4",
+    "@apollo/client-react-streaming": "workspace:*",
+    "@arethetypeswrong/cli": "0.15.3",
+    "@internal/test-utils": "workspace:^",
+    "@microsoft/api-extractor": "7.43.2",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
+    "@total-typescript/shoehorn": "0.1.2",
+    "@tsconfig/recommended": "1.0.6",
+    "@types/node": "20.12.11",
+    "@types/react": "^19.0.0",
+    "concurrently": "8.2.2",
+    "eslint": "8.57.0",
+    "glob": "10.3.12",
+    "global-jsdom": "24.0.0",
+    "globstar": "1.0.0",
+    "graphql": "16.8.1",
+    "jsdom": "24.0.0",
+    "publint": "0.2.7",
+    "react": "^19.0.0",
+    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
+    "rimraf": "5.0.5",
+    "ts-node": "10.9.2",
+    "tsup": "8.0.2",
+    "tsx": "4.7.1",
+    "typescript": "5.4.5",
+    "vitest": "1.6.0"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-router": "^7.0.2"
+  },
+  "dependencies": {
+    "@apollo/client-react-streaming": "0.11.5"
+  }
+}
