@@ -19,7 +19,7 @@ $.stdio = "inherit";
   // give the main build script a chance to kick in
   await sleep(1000);
 
-  await retry(30, "1s", () => $`test -f ${archive}`);
+  await retry(120, "1s", () => $`test -f ${archive}`);
 
   cd(monorepoRoot);
   await $`tar -x -z --strip-components=1 -f ${archive} -C ${execEnv.buildDir}`;
