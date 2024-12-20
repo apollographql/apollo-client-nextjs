@@ -5,6 +5,7 @@
     "@apollo/client-react-streaming": "exec:./shared/build-client-react-streaming.cjs",
     "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs",
     "@apollo/client-integration-react-router": "exec:./shared/build-client-integration-react-router.cjs",
+    "@apollo/client-integration-tanstack-start": "exec:./shared/build-client-integration-tanstack-start.cjs",
     "graphql": "17.0.0-alpha.2",
     "turbo-stream": "npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e",
     "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.91.3#~/../.yarn/patches/@tanstack-react-router-npm-1.91.3-8e077b923e.patch",
@@ -14,7 +15,7 @@
     "*"
   ],
   "scripts": {
-    "build:libs": "find . -regextype posix-extended -regex '.*/node_modules/@apollo/(client-react-streaming|experimental-nextjs-app-support|client-integration-react-router)' -printf 'rm -r %p\n' -exec rm -r {} +; glob \"../.yarn/cache/@apollo-*exec*\" \"$HOME/.yarn/berry/cache/@apollo-*exec*\" --cmd='rm -v' ; yarn"
+    "build:libs": "find . -regextype posix-extended -regex '.*/node_modules/@apollo/(client-react-streaming|experimental-nextjs-app-support|client-integration-react-router|client-integration-tanstack-start)' -printf 'rm -r %p\n' -exec rm -r {} +; glob \"../.yarn/cache/@apollo-*exec*\" \"$HOME/.yarn/berry/cache/@apollo-*exec*\" --cmd='rm -v' ; yarn"
   },
   "devDependencies": {
     "glob": "^10.3.10"

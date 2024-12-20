@@ -50,6 +50,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/client-integration-tanstack-start@exec:./shared/build-client-integration-tanstack-start.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
+  version: 0.11.5
+  resolution: "@apollo/client-integration-tanstack-start@exec:./shared/build-client-integration-tanstack-start.cjs#./shared/build-client-integration-tanstack-start.cjs::hash=66d731&locator=%40integration-test%2Froot%40workspace%3A."
+  dependencies:
+    "@apollo/client-react-streaming": "npm:0.11.5"
+  peerDependencies:
+    "@tanstack/react-router": "*"
+    react: ^19
+  checksum: 10/c99ecea3568fbf162166751c610b1da35aa51aeeda3538d23b8ca53b1c4e527994cc6bba574891ff136dc32faf4f6592dacafa5cb57a9a9abec75ec679addfc9
+  languageName: node
+  linkType: hard
+
 "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
   version: 0.11.8-alpha.1
   resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=509995&locator=%40integration-test%2Froot%40workspace%3A."
@@ -96,6 +108,43 @@ __metadata:
     subscriptions-transport-ws:
       optional: true
   checksum: 10/a7e242187e4c198c43b94d57d17c8bda123619977f659fda19c1a1a9dd7351d2d0d73db76e61f0161b4a0a69d8e7d8707a228398f3af4f78103d11843ba67101
+  languageName: node
+  linkType: hard
+
+"@apollo/client@npm:^3.12.4":
+  version: 3.12.4
+  resolution: "@apollo/client@npm:3.12.4"
+  dependencies:
+    "@graphql-typed-document-node/core": "npm:^3.1.1"
+    "@wry/caches": "npm:^1.0.0"
+    "@wry/equality": "npm:^0.5.6"
+    "@wry/trie": "npm:^0.5.0"
+    graphql-tag: "npm:^2.12.6"
+    hoist-non-react-statics: "npm:^3.3.2"
+    optimism: "npm:^0.18.0"
+    prop-types: "npm:^15.7.2"
+    rehackt: "npm:^0.1.0"
+    response-iterator: "npm:^0.2.6"
+    symbol-observable: "npm:^4.0.0"
+    ts-invariant: "npm:^0.10.3"
+    tslib: "npm:^2.3.0"
+    zen-observable-ts: "npm:^1.2.5"
+  peerDependencies:
+    graphql: ^15.0.0 || ^16.0.0
+    graphql-ws: ^5.5.5
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
+  peerDependenciesMeta:
+    graphql-ws:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    subscriptions-transport-ws:
+      optional: true
+  checksum: 10/9659ccf03ab5d6708cf191a1bd09c33ab5f958a8d66e783f81ccc899448b362a51cecf7d62c0ff5b852e60a340238e6903b3c96dcb5cf68dfb8a438ee6cd24bb
   languageName: node
   linkType: hard
 
@@ -13867,11 +13916,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tanstack-start@workspace:tanstack-start"
   dependencies:
+    "@apollo/client": "npm:^3.12.4"
+    "@apollo/client-integration-tanstack-start": "npm:*"
+    "@integration-test/shared": "workspace:^"
     "@tanstack/react-router": "npm:1.91.3"
     "@tanstack/start": "npm:1.91.3"
     "@types/react": "npm:^19.0.2"
     "@types/react-dom": "npm:^19.0.2"
     "@vitejs/plugin-react": "npm:^4.3.4"
+    graphql: "npm:^16.10.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     typescript: "npm:^5.7.2"
