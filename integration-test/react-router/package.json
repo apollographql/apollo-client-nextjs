@@ -18,7 +18,7 @@
     "isbot": "^5.1.17",
     "react": "^19",
     "react-dom": "^19",
-    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
+    "react-router": "patch:react-router@npm%3A7.0.2#~/../.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
   },
   "devDependencies": {
     "@react-router/dev": "^7.0.1",

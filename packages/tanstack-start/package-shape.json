@@ -1,0 +1,14 @@
+{
+  "@apollo/client-integration-react-router": {
+    "browser": [
+      "ApolloClient",
+      "routerWithApolloClient",
+      "built_for_browser"
+    ],
+    "node": [
+      "ApolloClient",
+      "routerWithApolloClient",
+      "built_for_browser"
+    ]
+  }
+}
