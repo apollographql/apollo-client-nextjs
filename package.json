@@ -29,6 +29,7 @@
     "@size-limit/file": "11.1.2",
     "@size-limit/webpack": "11.1.2",
     "@size-limit/webpack-why": "11.1.2",
-    "size-limit": "11.1.2"
+    "size-limit": "11.1.2",
+    "zx": "^8.2.4"
   }
 }
