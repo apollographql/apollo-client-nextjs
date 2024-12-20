@@ -1,94 +1,43 @@
 {
-  "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.11.8-alpha.1",
+  "name": "@apollo/client-integration-react-router",
+  "version": "0.11.5",
   "repository": {
-    "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
   "keywords": [
     "apollo",
-    "nextjs",
+    "react-router",
     "apollo-client",
     "graphql",
-    "ssr",
-    "rsc",
-    "app-router",
-    "app"
+    "ssr"
   ],
   "type": "module",
   "imports": {
     "#bundled": {
       "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       },
       "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     }
   },
   "exports": {
     ".": {
       "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "edge-light": "./dist/index.ssr.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       },
       "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "edge-light": "./dist/index.ssr.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
-      }
-    },
-    "./rsc": {
-      "require": {
-        "types": "./dist/rsc/index.d.cts",
-        "react-server": "./dist/rsc/index.cjs",
-        "default": "./dist/empty.cjs"
-      },
-      "import": {
-        "types": "./dist/rsc/index.d.ts",
-        "react-server": "./dist/rsc/index.js",
-        "default": "./dist/empty.js"
-      }
-    },
-    "./ssr": {
-      "require": {
-        "types": "./dist/ssr/index.ssr.d.cts",
-        "react-server": "./dist/ssr/index.rsc.cjs",
-        "edge-light": "./dist/ssr/index.ssr.cjs",
-        "browser": "./dist/ssr/index.browser.cjs",
-        "node": "./dist/ssr/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/ssr/index.ssr.d.ts",
-        "react-server": "./dist/ssr/index.rsc.js",
-        "edge-light": "./dist/ssr/index.ssr.js",
-        "browser": "./dist/ssr/index.browser.js",
-        "node": "./dist/ssr/index.ssr.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     },
     "./package.json": "./package.json"
   },
-  "typesVersions": {
-    "*": {
-      "ssr": [
-        "./dist/ssr/index.ssr.d.ts"
-      ],
-      "rsc": [
-        "./dist/rsc/index.d.ts"
-      ]
-    }
-  },
-  "typings": "./dist/combined.d.ts",
+  "typings": "./dist/index.d.ts",
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
@@ -133,23 +82,21 @@
     "globstar": "1.0.0",
     "graphql": "16.8.1",
     "jsdom": "24.0.0",
-    "next": "^15.0.0",
     "publint": "0.2.7",
     "react": "^19.0.0",
+    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
     "tsx": "4.7.1",
     "typescript": "5.4.5",
-    "vitest": "1.6.0",
-    "wait-on": "^8.0.1"
+    "vitest": "1.6.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.10.4",
-    "next": "^13.4.1 || ^14.0.0 || ^15.0.0-rc.0",
-    "react": "^18 || >=19.0.0-rc"
+    "react": "^19",
+    "react-router": "^7.0.2"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.8-alpha.1"
+    "@apollo/client-react-streaming": "0.11.5"
   }
 }

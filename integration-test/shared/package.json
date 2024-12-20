@@ -1,3 +1,7 @@
 {
-  "name": "@integration-test/shared"
+  "name": "@integration-test/shared",
+  "peerDependencies": {
+    "@apollo/client": "*",
+    "graphql": "*"
+  }
 }

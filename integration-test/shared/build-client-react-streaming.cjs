@@ -5,38 +5,21 @@ This script can be used with the `exec:` protocol (https://yarnpkg.com/protocol/
 the package.
 */
 
-const { execFileSync } = require("node:child_process");
-const { join, dirname } = require("node:path");
-
-const monorepoRoot = join(process.env.PROJECT_CWD, "..");
-const pathToArchive = join(execEnv.tempDir, "archive.tgz");
-
-execFileSync(
-  `yarn`,
-  [
-    `workspace`,
-    `@apollo/client-react-streaming`,
-    `pack`,
-    `--out`,
-    pathToArchive,
-  ],
-  {
-    stdio: `inherit`,
-    cwd: monorepoRoot,
-  }
+const { join } = require("node:path");
+const { $, cd } = /** @type {typeof import('zx')} */ (
+  require(require.resolve("zx", { paths: [process.env.PROJECT_CWD] }))
 );
-execFileSync(
-  `tar`,
-  [
-    `-x`,
-    `-z`,
-    `--strip-components=1`,
-    `-f`,
-    pathToArchive,
-    `-C`,
-    execEnv.buildDir,
-  ],
-  {
-    stdio: `inherit`,
-  }
-);
+$.stdio = "inherit";
+
+(async function run() {
+  const monorepoRoot = join(process.env.PROJECT_CWD, "..");
+  const archive = join(
+    monorepoRoot,
+    "packages/client-react-streaming/archive.tgz"
+  );
+
+  cd(monorepoRoot);
+  await $`yarn workspaces foreach --all --include '@apollo/*' exec rm -vf archive.tgz`;
+  await $`yarn workspaces foreach --all --include '@apollo/*' pack --out archive.tgz`;
+  await $`tar -x -z --strip-components=1 -f ${archive} -C ${execEnv.buildDir}`;
+})();

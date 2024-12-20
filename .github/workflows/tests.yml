@@ -98,7 +98,7 @@ jobs:
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
 
       - name: Set target version of Apollo Client (Integration Test)
-        run: yarn workspaces foreach --all --include "@integration-test/*" add @apollo/client@${{ matrix.version }}
+        run: yarn workspaces foreach --all --include "@integration-test/*" --exclude @integration-test/shared add @apollo/client@${{ matrix.version }}
 
       - name: Get installed Playwright version
         id: playwright-version
