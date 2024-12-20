@@ -1,3 +1,2 @@
-export { ApolloClient } from "./ApolloClient.js";
-export { ApolloHydrationHelper } from "./ApolloHydrationHelper.js";
-export { createApolloLoaderHandler } from "./preloader.js";
+export { routerWithApolloClient } from "./routerWithApolloClient.js";
+export { ApolloClient } from "@apollo/client-react-streaming";

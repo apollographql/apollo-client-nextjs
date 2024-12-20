@@ -2,14 +2,12 @@
   "@apollo/client-integration-react-router": {
     "browser": [
       "ApolloClient",
-      "ApolloHydrationHelper",
-      "createApolloLoaderHandler",
+      "routerWithApolloClient",
       "built_for_browser"
     ],
     "node": [
       "ApolloClient",
-      "ApolloHydrationHelper",
-      "createApolloLoaderHandler",
+      "routerWithApolloClient",
       "built_for_browser"
     ]
   }
