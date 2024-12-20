@@ -1,0 +1,22 @@
+{
+  "name": "tanstack-start",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "1.91.3",
+    "@tanstack/start": "1.91.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vinxi": "^0.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2"
+  }
+}

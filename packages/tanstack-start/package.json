@@ -87,7 +87,6 @@
     "jsdom": "24.0.0",
     "publint": "0.2.7",
     "react": "^19.0.0",
-    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
@@ -97,8 +96,7 @@
   },
   "peerDependencies": {
     "@tanstack/react-router": "*",
-    "react": "^19",
-    "react-router": "^7.0.2"
+    "react": "^19"
   },
   "dependencies": {
     "@apollo/client-react-streaming": "0.11.5"

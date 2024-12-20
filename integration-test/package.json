@@ -6,7 +6,9 @@
     "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs",
     "@apollo/client-integration-react-router": "exec:./shared/build-client-integration-react-router.cjs",
     "graphql": "17.0.0-alpha.2",
-    "turbo-stream": "npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e"
+    "turbo-stream": "npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e",
+    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.91.3#~/../.yarn/patches/@tanstack-react-router-npm-1.91.3-8e077b923e.patch",
+    "@tanstack/start": "patch:@tanstack/start@npm%3A1.91.3#~/../.yarn/patches/@tanstack-start-npm-1.91.3-de6292cf0b.patch"
   },
   "workspaces": [
     "*"
