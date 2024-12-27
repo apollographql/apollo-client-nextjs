@@ -31,7 +31,7 @@ describe(
   async () => {
     // @ts-expect-error seems to have a wrong type?
     await import("global-jsdom/register");
-    const { render, cleanup, getQueriesForElement } = await import(
+    const { render, cleanup, getQueriesForElement, act } = await import(
       "@testing-library/react"
     );
 
@@ -117,18 +117,22 @@ describe(
           return <>{data.me}</>;
         }
 
-        const { findByText } = render(
-          <Provider makeClient={() => client}>
-            <Suspense fallback={"Fallback"}>
-              <Child />
-            </Suspense>
-          </Provider>
+        const { findByText } = await act(async () =>
+          render(
+            <Provider makeClient={() => client}>
+              <Suspense fallback={"Fallback"}>
+                <Child />
+              </Suspense>
+            </Provider>
+          )
         );
 
         assert.deepStrictEqual(events, [EVENT_STARTED]);
         assert.deepStrictEqual(staticData, []);
 
-        link.simulateResult({ result: { data: FIRST_RESULT } }, true);
+        await act(async () =>
+          link.simulateResult({ result: { data: FIRST_RESULT } }, true)
+        );
 
         await findByText("User");
 
@@ -189,17 +193,19 @@ describe(
           return <>{data.me}</>;
         }
 
-        const { findByText, rerender } = render(
-          <Provider makeClient={() => client}></Provider>
+        const { findByText, rerender } = await act(async () =>
+          render(<Provider makeClient={() => client}></Provider>)
         );
 
-        simulateQueryEvent!(EVENT_STARTED);
-        rerender(
-          <Provider makeClient={() => client}>
-            <Suspense fallback={"Fallback"}>
-              <Child />
-            </Suspense>
-          </Provider>
+        await act(async () => simulateQueryEvent!(EVENT_STARTED));
+        await act(async () =>
+          rerender(
+            <Provider makeClient={() => client}>
+              <Suspense fallback={"Fallback"}>
+                <Child />
+              </Suspense>
+            </Provider>
+          )
         );
 
         assert.ok(attemptedRenderCount > 0);
@@ -207,8 +213,8 @@ describe(
         await findByText("Fallback");
 
         useStaticValueRefStub = () => ({ current: FIRST_HOOK_RESULT as any });
-        simulateQueryEvent!(EVENT_DATA);
-        simulateQueryEvent!(EVENT_COMPLETE);
+        await act(async () => simulateQueryEvent!(EVENT_DATA));
+        await act(async () => simulateQueryEvent!(EVENT_COMPLETE));
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
 

@@ -8,42 +8,46 @@ the package.
 const { execFileSync } = require("node:child_process");
 const { join, dirname } = require("node:path");
 
-const monorepoRoot = dirname(
-  require.resolve("monorepo", { paths: [process.env.INIT_CWD] })
-);
+const monorepoRoot = join(process.env.PROJECT_CWD, "..");
 const pathToArchive = join(execEnv.tempDir, "archive.tgz");
 
-execFileSync(`yarn`, [`workspace`, `@apollo/client-react-streaming`, `build`], {
-  stdio: `inherit`,
-  cwd: monorepoRoot,
-});
+setTimeout(() => {
+  execFileSync(
+    `yarn`,
+    [`workspace`, `@apollo/client-react-streaming`, `build`],
+    {
+      stdio: `inherit`,
+      cwd: monorepoRoot,
+    }
+  );
 
-execFileSync(
-  `yarn`,
-  [
-    `workspace`,
-    `@apollo/experimental-nextjs-app-support`,
-    `pack`,
-    `--out`,
-    pathToArchive,
-  ],
-  {
-    stdio: `inherit`,
-    cwd: monorepoRoot,
-  }
-);
-execFileSync(
-  `tar`,
-  [
-    `-x`,
-    `-z`,
-    `--strip-components=1`,
-    `-f`,
-    pathToArchive,
-    `-C`,
-    execEnv.buildDir,
-  ],
-  {
-    stdio: `inherit`,
-  }
-);
+  execFileSync(
+    `yarn`,
+    [
+      `workspace`,
+      `@apollo/experimental-nextjs-app-support`,
+      `pack`,
+      `--out`,
+      pathToArchive,
+    ],
+    {
+      stdio: `inherit`,
+      cwd: monorepoRoot,
+    }
+  );
+  execFileSync(
+    `tar`,
+    [
+      `-x`,
+      `-z`,
+      `--strip-components=1`,
+      `-f`,
+      pathToArchive,
+      `-C`,
+      execEnv.buildDir,
+    ],
+    {
+      stdio: `inherit`,
+    }
+  );
+}, 3000);

@@ -1,8 +1,8 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.11.6",
+  "version": "0.11.8-alpha.1",
   "repository": {
-    "url": "git+https://github.com/apollographql/apollo-client-nextjs"
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
   },
   "keywords": [
     "apollo",
@@ -105,7 +105,7 @@
     "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
     "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
-    "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "prepublishOnly": "wait-on ../client-react-streaming/.published --delay 3000 --timeout 30000 && yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
     "test-bundle:attw": "attw --pack .",
     "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
@@ -120,11 +120,12 @@
     "@arethetypeswrong/cli": "0.15.3",
     "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
-    "@testing-library/react": "15.0.7",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
     "@total-typescript/shoehorn": "0.1.2",
     "@tsconfig/recommended": "1.0.6",
     "@types/node": "20.12.11",
-    "@types/react": "18.3.1",
+    "@types/react": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
     "concurrently": "8.2.2",
@@ -138,20 +139,21 @@
     "jsdom": "24.0.0",
     "next": "^15.0.0",
     "publint": "0.2.7",
-    "react": "18.3.0",
+    "react": "^19.0.0",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
     "tsx": "4.7.1",
     "typescript": "5.4.5",
-    "vitest": "1.6.0"
+    "vitest": "1.6.0",
+    "wait-on": "^8.0.1"
   },
   "peerDependencies": {
     "@apollo/client": "^3.10.4",
     "next": "^13.4.1 || ^14.0.0 || ^15.0.0-rc.0",
-    "react": "^18 || >=19.0.0-rc <19.0.0"
+    "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.6"
+    "@apollo/client-react-streaming": "0.11.8-alpha.1"
   }
 }
