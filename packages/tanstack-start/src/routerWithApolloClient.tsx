@@ -61,6 +61,7 @@ export function routerWithApolloClient<TRouter extends AnyRouter>(
           });
           reviveTransportedQueryRef(value, apolloClient);
         }
+        return value;
       });
 
       return transformed;

@@ -174,7 +174,16 @@ export function reviveTransportedQueryRef(
     queryKey,
   ];
   if (!queryRef._hydrated) {
-    queryRef._hydrated = cacheKey;
+    // TanStack query has a timing where this is potentially transported over the wire if it
+    // is consumed in a component (it will be revived there) and timing is unfortunate
+    // this works here now, but might cause problems with React itself - we should change this
+    // to a WeakMap.
+    Object.defineProperty(queryRef, "_hydrated", {
+      value: cacheKey,
+      writable: false,
+      enumerable: false,
+      configurable: true,
+    });
     const internalQueryRef = getSuspenseCache(client).getQueryRef(
       cacheKey,
       () =>

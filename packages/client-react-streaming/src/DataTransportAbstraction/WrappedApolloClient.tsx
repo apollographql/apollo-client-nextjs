@@ -6,9 +6,10 @@ import type {
   FetchResult,
   DocumentNode,
   NormalizedCacheObject,
-  ApolloLink,
 } from "@apollo/client/index.js";
+
 import {
+  ApolloLink,
   ApolloClient as OrigApolloClient,
   Observable,
 } from "@apollo/client/index.js";
@@ -331,7 +332,14 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   }
 
   setLink(newLink: ApolloLink) {
-    super.setLink.call(this, ReadFromReadableStreamLink.concat(newLink));
+    super.setLink.call(
+      this,
+      ApolloLink.from([
+        new ReadFromReadableStreamLink(),
+        new TeeToReadableStreamLink(),
+        newLink,
+      ])
+    );
   }
 
   watchQueryQueue = createBackpressuredCallback<{
@@ -419,7 +427,7 @@ export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {
   }
 
   setLink(newLink: ApolloLink) {
-    super.setLink.call(this, ReadFromReadableStreamLink.concat(newLink));
+    super.setLink.call(this, new ReadFromReadableStreamLink().concat(newLink));
   }
 }
 
@@ -430,7 +438,7 @@ export class ApolloClientRSCImpl extends ApolloClientBase {
   }
 
   setLink(newLink: ApolloLink) {
-    super.setLink.call(this, TeeToReadableStreamLink.concat(newLink));
+    super.setLink.call(this, new TeeToReadableStreamLink().concat(newLink));
   }
 }
 

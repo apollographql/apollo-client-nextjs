@@ -6,7 +6,6 @@ import {
   useReadQuery,
 } from "@apollo/client/index.js";
 import { useTransition } from "react";
-import { reviveTransportedQueryRef } from "@apollo/client-react-streaming";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -22,13 +21,6 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { queryRef } = Route.useLoaderData();
-
-  const ac = useApolloClient();
-
-  console.log({ queryRef });
-  // @ts-ignore
-  reviveTransportedQueryRef(queryRef, ac);
-  console.log({ queryRef });
 
   const { refetch } = useQueryRefHandlers(queryRef);
   const [refetching, startTransition] = useTransition();

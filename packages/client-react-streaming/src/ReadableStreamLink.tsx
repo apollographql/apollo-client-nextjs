@@ -50,127 +50,136 @@ export function readFromReadableStream<T extends Record<string, any>>(
  * A link that allows the request to be cloned into a readable stream, e.g. for
  * transport of multipart responses from RSC or a server loader to the browser.
  */
-export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
-  const context = operation.getContext() as InternalContext;
+export class TeeToReadableStreamLink extends ApolloLink {
+  constructor() {
+    super((operation, forward) => {
+      const context = operation.getContext() as InternalContext;
 
-  const controller = context[teeToReadableStreamKey];
+      const controller = context[teeToReadableStreamKey];
 
-  if (controller) {
-    const tryClose = () => {
-      try {
-        controller.close();
-      } catch {
-        // maybe we already tried to close the stream, nothing to worry about
+      if (controller) {
+        const tryClose = () => {
+          try {
+            controller.close();
+          } catch {
+            // maybe we already tried to close the stream, nothing to worry about
+          }
+        };
+        return new Observable((observer) => {
+          const subscription = forward(operation).subscribe({
+            next(result) {
+              console.log("enqueue next", result);
+              controller.enqueue({ type: "next", value: result });
+              observer.next(result);
+            },
+            error(error) {
+              controller.enqueue({ type: "error" });
+              controller.close();
+              observer.error(error);
+            },
+            complete() {
+              controller.enqueue({ type: "completed" });
+              controller.close();
+              observer.complete();
+            },
+          });
+
+          return () => {
+            tryClose();
+            subscription.unsubscribe();
+          };
+        });
       }
-    };
-    return new Observable((observer) => {
-      const subscription = forward(operation).subscribe({
-        next(result) {
-          controller.enqueue({ type: "next", value: result });
-          observer.next(result);
-        },
-        error(error) {
-          controller.enqueue({ type: "error" });
-          controller.close();
-          observer.error(error);
-        },
-        complete() {
-          controller.enqueue({ type: "completed" });
-          controller.close();
-          observer.complete();
-        },
-      });
 
-      return () => {
-        tryClose();
-        subscription.unsubscribe();
-      };
+      return forward(operation);
     });
   }
-
-  return forward(operation);
-});
+}
 
 /**
  * A link that allows the response to be read from a readable stream, e.g. for
  * hydration of a multipart response from RSC or a server loader in the browser.
  */
-export const ReadFromReadableStreamLink = new ApolloLink(
-  (operation, forward) => {
-    const context = operation.getContext() as InternalContext;
 
-    const eventSteam = context[readFromReadableStreamKey];
-    if (eventSteam) {
-      return new Observable((observer) => {
-        let aborted = false as boolean;
-        const reader = (() => {
-          try {
-            return eventSteam.getReader();
-          } catch {
-            /**
-             * The reader could not be created, usually because the stream has
-             * already been consumed.
-             * This would be the case if we call `refetch` on a queryRef that has
-             * the `readFromReadableStreamKey` property in context.
-             * In that case, we want to do a normal network request.
-             */
+export class ReadFromReadableStreamLink extends ApolloLink {
+  constructor() {
+    super((operation, forward) => {
+      const context = operation.getContext() as InternalContext;
+
+      const eventSteam = context[readFromReadableStreamKey];
+      if (eventSteam) {
+        return new Observable((observer) => {
+          let aborted = false as boolean;
+          const reader = (() => {
+            try {
+              return eventSteam.getReader();
+            } catch {
+              /**
+               * The reader could not be created, usually because the stream has
+               * already been consumed.
+               * This would be the case if we call `refetch` on a queryRef that has
+               * the `readFromReadableStreamKey` property in context.
+               * In that case, we want to do a normal network request.
+               */
+            }
+          })();
+
+          if (!reader) {
+            // if we can't create a reader, we want to do a normal network request
+            const subscription = forward(operation).subscribe(observer);
+            return () => subscription.unsubscribe();
           }
-        })();
+          consume(reader);
 
-        if (!reader) {
-          // if we can't create a reader, we want to do a normal network request
-          const subscription = forward(operation).subscribe(observer);
-          return () => subscription.unsubscribe();
-        }
-        consume(reader);
+          let onAbort = () => {
+            aborted = true;
+            reader.cancel();
+          };
 
-        let onAbort = () => {
-          aborted = true;
-          reader.cancel();
-        };
+          return () => onAbort();
 
-        return () => onAbort();
-
-        async function consume(
-          reader: ReadableStreamDefaultReader<ReadableStreamLinkEvent>
-        ) {
-          let event:
-            | ReadableStreamReadResult<ReadableStreamLinkEvent>
-            | undefined = undefined;
-          while (!aborted && !event?.done) {
-            event = await reader.read();
-            if (aborted) break;
-            if (event.value) {
-              switch (event.value.type) {
-                case "next":
-                  observer.next(event.value.value);
-                  break;
-                case "completed":
-                  observer.complete();
-                  break;
-                case "error":
-                  // in case a network error happened on the sending side,
-                  if (process.env.REACT_ENV === "ssr") {
-                    // we want to fail SSR for this tree
-                    observer.error(
-                      new Error(
-                        "Error from event stream. Redacted for security concerns."
-                      )
-                    );
-                  } else {
-                    // we want to retry the operation on the receiving side
-                    onAbort();
-                    const subscription = forward(operation).subscribe(observer);
-                    onAbort = () => subscription.unsubscribe();
-                  }
-                  break;
+          async function consume(
+            reader: ReadableStreamDefaultReader<ReadableStreamLinkEvent>
+          ) {
+            let event:
+              | ReadableStreamReadResult<ReadableStreamLinkEvent>
+              | undefined = undefined;
+            while (!aborted && !event?.done) {
+              event = await reader.read();
+              if (aborted) break;
+              if (event.value) {
+                switch (event.value.type) {
+                  case "next":
+                    observer.next(event.value.value);
+                    break;
+                  case "completed":
+                    observer.complete();
+                    break;
+                  case "error":
+                    // in case a network error happened on the sending side,
+                    if (process.env.REACT_ENV === "ssr") {
+                      // we want to fail SSR for this tree
+                      observer.error(
+                        new Error(
+                          "Error from event stream. Redacted for security concerns."
+                        )
+                      );
+                    } else {
+                      // we want to retry the operation on the receiving side
+                      onAbort();
+                      const subscription =
+                        forward(operation).subscribe(observer);
+                      onAbort = () => subscription.unsubscribe();
+                    }
+                    break;
+                }
               }
             }
           }
-        }
-      });
-    }
+        });
+      }
 
-    return forward(operation);
+      return forward(operation);
+    });
   }
-);
+}
