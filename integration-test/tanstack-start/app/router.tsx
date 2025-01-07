@@ -11,13 +11,22 @@ import {
   loadDevMessages,
 } from "@apollo/client/dev/index.js";
 
+import { IncrementalSchemaLink } from "@integration-test/shared/IncrementalSchemaLink";
+import { schema } from "@integration-test/shared/schema";
+import { HttpLink, ApolloLink } from "@apollo/client/index.js";
+
 loadDevMessages();
 loadErrorMessages();
+
+const link =
+  typeof window === "undefined"
+    ? (new IncrementalSchemaLink({ schema }) as any as ApolloLink)
+    : new HttpLink({ uri: "/api/graphql" });
 
 export function createRouter() {
   const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: "http://localhost:5173/graphql",
+    link,
   });
   const router = createTanStackRouter({
     routeTree,
