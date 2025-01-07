@@ -5,10 +5,10 @@ import {
   useQueryRefHandlers,
   useReadQuery,
 } from "@apollo/client/index.js";
-import { useTransition } from "react";
+import { Suspense, useTransition } from "react";
 
 export const Route = createFileRoute("/")({
-  component: Home,
+  component: SuspenseWrapper,
   loader: async ({ context: { preloadQuery } }) => {
     const queryRef = preloadQuery(DEFERRED_QUERY, {
       variables: { delayDeferred: 500 },
@@ -18,6 +18,15 @@ export const Route = createFileRoute("/")({
     };
   },
 });
+
+/** temporary workaround for https://github.com/TanStack/router/issues/3117 - we can't fix this on our end */
+function SuspenseWrapper() {
+  return (
+    <Suspense fallback="Loading...">
+      <Home />
+    </Suspense>
+  );
+}
 
 function Home() {
   const { queryRef } = Route.useLoaderData();
