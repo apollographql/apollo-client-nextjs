@@ -175,12 +175,9 @@ export function reviveTransportedQueryRef(
   ];
   if (!queryRef._hydrated) {
     // TanStack query has a timing where this is potentially transported over the wire if it
-    // is consumed in a component (it will be revived there) and timing is unfortunate
-    // this works here now, but might cause problems with React itself - we should change this
-    // to a WeakMap.
+    // is consumed in a component during SSR (it will be revived there) unless we make it non-enumerable
     Object.defineProperty(queryRef, "_hydrated", {
       value: cacheKey,
-      writable: false,
       enumerable: false,
       configurable: true,
     });
