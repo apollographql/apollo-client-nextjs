@@ -1,23 +1,34 @@
-import { ActionFunctionArgs } from "react-router";
-import { experimentalExecuteIncrementally, parse } from "graphql";
-import { schema } from "@integration-test/shared/schema";
+import {
+  experimentalExecuteIncrementally,
+  GraphQLSchema,
+  parse,
+} from "graphql";
 
 /**
  * `@defer`-capable very crude implementation of a GraphQL server.
  */
 
-export async function action({ request }: ActionFunctionArgs) {
+export function apiRouteHandler({
+  schema,
+  contextValue = { from: "network" },
+}: {
+  schema: GraphQLSchema;
+  contextValue?: { from: string };
+}) {
+return async function handler({
+  request,
+}: {
+  request: Request;
+}): Promise<Response> {
   const body = await request.json();
   const { query, variables } = body;
   const document = parse(query);
-
   const result = await experimentalExecuteIncrementally({
     schema,
     document,
     variableValues: variables,
-    contextValue: { from: "network" },
+    contextValue,
   });
-
   if (`initialResult` in result) {
     const encoder = new TextEncoder();
     const generator = async function* (): AsyncIterable<Uint8Array> {
@@ -48,4 +59,5 @@ export async function action({ request }: ActionFunctionArgs) {
       },
     });
   }
+};
 }
