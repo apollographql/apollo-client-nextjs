@@ -66,6 +66,12 @@ export function routerWithApolloClient<TRouter extends AnyRouter>(
 
       return transformed;
     },
+    encode(value) {
+      return previousTransformer.encode(value);
+    },
+    decode(value) {
+      return previousTransformer.decode(value);
+    },
   };
 
   const PreviousInnerWrap = router.options.InnerWrap || React.Fragment;
