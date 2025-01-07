@@ -1,5 +1,6 @@
 import { type PreloadQueryFunction } from "@apollo/client";
 import { type ApolloClient } from "@apollo/client-integration-tanstack-start";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import {
   Outlet,
   ScrollRestoration,
@@ -46,6 +47,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <body>
         {children}
         <ScrollRestoration />
+        <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
     </html>

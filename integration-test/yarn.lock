@@ -5138,6 +5138,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/router-devtools@npm:^1.95.1":
+  version: 1.95.1
+  resolution: "@tanstack/router-devtools@npm:1.95.1"
+  dependencies:
+    clsx: "npm:^2.1.1"
+    goober: "npm:^2.1.16"
+  peerDependencies:
+    "@tanstack/react-router": ^1.95.1
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10/7e7c0d46f75f98402caf629ab2bbb164a1864d838566aaeb9c6d8cb786b49acba68469ae87ebc99797abfc55d780a999a628d0a4e0b838960ad42fe3961aa374
+  languageName: node
+  linkType: hard
+
 "@tanstack/router-generator@npm:^1.87.7":
   version: 1.87.7
   resolution: "@tanstack/router-generator@npm:1.87.7"
@@ -7043,6 +7057,13 @@ __metadata:
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^7.0.0"
   checksum: 10/eaa5561aeb3135c2cddf7a3b3f562fc4238ff3b3fc666869ef2adf264be0f372136702f16add9299087fb1907c2e4ec5dbfe83bd24bce815c70a80c6c1a2e950
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: 10/cdfb57fa6c7649bbff98d9028c2f0de2f91c86f551179541cf784b1cfdc1562dcb951955f46d54d930a3879931a980e32a46b598acaea274728dbe068deca919
   languageName: node
   linkType: hard
 
@@ -9074,6 +9095,15 @@ __metadata:
   version: 0.1.2
   resolution: "globrex@npm:0.1.2"
   checksum: 10/81ce62ee6f800d823d6b7da7687f841676d60ee8f51f934ddd862e4057316d26665c4edc0358d4340a923ac00a514f8b67c787e28fe693aae16350f4e60d55e9
+  languageName: node
+  linkType: hard
+
+"goober@npm:^2.1.16":
+  version: 2.1.16
+  resolution: "goober@npm:2.1.16"
+  peerDependencies:
+    csstype: ^3.0.10
+  checksum: 10/27b57b1aef751a5b287c75cac2a3ad5f540c577fc0c89882d11d88ed6f541dbf2c1792b181a8555220da8fcf618813381fba1506d80da7831ba6e95a4f3d9ed2
   languageName: node
   linkType: hard
 
@@ -13883,6 +13913,7 @@ __metadata:
     "@apollo/client-integration-tanstack-start": "npm:*"
     "@integration-test/shared": "workspace:^"
     "@tanstack/react-router": "npm:^1.95.1"
+    "@tanstack/router-devtools": "npm:^1.95.1"
     "@tanstack/start": "npm:^1.95.1"
     "@types/react": "npm:^19.0.2"
     "@types/react-dom": "npm:^19.0.2"
