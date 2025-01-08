@@ -1,10 +1,16 @@
-name: Playwright Tests
+name: Vercel Integration Tests
 
 on:
   deployment_status:
 jobs:
-  run-e2es:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log the deployment status
+        run: echo 'Deployment status is ${{ toJSON(github.event.deployment_status) }}'
+
+  run-next-e2e:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – apollo__experimental-nextjs-app-support'
     runs-on: ubuntu-latest
     name: Run Playwright tests against Vercel deployment
     defaults:
