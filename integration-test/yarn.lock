@@ -40,13 +40,13 @@ __metadata:
 
 "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
   version: 0.11.5
-  resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=e00fd5&locator=%40integration-test%2Froot%40workspace%3A."
+  resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=08a50e&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     "@apollo/client-react-streaming": "npm:0.11.5"
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
-  checksum: 10/441c697e3ea4339b5acfa6d8e03fb6bd667d4ec1e701650fe77762df415e3ae618be267d9e4d4a0cf16ef99318b5b5c2fcf3cf2785fc88e31375ebf5e246b54b
+  checksum: 10/8770adee6bfd938135742fe6f2c43119a027b9a3b87ee04aaae38fb3e0801ac30f5a8a411a2952fa1c7caad5698f7da0850e3f6d7cbec4ec435577f151018113
   languageName: node
   linkType: hard
 
@@ -101,7 +101,7 @@ __metadata:
 
 "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
   version: 0.11.8-alpha.1
-  resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=af96a6&locator=%40integration-test%2Froot%40workspace%3A."
+  resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=2ee804&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     "@apollo/client-react-streaming": "npm:0.11.8-alpha.1"
   peerDependencies:
