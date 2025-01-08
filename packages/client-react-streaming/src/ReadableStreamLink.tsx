@@ -56,6 +56,13 @@ export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
   const controller = context[teeToReadableStreamKey];
 
   if (controller) {
+    const tryClose = () => {
+      try {
+        controller.close();
+      } catch {
+        // maybe we already tried to close the stream, nothing to worry about
+      }
+    };
     return new Observable((observer) => {
       const subscription = forward(operation).subscribe({
         next(result) {
@@ -75,6 +82,7 @@ export const TeeToReadableStreamLink = new ApolloLink((operation, forward) => {
       });
 
       return () => {
+        tryClose();
         subscription.unsubscribe();
       };
     });
@@ -95,15 +103,37 @@ export const ReadFromReadableStreamLink = new ApolloLink(
     if (eventSteam) {
       return new Observable((observer) => {
         let aborted = false as boolean;
-        const reader = eventSteam.getReader();
-        consumeReader();
+        const reader = (() => {
+          try {
+            return eventSteam.getReader();
+          } catch {
+            /**
+             * The reader could not be created, usually because the stream has
+             * already been consumed.
+             * This would be the case if we call `refetch` on a queryRef that has
+             * the `readFromReadableStreamKey` property in context.
+             * In that case, we want to do a normal network request.
+             */
+          }
+        })();
 
-        return () => {
+        if (!reader) {
+          // if we can't create a reader, we want to do a normal network request
+          const subscription = forward(operation).subscribe(observer);
+          return () => subscription.unsubscribe();
+        }
+        consume(reader);
+
+        let onAbort = () => {
           aborted = true;
           reader.cancel();
         };
 
-        async function consumeReader() {
+        return () => onAbort();
+
+        async function consume(
+          reader: ReadableStreamDefaultReader<ReadableStreamLinkEvent>
+        ) {
           let event:
             | ReadableStreamReadResult<ReadableStreamLinkEvent>
             | undefined = undefined;
@@ -119,11 +149,20 @@ export const ReadFromReadableStreamLink = new ApolloLink(
                   observer.complete();
                   break;
                 case "error":
-                  observer.error(
-                    new Error(
-                      "Error from event stream. Redacted for security concerns."
-                    )
-                  );
+                  // in case a network error happened on the sending side,
+                  if (process.env.REACT_ENV === "ssr") {
+                    // we want to fail SSR for this tree
+                    observer.error(
+                      new Error(
+                        "Error from event stream. Redacted for security concerns."
+                      )
+                    );
+                  } else {
+                    // we want to retry the operation on the receiving side
+                    onAbort();
+                    const subscription = forward(operation).subscribe(observer);
+                    onAbort = () => subscription.unsubscribe();
+                  }
                   break;
               }
             }

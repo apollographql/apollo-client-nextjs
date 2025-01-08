@@ -1,5 +1,5 @@
 import type { ApolloClient, OperationVariables } from "@apollo/client/index.js";
-import type React from "react";
+import React from "react";
 import { cache } from "react";
 import type { ReactNode } from "react";
 import type { PreloadQueryOptions } from "./PreloadQuery.js";
@@ -149,7 +149,7 @@ return a new instance every time \`makeClient\` is called.
  * @see {@link PreloadQueryComponent}
  * @public
  */
-export interface PreloadQueryProps<TData, TVariables>
+export interface PreloadQueryProps<TData, TVariables extends OperationVariables>
   extends PreloadQueryOptions<TVariables, TData> {
   children:
     | ReactNode
@@ -208,7 +208,6 @@ function makePreloadQuery(
   return function PreloadQuery<TData, TVariables extends OperationVariables>(
     props: PreloadQueryProps<TData, TVariables>
   ): React.ReactElement {
-    // we directly execute the bound component instead of returning JSX to keep the tree a bit tidier
-    return UnboundPreloadQuery({ ...props, getClient });
+    return <UnboundPreloadQuery getClient={getClient} {...props} />;
   };
 }

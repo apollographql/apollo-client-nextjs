@@ -11,6 +11,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_rsc"
     ],
     "browser": [
@@ -27,6 +30,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_browser"
     ],
     "node": [
@@ -43,6 +49,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_ssr"
     ],
     "edge-light,worker,browser": [
@@ -59,6 +68,9 @@
       "TeeToReadableStreamLink",
       "readFromReadableStream",
       "teeToReadableStream",
+      "createTransportedQueryPreloader",
+      "isTransportedQueryRef",
+      "reviveTransportedQueryRef",
       "built_for_ssr"
     ]
   },
@@ -81,17 +93,25 @@
     ]
   },
   "@apollo/client-react-streaming/stream-utils": {
-    "react-server": ["built_for_other"],
-    "browser": ["built_for_other"],
+    "react-server": [
+      "built_for_browser",
+      "JSONDecodeStream",
+      "JSONEncodeStream"
+    ],
+    "browser": ["built_for_browser", "JSONDecodeStream", "JSONEncodeStream"],
     "node": [
       "built_for_ssr",
       "createInjectionTransformStream",
-      "pipeReaderToResponse"
+      "pipeReaderToResponse",
+      "JSONDecodeStream",
+      "JSONEncodeStream"
     ],
     "edge-light,worker,browser": [
       "built_for_ssr",
       "createInjectionTransformStream",
-      "pipeReaderToResponse"
+      "pipeReaderToResponse",
+      "JSONDecodeStream",
+      "JSONEncodeStream"
     ]
   }
 }
