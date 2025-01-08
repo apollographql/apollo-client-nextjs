@@ -3,6 +3,12 @@ name: Playwright Tests
 on:
   deployment_status:
 jobs:
+  log:
+    runs-on: ubuntu-latest`
+    steps:
+      - name: Log the deployment status
+        run: echo "Deployment status is ${{ toJSON(github.event.deployment_status) }}"
+
   run-e2es:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – apollo__client-integration-tanstack-start'
     runs-on: ubuntu-latest
