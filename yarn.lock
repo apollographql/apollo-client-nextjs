@@ -67,6 +67,7 @@ __metadata:
     globstar: "npm:1.0.0"
     graphql: "npm:16.8.1"
     jsdom: "npm:24.0.0"
+    promiscade: "npm:^0.0.1-alpha.1"
     publint: "npm:0.2.7"
     react: "npm:^19.0.0"
     react-router: "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
@@ -13750,6 +13751,13 @@ __metadata:
   version: 2.0.1
   resolution: "process-nextick-args@npm:2.0.1"
   checksum: 10/1d38588e520dab7cea67cbbe2efdd86a10cc7a074c09657635e34f035277b59fbb57d09d8638346bf7090f8e8ebc070c96fa5fd183b777fff4f5edff5e9466cf
+  languageName: node
+  linkType: hard
+
+"promiscade@npm:^0.0.1-alpha.1":
+  version: 0.0.1-alpha.1
+  resolution: "promiscade@npm:0.0.1-alpha.1"
+  checksum: 10/fbda9f343306a5a6c903237ac8a8f22cc7dc8d7eba3462d52e13bef2422ecff2ff6b394d4408194695c41bedc5daf0a76114e040a68225be0a2927f2cb3740a8
   languageName: node
   linkType: hard
 

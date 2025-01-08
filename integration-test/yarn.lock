@@ -43,6 +43,7 @@ __metadata:
   resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=08a50e&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     "@apollo/client-react-streaming": "npm:0.11.5"
+    promiscade: "npm:^0.0.1-alpha.1"
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
@@ -8683,6 +8684,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"promiscade@npm:^0.0.1-alpha.1":
+  version: 0.0.1-alpha.1
+  resolution: "promiscade@npm:0.0.1-alpha.1"
+  checksum: 10/fbda9f343306a5a6c903237ac8a8f22cc7dc8d7eba3462d52e13bef2422ecff2ff6b394d4408194695c41bedc5daf0a76114e040a68225be0a2927f2cb3740a8
+  languageName: node
+  linkType: hard
+
 "promise-inflight@npm:^1.0.1":
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
@@ -10220,10 +10228,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-stream@npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e":
-  version: 2.4.1-pr.51.1.d24f66e
-  resolution: "@phryneas/turbo-stream@npm:2.4.1-pr.51.1.d24f66e"
-  checksum: 10/09fdd86c894cb050ebe942a4ecaa86e10093d81a1d082df306d0c6513328258ac7159d6ac3ec769d3fb9e4e5e367b8f8b78467ae0f6279714c19231dec836d06
+"turbo-stream@npm:2.4.0":
+  version: 2.4.0
+  resolution: "turbo-stream@npm:2.4.0"
+  checksum: 10/7079bbc82b58340f783144cd669cc7e598288523103a8d68bb8a4c6bb28c64eccb71d389b33aab07788d3a9030638b795709e15cb8486f722b1cdac59cb58afc
   languageName: node
   linkType: hard
 

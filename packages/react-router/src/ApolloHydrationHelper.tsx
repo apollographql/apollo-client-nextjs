@@ -5,6 +5,7 @@ import {
   isTransportedQueryRef,
   reviveTransportedQueryRef,
 } from "@apollo/client-react-streaming";
+import { replacePromiscadeWithStream } from "./preloader.js";
 
 export function ApolloHydrationHelper(props: { children: React.ReactNode }) {
   const [hydrated] = React.useState(new WeakSet());
@@ -18,6 +19,7 @@ export function ApolloHydrationHelper(props: { children: React.ReactNode }) {
 
       JSON.stringify(match.data, (_key, value) => {
         if (isTransportedQueryRef(value)) {
+          replacePromiscadeWithStream(value);
           reviveTransportedQueryRef(value, client);
         }
         return value;
