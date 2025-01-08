@@ -4,7 +4,7 @@ on:
   deployment_status:
 jobs:
   log:
-    runs-on: ubuntu-latest`
+    runs-on: ubuntu-latest
     steps:
       - name: Log the deployment status
         run: echo "Deployment status is ${{ toJSON(github.event.deployment_status) }}"
