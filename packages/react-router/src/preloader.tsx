@@ -51,6 +51,12 @@ export function createApolloLoaderHandler(
   };
 }
 
+// currently, `turbo-stream` cannot stream a `ReadableStream`.
+// until https://github.com/jacob-ebey/turbo-stream/pull/51
+// is merged or similar functionality is added, we need to
+// convert the stream to a cascade of promises
+// once that functionality has been added, all this can be removed.
+
 type EventPromiscade = Promiscade<JsonString<ReadableStreamLinkEvent>>;
 type PromiscadedRef = Omit<TransportedQueryRef, "$__apollo_queryRef"> & {
   $__apollo_queryRef: Omit<
