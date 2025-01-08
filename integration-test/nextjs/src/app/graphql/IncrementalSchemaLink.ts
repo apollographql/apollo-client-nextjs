@@ -5,12 +5,7 @@ import {
   Operation,
 } from "@apollo/client/index.js";
 import type { SchemaLink } from "@apollo/client/link/schema";
-import {
-  experimentalExecuteIncrementally,
-  SubsequentIncrementalExecutionResult,
-  validate,
-} from "graphql";
-import { ObjMap } from "graphql/jsutils/ObjMap";
+import { experimentalExecuteIncrementally, validate } from "graphql";
 
 export class IncrementalSchemaLink extends ApolloLink {
   public schema: SchemaLink.Options["schema"];
@@ -28,14 +23,11 @@ export class IncrementalSchemaLink extends ApolloLink {
 
   public request(operation: Operation): Observable<FetchResult> {
     return new Observable<FetchResult>((observer) => {
-      new Promise<SchemaLink.ResolverContext>((resolve) =>
-        resolve(
-          typeof this.context === "function"
+      (async () => {
+        try {
+          const context = await (typeof this.context === "function"
             ? this.context(operation)
-            : this.context
-        )
-      )
-        .then((context) => {
+            : this.context);
           if (this.validate) {
             const validationErrors = validate(this.schema, operation.query);
             if (validationErrors.length > 0) {
@@ -43,7 +35,8 @@ export class IncrementalSchemaLink extends ApolloLink {
             }
           }
 
-          return experimentalExecuteIncrementally({
+          if (observer.closed) return;
+          const data = await experimentalExecuteIncrementally({
             schema: this.schema,
             document: operation.query,
             rootValue: this.rootValue,
@@ -51,42 +44,30 @@ export class IncrementalSchemaLink extends ApolloLink {
             variableValues: operation.variables,
             operationName: operation.operationName,
           });
-        })
-        .then((data) => {
-          if (!observer.closed) {
-            if ("initialResult" in data) {
-              observer.next(data.initialResult);
-              return data.subsequentResults.next().then(function handleChunk(
-                next: IteratorResult<
-                  SubsequentIncrementalExecutionResult<
-                    ObjMap<unknown>,
-                    ObjMap<unknown>
-                  >,
-                  void
-                >
-              ): Promise<unknown> | void {
-                if (!observer.closed) {
-                  if (next.value) {
-                    observer.next(next.value);
-                  }
-                  if (next.done) {
-                    observer.complete();
-                  } else {
-                    return data.subsequentResults.next().then(handleChunk);
-                  }
-                }
-              });
-            } else {
-              observer.next(data);
-              observer.complete();
+
+          if ("initialResult" in data) {
+            if (observer.closed) return;
+            observer.next(data.initialResult);
+
+            for await (const value of data.subsequentResults) {
+              if (observer.closed) return;
+              observer.next(value);
             }
+
+            if (observer.closed) return;
+            observer.complete();
+          } else {
+            if (observer.closed) return;
+
+            observer.next(data);
+            observer.complete();
           }
-        })
-        .catch((error) => {
-          if (!observer.closed) {
-            observer.error(error);
-          }
-        });
+        } catch (error) {
+          if (observer.closed) return;
+
+          observer.error(error);
+        }
+      })();
     });
   }
 }
