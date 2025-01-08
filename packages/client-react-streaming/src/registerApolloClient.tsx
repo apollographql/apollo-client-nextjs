@@ -208,7 +208,6 @@ function makePreloadQuery(
   return function PreloadQuery<TData, TVariables extends OperationVariables>(
     props: PreloadQueryProps<TData, TVariables>
   ): React.ReactElement {
-    // we directly execute the bound component instead of returning JSX to keep the tree a bit tidier
     return <UnboundPreloadQuery getClient={getClient} {...props} />;
   };
 }
