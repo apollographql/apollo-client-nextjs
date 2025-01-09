@@ -9,6 +9,7 @@ import type {
 import {
   createTransportedQueryPreloader,
   isTransportedQueryRef,
+  reviveTransportedQueryRef,
 } from "@apollo/client-react-streaming";
 import type { Promiscade } from "promiscade";
 import { promiscadeToReadableStream, streamToPromiscade } from "promiscade";
@@ -58,12 +59,12 @@ export function createApolloLoaderHandler(
 // once that functionality has been added, all this can be removed.
 
 type EventPromiscade = Promiscade<JsonString<ReadableStreamLinkEvent>>;
-type PromiscadedRef = Omit<TransportedQueryRef, "$__apollo_queryRef"> & {
+export type PromiscadedRef = Omit<TransportedQueryRef, "$__apollo_queryRef"> & {
   $__apollo_queryRef: Omit<
     TransportedQueryRef["$__apollo_queryRef"],
     "stream"
   > & {
-    stream?: TransportedQueryRef["$__apollo_queryRef"]["stream"];
+    stream?: never;
     promiscade: EventPromiscade;
   };
 };
@@ -74,30 +75,57 @@ export function isPromiscaded(
   return "promiscade" in queryRef.$__apollo_queryRef;
 }
 
+/**
+ * This function is used to convert a stream ref to a promiscaded ref
+ *
+ * **modifies the object in place**
+ */
 function replaceStreamWithPromiscade(queryRef: TransportedQueryRef) {
-  const typed = queryRef as PromiscadedRef;
+  const typed = queryRef as unknown as PromiscadedRef;
   // the stream will be tee'd so it can be used in the same environment,
   // but also transported over the wire in the form of a promiscade
-  const [stream1, stream2] = queryRef.$__apollo_queryRef.stream.tee();
-  typed.$__apollo_queryRef.promiscade = streamToPromiscade(stream2);
-  Object.defineProperty(typed.$__apollo_queryRef, "stream", {
-    value: stream1,
-    writable: true,
-    configurable: true,
-    // this stream needs to be available for use in the same environment,
-    // but should not be serialized/transported
-    enumerable: false,
-  });
+  const stream = queryRef.$__apollo_queryRef.stream;
+  typed.$__apollo_queryRef.promiscade = streamToPromiscade(stream);
+  delete typed.$__apollo_queryRef.stream;
 }
 
-export function replacePromiscadeWithStream(
-  queryRef: TransportedQueryRef | PromiscadedRef
-) {
-  if (queryRef.$__apollo_queryRef.stream) return;
-  const typed = queryRef as PromiscadedRef;
-  queryRef.$__apollo_queryRef.stream = promiscadeToReadableStream(
-    typed.$__apollo_queryRef.promiscade
-  );
-  // @ts-expect-error this could usually not be deleted
-  delete typed.$__apollo_queryRef.promiscade;
+/**
+ * This function is used to convert a promiscaded query ref back to a stream ref
+ *
+ * **returns a new object** - this is important because modifying the original object
+ * could result in poor timing and have the modified object be sent over the wire instead
+ * of the one with the promiscade
+ */
+export function promiscadedRefToStreamRef(
+  queryRef: PromiscadedRef
+): TransportedQueryRef {
+  const { promiscade: _, ...restRef } = queryRef.$__apollo_queryRef;
+  return {
+    ...queryRef,
+    $__apollo_queryRef: {
+      ...restRef,
+      stream: promiscadeToReadableStream(
+        queryRef.$__apollo_queryRef.promiscade
+      ),
+    },
+  };
+}
+
+export const hydratedRefs = new WeakMap<PromiscadedRef, TransportedQueryRef>();
+/**
+ * If `obj` is a Promiscaded Ref, creates a new "live" QueryRef
+ * If `obj` is a Transported Ref, converts it to a "live" QueryRef
+ * Returns other values untouched
+ */
+export function hydrateIfNecessary(obj: unknown, client: ApolloClient) {
+  if (isTransportedQueryRef(obj)) {
+    if (isPromiscaded(obj)) {
+      if (!hydratedRefs.has(obj)) {
+        hydratedRefs.set(obj, promiscadedRefToStreamRef(obj));
+      }
+      obj = hydratedRefs.get(obj)!;
+    }
+    reviveTransportedQueryRef(obj as TransportedQueryRef, client);
+  }
+  return obj;
 }
