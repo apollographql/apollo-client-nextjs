@@ -2746,6 +2746,7 @@ __metadata:
   resolution: "@integration-test/root@workspace:."
   dependencies:
     glob: "npm:^10.3.10"
+    graphql: "npm:17.0.0-alpha.2"
   languageName: unknown
   linkType: soft
 
