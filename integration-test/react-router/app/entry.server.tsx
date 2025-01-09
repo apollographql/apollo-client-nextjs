@@ -29,9 +29,7 @@ export default function handleRequest(
         ? "onAllReady"
         : "onShellReady";
 
-    // TODO
-    const client =
-      makeClient() as any as import("@apollo/client/index.js").ApolloClient<any>;
+    const client = makeClient();
     const { pipe, abort } = renderToPipeableStream(
       <ApolloProvider client={client}>
         <ServerRouter

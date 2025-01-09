@@ -5,9 +5,7 @@ import { makeClient } from "./apollo";
 import { ApolloProvider } from "@apollo/client/index.js";
 
 startTransition(() => {
-  // TODO
-  const client =
-    makeClient() as any as import("@apollo/client/index.js").ApolloClient<any>;
+  const client = makeClient();
   hydrateRoot(
     document,
     <StrictMode>
