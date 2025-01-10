@@ -1,10 +1,7 @@
 import { useApolloClient } from "@apollo/client/index.js";
 import * as React from "react";
 import { useMatches } from "react-router";
-import {
-  isTransportedQueryRef,
-  reviveTransportedQueryRef,
-} from "@apollo/client-react-streaming";
+import { hydrateIfNecessary } from "./preloader.js";
 
 export function ApolloHydrationHelper(props: { children: React.ReactNode }) {
   const [hydrated] = React.useState(new WeakSet());
@@ -17,9 +14,7 @@ export function ApolloHydrationHelper(props: { children: React.ReactNode }) {
       hydrated.add(data);
 
       JSON.stringify(match.data, (_key, value) => {
-        if (isTransportedQueryRef(value)) {
-          reviveTransportedQueryRef(value, client);
-        }
+        hydrateIfNecessary(value, client);
         return value;
       });
     }

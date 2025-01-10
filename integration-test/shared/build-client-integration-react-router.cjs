@@ -1,8 +1,8 @@
 /*
-The integration tests need the latest version of the `@apollo/client-react-streaming` package.
+The integration tests need the latest version of the `@apollo/client-integration-react-router` package.
 
-This script can be used with the `exec:` protocol (https://yarnpkg.com/protocol/exec) to build
-the package.
+This script can be used with the `exec:` protocol (https://yarnpkg.com/protocol/exec) to install the package,
+which was already built by the `build-client-react-streaming.cjs` script running in parallel.
 */
 
 const { join } = require("node:path");
