@@ -5,6 +5,7 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import React, { useCallback, useEffect, useId, useMemo, useRef } from "react";
 import type { ApolloClient, QueryEvent } from "@apollo/client-react-streaming";
+import { bundle } from "./bundleInfo.js";
 
 const APOLLO_EVENT_PREFIX = "@@apollo.event/";
 const APOLLO_HOOK_PREFIX = "@@apollo.hook/";
@@ -89,6 +90,7 @@ const WrappedApolloProvider = WrapApolloProvider((props) => {
     </DataTransportContext.Provider>
   );
 });
+WrappedApolloProvider.info = bundle;
 
 function useStaticValueRef<T>(value: T) {
   const router = useRouter();
