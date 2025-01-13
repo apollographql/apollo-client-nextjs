@@ -11,9 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UseSuspenseQueryImport } from './routes/useSuspenseQuery'
 import { Route as LoaderDeferImport } from './routes/loader-defer'
+import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const UseSuspenseQueryRoute = UseSuspenseQueryImport.update({
+  id: '/useSuspenseQuery',
+  path: '/useSuspenseQuery',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LoaderDeferRoute = LoaderDeferImport.update({
   id: '/loader-defer',
@@ -21,15 +29,35 @@ const LoaderDeferRoute = LoaderDeferImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/loader-defer': {
       id: '/loader-defer'
       path: '/loader-defer'
       fullPath: '/loader-defer'
       preLoaderRoute: typeof LoaderDeferImport
+      parentRoute: typeof rootRoute
+    }
+    '/useSuspenseQuery': {
+      id: '/useSuspenseQuery'
+      path: '/useSuspenseQuery'
+      fullPath: '/useSuspenseQuery'
+      preLoaderRoute: typeof UseSuspenseQueryImport
       parentRoute: typeof rootRoute
     }
   }
@@ -38,33 +66,43 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/loader-defer': typeof LoaderDeferRoute
+  '/useSuspenseQuery': typeof UseSuspenseQueryRoute
 }
 
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/loader-defer': typeof LoaderDeferRoute
+  '/useSuspenseQuery': typeof UseSuspenseQueryRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/': typeof IndexRoute
   '/loader-defer': typeof LoaderDeferRoute
+  '/useSuspenseQuery': typeof UseSuspenseQueryRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/loader-defer'
+  fullPaths: '/' | '/loader-defer' | '/useSuspenseQuery'
   fileRoutesByTo: FileRoutesByTo
-  to: '/loader-defer'
-  id: '__root__' | '/loader-defer'
+  to: '/' | '/loader-defer' | '/useSuspenseQuery'
+  id: '__root__' | '/' | '/loader-defer' | '/useSuspenseQuery'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   LoaderDeferRoute: typeof LoaderDeferRoute
+  UseSuspenseQueryRoute: typeof UseSuspenseQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   LoaderDeferRoute: LoaderDeferRoute,
+  UseSuspenseQueryRoute: UseSuspenseQueryRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/loader-defer"
+        "/",
+        "/loader-defer",
+        "/useSuspenseQuery"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/loader-defer": {
       "filePath": "loader-defer.tsx"
+    },
+    "/useSuspenseQuery": {
+      "filePath": "useSuspenseQuery.tsx"
     }
   }
 }

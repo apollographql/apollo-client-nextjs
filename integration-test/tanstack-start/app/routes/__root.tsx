@@ -2,6 +2,7 @@ import { type PreloadQueryFunction } from "@apollo/client";
 import { type ApolloClient } from "@apollo/client-integration-tanstack-start";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import {
+  Link,
   Outlet,
   ScrollRestoration,
   createRootRouteWithContext,
@@ -45,6 +46,34 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <Meta />
       </head>
       <body>
+        <div className="p-2 flex gap-2 text-lg">
+          <Link
+            to="/"
+            activeProps={{
+              className: "font-bold",
+            }}
+            activeOptions={{ exact: true }}
+          >
+            Home
+          </Link>{" "}
+          <Link
+            to="/loader-defer"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            Loader with @defer + useReadQuery
+          </Link>{" "}
+          <Link
+            to="/useSuspenseQuery"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            useSuspenseQuery
+          </Link>{" "}
+        </div>
+        <hr />
         {children}
         <ScrollRestoration />
         <TanStackRouterDevtools position="bottom-right" />
