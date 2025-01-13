@@ -59,13 +59,14 @@ test(
         })
       );
       const stream = env.createRenderStream();
-      const p = Promise.withResolvers();
-      await stream.render(
-        <ErrorBoundary onError={p.reject} fallback={<></>}>
-          <tss.StartServer router={router as any} />
-        </ErrorBoundary>
-      );
-      await assert.rejects(p.promise, {
+      const promise = new Promise((_, reject) => {
+        stream.render(
+          <ErrorBoundary onError={reject} fallback={<></>}>
+            <tss.StartServer router={router as any} />
+          </ErrorBoundary>
+        );
+      });
+      await assert.rejects(promise, {
         message:
           'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-tanstack-start"`.',
       });
