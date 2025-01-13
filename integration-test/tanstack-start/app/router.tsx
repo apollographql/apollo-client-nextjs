@@ -29,7 +29,7 @@ export const delayLink = new ApolloLink((operation, forward) => {
 
 const link = delayLink.concat(
   typeof window === "undefined"
-    ? (new IncrementalSchemaLink({ schema }) as any as ApolloLink)
+    ? new IncrementalSchemaLink({ schema })
     : new HttpLink({ uri: "/api/graphql" })
 );
 
