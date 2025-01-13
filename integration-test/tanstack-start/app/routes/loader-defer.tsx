@@ -7,7 +7,7 @@ import {
 } from "@apollo/client/index.js";
 import { Suspense, useTransition } from "react";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/loader-defer")({
   component: SuspenseWrapper,
   loader: async ({ context: { preloadQuery } }) => {
     const queryRef = preloadQuery(DEFERRED_QUERY, {
@@ -23,12 +23,12 @@ export const Route = createFileRoute("/")({
 function SuspenseWrapper() {
   return (
     <Suspense fallback="Loading...">
-      <Home />
+      <LoaderDeferPage />
     </Suspense>
   );
 }
 
-function Home() {
+function LoaderDeferPage() {
   const { queryRef } = Route.useLoaderData();
 
   const { refetch } = useQueryRefHandlers(queryRef);

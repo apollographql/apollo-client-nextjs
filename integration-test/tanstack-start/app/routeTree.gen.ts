@@ -11,13 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
+import { Route as LoaderDeferImport } from './routes/loader-defer'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+const LoaderDeferRoute = LoaderDeferImport.update({
+  id: '/loader-defer',
+  path: '/loader-defer',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -25,11 +25,11 @@ const IndexRoute = IndexImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/loader-defer': {
+      id: '/loader-defer'
+      path: '/loader-defer'
+      fullPath: '/loader-defer'
+      preLoaderRoute: typeof LoaderDeferImport
       parentRoute: typeof rootRoute
     }
   }
@@ -38,33 +38,33 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/loader-defer': typeof LoaderDeferRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/loader-defer': typeof LoaderDeferRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
+  '/loader-defer': typeof LoaderDeferRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/loader-defer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/loader-defer'
+  id: '__root__' | '/loader-defer'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  LoaderDeferRoute: typeof LoaderDeferRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  LoaderDeferRoute: LoaderDeferRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +77,11 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/loader-defer"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/loader-defer": {
+      "filePath": "loader-defer.tsx"
     }
   }
 }
