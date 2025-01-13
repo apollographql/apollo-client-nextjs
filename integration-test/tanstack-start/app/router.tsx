@@ -43,7 +43,6 @@ export function createRouter() {
     context: {} as any,
   });
 
-  // @ts-ignore need to investigate
   return routerWithApolloClient(router, apolloClient);
 }
 

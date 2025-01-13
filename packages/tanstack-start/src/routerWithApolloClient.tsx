@@ -6,30 +6,32 @@ import {
 import type { ApolloClient } from "@apollo/client-react-streaming";
 import { createTransportedQueryPreloader } from "@apollo/client-react-streaming";
 import { ApolloProvider } from "./ApolloProvider.js";
-import type { PreloadQueryFunction } from "@apollo/client";
+import {
+  createQueryPreloader,
+  type PreloadQueryFunction,
+} from "@apollo/client/index.js";
 import type { AnyRouter } from "@tanstack/react-router";
 import React from "react";
 
+export interface ApolloClientRouterContext {
+  apolloClient: ApolloClient;
+  preloadQuery: PreloadQueryFunction;
+}
+
 export function routerWithApolloClient<TRouter extends AnyRouter>(
-  router: TRouter["options"]["context"] extends {
-    apolloClient: ApolloClient;
-    preloadQuery: PreloadQueryFunction;
-  }
+  router: TRouter["options"]["context"] extends ApolloClientRouterContext
     ? TRouter
     : never,
   apolloClient: ApolloClient
 ): TRouter {
-  // @ts-expect-error unavoidable due to the ternary in arguments
-  router.options.context.apolloClient = apolloClient;
+  const context = router.options.context as ApolloClientRouterContext;
 
-  // it would be nice to do this in the long run
-  //   router.options.context.preloadQuery = router.isServer
-  //     ? createTransportedQueryPreloader(apolloClient)
-  //     : createQueryPreloader(apolloClient)
-
-  // @ts-expect-error unavoidable due to the ternary in arguments
-  router.options.context.preloadQuery =
-    createTransportedQueryPreloader(apolloClient);
+  context.apolloClient = apolloClient;
+  context.preloadQuery = router.isServer
+    ? (createTransportedQueryPreloader(
+        apolloClient
+      ) as unknown as PreloadQueryFunction)
+    : createQueryPreloader(apolloClient);
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const previousTransformer = router.options.transformer || defaultTransformer;

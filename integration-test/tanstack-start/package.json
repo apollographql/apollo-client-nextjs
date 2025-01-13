@@ -2,7 +2,7 @@
   "name": "tanstack-start",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
+    "dev": "rm -rf ./node_modules/.cache ./node_modules/.vinxi && vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start"
   },
