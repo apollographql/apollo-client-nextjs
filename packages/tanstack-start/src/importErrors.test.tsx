@@ -1,7 +1,8 @@
 import * as assert from "node:assert";
 import { test } from "node:test";
 import { outsideOf } from "@internal/test-utils/runInConditions.js";
-import { browserEnv } from "@internal/test-utils/react.js";
+import { renderStreamEnv } from "@internal/test-utils/react.js";
+import { silenceConsoleErrors } from "@internal/test-utils/console.js";
 
 test("Error message when `WrappedApolloClient` is instantiated with wrong `InMemoryCache`", async () => {
   const { ApolloClient } = await import("#bundled");
@@ -28,6 +29,9 @@ test(
     const tsr = await import("@tanstack/react-router");
     const tss = await import("@tanstack/start/server");
     const React = await import("react");
+
+    const { ErrorBoundary } = await import("react-error-boundary");
+
     const routeTree = tsr
       .createRootRouteWithContext<
         import("@apollo/client-integration-tanstack-start").ApolloClientRouterContext
@@ -40,7 +44,9 @@ test(
       const { ApolloClient, InMemoryCache } = await import(
         "@apollo/client/index.js"
       );
-      using env = await browserEnv();
+      using env = await renderStreamEnv();
+      // Even with an error Boundary, React will still log to `console.error` - we avoid the noise here.
+      using _restoreConsole = silenceConsoleErrors();
       const router = routerWithApolloClient(
         tsr.createRouter({
           routeTree,
@@ -52,20 +58,22 @@ test(
           uri: "/api/graphql",
         })
       );
-
-      assert.throws(
-        () =>
-          env.render(document.body, <tss.StartServer router={router as any} />),
-        {
-          message:
-            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-tanstack-start"`.',
-        }
+      const stream = env.createRenderStream();
+      const p = Promise.withResolvers();
+      await stream.render(
+        <ErrorBoundary onError={p.reject} fallback={<></>}>
+          <tss.StartServer router={router as any} />
+        </ErrorBoundary>
       );
+      await assert.rejects(p.promise, {
+        message:
+          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-tanstack-start"`.',
+      });
     });
 
     await test("this package should work", async () => {
       const { ApolloClient, InMemoryCache } = bundled;
-      using env = await browserEnv();
+      using env = await renderStreamEnv();
       const router = routerWithApolloClient(
         tsr.createRouter({
           routeTree,
@@ -76,7 +84,9 @@ test(
           uri: "/api/graphql",
         })
       );
-      env.render(document.body, <tss.StartServer router={router as any} />);
+      const stream = env.createRenderStream();
+      await stream.render(<tss.StartServer router={router as any} />);
+      await stream.takeRender();
     });
   }
 );
