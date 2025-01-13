@@ -1,19 +1,12 @@
-import { type PreloadQueryFunction } from "@apollo/client";
-import { type ApolloClient } from "@apollo/client-integration-tanstack-start";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import {
-  Link,
-  Outlet,
-  ScrollRestoration,
-  createRootRouteWithContext,
-} from "@tanstack/react-router";
+import { Link, Outlet, ScrollRestoration } from "@tanstack/react-router";
 import { Meta, Scripts } from "@tanstack/start";
 import type { ReactNode } from "react";
 
-export const Route = createRootRouteWithContext<{
-  apolloClient: ApolloClient<any>;
-  preloadQuery: PreloadQueryFunction;
-}>()({
+import { type ApolloClientRouterContext } from "@apollo/client-integration-tanstack-start";
+import { createRootRouteWithContext } from "@tanstack/react-router";
+
+export const Route = createRootRouteWithContext<ApolloClientRouterContext>()({
   head: () => ({
     meta: [
       {
