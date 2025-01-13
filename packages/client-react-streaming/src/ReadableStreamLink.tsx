@@ -68,7 +68,6 @@ export class TeeToReadableStreamLink extends ApolloLink {
         return new Observable((observer) => {
           const subscription = forward(operation).subscribe({
             next(result) {
-              console.log("enqueue next", result);
               controller.enqueue({ type: "next", value: result });
               observer.next(result);
             },
