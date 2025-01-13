@@ -51,8 +51,7 @@ export function createRouter() {
 }
 ```
 
-> [!IMPORTANT]
-> `ApolloClient` and `InMemoryCache` need to be imported from `@apollo/client-integration-tanstack-start`, not from `@apollo/client`.
+> [!IMPORTANT] > `ApolloClient` and `InMemoryCache` need to be imported from `@apollo/client-integration-tanstack-start`, not from `@apollo/client`.
 
 ## Usage
 
@@ -110,10 +109,7 @@ export const Route = createFileRoute("/myPage")({
 
 ### `useSuspenseQuery`
 
-You can also use the suspenseful Apollo Client api `useSuspenseQuery` (or `useQueryRef` and `useReadQuery`) directly into your component without a page:
-
-> [!WARNING]
-> This approach only works if you are not using `@defer` in your queries - if you use `@defer`, you need to use the `loader` approach described above.
+You can also use the suspenseful Apollo Client api `useSuspenseQuery` (or `useQueryRef` and `useReadQuery`) directly into your component without a loader:
 
 ```tsx
 import { useSuspenseQuery } from "@apollo/client/index.js";
@@ -129,3 +125,6 @@ function RouteComponent() {
   return <div> do something with `data` here </div>;
 }
 ```
+
+> [!WARNING]
+> This approach only works if you are not using `@defer` in your queries - if you use `@defer`, you need to use the `loader` approach described above.
