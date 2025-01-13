@@ -25,6 +25,7 @@ test(
   "Error message when using the wrong `ApolloClient`",
   { skip: outsideOf("node") },
   async () => {
+    globalThis.window = {} as any;
     const { routerWithApolloClient, ...bundled } = await import("#bundled");
     const tsr = await import("@tanstack/react-router");
     const tss = await import("@tanstack/start/server");
