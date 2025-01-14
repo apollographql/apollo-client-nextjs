@@ -83,30 +83,6 @@ function RouteComponent() {
 }
 ```
 
-> [!IMPORTANT]
-> Currently there is an [unresolved bug](https://github.com/TanStack/router/issues/3117) in TanStack Start that might cause errors with this approach. To avoid that bug, you need to wrap your `RouteComponent` component in a suspense boundary until it is resolved:
-
-```diff
-+ import { Suspense } from "react";
-
-export const Route = createFileRoute("/myPage")({
--  component: RouteComponent,
-+  component: SuspenseWrapper,
-  loader: ({ context: { preloadQuery } }) => {
-    // ...
-  },
-});
-
-+ /** temporary workaround for https://github.com/TanStack/router/issues/3117 */
-+ function SuspenseWrapper() {
-+   return (
-+     <Suspense fallback="Loading...">
-+       <RouteComponent />
-+     </Suspense>
-+   );
-+ }
-```
-
 ### `useSuspenseQuery`
 
 You can also use the suspenseful Apollo Client api `useSuspenseQuery` (or `useQueryRef` and `useReadQuery`) directly into your component without a loader:

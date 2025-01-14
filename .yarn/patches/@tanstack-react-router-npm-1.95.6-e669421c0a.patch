@@ -1,9 +1,9 @@
 diff --git a/dist/cjs/router.cjs b/dist/cjs/router.cjs
-index 587dace7016755dc5705bc8730c2092fee7ac79c..4b5660b0f7c51dd2cea4510e2cb25a3fe899f26c 100644
+index ff603dc0b9e215ba6b1f348e017753df47427130..03afa6c7371bb799876ff21dbac2e8c8825f91f4 100644
 --- a/dist/cjs/router.cjs
 +++ b/dist/cjs/router.cjs
-@@ -1439,7 +1439,11 @@ class Router {
- ${script}\`)` : ""}; if (typeof __TSR__ !== 'undefined') __TSR__.cleanScripts()<\/script>`
+@@ -1443,7 +1443,11 @@ class Router {
+ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'undefined') __TSR__.cleanScripts()<\/script>`
        );
      };
 -    this.streamedKeys = /* @__PURE__ */ new Set();
@@ -15,7 +15,7 @@ index 587dace7016755dc5705bc8730c2092fee7ac79c..4b5660b0f7c51dd2cea4510e2cb25a3f
      this.getStreamedValue = (key) => {
        var _a;
        if (this.isServer) {
-@@ -1460,7 +1464,7 @@ ${script}\`)` : ""}; if (typeof __TSR__ !== 'undefined') __TSR__.cleanScripts()<
+@@ -1464,7 +1468,7 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
          !this.streamedKeys.has(key),
          "Key has already been streamed: " + key
        );
@@ -25,7 +25,7 @@ index 587dace7016755dc5705bc8730c2092fee7ac79c..4b5660b0f7c51dd2cea4510e2cb25a3f
          `__TSR__.streamedValues['${key}'] = { value: ${(_a = this.serializer) == null ? void 0 : _a.call(this, this.options.transformer.stringify(value))}}`
        );
 diff --git a/dist/esm/router.d.ts b/dist/esm/router.d.ts
-index 66bbabfede3975c58f550400af955d8f7e8ac23b..a441ff575800f48d06392e2c328bb5cb01818a28 100644
+index 08d8c55c7bc6bde6217067a7478d1f4bcd08a3b7..755f8ea47c203756add49b3b0278ddc5bf91c020 100644
 --- a/dist/esm/router.d.ts
 +++ b/dist/esm/router.d.ts
 @@ -472,6 +472,10 @@ export type RouterEvents = {
@@ -40,11 +40,11 @@ index 66bbabfede3975c58f550400af955d8f7e8ac23b..a441ff575800f48d06392e2c328bb5cb
  export type RouterEvent = RouterEvents[keyof RouterEvents];
  export type RouterListener<TRouterEvent extends RouterEvent> = {
 diff --git a/dist/esm/router.js b/dist/esm/router.js
-index 7ac37c91f28abb4933e48658ccd73d208bdb297d..80fda69676c5c8e141b126278f7e132cf578337c 100644
+index 54809e99911c9b82e94aa66bbda5991ab96b20e8..1c6bdac989cedf64e5c4164dc55ed639e37c3e3b 100644
 --- a/dist/esm/router.js
 +++ b/dist/esm/router.js
-@@ -1437,7 +1437,12 @@ class Router {
- ${script}\`)` : ""}; if (typeof __TSR__ !== 'undefined') __TSR__.cleanScripts()<\/script>`
+@@ -1441,7 +1441,12 @@ class Router {
+ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'undefined') __TSR__.cleanScripts()<\/script>`
        );
      };
 -    this.streamedKeys = /* @__PURE__ */ new Set();
@@ -57,7 +57,7 @@ index 7ac37c91f28abb4933e48658ccd73d208bdb297d..80fda69676c5c8e141b126278f7e132c
      this.getStreamedValue = (key) => {
        var _a;
        if (this.isServer) {
-@@ -1458,7 +1463,7 @@ ${script}\`)` : ""}; if (typeof __TSR__ !== 'undefined') __TSR__.cleanScripts()<
+@@ -1462,7 +1467,7 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
          !this.streamedKeys.has(key),
          "Key has already been streamed: " + key
        );
