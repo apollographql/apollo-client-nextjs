@@ -7112,7 +7112,7 @@ __metadata:
 
 "@tanstack/start@patch:@tanstack/start@npm%3A1.95.6#~/.yarn/patches/@tanstack-start-npm-1.95.6-9ce6eb511a.patch":
   version: 1.95.6
-  resolution: "@tanstack/start@patch:@tanstack/start@npm%3A1.95.6#~/.yarn/patches/@tanstack-start-npm-1.95.6-9ce6eb511a.patch::version=1.95.6&hash=745eb6"
+  resolution: "@tanstack/start@patch:@tanstack/start@npm%3A1.95.6#~/.yarn/patches/@tanstack-start-npm-1.95.6-9ce6eb511a.patch::version=1.95.6&hash=89b5b4"
   dependencies:
     "@tanstack/react-cross-context": "npm:^1.87.6"
     "@tanstack/react-router": "npm:^1.95.6"
@@ -7133,7 +7133,7 @@ __metadata:
   peerDependencies:
     react: ">=18.0.0 || >=19.0.0"
     react-dom: ">=18.0.0 || >=19.0.0"
-  checksum: 10/ddcc68762b6122d88eca3e453c1269d59ed23d1100b69f513927e92731be8596472c0ed9ddab8afb8f39959f5881586d8e34b39596510236899f3d7b6fda014c
+  checksum: 10/f1b799a5e0a6a24332aacd4f1567bbac2e698499ace65a632ff1330253560de609d494ab4fa19d5cbd420acbba3a11449cb2ebb3d15a9fc7d11320c17f86468a
   languageName: node
   linkType: hard
 
