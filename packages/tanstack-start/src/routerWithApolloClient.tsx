@@ -79,7 +79,7 @@ export function routerWithApolloClient<TRouter extends AnyRouter>(
   const PreviousInnerWrap = router.options.InnerWrap || React.Fragment;
   // eslint-disable-next-line react/display-name
   router.options.InnerWrap = ({ children }) => (
-    <ApolloProvider>
+    <ApolloProvider router={router}>
       <PreviousInnerWrap>{children}</PreviousInnerWrap>
     </ApolloProvider>
   );
