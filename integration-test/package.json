@@ -9,8 +9,8 @@
     "@apollo/client": "3.12.4",
     "graphql": "17.0.0-alpha.2",
     "turbo-stream": "npm:@phryneas/turbo-stream@2.4.1-pr.51.1.d24f66e",
-    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.95.6#~/../.yarn/patches/@tanstack-react-router-npm-1.95.6-e669421c0a.patch",
-    "@tanstack/start": "patch:@tanstack/start@npm%3A1.95.6#~/../.yarn/patches/@tanstack-start-npm-1.95.6-9ce6eb511a.patch"
+    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.97.3#~/../.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch",
+    "@tanstack/start": "patch:@tanstack/start@npm%3A1.97.3#~/../.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch"
   },
   "workspaces": [
     "*"
