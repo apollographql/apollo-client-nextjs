@@ -75,9 +75,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.12.4":
-  version: 3.12.4
-  resolution: "@apollo/client@npm:3.12.4"
+"@apollo/client@npm:3.12.6":
+  version: 3.12.6
+  resolution: "@apollo/client@npm:3.12.6"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -108,7 +108,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/9659ccf03ab5d6708cf191a1bd09c33ab5f958a8d66e783f81ccc899448b362a51cecf7d62c0ff5b852e60a340238e6903b3c96dcb5cf68dfb8a438ee6cd24bb
+  checksum: 10/f413c35acc7456e71eb0ae8e180aee36531a61de03aab7941fadc6df73ecb5418b510ec6ee8c856294b369f7f427a1c0599622b87147cef0bdc0d4da14d0be16
   languageName: node
   linkType: hard
 
@@ -5183,16 +5183,16 @@ __metadata:
   linkType: hard
 
 "@tanstack/router-devtools@npm:^1.95.6":
-  version: 1.95.6
-  resolution: "@tanstack/router-devtools@npm:1.95.6"
+  version: 1.97.3
+  resolution: "@tanstack/router-devtools@npm:1.97.3"
   dependencies:
     clsx: "npm:^2.1.1"
     goober: "npm:^2.1.16"
   peerDependencies:
-    "@tanstack/react-router": ^1.95.6
+    "@tanstack/react-router": ^1.97.3
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/adcf1401a1ac191467fb30353d834c6ced05a9876e0d53716fa9061ca9b7883ec88d5a30a213d85aea61d6357884e7c8b67a20cb5aa53ec27498f53c08e2f65a
+  checksum: 10/ee889b0019defd965bcc5d39d3d33feb86ec9b91db228f7207cbcbec4e93f2680a5aafffef5da9abdc863b6582bf0d1007b196c2621c9053e3f7b8f34b5d3436
   languageName: node
   linkType: hard
 

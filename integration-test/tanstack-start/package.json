@@ -2,8 +2,8 @@
   "name": "tanstack-start",
   "type": "module",
   "scripts": {
-    "dev": "node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi dev",
-    "build": "node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi build",
+    "dev": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi dev",
+    "build": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi build",
     "start": "vinxi start"
   },
   "dependencies": {
