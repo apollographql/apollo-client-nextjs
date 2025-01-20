@@ -15,11 +15,6 @@
       "node"
     ],
     "esModuleInterop": true,
-    "paths": {
-      "@apollo/client-integration-react-router": [
-        "./src/combined.ts"
-      ]
-    }
   },
   "include": [
     "src"
