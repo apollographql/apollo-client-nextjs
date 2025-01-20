@@ -14,7 +14,7 @@ export default defineConfig((options) => {
     external: [
       "@apollo/client-react-streaming",
       "@apollo/client-react-streaming/manual-transport",
-      "@apollo/client-integration-react-router",
+      "@apollo/client-integration-tanstack-start",
       "react",
       "rehackt",
     ],

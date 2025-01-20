@@ -4,7 +4,7 @@
   "mainEntryPointFilePath": "./src/index.ts",
   "bundledPackages": [
     "@apollo/client-react-streaming",
-    "@apollo/client-integration-react-router"
+    "@apollo/client-integration-tanstack-start"
   ],
   "compiler": {
     "tsconfigFilePath": "./tsconfig.json",
