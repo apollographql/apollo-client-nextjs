@@ -78,6 +78,26 @@ export default function handleRequest(
         shellRendered = true;
 ```
 
+Add `<ApolloHydrationHelper>` to `app/root.tsx`
+
+```diff
++ import { ApolloHydrationHelper } from "@apollo/client-integration-react-router";
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      // ...
+      <body>
+-        {children}
++        <ApolloHydrationHelper>{children}</ApolloHydrationHelper>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+
 ### Temporary: patch React-Router
 
 We are still waiting for a PR to React Router to get merged: https://github.com/remix-run/react-router/pull/12264
