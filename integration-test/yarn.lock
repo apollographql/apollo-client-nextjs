@@ -42,8 +42,8 @@ __metadata:
   version: 0.11.5
   resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=d34732&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.11.5"
-    promiscade: "npm:^0.0.2-alpha.0"
+    "@apollo/client-react-streaming": "npm:0.11.8-alpha.1"
+    promiscade: "npm:^0.0.2"
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
@@ -12278,10 +12278,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"promiscade@npm:^0.0.2-alpha.0":
-  version: 0.0.2-alpha.0
-  resolution: "promiscade@npm:0.0.2-alpha.0"
-  checksum: 10/7e03751f780899a2fe637596713b03427aca67ffcf136c5dd5bcc23664e6873ff110ab91c35d3a8704e0affa5125a920a615495bc4a70a0db987135257dd8305
+"promiscade@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "promiscade@npm:0.0.2"
+  checksum: 10/4111d48acc5ab32d05eada5048ed64ef2d3e284502fd9861300a46237c36ac2982e01b7092dffdf0c6f083f41a78464546c174f2aad588ac911b0fb84419243e
   languageName: node
   linkType: hard
 
