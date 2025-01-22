@@ -1,53 +1,29 @@
 /*
-The integration tests need the latest version of the `@apollo/client-react-streaming` package.
+The integration tests need the latest version of the `@apollo/experimental-nextjs-app-support` package.
 
-This script can be used with the `exec:` protocol (https://yarnpkg.com/protocol/exec) to build
-the package.
+This script can be used with the `exec:` protocol (https://yarnpkg.com/protocol/exec) to install the package,
+which was already built by the `build-client-react-streaming.cjs` script running in parallel.
 */
 
-const { execFileSync } = require("node:child_process");
-const { join, dirname } = require("node:path");
+const { join } = require("node:path");
+const { $, cd, retry, sleep } = /** @type {typeof import('zx')} */ (
+  require(require.resolve("zx", { paths: [process.env.PROJECT_CWD] }))
+);
 
-const monorepoRoot = join(process.env.PROJECT_CWD, "..");
-const pathToArchive = join(execEnv.tempDir, "archive.tgz");
+$.stdio = "inherit";
 
-setTimeout(() => {
-  execFileSync(
-    `yarn`,
-    [`workspace`, `@apollo/client-react-streaming`, `build`],
-    {
-      stdio: `inherit`,
-      cwd: monorepoRoot,
-    }
+(async function run() {
+  const monorepoRoot = join(process.env.PROJECT_CWD, "..");
+  const archive = join(
+    monorepoRoot,
+    "packages/experimental-nextjs-app-support/archive.tgz"
   );
 
-  execFileSync(
-    `yarn`,
-    [
-      `workspace`,
-      `@apollo/experimental-nextjs-app-support`,
-      `pack`,
-      `--out`,
-      pathToArchive,
-    ],
-    {
-      stdio: `inherit`,
-      cwd: monorepoRoot,
-    }
-  );
-  execFileSync(
-    `tar`,
-    [
-      `-x`,
-      `-z`,
-      `--strip-components=1`,
-      `-f`,
-      pathToArchive,
-      `-C`,
-      execEnv.buildDir,
-    ],
-    {
-      stdio: `inherit`,
-    }
-  );
-}, 3000);
+  // give the main build script a chance to kick in
+  await sleep(1000);
+
+  await retry(120, "1s", () => $`test -f ${archive}`);
+
+  cd(monorepoRoot);
+  await $`tar -x -z --strip-components=1 -f ${archive} -C ${execEnv.buildDir}`;
+})();

@@ -5,7 +5,7 @@ import {
   useQueryRefHandlers,
   useReadQuery,
 } from "@apollo/client";
-import { DeferredDynamicProductResult } from "../shared";
+import { DeferredDynamicProductResult } from "@integration-test/shared/queries";
 import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
 import { useTransition } from "react";
 

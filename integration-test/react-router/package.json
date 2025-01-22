@@ -1,0 +1,35 @@
+{
+  "name": "react-router",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build && node vercel/prepare.js",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc --build --noEmit"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.11.10",
+    "@apollo/client-integration-react-router": "*",
+    "@apollo/client-react-streaming": "^0.11.6",
+    "@integration-test/shared": "workspace:^",
+    "@react-router/node": "^7.0.1",
+    "@react-router/serve": "^7.0.1",
+    "isbot": "^5.1.17",
+    "react": "^19",
+    "react-dom": "^19",
+    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^7.0.1",
+    "@types/node": "^20",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vite-tsconfig-paths": "^5.1.2"
+  }
+}

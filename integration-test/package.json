@@ -4,15 +4,17 @@
   "resolutions": {
     "@apollo/client-react-streaming": "exec:./shared/build-client-react-streaming.cjs",
     "@apollo/experimental-nextjs-app-support": "exec:./shared/build-experimental-nextjs-app-support.cjs",
+    "@apollo/client-integration-react-router": "exec:./shared/build-client-integration-react-router.cjs",
     "graphql": "17.0.0-alpha.2"
   },
   "workspaces": [
     "*"
   ],
   "scripts": {
-    "build:libs": "find . -regextype posix-extended -regex '.*/node_modules/@apollo/(client-react-streaming|experimental-nextjs-app-support)' -printf 'rm -r %p\n' -exec rm -r {} +; glob \"../.yarn/cache/@apollo-*exec*\" \"$HOME/.yarn/berry/cache/@apollo-*exec*\" --cmd='rm -v' ; yarn"
+    "build:libs": "find . -regextype posix-extended -regex '.*/node_modules/@apollo/(client-react-streaming|experimental-nextjs-app-support|client-integration-react-router)' -printf 'rm -r %p\n' -exec rm -r {} +; glob \"../.yarn/cache/@apollo-*exec*\" \"$HOME/.yarn/berry/cache/@apollo-*exec*\" --cmd='rm -v' ; yarn"
   },
   "devDependencies": {
-    "glob": "^10.3.10"
+    "glob": "^10.3.10",
+    "graphql": "17.0.0-alpha.2"
   }
 }
