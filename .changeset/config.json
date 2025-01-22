@@ -7,5 +7,10 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["app-dir", "hack-the-supergraph-ssr", "apollo-next-13-demo"]
+  "ignore": [
+    "app-dir",
+    "hack-the-supergraph-ssr",
+    "apollo-next-13-demo",
+    "packages-shared"
+  ]
 }
