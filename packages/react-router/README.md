@@ -29,7 +29,8 @@ export const makeClient = (request?: Request) => {
 export const apolloLoader = createApolloLoaderHandler(makeClient);
 ```
 
-> [!IMPORTANT] > `ApolloClient` needs to be imported from `@apollo/client-integration-react-router`, not from `@apollo/client`.
+> [!IMPORTANT]  
+> `ApolloClient` needs to be imported from `@apollo/client-integration-react-router`, not from `@apollo/client`.
 
 Run `yarn react-router reveal`. This will create the files `app/entry.client.tsx` and `app/entry.server.tsx`.
 
@@ -307,7 +308,8 @@ export const loader = apolloLoader<Route.LoaderArgs>()(({ preloadQuery }) => {
 });
 ```
 
-> [!IMPORTANT] > To provide you with better TypeScript support, this is a method that you need to call twice: `apolloLoader<LoaderArgs>()(loader)`
+> [!IMPORTANT]  
+> To provide you with better TypeScript support, this is a method that you need to call twice: `apolloLoader<LoaderArgs>()(loader)`
 
 Then you can consume this `myQueryRef` object with `useReadQuery` in your component:
 
