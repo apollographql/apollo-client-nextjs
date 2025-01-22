@@ -29,7 +29,7 @@ export default function handleRequest(
         ? "onAllReady"
         : "onShellReady";
 
-    const client = makeClient();
+    const client = makeClient(request);
     const { pipe, abort } = renderToPipeableStream(
       <ApolloProvider client={client}>
         <ServerRouter
