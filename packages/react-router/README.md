@@ -107,7 +107,11 @@ In the meantime, you unfortunately have to use something like `patch-package` or
 You can use one of these patches:
 
 <details>
-<summary>with `yarn patch`: `.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch`</summary>
+<summary>
+
+with `yarn patch`: `.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch`
+
+</summary>
 
 ```diff
 diff --git a/dist/development/lib/types/route-module.d.mts b/dist/development/lib/types/route-module.d.mts
@@ -209,7 +213,11 @@ index a7b3449b84f7be4e7da9ce82ba6ac3ae3e30d64f..776fdbc13033eb82ce4de2b9026476e8
 </details>
 
 <details>
-<summary>with `patch-package`: `patches/react-router+7.0.2.patch`</summary>
+<summary>
+
+with `patch-package`: `patches/react-router+7.0.2.patch`
+
+</summary>
 
 ```diff
 diff --git a/node_modules/react-router/dist/development/lib/types/route-module.d.mts b/node_modules/react-router/dist/development/lib/types/route-module.d.mts
