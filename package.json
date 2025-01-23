@@ -28,6 +28,9 @@
     "@size-limit/file": "11.1.2",
     "@size-limit/webpack": "11.1.2",
     "@size-limit/webpack-why": "11.1.2",
-    "size-limit": "11.1.2"
+    "@types/node": "^22.10.9",
+    "knip": "^5.43.1",
+    "size-limit": "11.1.2",
+    "typescript": "^5.7.3"
   }
 }

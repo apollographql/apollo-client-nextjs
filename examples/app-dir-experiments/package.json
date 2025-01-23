@@ -27,6 +27,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "server-only": "^0.0.1",
-    "typescript": "5.4.5"
+    "typescript": "^5.7.3"
   }
 }
