@@ -52,7 +52,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-integration-react-router@npm:*, @apollo/client-integration-react-router@workspace:packages/react-router":
+"@apollo/client-integration-react-router@workspace:^, @apollo/client-integration-react-router@workspace:packages/react-router":
   version: 0.0.0-use.local
   resolution: "@apollo/client-integration-react-router@workspace:packages/react-router"
   dependencies:
@@ -81,7 +81,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client-integration-tanstack-start@npm:*, @apollo/client-integration-tanstack-start@workspace:packages/tanstack-start":
+"@apollo/client-integration-tanstack-start@workspace:^, @apollo/client-integration-tanstack-start@workspace:packages/tanstack-start":
   version: 0.0.0-use.local
   resolution: "@apollo/client-integration-tanstack-start@workspace:packages/tanstack-start"
   dependencies:
@@ -112,7 +112,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client-react-streaming@npm:*, @apollo/client-react-streaming@npm:^0.11.6, @apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
+"@apollo/client-react-streaming@workspace:*, @apollo/client-react-streaming@workspace:^, @apollo/client-react-streaming@workspace:packages/client-react-streaming":
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
   dependencies:
@@ -187,7 +187,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:*, @apollo/experimental-nextjs-app-support@workspace:*, @apollo/experimental-nextjs-app-support@workspace:^, @apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support":
+"@apollo/experimental-nextjs-app-support@workspace:^, @apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support":
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
@@ -6601,8 +6601,8 @@ __metadata:
   resolution: "@integration-test/jest@workspace:integration-test/jest"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/client-react-streaming": "workspace:*"
-    "@apollo/experimental-nextjs-app-support": "workspace:*"
+    "@apollo/client-react-streaming": "workspace:^"
+    "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
     "@babel/preset-react": "npm:^7.23.3"
@@ -6625,7 +6625,7 @@ __metadata:
   resolution: "@integration-test/nextjs@workspace:integration-test/nextjs"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/experimental-nextjs-app-support": "workspace:*"
+    "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@apollo/server": "npm:^4.11.2"
     "@as-integrations/next": "npm:^3.2.0"
     "@graphql-tools/schema": "npm:^10.0.0"
@@ -6661,7 +6661,7 @@ __metadata:
   resolution: "@integration-test/vite-streaming@workspace:integration-test/vite-streaming"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/client-react-streaming": "npm:*"
+    "@apollo/client-react-streaming": "workspace:^"
     "@playwright/test": "npm:^1.49.1"
     "@tsconfig/vite-react": "npm:^3.0.0"
     "@types/react": "npm:^19.0.0"
@@ -6685,7 +6685,7 @@ __metadata:
   resolution: "@integration-test/vitest@workspace:integration-test/vitest"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/experimental-nextjs-app-support": "npm:*"
+    "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@graphql-tools/schema": "npm:^10.0.3"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^16.1.0"
@@ -21964,8 +21964,7 @@ __metadata:
   resolution: "react-router@workspace:integration-test/react-router"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/client-integration-react-router": "npm:*"
-    "@apollo/client-react-streaming": "npm:^0.11.6"
+    "@apollo/client-integration-react-router": "workspace:^"
     "@integration-test/shared": "workspace:^"
     "@react-router/dev": "npm:^7.0.1"
     "@react-router/node": "npm:^7.0.1"
@@ -24261,7 +24260,7 @@ __metadata:
   resolution: "tanstack-start@workspace:integration-test/tanstack-start"
   dependencies:
     "@apollo/client": "npm:^3.12.4"
-    "@apollo/client-integration-tanstack-start": "npm:*"
+    "@apollo/client-integration-tanstack-start": "workspace:^"
     "@integration-test/shared": "workspace:^"
     "@tanstack/react-router": "npm:^1.95.6"
     "@tanstack/router-devtools": "npm:^1.95.6"

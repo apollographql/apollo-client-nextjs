@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
-    "@apollo/client-integration-react-router": "*",
-    "@apollo/client-react-streaming": "^0.11.6",
+    "@apollo/client-integration-react-router": "workspace:^",
     "@integration-test/shared": "workspace:^",
     "@react-router/node": "^7.0.1",
     "@react-router/serve": "^7.0.1",
