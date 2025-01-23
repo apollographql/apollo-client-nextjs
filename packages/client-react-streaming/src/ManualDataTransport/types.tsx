@@ -1,11 +1,7 @@
-import type { Cache, WatchQueryOptions } from "@apollo/client/index.js";
 import type React from "react";
-import type { DataTransport } from "./dataTransport.js";
 import type { QueryEvent } from "@apollo/client-react-streaming";
 
 export type RehydrationCache = Record<string, unknown>;
-export type ResultsCache = DataTransport<Cache.WriteOptions>;
-export type BackgroundQueriesCache = DataTransport<WatchQueryOptions>;
 
 export interface RehydrationContextValue {
   /**

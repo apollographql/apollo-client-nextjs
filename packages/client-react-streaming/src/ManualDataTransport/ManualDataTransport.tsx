@@ -8,7 +8,7 @@ import { registerDataTransport } from "./dataTransport.js";
 import { revive, stringify } from "./serialization.js";
 import { ApolloHookRehydrationCache } from "./ApolloRehydrateSymbols.js";
 
-export interface ManualDataTransportOptions {
+interface ManualDataTransportOptions {
   /**
    * A hook that allows for insertion into the stream.
    * Will only be called during SSR, doesn't need to actiually return something otherwise.
