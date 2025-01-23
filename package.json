@@ -20,7 +20,7 @@
     "docs": "api-documenter markdown --input-folder temp --output-folder docs",
     "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build",
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run",
-    "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn && cd integration-test && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn build:libs"
+    "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build && cd integration-test && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn build:libs"
   },
   "resolutions": {
     "@microsoft/api-documenter": "7.24.1",
