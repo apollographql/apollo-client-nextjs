@@ -82,7 +82,7 @@ jobs:
           node-version: "20.x"
           cache: "yarn"
       - name: Set target version of Apollo Client (Root)
-        run: npm pkg set resolutions.@apollo/client=$(npm info @apollo/client@${{ matrix.version }} --json | jq --raw-output .version)
+        run: npm pkg set resolutions.@apollo/client=$(npm view @apollo/client@${{ matrix.version }} version)
       - run: yarn install --mode=skip-build
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
