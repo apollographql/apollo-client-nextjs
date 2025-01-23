@@ -22,7 +22,8 @@
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run"
   },
   "resolutions": {
-    "@microsoft/api-documenter": "7.24.1"
+    "@microsoft/api-documenter": "7.24.1",
+    "@apollo/client": "3.12.6"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.3",

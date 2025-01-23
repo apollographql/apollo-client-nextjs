@@ -1,11 +1,16 @@
 {
-  "include": ["./*.js"],
-  "exclude": ["node_modules"],
+  "include": [
+    "./*.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": ".",
-    "declarationMap": false
+    "declarationMap": false,
+    "esModuleInterop": true
   }
 }

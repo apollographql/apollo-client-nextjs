@@ -1,12 +1,13 @@
 {
-  "name": "@apollo/client-integration-react-router",
+  "name": "@apollo/client-integration-tanstack-start",
   "version": "0.11.5",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
   "keywords": [
     "apollo",
-    "react-router",
+    "tanstack-start",
+    "tanstack",
     "apollo-client",
     "graphql",
     "ssr"
@@ -52,7 +53,6 @@
     "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
     "test:ssr": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=node\" yarn run test:base",
     "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
-    "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "wait-on ../client-react-streaming/.published --delay 3000 --timeout 30000 && yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
@@ -69,6 +69,8 @@
     "@arethetypeswrong/cli": "0.15.3",
     "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
+    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch",
+    "@tanstack/start": "patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.1.0",
     "@total-typescript/shoehorn": "0.1.2",
@@ -84,7 +86,6 @@
     "jsdom": "24.0.0",
     "publint": "0.2.7",
     "react": "^19.0.0",
-    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
     "rimraf": "5.0.5",
     "ts-node": "10.9.2",
     "tsup": "8.0.2",
@@ -93,11 +94,10 @@
     "vitest": "1.6.0"
   },
   "peerDependencies": {
-    "react": "^19",
-    "react-router": "^7.0.2"
+    "@tanstack/react-router": "*",
+    "react": "^19"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.8-alpha.1",
-    "promiscade": "^0.0.2"
+    "@apollo/client-react-streaming": "0.11.5"
   }
 }

@@ -16,3 +16,5 @@ yalc.lock
 .next/
 test-results/
 webpack-stats.json
+.output
+.vinxi

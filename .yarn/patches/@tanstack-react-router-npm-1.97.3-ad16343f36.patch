@@ -1,0 +1,766 @@
+diff --git a/dist/cjs/router.cjs b/dist/cjs/router.cjs
+index ff603dc0b9e215ba6b1f348e017753df47427130..43a0fb1077c587ad4d0bdf881615289a90df0982 100644
+--- a/dist/cjs/router.cjs
++++ b/dist/cjs/router.cjs
+@@ -53,6 +53,7 @@ class Router {
+    * @deprecated Use the `createRouter` function instead
+    */
+   constructor(options) {
++    var _a;
+     this.tempLocationKey = `${Math.round(
+       Math.random() * 1e7
+     )}`;
+@@ -62,7 +63,7 @@ class Router {
+     this.subscribers = /* @__PURE__ */ new Set();
+     this.startReactTransition = (fn) => fn();
+     this.update = (newOptions) => {
+-      var _a;
++      var _a2;
+       if (newOptions.notFoundRoute) {
+         console.warn(
+           "The notFoundRoute API is deprecated and will be removed in the next major version. See https://tanstack.com/router/v1/docs/guide/not-found-errors#migrating-from-notfoundroute for more info."
+@@ -113,7 +114,7 @@ class Router {
+         });
+       }
+       if (typeof window !== "undefined" && "CSS" in window && // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+-      typeof ((_a = window.CSS) == null ? void 0 : _a.supports) === "function") {
++      typeof ((_a2 = window.CSS) == null ? void 0 : _a2.supports) === "function") {
+         this.isViewTransitionTypesSupported = window.CSS.supports(
+           "selector(:active-view-transition-type(a)"
+         );
+@@ -158,13 +159,13 @@ class Router {
+       const scoredRoutes = [];
+       const routes = Object.values(this.routesById);
+       routes.forEach((d, i) => {
+-        var _a;
++        var _a2;
+         if (d.isRoot || !d.path) {
+           return;
+         }
+         const trimmed = path.trimPathLeft(d.fullPath);
+         const parsed = path.parsePathname(trimmed);
+-        while (parsed.length > 1 && ((_a = parsed[0]) == null ? void 0 : _a.value) === "/") {
++        while (parsed.length > 1 && ((_a2 = parsed[0]) == null ? void 0 : _a2.value) === "/") {
+           parsed.shift();
+         }
+         const scores = parsed.map((segment) => {
+@@ -299,14 +300,14 @@ class Router {
+       clearTimeout(match.pendingTimeout);
+     };
+     this.cancelMatches = () => {
+-      var _a;
+-      (_a = this.state.pendingMatches) == null ? void 0 : _a.forEach((match) => {
++      var _a2;
++      (_a2 = this.state.pendingMatches) == null ? void 0 : _a2.forEach((match) => {
+         this.cancelMatch(match.id);
+       });
+     };
+     this.buildLocation = (opts) => {
+       const build = (dest = {}, matchedRoutesResult) => {
+-        var _a, _b, _c, _d, _e, _f;
++        var _a2, _b, _c, _d, _e, _f;
+         const fromMatches = dest._fromLocation ? this.matchRoutes(dest._fromLocation, { _buildLocation: true }) : this.state.matches;
+         const fromMatch = dest.from != null ? fromMatches.find(
+           (d) => path.matchPathname(this.basepath, path.trimPathRight(d.pathname), {
+@@ -320,7 +321,7 @@ class Router {
+           dest.from == null || fromMatch != null,
+           "Could not find match for from: " + dest.from
+         );
+-        const fromSearch = ((_a = this.state.pendingMatches) == null ? void 0 : _a.length) ? (_b = utils.last(this.state.pendingMatches)) == null ? void 0 : _b.search : ((_c = utils.last(fromMatches)) == null ? void 0 : _c.search) || this.latestLocation.search;
++        const fromSearch = ((_a2 = this.state.pendingMatches) == null ? void 0 : _a2.length) ? (_b = utils.last(this.state.pendingMatches)) == null ? void 0 : _b.search : ((_c = utils.last(fromMatches)) == null ? void 0 : _c.search) || this.latestLocation.search;
+         const stayingMatches = matchedRoutesResult == null ? void 0 : matchedRoutesResult.matchedRoutes.filter(
+           (d) => fromMatches.find((e) => e.routeId === d.id)
+         );
+@@ -349,8 +350,8 @@ class Router {
+         };
+         if (Object.keys(nextParams).length > 0) {
+           matchedRoutesResult == null ? void 0 : matchedRoutesResult.matchedRoutes.map((route) => {
+-            var _a2;
+-            return ((_a2 = route.options.params) == null ? void 0 : _a2.stringify) ?? route.options.stringifyParams;
++            var _a3;
++            return ((_a3 = route.options.params) == null ? void 0 : _a3.stringify) ?? route.options.stringifyParams;
+           }).filter(Boolean).forEach((fn) => {
+             nextParams = { ...nextParams, ...fn(nextParams) };
+           });
+@@ -384,10 +385,10 @@ class Router {
+         const applyMiddlewares = (search2) => {
+           const allMiddlewares = (matchedRoutesResult == null ? void 0 : matchedRoutesResult.matchedRoutes.reduce(
+             (acc, route) => {
+-              var _a2;
++              var _a3;
+               const middlewares = [];
+               if ("search" in route.options) {
+-                if ((_a2 = route.options.search) == null ? void 0 : _a2.middlewares) {
++                if ((_a3 = route.options.search) == null ? void 0 : _a3.middlewares) {
+                   middlewares.push(...route.options.search.middlewares);
+                 }
+               } else if (route.options.preSearchFilters || route.options.postSearchFilters) {
+@@ -474,12 +475,12 @@ class Router {
+         };
+       };
+       const buildWithMatches = (dest = {}, maskedDest) => {
+-        var _a;
++        var _a2;
+         const next = build(dest);
+         let maskedNext = maskedDest ? build(maskedDest) : void 0;
+         if (!maskedNext) {
+           let params = {};
+-          const foundMask = (_a = this.options.routeMasks) == null ? void 0 : _a.find((d) => {
++          const foundMask = (_a2 = this.options.routeMasks) == null ? void 0 : _a2.find((d) => {
+             const match = path.matchPathname(this.basepath, next.pathname, {
+               to: d.from,
+               caseSensitive: false,
+@@ -631,7 +632,7 @@ class Router {
+       let loadPromise;
+       loadPromise = new Promise((resolve) => {
+         this.startReactTransition(async () => {
+-          var _a;
++          var _a2;
+           try {
+             const next = this.latestLocation;
+             const prevLocation = this.state.resolvedLocation;
+@@ -712,8 +713,8 @@ class Router {
+                     [stayingMatches, "onStay"]
+                   ].forEach(([matches, hook]) => {
+                     matches.forEach((match) => {
+-                      var _a2, _b;
+-                      (_b = (_a2 = this.looseRoutesById[match.routeId].options)[hook]) == null ? void 0 : _b.call(_a2, match);
++                      var _a3, _b;
++                      (_b = (_a3 = this.looseRoutesById[match.routeId].options)[hook]) == null ? void 0 : _b.call(_a3, match);
+                     });
+                   });
+                 });
+@@ -739,7 +740,7 @@ class Router {
+             }));
+           }
+           if (this.latestLoadPromise === loadPromise) {
+-            (_a = this.commitLocationPromise) == null ? void 0 : _a.resolve();
++            (_a2 = this.commitLocationPromise) == null ? void 0 : _a2.resolve();
+             this.latestLoadPromise = void 0;
+             this.commitLocationPromise = void 0;
+           }
+@@ -771,18 +772,18 @@ class Router {
+       }
+     };
+     this.updateMatch = (id, updater) => {
+-      var _a;
++      var _a2;
+       let updated;
+-      const isPending = (_a = this.state.pendingMatches) == null ? void 0 : _a.find((d) => d.id === id);
++      const isPending = (_a2 = this.state.pendingMatches) == null ? void 0 : _a2.find((d) => d.id === id);
+       const isMatched = this.state.matches.find((d) => d.id === id);
+       const isCached = this.state.cachedMatches.find((d) => d.id === id);
+       const matchesKey = isPending ? "pendingMatches" : isMatched ? "matches" : isCached ? "cachedMatches" : "";
+       if (matchesKey) {
+         this.__store.setState((s) => {
+-          var _a2;
++          var _a3;
+           return {
+             ...s,
+-            [matchesKey]: (_a2 = s[matchesKey]) == null ? void 0 : _a2.map(
++            [matchesKey]: (_a3 = s[matchesKey]) == null ? void 0 : _a3.map(
+               (d) => d.id === id ? updated = updater(d) : d
+             )
+           };
+@@ -820,7 +821,7 @@ class Router {
+         triggerOnReady();
+       }
+       const handleRedirectAndNotFound = (match, err) => {
+-        var _a, _b, _c;
++        var _a2, _b, _c;
+         if (redirects.isResolvedRedirect(err)) {
+           if (!err.reloadDocument) {
+             throw err;
+@@ -838,7 +839,7 @@ class Router {
+           if (!err.routeId) {
+             err.routeId = match.routeId;
+           }
+-          (_a = match.beforeLoadPromise) == null ? void 0 : _a.resolve();
++          (_a2 = match.beforeLoadPromise) == null ? void 0 : _a2.resolve();
+           (_b = match.loaderPromise) == null ? void 0 : _b.resolve();
+           (_c = match.loadPromise) == null ? void 0 : _c.resolve();
+           if (redirects.isRedirect(err)) {
+@@ -857,10 +858,10 @@ class Router {
+         await new Promise((resolveAll, rejectAll) => {
+           ;
+           (async () => {
+-            var _a, _b, _c;
++            var _a2, _b, _c;
+             try {
+               const handleSerialError = (index, err, routerCode) => {
+-                var _a2, _b2;
++                var _a3, _b2;
+                 const { id: matchId, routeId } = matches[index];
+                 const route = this.looseRoutesById[routeId];
+                 if (err instanceof Promise) {
+@@ -870,14 +871,14 @@ class Router {
+                 firstBadMatchIndex = firstBadMatchIndex ?? index;
+                 handleRedirectAndNotFound(this.getMatch(matchId), err);
+                 try {
+-                  (_b2 = (_a2 = route.options).onError) == null ? void 0 : _b2.call(_a2, err);
++                  (_b2 = (_a3 = route.options).onError) == null ? void 0 : _b2.call(_a3, err);
+                 } catch (errorHandlerErr) {
+                   err = errorHandlerErr;
+                   handleRedirectAndNotFound(this.getMatch(matchId), err);
+                 }
+                 updateMatch(matchId, (prev) => {
+-                  var _a3, _b3;
+-                  (_a3 = prev.beforeLoadPromise) == null ? void 0 : _a3.resolve();
++                  var _a4, _b3;
++                  (_a4 = prev.beforeLoadPromise) == null ? void 0 : _a4.resolve();
+                   (_b3 = prev.loadPromise) == null ? void 0 : _b3.resolve();
+                   return {
+                     ...prev,
+@@ -892,7 +893,7 @@ class Router {
+               };
+               for (const [index, { id: matchId, routeId }] of matches.entries()) {
+                 const existingMatch = this.getMatch(matchId);
+-                const parentMatchId = (_a = matches[index - 1]) == null ? void 0 : _a.id;
++                const parentMatchId = (_a2 = matches[index - 1]) == null ? void 0 : _a2.id;
+                 const route = this.looseRoutesById[routeId];
+                 const pendingMs = route.options.pendingMs ?? this.options.defaultPendingMs;
+                 const shouldPending = !!(onReady && !this.isServer && !resolvePreload(matchId) && (route.options.loader || route.options.beforeLoad) && typeof pendingMs === "number" && pendingMs !== Infinity && (route.options.pendingComponent ?? this.options.defaultPendingComponent));
+@@ -918,8 +919,8 @@ class Router {
+                     updateMatch(matchId, (prev) => ({
+                       ...prev,
+                       loadPromise: utils.createControlledPromise(() => {
+-                        var _a2;
+-                        (_a2 = prev.loadPromise) == null ? void 0 : _a2.resolve();
++                        var _a3;
++                        (_a3 = prev.loadPromise) == null ? void 0 : _a3.resolve();
+                       }),
+                       beforeLoadPromise: utils.createControlledPromise()
+                     }));
+@@ -996,8 +997,8 @@ class Router {
+                     handleSerialError(index, err, "BEFORE_LOAD");
+                   }
+                   updateMatch(matchId, (prev) => {
+-                    var _a2;
+-                    (_a2 = prev.beforeLoadPromise) == null ? void 0 : _a2.resolve();
++                    var _a3;
++                    (_a3 = prev.beforeLoadPromise) == null ? void 0 : _a3.resolve();
+                     return {
+                       ...prev,
+                       beforeLoadPromise: void 0,
+@@ -1056,7 +1057,7 @@ class Router {
+                         preload: !!preload && !this.state.matches.find((d) => d.id === matchId)
+                       }));
+                       const runLoader = async () => {
+-                        var _a2, _b2, _c2, _d, _e, _f, _g, _h;
++                        var _a3, _b2, _c2, _d, _e, _f, _g, _h;
+                         try {
+                           const potentialPendingMinPromise = async () => {
+                             const latestMatch = this.getMatch(matchId);
+@@ -1070,7 +1071,7 @@ class Router {
+                               ...prev,
+                               isFetching: "loader"
+                             }));
+-                            let loaderData = await ((_b2 = (_a2 = route.options).loader) == null ? void 0 : _b2.call(_a2, getLoaderContext()));
++                            let loaderData = await ((_b2 = (_a3 = route.options).loader) == null ? void 0 : _b2.call(_a3, getLoaderContext()));
+                             if (this.serializeLoaderData) {
+                               loaderData = this.serializeLoaderData(
+                                 "loaderData",
+@@ -1200,8 +1201,8 @@ class Router {
+     };
+     this.invalidate = (opts) => {
+       const invalidate = (d) => {
+-        var _a;
+-        if (((_a = opts == null ? void 0 : opts.filter) == null ? void 0 : _a.call(opts, d)) ?? true) {
++        var _a2;
++        if (((_a2 = opts == null ? void 0 : opts.filter) == null ? void 0 : _a2.call(opts, d)) ?? true) {
+           return {
+             ...d,
+             invalid: true,
+@@ -1211,12 +1212,12 @@ class Router {
+         return d;
+       };
+       this.__store.setState((s) => {
+-        var _a;
++        var _a2;
+         return {
+           ...s,
+           matches: s.matches.map(invalidate),
+           cachedMatches: s.cachedMatches.map(invalidate),
+-          pendingMatches: (_a = s.pendingMatches) == null ? void 0 : _a.map(invalidate)
++          pendingMatches: (_a2 = s.pendingMatches) == null ? void 0 : _a2.map(invalidate)
+         };
+       });
+       return this.load({ sync: opts == null ? void 0 : opts.sync });
+@@ -1372,8 +1373,8 @@ class Router {
+       return match;
+     };
+     this.dehydrate = () => {
+-      var _a;
+-      const pickError = ((_a = this.options.errorSerializer) == null ? void 0 : _a.serialize) ?? defaultSerializeError;
++      var _a2;
++      const pickError = ((_a2 = this.options.errorSerializer) == null ? void 0 : _a2.serialize) ?? defaultSerializeError;
+       return {
+         state: {
+           dehydratedMatches: this.state.matches.map((d) => {
+@@ -1396,10 +1397,10 @@ class Router {
+       };
+     };
+     this.hydrate = () => {
+-      var _a, _b, _c;
++      var _a2, _b, _c;
+       let ctx;
+       if (typeof document !== "undefined") {
+-        ctx = this.options.transformer.parse((_a = window.__TSR__) == null ? void 0 : _a.dehydrated);
++        ctx = this.options.transformer.parse((_a2 = window.__TSR__) == null ? void 0 : _a2.dehydrated);
+       }
+       invariant(
+         ctx,
+@@ -1445,11 +1446,11 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
+     };
+     this.streamedKeys = /* @__PURE__ */ new Set();
+     this.getStreamedValue = (key) => {
+-      var _a;
++      var _a2;
+       if (this.isServer) {
+         return void 0;
+       }
+-      const streamedValue = (_a = window.__TSR__) == null ? void 0 : _a.streamedValues[key];
++      const streamedValue = (_a2 = window.__TSR__) == null ? void 0 : _a2.streamedValues[key];
+       if (!streamedValue) {
+         return;
+       }
+@@ -1459,14 +1460,14 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
+       return streamedValue.parsed;
+     };
+     this.streamValue = (key, value) => {
+-      var _a;
++      var _a2, _b;
+       warning(
+         !this.streamedKeys.has(key),
+         "Key has already been streamed: " + key
+       );
+-      this.streamedKeys.add(key);
++      this.emit({ type: "onStreamedValue", key });
+       this.injectScript(
+-        `__TSR__.streamedValues['${key}'] = { value: ${(_a = this.serializer) == null ? void 0 : _a.call(this, this.options.transformer.stringify(value))}}`
++        `__TSR__.setStreamedValue(${(_a2 = this.serializer) == null ? void 0 : _a2.call(this, key)}, ${(_b = this.serializer) == null ? void 0 : _b.call(this, this.options.transformer.stringify(value))})`
+       );
+     };
+     this._handleNotFound = (matches, err, {
+@@ -1517,7 +1518,11 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
+     });
+     if (typeof document !== "undefined") {
+       window.__TSR__ROUTER__ = this;
++      this.streamedKeys = new Set(
++        Object.keys(((_a = window.__TSR__) == null ? void 0 : _a.streamedValues) || {})
++      );
+     }
++    this.subscribe("onStreamedValue", ({ key }) => this.streamedKeys.add(key));
+   }
+   get state() {
+     return this.__store.state;
+diff --git a/dist/cjs/router.d.cts b/dist/cjs/router.d.cts
+index ecc380af755df6a5326fcc26db0f3e5fe34e3d68..6582e93776336f5ad410e1d0c525a0849892d14e 100644
+--- a/dist/cjs/router.d.cts
++++ b/dist/cjs/router.d.cts
+@@ -22,9 +22,10 @@ export interface TSRGlobalMatch {
+ }
+ export interface TSRGlobal {
+     matches: Array<TSRGlobalMatch>;
++    setStreamedValue: (key: string, value: unknown) => void;
+     streamedValues: Record<string, {
+         value: any;
+-        parsed: any;
++        parsed?: any;
+     }>;
+     cleanScripts: () => void;
+     dehydrated?: any;
+@@ -480,6 +481,10 @@ export type RouterEvents = {
+         pathChanged: boolean;
+         hrefChanged: boolean;
+     };
++    onStreamedValue: {
++        type: 'onStreamedValue';
++        key: string;
++    };
+ };
+ export type RouterEvent = RouterEvents[keyof RouterEvents];
+ export type RouterListener<TRouterEvent extends RouterEvent> = {
+diff --git a/dist/esm/router.d.ts b/dist/esm/router.d.ts
+index a14c215fe98a53b81f8d7af2bb26bda2bd76c933..7f5fb7f9808dd53fcff25015c60879e2d8b749ce 100644
+--- a/dist/esm/router.d.ts
++++ b/dist/esm/router.d.ts
+@@ -22,9 +22,10 @@ export interface TSRGlobalMatch {
+ }
+ export interface TSRGlobal {
+     matches: Array<TSRGlobalMatch>;
++    setStreamedValue: (key: string, value: unknown) => void;
+     streamedValues: Record<string, {
+         value: any;
+-        parsed: any;
++        parsed?: any;
+     }>;
+     cleanScripts: () => void;
+     dehydrated?: any;
+@@ -480,6 +481,10 @@ export type RouterEvents = {
+         pathChanged: boolean;
+         hrefChanged: boolean;
+     };
++    onStreamedValue: {
++        type: 'onStreamedValue';
++        key: string;
++    };
+ };
+ export type RouterEvent = RouterEvents[keyof RouterEvents];
+ export type RouterListener<TRouterEvent extends RouterEvent> = {
+diff --git a/dist/esm/router.js b/dist/esm/router.js
+index 54809e99911c9b82e94aa66bbda5991ab96b20e8..86da9c8f7c922e41bb8fe72619699c2c78f86a2a 100644
+--- a/dist/esm/router.js
++++ b/dist/esm/router.js
+@@ -51,6 +51,7 @@ class Router {
+    * @deprecated Use the `createRouter` function instead
+    */
+   constructor(options) {
++    var _a;
+     this.tempLocationKey = `${Math.round(
+       Math.random() * 1e7
+     )}`;
+@@ -60,7 +61,7 @@ class Router {
+     this.subscribers = /* @__PURE__ */ new Set();
+     this.startReactTransition = (fn) => fn();
+     this.update = (newOptions) => {
+-      var _a;
++      var _a2;
+       if (newOptions.notFoundRoute) {
+         console.warn(
+           "The notFoundRoute API is deprecated and will be removed in the next major version. See https://tanstack.com/router/v1/docs/guide/not-found-errors#migrating-from-notfoundroute for more info."
+@@ -111,7 +112,7 @@ class Router {
+         });
+       }
+       if (typeof window !== "undefined" && "CSS" in window && // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+-      typeof ((_a = window.CSS) == null ? void 0 : _a.supports) === "function") {
++      typeof ((_a2 = window.CSS) == null ? void 0 : _a2.supports) === "function") {
+         this.isViewTransitionTypesSupported = window.CSS.supports(
+           "selector(:active-view-transition-type(a)"
+         );
+@@ -156,13 +157,13 @@ class Router {
+       const scoredRoutes = [];
+       const routes = Object.values(this.routesById);
+       routes.forEach((d, i) => {
+-        var _a;
++        var _a2;
+         if (d.isRoot || !d.path) {
+           return;
+         }
+         const trimmed = trimPathLeft(d.fullPath);
+         const parsed = parsePathname(trimmed);
+-        while (parsed.length > 1 && ((_a = parsed[0]) == null ? void 0 : _a.value) === "/") {
++        while (parsed.length > 1 && ((_a2 = parsed[0]) == null ? void 0 : _a2.value) === "/") {
+           parsed.shift();
+         }
+         const scores = parsed.map((segment) => {
+@@ -297,14 +298,14 @@ class Router {
+       clearTimeout(match.pendingTimeout);
+     };
+     this.cancelMatches = () => {
+-      var _a;
+-      (_a = this.state.pendingMatches) == null ? void 0 : _a.forEach((match) => {
++      var _a2;
++      (_a2 = this.state.pendingMatches) == null ? void 0 : _a2.forEach((match) => {
+         this.cancelMatch(match.id);
+       });
+     };
+     this.buildLocation = (opts) => {
+       const build = (dest = {}, matchedRoutesResult) => {
+-        var _a, _b, _c, _d, _e, _f;
++        var _a2, _b, _c, _d, _e, _f;
+         const fromMatches = dest._fromLocation ? this.matchRoutes(dest._fromLocation, { _buildLocation: true }) : this.state.matches;
+         const fromMatch = dest.from != null ? fromMatches.find(
+           (d) => matchPathname(this.basepath, trimPathRight(d.pathname), {
+@@ -318,7 +319,7 @@ class Router {
+           dest.from == null || fromMatch != null,
+           "Could not find match for from: " + dest.from
+         );
+-        const fromSearch = ((_a = this.state.pendingMatches) == null ? void 0 : _a.length) ? (_b = last(this.state.pendingMatches)) == null ? void 0 : _b.search : ((_c = last(fromMatches)) == null ? void 0 : _c.search) || this.latestLocation.search;
++        const fromSearch = ((_a2 = this.state.pendingMatches) == null ? void 0 : _a2.length) ? (_b = last(this.state.pendingMatches)) == null ? void 0 : _b.search : ((_c = last(fromMatches)) == null ? void 0 : _c.search) || this.latestLocation.search;
+         const stayingMatches = matchedRoutesResult == null ? void 0 : matchedRoutesResult.matchedRoutes.filter(
+           (d) => fromMatches.find((e) => e.routeId === d.id)
+         );
+@@ -347,8 +348,8 @@ class Router {
+         };
+         if (Object.keys(nextParams).length > 0) {
+           matchedRoutesResult == null ? void 0 : matchedRoutesResult.matchedRoutes.map((route) => {
+-            var _a2;
+-            return ((_a2 = route.options.params) == null ? void 0 : _a2.stringify) ?? route.options.stringifyParams;
++            var _a3;
++            return ((_a3 = route.options.params) == null ? void 0 : _a3.stringify) ?? route.options.stringifyParams;
+           }).filter(Boolean).forEach((fn) => {
+             nextParams = { ...nextParams, ...fn(nextParams) };
+           });
+@@ -382,10 +383,10 @@ class Router {
+         const applyMiddlewares = (search2) => {
+           const allMiddlewares = (matchedRoutesResult == null ? void 0 : matchedRoutesResult.matchedRoutes.reduce(
+             (acc, route) => {
+-              var _a2;
++              var _a3;
+               const middlewares = [];
+               if ("search" in route.options) {
+-                if ((_a2 = route.options.search) == null ? void 0 : _a2.middlewares) {
++                if ((_a3 = route.options.search) == null ? void 0 : _a3.middlewares) {
+                   middlewares.push(...route.options.search.middlewares);
+                 }
+               } else if (route.options.preSearchFilters || route.options.postSearchFilters) {
+@@ -472,12 +473,12 @@ class Router {
+         };
+       };
+       const buildWithMatches = (dest = {}, maskedDest) => {
+-        var _a;
++        var _a2;
+         const next = build(dest);
+         let maskedNext = maskedDest ? build(maskedDest) : void 0;
+         if (!maskedNext) {
+           let params = {};
+-          const foundMask = (_a = this.options.routeMasks) == null ? void 0 : _a.find((d) => {
++          const foundMask = (_a2 = this.options.routeMasks) == null ? void 0 : _a2.find((d) => {
+             const match = matchPathname(this.basepath, next.pathname, {
+               to: d.from,
+               caseSensitive: false,
+@@ -629,7 +630,7 @@ class Router {
+       let loadPromise;
+       loadPromise = new Promise((resolve) => {
+         this.startReactTransition(async () => {
+-          var _a;
++          var _a2;
+           try {
+             const next = this.latestLocation;
+             const prevLocation = this.state.resolvedLocation;
+@@ -710,8 +711,8 @@ class Router {
+                     [stayingMatches, "onStay"]
+                   ].forEach(([matches, hook]) => {
+                     matches.forEach((match) => {
+-                      var _a2, _b;
+-                      (_b = (_a2 = this.looseRoutesById[match.routeId].options)[hook]) == null ? void 0 : _b.call(_a2, match);
++                      var _a3, _b;
++                      (_b = (_a3 = this.looseRoutesById[match.routeId].options)[hook]) == null ? void 0 : _b.call(_a3, match);
+                     });
+                   });
+                 });
+@@ -737,7 +738,7 @@ class Router {
+             }));
+           }
+           if (this.latestLoadPromise === loadPromise) {
+-            (_a = this.commitLocationPromise) == null ? void 0 : _a.resolve();
++            (_a2 = this.commitLocationPromise) == null ? void 0 : _a2.resolve();
+             this.latestLoadPromise = void 0;
+             this.commitLocationPromise = void 0;
+           }
+@@ -769,18 +770,18 @@ class Router {
+       }
+     };
+     this.updateMatch = (id, updater) => {
+-      var _a;
++      var _a2;
+       let updated;
+-      const isPending = (_a = this.state.pendingMatches) == null ? void 0 : _a.find((d) => d.id === id);
++      const isPending = (_a2 = this.state.pendingMatches) == null ? void 0 : _a2.find((d) => d.id === id);
+       const isMatched = this.state.matches.find((d) => d.id === id);
+       const isCached = this.state.cachedMatches.find((d) => d.id === id);
+       const matchesKey = isPending ? "pendingMatches" : isMatched ? "matches" : isCached ? "cachedMatches" : "";
+       if (matchesKey) {
+         this.__store.setState((s) => {
+-          var _a2;
++          var _a3;
+           return {
+             ...s,
+-            [matchesKey]: (_a2 = s[matchesKey]) == null ? void 0 : _a2.map(
++            [matchesKey]: (_a3 = s[matchesKey]) == null ? void 0 : _a3.map(
+               (d) => d.id === id ? updated = updater(d) : d
+             )
+           };
+@@ -818,7 +819,7 @@ class Router {
+         triggerOnReady();
+       }
+       const handleRedirectAndNotFound = (match, err) => {
+-        var _a, _b, _c;
++        var _a2, _b, _c;
+         if (isResolvedRedirect(err)) {
+           if (!err.reloadDocument) {
+             throw err;
+@@ -836,7 +837,7 @@ class Router {
+           if (!err.routeId) {
+             err.routeId = match.routeId;
+           }
+-          (_a = match.beforeLoadPromise) == null ? void 0 : _a.resolve();
++          (_a2 = match.beforeLoadPromise) == null ? void 0 : _a2.resolve();
+           (_b = match.loaderPromise) == null ? void 0 : _b.resolve();
+           (_c = match.loadPromise) == null ? void 0 : _c.resolve();
+           if (isRedirect(err)) {
+@@ -855,10 +856,10 @@ class Router {
+         await new Promise((resolveAll, rejectAll) => {
+           ;
+           (async () => {
+-            var _a, _b, _c;
++            var _a2, _b, _c;
+             try {
+               const handleSerialError = (index, err, routerCode) => {
+-                var _a2, _b2;
++                var _a3, _b2;
+                 const { id: matchId, routeId } = matches[index];
+                 const route = this.looseRoutesById[routeId];
+                 if (err instanceof Promise) {
+@@ -868,14 +869,14 @@ class Router {
+                 firstBadMatchIndex = firstBadMatchIndex ?? index;
+                 handleRedirectAndNotFound(this.getMatch(matchId), err);
+                 try {
+-                  (_b2 = (_a2 = route.options).onError) == null ? void 0 : _b2.call(_a2, err);
++                  (_b2 = (_a3 = route.options).onError) == null ? void 0 : _b2.call(_a3, err);
+                 } catch (errorHandlerErr) {
+                   err = errorHandlerErr;
+                   handleRedirectAndNotFound(this.getMatch(matchId), err);
+                 }
+                 updateMatch(matchId, (prev) => {
+-                  var _a3, _b3;
+-                  (_a3 = prev.beforeLoadPromise) == null ? void 0 : _a3.resolve();
++                  var _a4, _b3;
++                  (_a4 = prev.beforeLoadPromise) == null ? void 0 : _a4.resolve();
+                   (_b3 = prev.loadPromise) == null ? void 0 : _b3.resolve();
+                   return {
+                     ...prev,
+@@ -890,7 +891,7 @@ class Router {
+               };
+               for (const [index, { id: matchId, routeId }] of matches.entries()) {
+                 const existingMatch = this.getMatch(matchId);
+-                const parentMatchId = (_a = matches[index - 1]) == null ? void 0 : _a.id;
++                const parentMatchId = (_a2 = matches[index - 1]) == null ? void 0 : _a2.id;
+                 const route = this.looseRoutesById[routeId];
+                 const pendingMs = route.options.pendingMs ?? this.options.defaultPendingMs;
+                 const shouldPending = !!(onReady && !this.isServer && !resolvePreload(matchId) && (route.options.loader || route.options.beforeLoad) && typeof pendingMs === "number" && pendingMs !== Infinity && (route.options.pendingComponent ?? this.options.defaultPendingComponent));
+@@ -916,8 +917,8 @@ class Router {
+                     updateMatch(matchId, (prev) => ({
+                       ...prev,
+                       loadPromise: createControlledPromise(() => {
+-                        var _a2;
+-                        (_a2 = prev.loadPromise) == null ? void 0 : _a2.resolve();
++                        var _a3;
++                        (_a3 = prev.loadPromise) == null ? void 0 : _a3.resolve();
+                       }),
+                       beforeLoadPromise: createControlledPromise()
+                     }));
+@@ -994,8 +995,8 @@ class Router {
+                     handleSerialError(index, err, "BEFORE_LOAD");
+                   }
+                   updateMatch(matchId, (prev) => {
+-                    var _a2;
+-                    (_a2 = prev.beforeLoadPromise) == null ? void 0 : _a2.resolve();
++                    var _a3;
++                    (_a3 = prev.beforeLoadPromise) == null ? void 0 : _a3.resolve();
+                     return {
+                       ...prev,
+                       beforeLoadPromise: void 0,
+@@ -1054,7 +1055,7 @@ class Router {
+                         preload: !!preload && !this.state.matches.find((d) => d.id === matchId)
+                       }));
+                       const runLoader = async () => {
+-                        var _a2, _b2, _c2, _d, _e, _f, _g, _h;
++                        var _a3, _b2, _c2, _d, _e, _f, _g, _h;
+                         try {
+                           const potentialPendingMinPromise = async () => {
+                             const latestMatch = this.getMatch(matchId);
+@@ -1068,7 +1069,7 @@ class Router {
+                               ...prev,
+                               isFetching: "loader"
+                             }));
+-                            let loaderData = await ((_b2 = (_a2 = route.options).loader) == null ? void 0 : _b2.call(_a2, getLoaderContext()));
++                            let loaderData = await ((_b2 = (_a3 = route.options).loader) == null ? void 0 : _b2.call(_a3, getLoaderContext()));
+                             if (this.serializeLoaderData) {
+                               loaderData = this.serializeLoaderData(
+                                 "loaderData",
+@@ -1198,8 +1199,8 @@ class Router {
+     };
+     this.invalidate = (opts) => {
+       const invalidate = (d) => {
+-        var _a;
+-        if (((_a = opts == null ? void 0 : opts.filter) == null ? void 0 : _a.call(opts, d)) ?? true) {
++        var _a2;
++        if (((_a2 = opts == null ? void 0 : opts.filter) == null ? void 0 : _a2.call(opts, d)) ?? true) {
+           return {
+             ...d,
+             invalid: true,
+@@ -1209,12 +1210,12 @@ class Router {
+         return d;
+       };
+       this.__store.setState((s) => {
+-        var _a;
++        var _a2;
+         return {
+           ...s,
+           matches: s.matches.map(invalidate),
+           cachedMatches: s.cachedMatches.map(invalidate),
+-          pendingMatches: (_a = s.pendingMatches) == null ? void 0 : _a.map(invalidate)
++          pendingMatches: (_a2 = s.pendingMatches) == null ? void 0 : _a2.map(invalidate)
+         };
+       });
+       return this.load({ sync: opts == null ? void 0 : opts.sync });
+@@ -1370,8 +1371,8 @@ class Router {
+       return match;
+     };
+     this.dehydrate = () => {
+-      var _a;
+-      const pickError = ((_a = this.options.errorSerializer) == null ? void 0 : _a.serialize) ?? defaultSerializeError;
++      var _a2;
++      const pickError = ((_a2 = this.options.errorSerializer) == null ? void 0 : _a2.serialize) ?? defaultSerializeError;
+       return {
+         state: {
+           dehydratedMatches: this.state.matches.map((d) => {
+@@ -1394,10 +1395,10 @@ class Router {
+       };
+     };
+     this.hydrate = () => {
+-      var _a, _b, _c;
++      var _a2, _b, _c;
+       let ctx;
+       if (typeof document !== "undefined") {
+-        ctx = this.options.transformer.parse((_a = window.__TSR__) == null ? void 0 : _a.dehydrated);
++        ctx = this.options.transformer.parse((_a2 = window.__TSR__) == null ? void 0 : _a2.dehydrated);
+       }
+       invariant(
+         ctx,
+@@ -1443,11 +1444,11 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
+     };
+     this.streamedKeys = /* @__PURE__ */ new Set();
+     this.getStreamedValue = (key) => {
+-      var _a;
++      var _a2;
+       if (this.isServer) {
+         return void 0;
+       }
+-      const streamedValue = (_a = window.__TSR__) == null ? void 0 : _a.streamedValues[key];
++      const streamedValue = (_a2 = window.__TSR__) == null ? void 0 : _a2.streamedValues[key];
+       if (!streamedValue) {
+         return;
+       }
+@@ -1457,14 +1458,14 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
+       return streamedValue.parsed;
+     };
+     this.streamValue = (key, value) => {
+-      var _a;
++      var _a2, _b;
+       warning(
+         !this.streamedKeys.has(key),
+         "Key has already been streamed: " + key
+       );
+-      this.streamedKeys.add(key);
++      this.emit({ type: "onStreamedValue", key });
+       this.injectScript(
+-        `__TSR__.streamedValues['${key}'] = { value: ${(_a = this.serializer) == null ? void 0 : _a.call(this, this.options.transformer.stringify(value))}}`
++        `__TSR__.setStreamedValue(${(_a2 = this.serializer) == null ? void 0 : _a2.call(this, key)}, ${(_b = this.serializer) == null ? void 0 : _b.call(this, this.options.transformer.stringify(value))})`
+       );
+     };
+     this._handleNotFound = (matches, err, {
+@@ -1515,7 +1516,11 @@ ${jsesc(script, { quotes: "backtick" })}\`)` : ""}; if (typeof __TSR__ !== 'unde
+     });
+     if (typeof document !== "undefined") {
+       window.__TSR__ROUTER__ = this;
++      this.streamedKeys = new Set(
++        Object.keys(((_a = window.__TSR__) == null ? void 0 : _a.streamedValues) || {})
++      );
+     }
++    this.subscribe("onStreamedValue", ({ key }) => this.streamedKeys.add(key));
+   }
+   get state() {
+     return this.__store.state;

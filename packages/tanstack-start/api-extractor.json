@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "extends": "../../api-extractor.json",
+  "mainEntryPointFilePath": "./src/index.ts",
+  "bundledPackages": [
+    "@apollo/client-react-streaming",
+    "@apollo/client-integration-tanstack-start"
+  ],
+  "compiler": {
+    "tsconfigFilePath": "./tsconfig.json",
+    "skipLibCheck": true
+  }
+}

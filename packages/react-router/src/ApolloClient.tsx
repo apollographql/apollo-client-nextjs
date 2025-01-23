@@ -46,8 +46,8 @@ export class ApolloClient extends _ApolloClient<any> {
     _ApolloClient.prototype.setLink.call(
       this,
       ApolloLink.from([
-        ReadFromReadableStreamLink,
-        TeeToReadableStreamLink,
+        new ReadFromReadableStreamLink(),
+        new TeeToReadableStreamLink(),
         newLink,
       ])
     );
