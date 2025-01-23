@@ -5,7 +5,7 @@ const config = {
   workspaces: {
     ".": {
       ignoreBinaries: ["jq", "playwright"],
-      ignoreDependencies: [/@size-limit\/.*/, "prettier"],
+      ignoreDependencies: [/@size-limit\/.*/, "prettier", "zx"],
     },
     "packages/*": {
       entry: ["**/*.test.{ts,tsx}"],
