@@ -27,6 +27,7 @@ const config = {
     "scripts/**",
     "packages/client-react-streaming/api-extractor.d.ts",
     "packages/experimental-nextjs-app-support/api-extractor.d.ts",
+    "**/.yalc/**",
   ],
 };
 
