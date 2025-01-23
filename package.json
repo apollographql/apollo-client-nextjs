@@ -5,7 +5,8 @@
   "workspaces": [
     "packages",
     "packages/*",
-    "examples/*"
+    "examples/*",
+    "integration-test/*"
   ],
   "main": "package.json",
   "dependencies": {
@@ -21,11 +22,16 @@
     "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build",
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run",
     "changeset-publish": "yarn build:libs && changeset publish",
-    "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build && cd integration-test && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install"
+    "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build"
   },
   "resolutions": {
     "@microsoft/api-documenter": "7.24.1",
-    "@apollo/client": "3.12.6"
+    "@apollo/client": "3.12.6",
+    "graphql": "17.0.0-alpha.2",
+    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
+    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch",
+    "@tanstack/start": "patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch",
+    "@types/react": "19.0.2"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.3",
