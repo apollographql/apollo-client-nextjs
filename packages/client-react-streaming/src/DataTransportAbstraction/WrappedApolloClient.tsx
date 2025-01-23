@@ -43,12 +43,22 @@ function getQueryManager(
   return client["queryManager"];
 }
 
+declare class Trie<Data> {
+  constructor(weakness?: boolean, makeData?: (array: any[]) => Data);
+  lookup<T extends any[]>(...array: T): Data;
+  lookupArray<T extends IArguments | any[]>(array: T): Data;
+  peek<T extends any[]>(...array: T): Data | undefined;
+  peekArray<T extends IArguments | any[]>(array: T): Data | undefined;
+  remove(...array: any[]): Data | undefined;
+  removeArray<T extends IArguments | any[]>(array: T): Data | undefined;
+}
+
 /**
  * Returns the `Trie` constructor without adding a direct dependency on `@wry/trie`.
  */
 function getTrieConstructor(client: OrigApolloClient<unknown>) {
   return getQueryManager(client)["inFlightLinkObservables"]
-    .constructor as typeof import("@wry/trie").Trie;
+    .constructor as typeof Trie;
 }
 
 type SimulatedQueryInfo = {
@@ -113,7 +123,7 @@ class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
   }
 }
 
-export class ApolloClientClientBaseImpl extends ApolloClientBase {
+class ApolloClientClientBaseImpl extends ApolloClientBase {
   constructor(options: WrappedApolloClientOptions) {
     super(options);
     this.onQueryStarted = this.onQueryStarted.bind(this);

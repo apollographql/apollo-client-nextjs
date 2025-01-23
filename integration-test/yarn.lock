@@ -47,7 +47,7 @@ __metadata:
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
-  checksum: 10/28afc59f9246f23d8e7f3a4cc622207b0d63a34d456174560043bc086514e75f55844a88ea0f4ea547b5f782b174adeafc62a4017dce72f251f6042056181f73
+  checksum: 10/e8d6af811d70f120e61f9c6ad3c518a892f75bbb3a84a83ba180c1ca65774660bc01313c053474ae605b0140744ce01f65cd469601180b996702027ddbe8d3c6
   languageName: node
   linkType: hard
 
@@ -59,19 +59,21 @@ __metadata:
   peerDependencies:
     "@tanstack/react-router": "*"
     react: ^19
-  checksum: 10/7b6ec156bbd2ded3c049cf4d34cdec50fc2111399dd7fc81fe6d5087b27a931f054355b2e817795a8e401e8f73df4d5d61150ea1d28889987462c2c839a3e96a
+  checksum: 10/925e6f086df1f3d7a3fd0e60265dce1192a7666934b2ee35f545ffdb00f04463d0734649e9320094b195aaa8b327bd8520a38dd7436051413e97564183f83fda
   languageName: node
   linkType: hard
 
 "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.8-alpha.1
+  version: 0.11.8
   resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=509995&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.10.4
+    graphql: ^16 || >=17.0.0-alpha.2
     react: ^18 || >=19.0.0-rc
-  checksum: 10/8328db2c32b7b940001af3810d49429969abe8cfa035b1f84c56b11a66e34e0f95443368f4acc5a2c3a05c71a6a4dba3cf091538c88dd36c4f13b7986df8e136
+    react-dom: ^18 || >=19.0.0-rc
+  checksum: 10/04dbf100bd75132b9ca2b9a00e35e31d89fb9b197339120b5469503a2e4908ec707e145e92cfcb44306b4b9db69c09fe4e10463b228530c7b3a9ac3b7b4500a2
   languageName: node
   linkType: hard
 
@@ -113,15 +115,15 @@ __metadata:
   linkType: hard
 
 "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.8-alpha.1
+  version: 0.11.8
   resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=21ade4&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.11.8-alpha.1"
+    "@apollo/client-react-streaming": "npm:0.11.8"
   peerDependencies:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
-  checksum: 10/3fd928dd4dbb08a20691d7642680d6dc3fc1cff98d48f3a027c1d9b1a5445d8a1579ca7e5740b71901c59212931fb8efd7ccc3d01b37c8976ccef1153f78daec
+  checksum: 10/a866cc1c43ff0358e7c4a7be793c1c73eb0f0078022cd86475fe375902378e1adfcf4ff7d672a6e365daaba812a0e7ca253af2315275146ddf283825ec1cb75e
   languageName: node
   linkType: hard
 

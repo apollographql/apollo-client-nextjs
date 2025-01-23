@@ -20,6 +20,7 @@
     "docs": "api-documenter markdown --input-folder temp --output-folder docs",
     "build:libs": "yarn workspaces foreach --all --include \"@apollo/*\" run build",
     "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run",
+    "changeset-publish": "yarn build:libs && changeset publish",
     "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build && cd integration-test && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install"
   },
   "resolutions": {
@@ -31,7 +32,10 @@
     "@size-limit/file": "11.1.2",
     "@size-limit/webpack": "11.1.2",
     "@size-limit/webpack-why": "11.1.2",
+    "@types/node": "^22.10.9",
+    "knip": "^5.43.1",
     "size-limit": "11.1.2",
+    "typescript": "^5.7.3",
     "zx": "^8.2.4"
   }
 }

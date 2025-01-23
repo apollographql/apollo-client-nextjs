@@ -5,7 +5,7 @@
   "devDependencies": {
     "@testing-library/react-render-stream": "^2.0.0",
     "expect": "^29.7.0",
-    "typescript": "*"
+    "typescript": "^5.7.3"
   },
   "type": "module"
 }

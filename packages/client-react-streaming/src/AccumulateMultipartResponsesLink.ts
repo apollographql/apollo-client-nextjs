@@ -6,7 +6,7 @@ import {
   mergeIncrementalData,
 } from "@apollo/client/utilities/index.js";
 
-export interface AccumulateMultipartResponsesConfig {
+interface AccumulateMultipartResponsesConfig {
   /**
    * The maximum delay in milliseconds
    * from receiving the first response

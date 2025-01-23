@@ -1,6 +1,6 @@
 {
   "name": "@apollo/client-integration-react-router",
-  "version": "0.11.5",
+  "version": "0.11.8",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs"
   },
