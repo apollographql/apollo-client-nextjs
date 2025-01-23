@@ -11,6 +11,9 @@ const config = {
       entry: ["**/*.test.{ts,tsx}"],
       project: ["**/*.{ts,tsx}"],
     },
+    "packages/test-utils": {
+      entry: ["*.js"],
+    },
     "packages/client-react-streaming": {
       entry: ["**/*.test.{ts,tsx}"],
       project: ["**/*.{ts,tsx}"],
