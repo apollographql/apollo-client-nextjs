@@ -2,9 +2,11 @@
   "name": "@internal/test-utils",
   "private": true,
   "version": "0.0.0",
-  "devDependencies": {
+  "dependencies": {
     "@testing-library/react-render-stream": "^2.0.0",
-    "expect": "^29.7.0",
+    "global-jsdom": "^26.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^5.7.3"
   },
   "type": "module"

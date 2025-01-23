@@ -37,7 +37,7 @@ export async function renderStreamEnv() {
   const jsdom = await import("global-jsdom");
   const cleanupJSDOM = jsdom.default();
   const { createRenderStream } = await import(
-    "@testing-library/react-render-stream"
+    "@testing-library/react-render-stream/pure"
   );
 
   return {

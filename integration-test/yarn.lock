@@ -39,7 +39,7 @@ __metadata:
   linkType: hard
 
 "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.5
+  version: 0.11.8
   resolution: "@apollo/client-integration-react-router@exec:./shared/build-client-integration-react-router.cjs#./shared/build-client-integration-react-router.cjs::hash=d34732&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     "@apollo/client-react-streaming": "npm:0.11.8-alpha.1"
@@ -47,19 +47,19 @@ __metadata:
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
-  checksum: 10/e8d6af811d70f120e61f9c6ad3c518a892f75bbb3a84a83ba180c1ca65774660bc01313c053474ae605b0140744ce01f65cd469601180b996702027ddbe8d3c6
+  checksum: 10/33a961cd848ede8bc31907346134b7f0bfab48522271fa1be4e6deac5d624cf1d0d3c63a9def90c89b2a2894ae683195ca470f77d6fb2fdd7893823ff0c507a6
   languageName: node
   linkType: hard
 
 "@apollo/client-integration-tanstack-start@exec:./shared/build-client-integration-tanstack-start.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.5
+  version: 0.11.8
   resolution: "@apollo/client-integration-tanstack-start@exec:./shared/build-client-integration-tanstack-start.cjs#./shared/build-client-integration-tanstack-start.cjs::hash=66d731&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
     "@apollo/client-react-streaming": "npm:0.11.5"
   peerDependencies:
     "@tanstack/react-router": "*"
     react: ^19
-  checksum: 10/925e6f086df1f3d7a3fd0e60265dce1192a7666934b2ee35f545ffdb00f04463d0734649e9320094b195aaa8b327bd8520a38dd7436051413e97564183f83fda
+  checksum: 10/8fbcea3c6b0bb00a2036c84159428822538e939ad23ae227d35c92b5df4a8704494bec7b8c7d70c3c67d8f83878e645f8444bdc64a21a899558f904b83194daa
   languageName: node
   linkType: hard
 
@@ -73,7 +73,7 @@ __metadata:
     graphql: ^16 || >=17.0.0-alpha.2
     react: ^18 || >=19.0.0-rc
     react-dom: ^18 || >=19.0.0-rc
-  checksum: 10/04dbf100bd75132b9ca2b9a00e35e31d89fb9b197339120b5469503a2e4908ec707e145e92cfcb44306b4b9db69c09fe4e10463b228530c7b3a9ac3b7b4500a2
+  checksum: 10/7eae1b9df8c5e4e37096f37f488d0779f47650b724b4cbedc534dd0c00c3f0ea99c1452cde911e20137e64c6b28c22a9bd760d9d9fb92fe26ade8e253dd607eb
   languageName: node
   linkType: hard
 
@@ -123,7 +123,7 @@ __metadata:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
-  checksum: 10/a866cc1c43ff0358e7c4a7be793c1c73eb0f0078022cd86475fe375902378e1adfcf4ff7d672a6e365daaba812a0e7ca253af2315275146ddf283825ec1cb75e
+  checksum: 10/831e5f8f8cb0b86c4fb10bcba1c54966f60e2ff9d72bc3e6f52d0816cc0d71c495f8c2e7a3a8d1d0ab524809f2852a883a36c50de432c718a7c00ad69d160a32
   languageName: node
   linkType: hard
 

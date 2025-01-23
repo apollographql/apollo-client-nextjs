@@ -59,7 +59,7 @@ export function createApolloLoaderHandler(
 // once that functionality has been added, all this can be removed.
 
 type EventPromiscade = Promiscade<JsonString<ReadableStreamLinkEvent>>;
-export type PromiscadedRef = Omit<TransportedQueryRef, "$__apollo_queryRef"> & {
+type PromiscadedRef = Omit<TransportedQueryRef, "$__apollo_queryRef"> & {
   $__apollo_queryRef: Omit<
     TransportedQueryRef["$__apollo_queryRef"],
     "stream"
@@ -69,7 +69,7 @@ export type PromiscadedRef = Omit<TransportedQueryRef, "$__apollo_queryRef"> & {
   };
 };
 
-export function isPromiscaded(
+function isPromiscaded(
   queryRef: TransportedQueryRef | PromiscadedRef
 ): queryRef is PromiscadedRef {
   return "promiscade" in queryRef.$__apollo_queryRef;
@@ -96,7 +96,7 @@ function replaceStreamWithPromiscade(queryRef: TransportedQueryRef) {
  * could result in poor timing and have the modified object be sent over the wire instead
  * of the one with the promiscade
  */
-export function promiscadedRefToStreamRef(
+function promiscadedRefToStreamRef(
   queryRef: PromiscadedRef
 ): TransportedQueryRef {
   const { promiscade: _, ...restRef } = queryRef.$__apollo_queryRef;
@@ -111,7 +111,7 @@ export function promiscadedRefToStreamRef(
   };
 }
 
-export const hydratedRefs = new WeakMap<PromiscadedRef, TransportedQueryRef>();
+const hydratedRefs = new WeakMap<PromiscadedRef, TransportedQueryRef>();
 /**
  * If `obj` is a Promiscaded Ref, creates a new "live" QueryRef
  * If `obj` is a Transported Ref, converts it to a "live" QueryRef

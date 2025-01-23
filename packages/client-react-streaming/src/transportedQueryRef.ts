@@ -32,7 +32,7 @@ import {
   type JsonString,
 } from "@apollo/client-react-streaming/stream-utils";
 
-export type RestrictedPreloadOptions = {
+type RestrictedPreloadOptions = {
   fetchPolicy?: "network-only" | "cache-and-network" | "cache-first";
   returnPartialData?: false;
   nextFetchPolicy?: undefined;
@@ -45,7 +45,7 @@ export type PreloadTransportedQueryOptions<TVariables, TData> = Omit<
 > &
   RestrictedPreloadOptions;
 
-export type TransportedQueryRefOptions = TransportedOptions &
+type TransportedQueryRefOptions = TransportedOptions &
   RestrictedPreloadOptions;
 
 /**
@@ -141,7 +141,7 @@ export function createTransportedQueryPreloader(
   };
 }
 
-export function createTransportedQueryRef<
+function createTransportedQueryRef<
   TData,
   TVariables extends OperationVariables,
 >(
