@@ -1,5 +1,13 @@
+// @ts-check
+
 /** @type{import('knip').KnipConfig}*/
 const config = {
+  workspaces: {
+    "packages/*": {
+      entry: ["**/*.test.{ts,tsx}"],
+      project: ["**/*.{ts,tsx}"],
+    },
+  },
   ignore: [
     "examples/**",
     "integration-test/**",
@@ -9,7 +17,7 @@ const config = {
     "packages/experimental-nextjs-app-support/api-extractor.d.ts",
   ],
   ignoreBinaries: ["jq", "playwright"],
-  ignoreDependencies: [/@size-limit\/.*/, "prettier", "semver"],
+  ignoreDependencies: [/@size-limit\/.*/, "prettier", "tsx"],
 };
 
 export default config;

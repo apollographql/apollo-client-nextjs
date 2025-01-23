@@ -1,4 +1,4 @@
-import React, { Suspense, use, useMemo } from "rehackt";
+import React, { Suspense, use, useMemo } from "react";
 import { outsideOf } from "@internal/test-utils/runInConditions.js";
 import assert from "node:assert";
 import test, { afterEach, describe } from "node:test";
