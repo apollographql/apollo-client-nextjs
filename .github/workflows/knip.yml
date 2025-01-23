@@ -13,4 +13,5 @@ jobs:
           node-version: "20.x"
           cache: "yarn"
       - run: yarn install --immutable --mode=skip-build
+      - run: yarn build:libs
       - run: yarn knip
