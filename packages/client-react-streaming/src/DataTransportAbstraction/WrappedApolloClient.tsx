@@ -441,7 +441,7 @@ export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {
   }
 }
 
-export class ApolloClientRSCImpl extends ApolloClientBase {
+class ApolloClientRSCImpl extends ApolloClientBase {
   constructor(options: WrappedApolloClientOptions) {
     super(options);
     this.setLink(this.link);
