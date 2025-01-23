@@ -47,7 +47,7 @@ __metadata:
   peerDependencies:
     react: ^19
     react-router: ^7.0.2
-  checksum: 10/2a75a009ca2221fd572d4d73124db2695f15c5af42fcc73ba0da9b94fdeb2ea9dd9e16bd2b862844a5c008fcfe688faf04f202f5d6e6268cce0a7db16bb492e2
+  checksum: 10/28afc59f9246f23d8e7f3a4cc622207b0d63a34d456174560043bc086514e75f55844a88ea0f4ea547b5f782b174adeafc62a4017dce72f251f6042056181f73
   languageName: node
   linkType: hard
 
@@ -59,7 +59,7 @@ __metadata:
   peerDependencies:
     "@tanstack/react-router": "*"
     react: ^19
-  checksum: 10/c99ecea3568fbf162166751c610b1da35aa51aeeda3538d23b8ca53b1c4e527994cc6bba574891ff136dc32faf4f6592dacafa5cb57a9a9abec75ec679addfc9
+  checksum: 10/7b6ec156bbd2ded3c049cf4d34cdec50fc2111399dd7fc81fe6d5087b27a931f054355b2e817795a8e401e8f73df4d5d61150ea1d28889987462c2c839a3e96a
   languageName: node
   linkType: hard
 
@@ -71,7 +71,7 @@ __metadata:
   peerDependencies:
     "@apollo/client": ^3.10.4
     react: ^18 || >=19.0.0-rc
-  checksum: 10/007511fdca6df20b5329c20839271de5408b73f7aeedc7bd0e50b02316525c5e25a7ad33b435bcfc11aef1abddc20cd6d7d05df907e1e0d396ee21b405941cc5
+  checksum: 10/8328db2c32b7b940001af3810d49429969abe8cfa035b1f84c56b11a66e34e0f95443368f4acc5a2c3a05c71a6a4dba3cf091538c88dd36c4f13b7986df8e136
   languageName: node
   linkType: hard
 
@@ -121,7 +121,7 @@ __metadata:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
-  checksum: 10/dfb4cd61c0ef9e667cd80bbf4941ce2d8a0dc7d93b34f0f388014ebf3763527499b6df1b6f2d0059b03f8be633087a556fc27c5d2d917320f0bac0187965c8a3
+  checksum: 10/3fd928dd4dbb08a20691d7642680d6dc3fc1cff98d48f3a027c1d9b1a5445d8a1579ca7e5740b71901c59212931fb8efd7ccc3d01b37c8976ccef1153f78daec
   languageName: node
   linkType: hard
 
