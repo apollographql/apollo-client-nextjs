@@ -124,6 +124,7 @@
     "@types/eslint": "^9.6.1",
     "@types/node": "20.12.11",
     "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
     "concurrently": "8.2.2",
@@ -148,7 +149,6 @@
     "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.8-alpha.1",
-    "@types/react-dom": "^19.0.0"
+    "@apollo/client-react-streaming": "0.11.8-alpha.1"
   }
 }
