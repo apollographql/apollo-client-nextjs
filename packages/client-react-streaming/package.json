@@ -140,17 +140,17 @@
     "@testing-library/react": "^16.1.0",
     "@total-typescript/shoehorn": "0.1.2",
     "@tsconfig/recommended": "1.0.6",
+    "@types/eslint": "^9.6.1",
     "@types/node": "20.12.11",
     "@types/react": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
     "concurrently": "8.2.2",
+    "esbuild": "^0.24.2",
     "eslint": "8.57.0",
     "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
-    "glob": "10.3.12",
     "global-jsdom": "24.0.0",
-    "globstar": "1.0.0",
     "graphql": "16.8.1",
     "jsdom": "24.0.0",
     "publint": "0.2.7",
@@ -158,15 +158,16 @@
     "react-error-boundary": "4.0.13",
     "react-server-dom-webpack": "^19.0.0",
     "rimraf": "5.0.5",
-    "ts-node": "10.9.2",
     "tsup": "8.0.2",
     "tsx": "4.7.1",
-    "typescript": "5.4.5",
-    "vitest": "1.6.0"
+    "typescript": "^5.7.3",
+    "zen-observable-ts": "1.1.0"
   },
   "peerDependencies": {
     "@apollo/client": "^3.10.4",
-    "react": "^18 || >=19.0.0-rc"
+    "graphql": "^16 || >=17.0.0-alpha.2",
+    "react": "^18 || >=19.0.0-rc",
+    "react-dom": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
     "ts-invariant": "^0.10.3"
