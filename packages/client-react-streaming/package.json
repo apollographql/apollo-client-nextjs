@@ -114,7 +114,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf dist; tsup",
+    "build": "rimraf dist .built; tsup && touch .built",
     "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
     "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
     "test:ssr": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=node\" yarn run test:base",
@@ -122,7 +122,6 @@
     "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
     "prepack": "yarn build",
     "prepublishOnly": "yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
-    "postpublish": "touch .published",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
     "test-bundle:attw": "attw --pack .",
     "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
