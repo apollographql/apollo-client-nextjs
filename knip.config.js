@@ -17,7 +17,8 @@ const config = {
     "packages/experimental-nextjs-app-support/api-extractor.d.ts",
   ],
   ignoreBinaries: ["jq", "playwright"],
-  ignoreDependencies: [/@size-limit\/.*/, "prettier", "tsx"],
+  ignoreDependencies: [/@size-limit\/.*/, "prettier", "tsx", "semver", "next"],
+  ignoreUnresolved: ["#bundled"],
 };
 
 export default config;
