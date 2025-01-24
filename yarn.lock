@@ -6647,12 +6647,59 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@integration-test/react-router@workspace:integration-test/react-router":
+  version: 0.0.0-use.local
+  resolution: "@integration-test/react-router@workspace:integration-test/react-router"
+  dependencies:
+    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client-integration-react-router": "workspace:^"
+    "@integration-test/shared": "workspace:^"
+    "@react-router/dev": "npm:^7.0.1"
+    "@react-router/node": "npm:^7.0.1"
+    "@react-router/serve": "npm:^7.0.1"
+    "@types/node": "npm:^20"
+    "@types/react": "npm:^19.0.0"
+    "@types/react-dom": "npm:^19.0.0"
+    autoprefixer: "npm:^10.4.20"
+    isbot: "npm:^5.1.17"
+    postcss: "npm:^8.4.49"
+    react: "npm:^19"
+    react-dom: "npm:^19"
+    react-router: "npm:7.0.2"
+    tailwindcss: "npm:^3.4.15"
+    typescript: "npm:^5.6.3"
+    vite: "npm:^5.4.11"
+    vite-tsconfig-paths: "npm:^5.1.2"
+  languageName: unknown
+  linkType: soft
+
 "@integration-test/shared@workspace:^, @integration-test/shared@workspace:integration-test/shared":
   version: 0.0.0-use.local
   resolution: "@integration-test/shared@workspace:integration-test/shared"
   peerDependencies:
     "@apollo/client": "*"
     graphql: "*"
+  languageName: unknown
+  linkType: soft
+
+"@integration-test/tanstack-start@workspace:integration-test/tanstack-start":
+  version: 0.0.0-use.local
+  resolution: "@integration-test/tanstack-start@workspace:integration-test/tanstack-start"
+  dependencies:
+    "@apollo/client": "npm:^3.12.4"
+    "@apollo/client-integration-tanstack-start": "workspace:^"
+    "@integration-test/shared": "workspace:^"
+    "@tanstack/react-router": "npm:^1.95.6"
+    "@tanstack/router-devtools": "npm:^1.95.6"
+    "@tanstack/start": "npm:^1.95.6"
+    "@types/react": "npm:^19.0.2"
+    "@types/react-dom": "npm:^19.0.2"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    graphql: "npm:^16.10.0"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
+    typescript: "npm:^5.7.2"
+    vinxi: "npm:^0.5.1"
   languageName: unknown
   linkType: soft
 
@@ -21959,32 +22006,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@workspace:integration-test/react-router":
-  version: 0.0.0-use.local
-  resolution: "react-router@workspace:integration-test/react-router"
-  dependencies:
-    "@apollo/client": "npm:^3.11.10"
-    "@apollo/client-integration-react-router": "workspace:^"
-    "@integration-test/shared": "workspace:^"
-    "@react-router/dev": "npm:^7.0.1"
-    "@react-router/node": "npm:^7.0.1"
-    "@react-router/serve": "npm:^7.0.1"
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^19.0.0"
-    "@types/react-dom": "npm:^19.0.0"
-    autoprefixer: "npm:^10.4.20"
-    isbot: "npm:^5.1.17"
-    postcss: "npm:^8.4.49"
-    react: "npm:^19"
-    react-dom: "npm:^19"
-    react-router: "npm:7.0.2"
-    tailwindcss: "npm:^3.4.15"
-    typescript: "npm:^5.6.3"
-    vite: "npm:^5.4.11"
-    vite-tsconfig-paths: "npm:^5.1.2"
-  languageName: unknown
-  linkType: soft
-
 "react-server-dom-webpack@npm:^19.0.0":
   version: 19.0.0
   resolution: "react-server-dom-webpack@npm:19.0.0"
@@ -24254,27 +24275,6 @@ __metadata:
   checksum: 10/b0e00533ae3800223b5b71af9cb1dd9bfea5ef5ffa01300f1ced99de9511487aa41e03106173e4168c56c8f6600ee21c98c1d75a5def23cddf9b39b4ad71210d
   languageName: node
   linkType: hard
-
-"tanstack-start@workspace:integration-test/tanstack-start":
-  version: 0.0.0-use.local
-  resolution: "tanstack-start@workspace:integration-test/tanstack-start"
-  dependencies:
-    "@apollo/client": "npm:^3.12.4"
-    "@apollo/client-integration-tanstack-start": "workspace:^"
-    "@integration-test/shared": "workspace:^"
-    "@tanstack/react-router": "npm:^1.95.6"
-    "@tanstack/router-devtools": "npm:^1.95.6"
-    "@tanstack/start": "npm:^1.95.6"
-    "@types/react": "npm:^19.0.2"
-    "@types/react-dom": "npm:^19.0.2"
-    "@vitejs/plugin-react": "npm:^4.3.4"
-    graphql: "npm:^16.10.0"
-    react: "npm:^19.0.0"
-    react-dom: "npm:^19.0.0"
-    typescript: "npm:^5.7.2"
-    vinxi: "npm:^0.5.1"
-  languageName: unknown
-  linkType: soft
 
 "tapable@npm:^2.1.1, tapable@npm:^2.2.0":
   version: 2.2.1
