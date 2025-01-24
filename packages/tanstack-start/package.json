@@ -91,6 +91,6 @@
     "react": "^19"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.5"
+    "@apollo/client-react-streaming": "0.11.8"
   }
 }

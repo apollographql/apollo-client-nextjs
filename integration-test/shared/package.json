@@ -1,5 +1,7 @@
 {
   "name": "@integration-test/shared",
+  "version": "0.0.0",
+  "private": true,
   "peerDependencies": {
     "@apollo/client": "*",
     "graphql": "*"

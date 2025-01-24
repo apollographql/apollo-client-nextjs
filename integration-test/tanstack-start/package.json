@@ -1,5 +1,7 @@
 {
-  "name": "tanstack-start",
+  "name": "@integration-test/tanstack-start",
+  "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi dev",

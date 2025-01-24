@@ -11,6 +11,7 @@
     "app-dir",
     "hack-the-supergraph-ssr",
     "apollo-next-13-demo",
-    "packages-shared"
+    "packages-shared",
+    "@integration-test/**"
   ]
 }
