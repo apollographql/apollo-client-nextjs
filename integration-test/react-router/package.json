@@ -10,15 +10,14 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
-    "@apollo/client-integration-react-router": "*",
-    "@apollo/client-react-streaming": "^0.11.6",
+    "@apollo/client-integration-react-router": "workspace:^",
     "@integration-test/shared": "workspace:^",
     "@react-router/node": "^7.0.1",
     "@react-router/serve": "^7.0.1",
     "isbot": "^5.1.17",
     "react": "^19",
     "react-dom": "^19",
-    "react-router": "patch:react-router@npm%3A7.0.2#~/../.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch"
+    "react-router": "7.0.2"
   },
   "devDependencies": {
     "@react-router/dev": "^7.0.1",

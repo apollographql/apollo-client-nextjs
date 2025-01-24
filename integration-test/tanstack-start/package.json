@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
-    "@apollo/client-integration-tanstack-start": "*",
+    "@apollo/client-integration-tanstack-start": "workspace:^",
     "@integration-test/shared": "workspace:^",
     "@tanstack/react-router": "^1.95.6",
     "@tanstack/router-devtools": "^1.95.6",

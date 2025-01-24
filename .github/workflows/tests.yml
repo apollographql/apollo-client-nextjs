@@ -75,30 +75,19 @@ jobs:
       fail-fast: false
       matrix:
         version: ${{ fromJson(needs.matrix.outputs.version) }}
-    defaults:
-      run:
-        working-directory: ./integration-test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "yarn"
-      - name: Install Packages (Root)
-        run: yarn install --immutable --mode=skip-build
-        working-directory: ./
       - name: Set target version of Apollo Client (Root)
-        run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
-        working-directory: ./
-
-      - name: Install Packages (Integration Test)
-        run: |
-          yarn install
+        run: npm pkg set resolutions.@apollo/client=$(npm view @apollo/client@${{ matrix.version }} version)
+      - run: yarn install --mode=skip-build
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
 
-      - name: Set target version of Apollo Client (Integration Test)
-        run: yarn workspaces foreach --all --include "@integration-test/*" --exclude @integration-test/shared add @apollo/client@${{ matrix.version }}
+      - run: yarn build:libs
 
       - name: Get installed Playwright version
         id: playwright-version
@@ -126,11 +115,6 @@ jobs:
 
       - name: "Next.js: Test"
         run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
-
-      - name: "Experimentally patched React: Build"
-        run: yarn workspace @integration-test/experimental-react run build
-      - name: "Experimentally patched React: Test"
-        run: yarn workspace @integration-test/experimental-react run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
 
       - name: "Vite Streaming: Build"
         run: yarn workspace @integration-test/vite-streaming run build
