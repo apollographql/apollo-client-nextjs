@@ -73,12 +73,12 @@ export class TeeToReadableStreamLink extends ApolloLink {
             },
             error(error) {
               controller.enqueue({ type: "error" });
-              controller.close();
+              tryClose();
               observer.error(error);
             },
             complete() {
               controller.enqueue({ type: "completed" });
-              controller.close();
+              tryClose();
               observer.complete();
             },
           });

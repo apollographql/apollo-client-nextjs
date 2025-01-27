@@ -34,9 +34,10 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
 
     const { onQueryEvent } = props;
     const consumeBackPressure = useCallback(() => {
-      for (const key of router.streamedKeys) {
+      if (!router.clientSsr) return;
+      for (const key of router.clientSsr.streamedKeys) {
         if (key.startsWith(APOLLO_EVENT_PREFIX)) {
-          const streamedValue = router.getStreamedValue(key);
+          const streamedValue = router.clientSsr.getStreamedValue(key);
           if (
             streamedValue &&
             typeof streamedValue === "object" &&
@@ -50,18 +51,19 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
       }
     }, [router, onQueryEvent]);
 
-    if (router.isServer) {
+    if (router.serverSsr) {
+      const ssr = router.serverSsr;
       props.registerDispatchRequestStarted!(({ event, observable }) => {
         const id = crypto.randomUUID() as typeof event.id;
         event.id = id;
-        router.streamValue(
+        ssr.streamValue(
           `${APOLLO_EVENT_PREFIX}${event.id}/${event.type}`,
           event satisfies QueryEvent
         );
         observable.subscribe({
           next(event) {
             event.id = id;
-            router.streamValue(
+            ssr.streamValue(
               `${APOLLO_EVENT_PREFIX}${event.id}/${event.type}`,
               event satisfies QueryEvent
             );
@@ -77,8 +79,9 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
     useEffect(() => {
       consumeBackPressure();
       return router.subscribe("onStreamedValue", ({ key }) => {
+        if (!router.clientSsr) return;
         if (!key.startsWith(APOLLO_EVENT_PREFIX)) return;
-        const streamedValue = router.getStreamedValue(key);
+        const streamedValue = router.clientSsr.getStreamedValue(key);
         if (streamedValue && onQueryEvent) {
           handledEvents.add(streamedValue);
           onQueryEvent(streamedValue as QueryEvent);
@@ -91,14 +94,14 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
         useStaticValueRef<T>(value: T) {
           const key = APOLLO_HOOK_PREFIX + useId();
           const dataValue =
-            !router.isServer && router.streamedKeys.has(key)
-              ? (router.getStreamedValue(key) as T)
+            router.clientSsr && router.clientSsr.streamedKeys.has(key)
+              ? (router.clientSsr.getStreamedValue(key) as T)
               : value;
           const dataRef = useRef(dataValue);
 
-          if (router.isServer) {
-            if (!router.streamedKeys.has(key)) {
-              router.streamValue(key, value);
+          if (router.serverSsr) {
+            if (!router.serverSsr.streamedKeys.has(key)) {
+              router.serverSsr.streamValue(key, value);
             }
           }
           return dataRef;
