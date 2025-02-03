@@ -21,7 +21,10 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
+    "@types/react": "*",
+    "@types/react-dom": "*",
     "babel-jest": "^29.7.0",
+    "graphql": "*",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-fixed-jsdom": "^0.0.9"
