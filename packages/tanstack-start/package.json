@@ -69,9 +69,10 @@
     "@arethetypeswrong/cli": "0.15.3",
     "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
-    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch",
-    "@tanstack/start": "patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch",
+    "@tanstack/react-router": "^1.99.0",
+    "@tanstack/start": "^1.99.3",
     "@tsconfig/recommended": "1.0.6",
+    "@types/jsesc": "^3",
     "@types/node": "20.12.11",
     "@types/react": "^19.0.0",
     "concurrently": "8.2.2",
@@ -87,10 +88,11 @@
     "wait-on": "8.0.2"
   },
   "peerDependencies": {
-    "@tanstack/react-router": "*",
+    "@tanstack/react-router": "^1.99.0",
     "react": "^19"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.11.8"
+    "@apollo/client-react-streaming": "0.11.8",
+    "jsesc": "^3.1.0"
   }
 }

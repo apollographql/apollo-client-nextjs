@@ -79,16 +79,19 @@
     "browser": [
       "buildManualDataTransport",
       "resetManualSSRApolloSingletons",
+      "registerLateInitializingQueue",
       "built_for_browser"
     ],
     "node": [
       "buildManualDataTransport",
       "resetManualSSRApolloSingletons",
+      "registerLateInitializingQueue",
       "built_for_ssr"
     ],
     "edge-light,worker,browser": [
       "buildManualDataTransport",
       "resetManualSSRApolloSingletons",
+      "registerLateInitializingQueue",
       "built_for_ssr"
     ]
   },

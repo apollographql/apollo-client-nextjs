@@ -90,15 +90,17 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
-    "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch"
-    "@tanstack/start": "patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch"
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@tanstack/start": "npm:^1.99.3"
     "@tsconfig/recommended": "npm:1.0.6"
+    "@types/jsesc": "npm:^3"
     "@types/node": "npm:20.12.11"
     "@types/react": "npm:^19.0.0"
     concurrently: "npm:8.2.2"
     esbuild: "npm:0.24.2"
     eslint: "npm:8.57.0"
     graphql: "npm:16.8.1"
+    jsesc: "npm:^3.1.0"
     publint: "npm:0.2.7"
     react: "npm:^19.0.0"
     react-error-boundary: "npm:5.0.0"
@@ -107,7 +109,7 @@ __metadata:
     typescript: "npm:5.4.5"
     wait-on: "npm:8.0.2"
   peerDependencies:
-    "@tanstack/react-router": "*"
+    "@tanstack/react-router": ^1.99.0
     react: ^19
   languageName: unknown
   linkType: soft
@@ -678,6 +680,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/core@npm:^7.26.7":
+  version: 7.26.7
+  resolution: "@babel/core@npm:7.26.7"
+  dependencies:
+    "@ampproject/remapping": "npm:^2.2.0"
+    "@babel/code-frame": "npm:^7.26.2"
+    "@babel/generator": "npm:^7.26.5"
+    "@babel/helper-compilation-targets": "npm:^7.26.5"
+    "@babel/helper-module-transforms": "npm:^7.26.0"
+    "@babel/helpers": "npm:^7.26.7"
+    "@babel/parser": "npm:^7.26.7"
+    "@babel/template": "npm:^7.25.9"
+    "@babel/traverse": "npm:^7.26.7"
+    "@babel/types": "npm:^7.26.7"
+    convert-source-map: "npm:^2.0.0"
+    debug: "npm:^4.1.0"
+    gensync: "npm:^1.0.0-beta.2"
+    json5: "npm:^2.2.3"
+    semver: "npm:^6.3.1"
+  checksum: 10/1ca1c9b1366a1ee77ade9c72302f288b2b148e4190e0f36bc032d09c686b2c7973d3309e4eec2c57243508c16cf907c17dec4e34ba95e7a18badd57c61bbcb7c
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.14.0, @babel/generator@npm:^7.18.13, @babel/generator@npm:^7.23.6":
   version: 7.23.6
   resolution: "@babel/generator@npm:7.23.6"
@@ -747,7 +772,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-compilation-targets@npm:^7.22.6":
+"@babel/helper-compilation-targets@npm:^7.22.6, @babel/helper-compilation-targets@npm:^7.26.5":
   version: 7.26.5
   resolution: "@babel/helper-compilation-targets@npm:7.26.5"
   dependencies:
@@ -1119,6 +1144,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helpers@npm:^7.26.7":
+  version: 7.26.7
+  resolution: "@babel/helpers@npm:7.26.7"
+  dependencies:
+    "@babel/template": "npm:^7.25.9"
+    "@babel/types": "npm:^7.26.7"
+  checksum: 10/97593a0c9b3c5e2e7cf824e549b5f6fa6dc739593ad93d5bb36d06883d8124beac63ee2154c9a514dbee68a169d5683ab463e0ac6713ad92fb4854cea35ed4d4
+  languageName: node
+  linkType: hard
+
 "@babel/highlight@npm:^7.23.4":
   version: 7.23.4
   resolution: "@babel/highlight@npm:7.23.4"
@@ -1130,7 +1165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.22.16, @babel/parser@npm:^7.23.5, @babel/parser@npm:^7.23.6, @babel/parser@npm:^7.25.4, @babel/parser@npm:^7.25.9, @babel/parser@npm:^7.26.0, @babel/parser@npm:^7.26.3":
+"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.23.6, @babel/parser@npm:^7.25.4, @babel/parser@npm:^7.25.9, @babel/parser@npm:^7.26.0, @babel/parser@npm:^7.26.3":
   version: 7.26.3
   resolution: "@babel/parser@npm:7.26.3"
   dependencies:
@@ -1167,6 +1202,17 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 10/727a7a807100f6a26df859e2f009c4ddbd0d3363287b45daa50bd082ccd0d431d0c4d0e610a91f806e04a1918726cd0f5a0592c9b902a815337feed12e1cafd9
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.26.7":
+  version: 7.26.7
+  resolution: "@babel/parser@npm:7.26.7"
+  dependencies:
+    "@babel/types": "npm:^7.26.7"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 10/3ccc384366ca9a9b49c54f5b24c9d8cff9a505f2fbdd1cfc04941c8e1897084cc32f100e77900c12bc14a176cf88daa3c155faad680d9a23491b997fd2a59ffc
   languageName: node
   linkType: hard
 
@@ -2635,7 +2681,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.23.7, @babel/traverse@npm:^7.25.9, @babel/traverse@npm:^7.26.4":
+"@babel/traverse@npm:^7.23.7, @babel/traverse@npm:^7.25.9":
   version: 7.26.4
   resolution: "@babel/traverse@npm:7.26.4"
   dependencies:
@@ -2650,6 +2696,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/traverse@npm:^7.26.7":
+  version: 7.26.7
+  resolution: "@babel/traverse@npm:7.26.7"
+  dependencies:
+    "@babel/code-frame": "npm:^7.26.2"
+    "@babel/generator": "npm:^7.26.5"
+    "@babel/parser": "npm:^7.26.7"
+    "@babel/template": "npm:^7.25.9"
+    "@babel/types": "npm:^7.26.7"
+    debug: "npm:^4.3.1"
+    globals: "npm:^11.1.0"
+  checksum: 10/c821c9682fe0b9edf7f7cbe9cc3e0787ffee3f73b52c13b21b463f8979950a6433f5e7e482a74348d22c0b7a05180e6f72b23eb6732328b49c59fc6388ebf6e5
+  languageName: node
+  linkType: hard
+
 "@babel/types@npm:^7.0.0, @babel/types@npm:^7.16.8, @babel/types@npm:^7.18.13, @babel/types@npm:^7.18.6, @babel/types@npm:^7.20.0, @babel/types@npm:^7.21.5, @babel/types@npm:^7.22.15, @babel/types@npm:^7.22.5, @babel/types@npm:^7.23.0, @babel/types@npm:^7.23.6, @babel/types@npm:^7.23.9, @babel/types@npm:^7.8.3":
   version: 7.23.9
   resolution: "@babel/types@npm:7.23.9"
@@ -2661,7 +2722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.20.7, @babel/types@npm:^7.22.17, @babel/types@npm:^7.25.4, @babel/types@npm:^7.25.9, @babel/types@npm:^7.26.0, @babel/types@npm:^7.26.3":
+"@babel/types@npm:^7.20.7, @babel/types@npm:^7.25.4, @babel/types@npm:^7.25.9, @babel/types@npm:^7.26.0, @babel/types@npm:^7.26.3":
   version: 7.26.3
   resolution: "@babel/types@npm:7.26.3"
   dependencies:
@@ -2678,6 +2739,16 @@ __metadata:
     "@babel/helper-string-parser": "npm:^7.25.9"
     "@babel/helper-validator-identifier": "npm:^7.25.9"
   checksum: 10/148f6bead7bc39371176ba681873c930087503a8bfd2b0dab5090de32752241806c95f4e87cee8b2976bb0277c6cbc150f16c333fc90269634b711d3711c0f18
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.26.7":
+  version: 7.26.7
+  resolution: "@babel/types@npm:7.26.7"
+  dependencies:
+    "@babel/helper-string-parser": "npm:^7.25.9"
+    "@babel/helper-validator-identifier": "npm:^7.25.9"
+  checksum: 10/2264efd02cc261ca5d1c5bc94497c8995238f28afd2b7483b24ea64dd694cf46b00d51815bf0c87f0d0061ea221569c77893aeecb0d4b4bb254e9c2f938d7669
   languageName: node
   linkType: hard
 
@@ -6689,9 +6760,8 @@ __metadata:
     "@apollo/client": "npm:^3.12.4"
     "@apollo/client-integration-tanstack-start": "workspace:^"
     "@integration-test/shared": "workspace:^"
-    "@tanstack/react-router": "npm:^1.95.6"
-    "@tanstack/router-devtools": "npm:^1.95.6"
-    "@tanstack/start": "npm:^1.95.6"
+    "@tanstack/router-devtools": "npm:^1.99.0"
+    "@tanstack/start": "npm:^1.99.3"
     "@types/react": "npm:^19.0.2"
     "@types/react-dom": "npm:^19.0.2"
     "@vitejs/plugin-react": "npm:^4.3.4"
@@ -9117,80 +9187,60 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/directive-functions-plugin@npm:1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/directive-functions-plugin@npm:1.97.3"
+"@tanstack/directive-functions-plugin@npm:1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/directive-functions-plugin@npm:1.99.3"
   dependencies:
     "@babel/code-frame": "npm:7.26.2"
-    "@babel/core": "npm:^7.26.0"
-    "@babel/generator": "npm:^7.26.3"
-    "@babel/parser": "npm:^7.26.3"
+    "@babel/core": "npm:^7.26.7"
     "@babel/plugin-syntax-jsx": "npm:^7.25.9"
     "@babel/plugin-syntax-typescript": "npm:^7.25.9"
     "@babel/template": "npm:^7.25.9"
-    "@babel/traverse": "npm:^7.26.4"
-    "@babel/types": "npm:^7.26.3"
+    "@babel/traverse": "npm:^7.26.7"
+    "@babel/types": "npm:^7.26.7"
+    "@tanstack/router-utils": "npm:^1.99.3"
     "@types/babel__code-frame": "npm:^7.0.6"
     "@types/babel__core": "npm:^7.20.5"
-    "@types/babel__generator": "npm:^7.6.8"
     "@types/babel__template": "npm:^7.4.4"
     "@types/babel__traverse": "npm:^7.20.6"
-    "@types/diff": "npm:^6.0.0"
-    babel-dead-code-elimination: "npm:^1.0.6"
-    chalk: "npm:^5.3.0"
+    babel-dead-code-elimination: "npm:^1.0.8"
     dedent: "npm:^1.5.3"
-    diff: "npm:^7.0.0"
     tiny-invariant: "npm:^1.3.3"
-  checksum: 10/f583c0001cec4dc39fb43cc253febd5390e52ab3ee9aa54f40b692604d02cac0387b758a62f9ab7600f8e23cbebd547253a989f890edf2f5c64491e598414667
+  checksum: 10/9a58b545f824d90f13d6858ae8669f1aef731b1d5ce79c00b98e76c5426dd51acf9dd82985d37355645021749776485681a6b6f6e6157f35218f466531bdadbe
   languageName: node
   linkType: hard
 
-"@tanstack/history@npm:1.97.0":
-  version: 1.97.0
-  resolution: "@tanstack/history@npm:1.97.0"
-  checksum: 10/4f77cabd5d7abb66b1cf7c342cffdef4f47f3a2a2907f2b9c7696e1d0fe731c5d61af02ff54f6459e74bb02835a11b75f3ba392ec250d88756b6cf72f7aa90fe
+"@tanstack/history@npm:1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/history@npm:1.99.0"
+  checksum: 10/12013b1853a3f554f78c9977674be485feae38af31dd64ffe102f2b6e7045ec30ef60d13606b70102f1c6d702532fcac81702b8189c5b8f6fa6a01f45d9b594b
   languageName: node
   linkType: hard
 
-"@tanstack/react-cross-context@npm:^1.97.0":
-  version: 1.97.0
-  resolution: "@tanstack/react-cross-context@npm:1.97.0"
+"@tanstack/react-cross-context@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/react-cross-context@npm:1.99.0"
   peerDependencies:
-    react: ">=18"
-    react-dom: ">=18"
-  checksum: 10/58d4662cb3312456fa7ae052eb83bb42ebeb8a25d8aec037d0e1bcfb954bc8c26d062bfd36e618697376b030195998d57380393a3f6b59bef98e293053ac7663
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/9e3de8d4a4da0ec79e8ae3ed2693e61107cb79aacf8ed5d39e7efa21b28d13e4f898bb1ead3e0cb2e4d3f11c5c3a169b410049a0b9ff6af48a52f051235a7c0b
   languageName: node
   linkType: hard
 
-"@tanstack/react-router@npm:1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/react-router@npm:1.97.3"
+"@tanstack/react-router@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/react-router@npm:1.99.0"
   dependencies:
-    "@tanstack/history": "npm:1.97.0"
+    "@tanstack/history": "npm:1.99.0"
     "@tanstack/react-store": "npm:^0.7.0"
-    jsesc: "npm:^3.0.2"
+    "@tanstack/router-core": "npm:^1.99.0"
+    jsesc: "npm:^3.1.0"
     tiny-invariant: "npm:^1.3.3"
     tiny-warning: "npm:^1.0.3"
   peerDependencies:
-    react: ">=18"
-    react-dom: ">=18"
-  checksum: 10/bd6b07e97422fbc8ff79a581d82108784ebdb87277496085fb04e4787ac5743922833fea83c467fad8d4707f9b5d29f537368eaa1f0f61c8ff9a498d88efa9a7
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-router@patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch":
-  version: 1.97.3
-  resolution: "@tanstack/react-router@patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch::version=1.97.3&hash=3ae3cc"
-  dependencies:
-    "@tanstack/history": "npm:1.97.0"
-    "@tanstack/react-store": "npm:^0.7.0"
-    jsesc: "npm:^3.0.2"
-    tiny-invariant: "npm:^1.3.3"
-    tiny-warning: "npm:^1.0.3"
-  peerDependencies:
-    react: ">=18"
-    react-dom: ">=18"
-  checksum: 10/5e06195a0c24683d0c84b2cf2c95379809f91f625a2f8089675c75099eab68e99dd485fcea4cbb998692c9064e2eaddf9809ed525d69bbb614ad29e574d15be5
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/c3a05a2340cca8d4f9efb040cd281dc8fac9dbd63fc1701fc76b289980b3b2dfd181dede25ee1da8c4fb57cc045cd3a0bf3ed46895488f8d2b315850d7ab6104
   languageName: node
   linkType: hard
 
@@ -9207,61 +9257,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/router-devtools@npm:^1.95.6":
-  version: 1.97.14
-  resolution: "@tanstack/router-devtools@npm:1.97.14"
+"@tanstack/router-core@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/router-core@npm:1.99.0"
+  dependencies:
+    "@tanstack/history": "npm:1.99.0"
+    "@tanstack/store": "npm:^0.7.0"
+  checksum: 10/6557bdf54dc5e7998e1514e285d3a42d675fd37767c9b85b104c1756b584cd1fcd237466cd668cbcb3b1c3f48522dff4524f9a0ceea7990c9751b3787306a1a9
+  languageName: node
+  linkType: hard
+
+"@tanstack/router-devtools@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/router-devtools@npm:1.99.0"
   dependencies:
     clsx: "npm:^2.1.1"
     goober: "npm:^2.1.16"
   peerDependencies:
-    "@tanstack/react-router": ^1.97.14
-    react: ">=18"
-    react-dom: ">=18"
-  checksum: 10/477f60de34184513a80a4856ad67c556f97f3db1c3a96798619dacfd62e0b4f8e975887c41f3b6e2e0982296914a1e3ffc1f36af4f4ac02548f4004ac9dd940c
+    "@tanstack/react-router": ^1.99.0
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/f037cc4593853d7ea2f602dd262351f55acb9c9d18527f634aff04e721215ee92c30fb8a03d95d0deeba7c1a939a627ebcbfb32b199d3f8000c14c70f5d13245
   languageName: node
   linkType: hard
 
-"@tanstack/router-generator@npm:^1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/router-generator@npm:1.97.3"
+"@tanstack/router-generator@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/router-generator@npm:1.99.0"
   dependencies:
-    "@tanstack/virtual-file-routes": "npm:^1.97.0"
+    "@tanstack/virtual-file-routes": "npm:^1.99.0"
     prettier: "npm:^3.4.2"
     tsx: "npm:^4.19.2"
     zod: "npm:^3.24.1"
   peerDependencies:
-    "@tanstack/react-router": ^1.97.3
+    "@tanstack/react-router": ^1.99.0
   peerDependenciesMeta:
     "@tanstack/react-router":
       optional: true
-  checksum: 10/7b0bb6c176c4b7b5539c9a478f815393751e17fdcf45b7062df3e587bbec1e002693df753fa7709b6837be54949a24cadcff285b57a471c27fbf61926dc23791
+  checksum: 10/c694adf1ef6d975b7fccc66c391e724799354cd225055b9983876b99abcc2755136e8bff0ef45190515fc98c2d1bd16ef95470935fa4bec086332d4e2deee7ff
   languageName: node
   linkType: hard
 
-"@tanstack/router-plugin@npm:^1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/router-plugin@npm:1.97.3"
+"@tanstack/router-plugin@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/router-plugin@npm:1.99.3"
   dependencies:
-    "@babel/core": "npm:^7.26.0"
-    "@babel/generator": "npm:^7.26.3"
-    "@babel/parser": "npm:^7.26.3"
+    "@babel/core": "npm:^7.26.7"
     "@babel/plugin-syntax-jsx": "npm:^7.25.9"
     "@babel/plugin-syntax-typescript": "npm:^7.25.9"
     "@babel/template": "npm:^7.25.9"
-    "@babel/traverse": "npm:^7.26.4"
-    "@babel/types": "npm:^7.26.3"
-    "@tanstack/router-generator": "npm:^1.97.3"
-    "@tanstack/virtual-file-routes": "npm:^1.97.0"
+    "@babel/traverse": "npm:^7.26.7"
+    "@babel/types": "npm:^7.26.7"
+    "@tanstack/router-generator": "npm:^1.99.0"
+    "@tanstack/router-utils": "npm:^1.99.3"
+    "@tanstack/virtual-file-routes": "npm:^1.99.0"
     "@types/babel__core": "npm:^7.20.5"
-    "@types/babel__generator": "npm:^7.6.8"
     "@types/babel__template": "npm:^7.4.4"
     "@types/babel__traverse": "npm:^7.20.6"
-    "@types/diff": "npm:^6.0.0"
     babel-dead-code-elimination: "npm:^1.0.8"
-    chalk: "npm:^5.3.0"
     chokidar: "npm:^3.6.0"
-    diff: "npm:^7.0.0"
-    unplugin: "npm:^1.16.0"
+    unplugin: "npm:^2.1.2"
     zod: "npm:^3.24.1"
   peerDependencies:
     "@rsbuild/core": ">=1.0.2"
@@ -9274,135 +9329,259 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10/ffb3b938aa3fc41e7dc7dc7f19762db03d22ee3381811f432abc5825d96188d9d979b1123088a7e758afe3437ffac9407c3b3fd224ab1468031d78758e9448d6
+  checksum: 10/7f86d3d5495edb7564a04f9f17ee436a29e0877ea227e8c20dc19119178689203c92a8f7def62e25939181ebba2cc3cdcca2053542786ae70e1644ed278b33e5
   languageName: node
   linkType: hard
 
-"@tanstack/server-functions-plugin@npm:^1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/server-functions-plugin@npm:1.97.3"
+"@tanstack/router-utils@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/router-utils@npm:1.99.3"
   dependencies:
-    "@babel/code-frame": "npm:7.26.2"
-    "@babel/core": "npm:^7.26.0"
-    "@babel/generator": "npm:^7.26.3"
-    "@babel/parser": "npm:^7.26.3"
-    "@babel/plugin-syntax-jsx": "npm:^7.25.9"
-    "@babel/plugin-syntax-typescript": "npm:^7.25.9"
-    "@babel/template": "npm:^7.25.9"
-    "@babel/traverse": "npm:^7.26.4"
-    "@babel/types": "npm:^7.26.3"
-    "@tanstack/directive-functions-plugin": "npm:1.97.3"
-    "@types/babel__code-frame": "npm:^7.0.6"
-    "@types/babel__core": "npm:^7.20.5"
-    "@types/babel__generator": "npm:^7.6.8"
-    "@types/babel__template": "npm:^7.4.4"
-    "@types/babel__traverse": "npm:^7.20.6"
-    "@types/diff": "npm:^6.0.0"
-    babel-dead-code-elimination: "npm:^1.0.6"
-    chalk: "npm:^5.3.0"
-    dedent: "npm:^1.5.3"
+    "@babel/generator": "npm:^7.26.5"
+    "@babel/parser": "npm:^7.26.7"
+    ansis: "npm:^3.10.0"
     diff: "npm:^7.0.0"
-    tiny-invariant: "npm:^1.3.3"
-  checksum: 10/61e2c84399caf700aab506765483d78ada405e2a2651b927c2d3893e12aa82e907ebb0e981b5956de323e4f9027bef05f95394c8dc659fd06c54272a8598c428
+  checksum: 10/fcffbb1caf44c830343e1cb7fa38ce63c81af087cabe9ac04120a228b67df2129e6d137c3a69f81709f794361b253a876a2aaa43e58a4b6ef09ce1e8fcd5607a
   languageName: node
   linkType: hard
 
-"@tanstack/start-plugin@npm:^1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/start-plugin@npm:1.97.3"
+"@tanstack/server-functions-plugin@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/server-functions-plugin@npm:1.99.3"
   dependencies:
     "@babel/code-frame": "npm:7.26.2"
-    "@babel/core": "npm:^7.26.0"
-    "@babel/generator": "npm:^7.26.3"
-    "@babel/parser": "npm:^7.26.3"
+    "@babel/core": "npm:^7.26.7"
     "@babel/plugin-syntax-jsx": "npm:^7.25.9"
     "@babel/plugin-syntax-typescript": "npm:^7.25.9"
     "@babel/template": "npm:^7.25.9"
-    "@babel/traverse": "npm:^7.26.4"
-    "@babel/types": "npm:^7.26.3"
+    "@babel/traverse": "npm:^7.26.7"
+    "@babel/types": "npm:^7.26.7"
+    "@tanstack/directive-functions-plugin": "npm:1.99.3"
     "@types/babel__code-frame": "npm:^7.0.6"
     "@types/babel__core": "npm:^7.20.5"
-    "@types/babel__generator": "npm:^7.6.8"
     "@types/babel__template": "npm:^7.4.4"
     "@types/babel__traverse": "npm:^7.20.6"
-    "@types/diff": "npm:^6.0.0"
     babel-dead-code-elimination: "npm:^1.0.8"
-    chalk: "npm:^5.3.0"
-    diff: "npm:^7.0.0"
+    dedent: "npm:^1.5.3"
     tiny-invariant: "npm:^1.3.3"
-  checksum: 10/eafd1458e9ca300a199ad8380b3bb333e67eeb7751aac3dcd0bab48493d51edc3f5a22f4ab131a173a7c8f5d816adb9bc4e4ab6d7a08a974aeaba4e70465536e
+  checksum: 10/95c0ab13448f3529542bb984c2194aee5311e3c00c1f7f9a68385b8acf28ba007eda60c92cdd448fefbabc7382e5a4d4d558e9613b4c5856fdd14e6f847cb845
   languageName: node
   linkType: hard
 
-"@tanstack/start@npm:1.97.3":
-  version: 1.97.3
-  resolution: "@tanstack/start@npm:1.97.3"
+"@tanstack/start-api-routes@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-api-routes@npm:1.99.3"
   dependencies:
-    "@tanstack/react-cross-context": "npm:^1.97.0"
-    "@tanstack/react-router": "npm:^1.97.3"
-    "@tanstack/router-generator": "npm:^1.97.3"
-    "@tanstack/router-plugin": "npm:^1.97.3"
-    "@tanstack/server-functions-plugin": "npm:^1.97.3"
-    "@tanstack/start-plugin": "npm:^1.97.3"
-    "@vinxi/react": "npm:0.2.5"
-    "@vinxi/react-server-dom": "npm:^0.0.3"
-    "@vinxi/server-components": "npm:0.5.0"
-    "@vinxi/server-functions": "npm:0.5.0"
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@tanstack/start-server": "npm:^1.99.3"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    vinxi: "npm:0.5.1"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/3ccbe5ea145bb2dd8fa31c327ef8fd62406e15aec23e59ecc7867808b561004304afbb298334305eba21e922d8e299b3bc1a1c284b98c35867cc87e7a6714809
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-client@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/start-client@npm:1.99.0"
+  dependencies:
+    "@tanstack/react-cross-context": "npm:^1.99.0"
+    "@tanstack/react-router": "npm:^1.99.0"
+    jsesc: "npm:^3.1.0"
+    tiny-invariant: "npm:^1.3.3"
+    vinxi: "npm:^0.5.1"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/13d31653e3e84b5c4b169085ba67fbaddfebe662c60e32c978498d5967486ded9cf375b2595c824d7ed84d07f4cb4fb96321f3902215727304892191605ee414
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-config@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-config@npm:1.99.3"
+  dependencies:
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@tanstack/router-generator": "npm:^1.99.0"
+    "@tanstack/router-plugin": "npm:^1.99.3"
+    "@tanstack/server-functions-plugin": "npm:^1.99.3"
+    "@tanstack/start-plugin": "npm:^1.99.3"
+    "@tanstack/start-server-functions-handler": "npm:^1.99.3"
     "@vitejs/plugin-react": "npm:^4.3.4"
     import-meta-resolve: "npm:^4.1.0"
-    isbot: "npm:^5.1.17"
-    jsesc: "npm:^3.0.2"
+    nitropack: "npm:^2.10.4"
     ofetch: "npm:^1.4.1"
-    tiny-invariant: "npm:^1.3.3"
     vinxi: "npm:0.5.1"
+    vite: "npm:^6.0.11"
     zod: "npm:^3.24.1"
   peerDependencies:
     react: ">=18.0.0 || >=19.0.0"
     react-dom: ">=18.0.0 || >=19.0.0"
-  checksum: 10/02ca10bdd88de6c82979c1cc95b35df91e53dacd7b415246507afdbab95494fbc5a3148456e7ecccd584273644fa8f1c7dc84518647de023418d085471d47f42
+  checksum: 10/7797a6ad74833f7fd31f791328ca14ca9797193ed03c6987b1a4a396c7a38d29007c55d0ba4ee791c0df38945f934a1aedea4cc1c9fc9510b40dd1546ff9ab5e
   languageName: node
   linkType: hard
 
-"@tanstack/start@patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch":
-  version: 1.97.3
-  resolution: "@tanstack/start@patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch::version=1.97.3&hash=e09808"
+"@tanstack/start-plugin@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-plugin@npm:1.99.3"
   dependencies:
-    "@tanstack/react-cross-context": "npm:^1.97.0"
-    "@tanstack/react-router": "npm:^1.97.3"
-    "@tanstack/router-generator": "npm:^1.97.3"
-    "@tanstack/router-plugin": "npm:^1.97.3"
-    "@tanstack/server-functions-plugin": "npm:^1.97.3"
-    "@tanstack/start-plugin": "npm:^1.97.3"
-    "@vinxi/react": "npm:0.2.5"
-    "@vinxi/react-server-dom": "npm:^0.0.3"
-    "@vinxi/server-components": "npm:0.5.0"
-    "@vinxi/server-functions": "npm:0.5.0"
-    "@vitejs/plugin-react": "npm:^4.3.4"
-    import-meta-resolve: "npm:^4.1.0"
-    isbot: "npm:^5.1.17"
-    jsesc: "npm:^3.0.2"
-    ofetch: "npm:^1.4.1"
+    "@babel/code-frame": "npm:7.26.2"
+    "@babel/core": "npm:^7.26.7"
+    "@babel/plugin-syntax-jsx": "npm:^7.25.9"
+    "@babel/plugin-syntax-typescript": "npm:^7.25.9"
+    "@babel/template": "npm:^7.25.9"
+    "@babel/traverse": "npm:^7.26.7"
+    "@babel/types": "npm:^7.26.7"
+    "@tanstack/router-utils": "npm:^1.99.3"
+    "@types/babel__code-frame": "npm:^7.0.6"
+    "@types/babel__core": "npm:^7.20.5"
+    "@types/babel__template": "npm:^7.4.4"
+    "@types/babel__traverse": "npm:^7.20.6"
+    babel-dead-code-elimination: "npm:^1.0.8"
     tiny-invariant: "npm:^1.3.3"
+  checksum: 10/d8a3a44ab62055049fa4e8abad23f7136e8a65bee8ba8cdb99264e1375043933d3e336bd4c096b78fb0b8657e882ee9d915419839be52f83b2db36448c4b9e3e
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-router-manifest@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-router-manifest@npm:1.99.3"
+  dependencies:
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@vitejs/plugin-react": "npm:^4.3.4"
     vinxi: "npm:0.5.1"
-    zod: "npm:^3.24.1"
   peerDependencies:
     react: ">=18.0.0 || >=19.0.0"
     react-dom: ">=18.0.0 || >=19.0.0"
-  checksum: 10/42088957da31f28769037add1499631d9523e175b42eefe25e08f52c945a60d11c09058b7b49e6ccb29d5961246fcd485f5d6789dc7361e8fe7d60d8f68908c3
+  checksum: 10/ded838acb51d98fb726175032f9b56db6b86affea5f67f2460156c22987bcebaecf49457b046aa7d6c8556c5ba0c8c085b7524abf71609e29a679576af84586f
   languageName: node
   linkType: hard
 
-"@tanstack/store@npm:0.7.0":
+"@tanstack/start-server-functions-client@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-server-functions-client@npm:1.99.3"
+  dependencies:
+    "@tanstack/server-functions-plugin": "npm:^1.99.3"
+    "@tanstack/start-server-functions-fetcher": "npm:^1.99.0"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    tiny-invariant: "npm:^1.3.3"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/5fadcec9bbcecbb74cc95862bae1041f47f9ec4c6472dfa6c031f760341532f99c307d6411dabefeb1dd4b680ff6e85c6327a617196e202ea556416084b7a9ae
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-server-functions-fetcher@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/start-server-functions-fetcher@npm:1.99.0"
+  dependencies:
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@tanstack/start-client": "npm:^1.99.0"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/77ff680933f72b6b059aaa10fbaf248b86a8aab4506c712ed596729588964e46ba2ba82c3f7c238ab7823c4df8fd9c999446d90dd7dd8de85eb6ed2976aed9e0
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-server-functions-handler@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-server-functions-handler@npm:1.99.3"
+  dependencies:
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@tanstack/start-client": "npm:^1.99.0"
+    "@tanstack/start-server": "npm:^1.99.3"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    tiny-invariant: "npm:^1.3.3"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/53da39f3a373be0e14a28ed94e2674957aacc6534d117a0a88c51744803c92b5eaeeac8ed2e5a02a884094f751dc1609a549808f5dc4bf2ccfa441b3a9bb3a41
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-server-functions-server@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-server-functions-server@npm:1.99.3"
+  dependencies:
+    "@tanstack/server-functions-plugin": "npm:^1.99.3"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    tiny-invariant: "npm:^1.3.3"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/4d37505296e956d7a046d30ac5104c735623b515cb8b9aaf644186903997e3caad35518d5230d425a8b1571b03aa7110324463c89a3ec71262e2a4269c621172
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-server-functions-ssr@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-server-functions-ssr@npm:1.99.3"
+  dependencies:
+    "@tanstack/server-functions-plugin": "npm:^1.99.3"
+    "@tanstack/start-client": "npm:^1.99.0"
+    "@tanstack/start-server": "npm:^1.99.3"
+    "@tanstack/start-server-functions-fetcher": "npm:^1.99.0"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    tiny-invariant: "npm:^1.3.3"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/c717ee2a7fcb46b09df702f4fd06634d19491320e10a9bc78331de5246ac78875e8473214718cc648a1ddc67e78c5ae7722d8431005da2cddbb9aabe076b2457
+  languageName: node
+  linkType: hard
+
+"@tanstack/start-server@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start-server@npm:1.99.3"
+  dependencies:
+    "@tanstack/react-cross-context": "npm:^1.99.0"
+    "@tanstack/react-router": "npm:^1.99.0"
+    "@tanstack/start-client": "npm:^1.99.0"
+    "@vitejs/plugin-react": "npm:^4.3.4"
+    h3: "npm:1.14.0"
+    isbot: "npm:^5.1.22"
+    jsesc: "npm:^3.1.0"
+    unctx: "npm:^2.4.1"
+  peerDependencies:
+    react: ">=18.0.0 || >=19.0.0"
+    react-dom: ">=18.0.0 || >=19.0.0"
+  checksum: 10/11d388492feba37fe1d80e779a5ad6f7da7a86d9f0b7a2ec6e2d214b0c64d5dce2c7df589a75ad6215b0ab006febc7987221ea111693b83e5c0e47a129ec87a2
+  languageName: node
+  linkType: hard
+
+"@tanstack/start@npm:^1.99.3":
+  version: 1.99.3
+  resolution: "@tanstack/start@npm:1.99.3"
+  dependencies:
+    "@tanstack/start-api-routes": "npm:^1.99.3"
+    "@tanstack/start-client": "npm:^1.99.0"
+    "@tanstack/start-config": "npm:^1.99.3"
+    "@tanstack/start-router-manifest": "npm:^1.99.3"
+    "@tanstack/start-server": "npm:^1.99.3"
+    "@tanstack/start-server-functions-client": "npm:^1.99.3"
+    "@tanstack/start-server-functions-handler": "npm:^1.99.3"
+    "@tanstack/start-server-functions-server": "npm:^1.99.3"
+    "@tanstack/start-server-functions-ssr": "npm:^1.99.3"
+  checksum: 10/488827accfde510dac84280efb81b1460ac53909eb81b6b17ff074a4121639675277a555e20d28d7e69aba1f9124e70d7f4f647c4ec661c76d0a37ef7a566f3e
+  languageName: node
+  linkType: hard
+
+"@tanstack/store@npm:0.7.0, @tanstack/store@npm:^0.7.0":
   version: 0.7.0
   resolution: "@tanstack/store@npm:0.7.0"
   checksum: 10/d7adffba7d69904d70df44adb132b77b52ed9ef1cdf5afc8034a123ee835680f1c9af16b62cba5a44ffd61072832c6276037028420b381aba9b929cab7cd8162
   languageName: node
   linkType: hard
 
-"@tanstack/virtual-file-routes@npm:^1.97.0":
-  version: 1.97.0
-  resolution: "@tanstack/virtual-file-routes@npm:1.97.0"
-  checksum: 10/dacb08dc4d8b2aba868b561a555d8b7710dddbb832a734d1c4d2417ef23ed0d4737d2ba2ba4fb8d18a6607967d6fd38b24a62bc68f5d678a2e334956dfb5e9de
+"@tanstack/virtual-file-routes@npm:^1.99.0":
+  version: 1.99.0
+  resolution: "@tanstack/virtual-file-routes@npm:1.99.0"
+  checksum: 10/a87460d1fb80da0d8341e7cf627adc9d4fd77bcd71c3c6f305cb0c68df9c0a5bff3bc0e48d4cc03b6ec4613d4568f3292705dc39c612cf40b80e4f32bd58488f
   languageName: node
   linkType: hard
 
@@ -9564,7 +9743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/babel__generator@npm:*, @types/babel__generator@npm:^7.6.8":
+"@types/babel__generator@npm:*":
   version: 7.6.8
   resolution: "@types/babel__generator@npm:7.6.8"
   dependencies:
@@ -9631,13 +9810,6 @@ __metadata:
   version: 0.6.0
   resolution: "@types/cookie@npm:0.6.0"
   checksum: 10/b883348d5bf88695fbc2c2276b1c49859267a55cae3cf11ea1dccc1b3be15b466e637ce3242109ba27d616c77c6aa4efe521e3d557110b4fdd9bc332a12445c2
-  languageName: node
-  linkType: hard
-
-"@types/diff@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@types/diff@npm:6.0.0"
-  checksum: 10/ad2dc8ca9e7594c7d06b60832ef1a51c717e39fd92434043be35a5a5a038f61ee7e1b9e89d1e2a49b8c4fa0f020166d1d41f7ccbd62f6cadc9ca1bd3e5df4e5b
   languageName: node
   linkType: hard
 
@@ -9783,6 +9955,13 @@ __metadata:
     "@types/tough-cookie": "npm:*"
     parse5: "npm:^7.0.0"
   checksum: 10/15fbb9a0bfb4a5845cf6e795f2fd12400aacfca53b8c7e5bca4a3e5e8fa8629f676327964d64258aefb127d2d8a2be86dad46359efbfca0e8c9c2b790e7f8a88
+  languageName: node
+  linkType: hard
+
+"@types/jsesc@npm:^3":
+  version: 3.0.3
+  resolution: "@types/jsesc@npm:3.0.3"
+  checksum: 10/8e97013e91fdbffc7ce23f5be7f0b8a1208e9794ccae887f1a9fd606633d8b570424ab2de81ada47ff9a062812191a7aa764a42a293a37b86fd76f13329a0c0f
   languageName: node
   linkType: hard
 
@@ -10341,79 +10520,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vinxi/plugin-directives@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@vinxi/plugin-directives@npm:0.5.0"
-  dependencies:
-    "@babel/parser": "npm:^7.23.5"
-    acorn: "npm:^8.10.0"
-    acorn-jsx: "npm:^5.3.2"
-    acorn-loose: "npm:^8.3.0"
-    acorn-typescript: "npm:^1.4.3"
-    astring: "npm:^1.8.6"
-    magicast: "npm:^0.2.10"
-    recast: "npm:^0.23.4"
-    tslib: "npm:^2.6.2"
-  peerDependencies:
-    vinxi: ^0.5.0
-  checksum: 10/bc4a3d5c41c75cbde31461c18ce870d7a49dc1a9b989ed826d2a840f78d457afa1eefdd9896c975abd3bf5690c551c41d23e7e92d72381b1a95fcd92b55fb4c9
-  languageName: node
-  linkType: hard
-
-"@vinxi/react-server-dom@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@vinxi/react-server-dom@npm:0.0.3"
-  dependencies:
-    acorn-loose: "npm:^8.3.0"
-  peerDependencies:
-    react: 0.0.0-experimental-035a41c4e-20230704
-    react-dom: 0.0.0-experimental-035a41c4e-20230704
-    vite: ^4.3.9
-  checksum: 10/5967f0660bdd19529a33ce3487ccf74ae3a1d25dc7afffaf47b25df5f850c7e7aec898aa32a1eecffd03e3af7070a48544786040f53ede1805831fd28014b37a
-  languageName: node
-  linkType: hard
-
-"@vinxi/react@npm:0.2.5":
-  version: 0.2.5
-  resolution: "@vinxi/react@npm:0.2.5"
-  checksum: 10/c317a27d1ba96fd06e62babeb28bf3f3e7521ff64ec15d8cedffbe49a73f0f5b5ccb26975d3a243eccb2ef3a9b8b21ad0829d1556975e6b051d621f7ea975387
-  languageName: node
-  linkType: hard
-
-"@vinxi/server-components@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@vinxi/server-components@npm:0.5.0"
-  dependencies:
-    "@vinxi/plugin-directives": "npm:0.5.0"
-    acorn: "npm:^8.10.0"
-    acorn-loose: "npm:^8.3.0"
-    acorn-typescript: "npm:^1.4.3"
-    astring: "npm:^1.8.6"
-    magicast: "npm:^0.2.10"
-    recast: "npm:^0.23.4"
-  peerDependencies:
-    vinxi: ^0.5.0
-  checksum: 10/e6cb67d6654437bb7aa9aaa2f3e72988faa73584baba284b5bcc48f2c6023fc9bde044ff01c0a266a5d12baa9b96071b8687b256c374eb5c48951e484a2cfd71
-  languageName: node
-  linkType: hard
-
-"@vinxi/server-functions@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@vinxi/server-functions@npm:0.5.0"
-  dependencies:
-    "@vinxi/plugin-directives": "npm:0.5.0"
-    acorn: "npm:^8.10.0"
-    acorn-loose: "npm:^8.3.0"
-    acorn-typescript: "npm:^1.4.3"
-    astring: "npm:^1.8.6"
-    magicast: "npm:^0.2.10"
-    recast: "npm:^0.23.4"
-  peerDependencies:
-    vinxi: ^0.5.0
-  checksum: 10/e38685fa298bdd54738315926be27afa380378cfea45b216caecce35506b38eff5c862505bb677f9ad7fb55a5fa0d028da63c3863c90487f1ae4e615a0cb1d0d
-  languageName: node
-  linkType: hard
-
 "@vitejs/plugin-react@npm:^4.2.1, @vitejs/plugin-react@npm:^4.3.4":
   version: 4.3.4
   resolution: "@vitejs/plugin-react@npm:4.3.4"
@@ -10826,15 +10932,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-typescript@npm:^1.4.3":
-  version: 1.4.13
-  resolution: "acorn-typescript@npm:1.4.13"
-  peerDependencies:
-    acorn: ">=8.9.0"
-  checksum: 10/d39da8596e630e2937b3aa034b147b036f3317e0b116e7f5240f944eec841bd4125118794c87bfef4f8a9352891192c460b72abe2028aa4daa1f75bd79ce30e1
-  languageName: node
-  linkType: hard
-
 "acorn-walk@npm:^8.0.2, acorn-walk@npm:^8.3.2":
   version: 8.3.4
   resolution: "acorn-walk@npm:8.3.4"
@@ -11036,6 +11133,13 @@ __metadata:
   version: 0.3.2
   resolution: "ansicolors@npm:0.3.2"
   checksum: 10/0704d1485d84d65a47aacd3d2d26f501f21aeeb509922c8f2496d0ec5d346dc948efa64f3151aef0571d73e5c44eb10fd02f27f59762e9292fe123bb1ea9ff7d
+  languageName: node
+  linkType: hard
+
+"ansis@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "ansis@npm:3.10.0"
+  checksum: 10/440721b606d80fd61efe4fcdfbfbb336889b0ba59cfb787c5b0d1d2ea01629796c894ed648fefcd381521344a6aec62654f94766feae8344d53803c17a4a9636
   languageName: node
   linkType: hard
 
@@ -11437,28 +11541,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ast-types@npm:^0.16.1":
-  version: 0.16.1
-  resolution: "ast-types@npm:0.16.1"
-  dependencies:
-    tslib: "npm:^2.0.1"
-  checksum: 10/f569b475eb1c8cb93888cb6e7b7e36dc43fa19a77e4eb132cbff6e3eb1598ca60f850db6e60b070e5a0ee8c1559fca921dac0916e576f2f104e198793b0bdd8d
-  languageName: node
-  linkType: hard
-
 "astral-regex@npm:^2.0.0":
   version: 2.0.0
   resolution: "astral-regex@npm:2.0.0"
   checksum: 10/876231688c66400473ba505731df37ea436e574dd524520294cc3bbc54ea40334865e01fa0d074d74d036ee874ee7e62f486ea38bc421ee8e6a871c06f011766
-  languageName: node
-  linkType: hard
-
-"astring@npm:^1.8.6":
-  version: 1.9.0
-  resolution: "astring@npm:1.9.0"
-  bin:
-    astring: bin/astring
-  checksum: 10/ee88f71d8534557b27993d6d035ae85d78488d8dbc6429cd8e8fdfcafec3c65928a3bdc518cf69767a1298d3361490559a4819cd4b314007edae1e94cf1f9e4c
   languageName: node
   linkType: hard
 
@@ -13166,6 +13252,15 @@ __metadata:
   dependencies:
     uncrypto: "npm:^0.1.3"
   checksum: 10/d358a58b364b3314a0e42ee66b1432c01d416128e53eda983eb121abdad5ff39831a1f1ea3e90e80157ceaa0fc925f5193c151b156aa62af9e0c9bcb2fb2a15a
+  languageName: node
+  linkType: hard
+
+"crossws@npm:^0.3.2":
+  version: 0.3.3
+  resolution: "crossws@npm:0.3.3"
+  dependencies:
+    uncrypto: "npm:^0.1.3"
+  checksum: 10/f2139fa14d1f2f540a6c27aeb242f00eea97249a58f756aca8f59bbb868aeb9fc6f137bdce541070a7200aef43d744c8860c0a71a7afa25987fcc47cccaeac8b
   languageName: node
   linkType: hard
 
@@ -16684,6 +16779,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"h3@npm:1.14.0":
+  version: 1.14.0
+  resolution: "h3@npm:1.14.0"
+  dependencies:
+    cookie-es: "npm:^1.2.2"
+    crossws: "npm:^0.3.2"
+    defu: "npm:^6.1.4"
+    destr: "npm:^2.0.3"
+    iron-webcrypto: "npm:^1.2.1"
+    ohash: "npm:^1.1.4"
+    radix3: "npm:^1.1.2"
+    ufo: "npm:^1.5.4"
+    uncrypto: "npm:^0.1.3"
+    unenv: "npm:^1.10.0"
+  checksum: 10/d5813ef74e3a51d47246b9eeb049a0f177c405ca59388f4c0d4ac5786e63a471860f01a4cc3435f06cd71ae964a959d7e9446854b04899842313d68ade719956
+  languageName: node
+  linkType: hard
+
 "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr":
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
@@ -17859,6 +17972,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isbot@npm:^5.1.22":
+  version: 5.1.22
+  resolution: "isbot@npm:5.1.22"
+  checksum: 10/d2f55106b6645da1d74c7d7e474fd034f2dd98c8798044207ce5c92793562e595a2bac8a352dcc507c91e19b0991a5ea9811aad504b008324bf3f0906eab771a
+  languageName: node
+  linkType: hard
+
 "isexe@npm:^2.0.0":
   version: 2.0.0
   resolution: "isexe@npm:2.0.0"
@@ -18759,7 +18879,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsesc@npm:^3.0.2":
+"jsesc@npm:^3.0.2, jsesc@npm:^3.1.0":
   version: 3.1.0
   resolution: "jsesc@npm:3.1.0"
   bin:
@@ -19309,17 +19429,6 @@ __metadata:
   dependencies:
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
   checksum: 10/2f71af2b0afd78c2e9012a29b066d2c8ba45a9cd0c8070f7fd72de982fb1c403b4e3afdb1dae00691d56885ede66b772ef6bedf765e02e3a7066208fe2fec4aa
-  languageName: node
-  linkType: hard
-
-"magicast@npm:^0.2.10":
-  version: 0.2.11
-  resolution: "magicast@npm:0.2.11"
-  dependencies:
-    "@babel/parser": "npm:^7.22.16"
-    "@babel/types": "npm:^7.22.17"
-    recast: "npm:^0.23.4"
-  checksum: 10/b17d7983aefdb1e23e3e5bef3f0b2e43fa36c1f8687603dfb8a763f2b896ad3c7885c8a09bae084ce76ab212c009ad1344a402634d9ab74ada2c47a7851bb89e
   languageName: node
   linkType: hard
 
@@ -22130,19 +22239,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recast@npm:^0.23.4":
-  version: 0.23.9
-  resolution: "recast@npm:0.23.9"
-  dependencies:
-    ast-types: "npm:^0.16.1"
-    esprima: "npm:~4.0.0"
-    source-map: "npm:~0.6.1"
-    tiny-invariant: "npm:^1.3.3"
-    tslib: "npm:^2.0.1"
-  checksum: 10/d60584be179d81a82fbe58b5bbe009aa42831ee114a21a3e3a22bda91334e0b8a1a4610dca8ecb7f9ea1426da4febc08134d3003085ad6ecee478d1808eb8796
-  languageName: node
-  linkType: hard
-
 "redent@npm:^3.0.0":
   version: 3.0.0
   resolution: "redent@npm:3.0.0"
@@ -24765,7 +24861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.1, tslib@npm:^2.6.2, tslib@npm:^2.8.0":
+"tslib@npm:^2.8.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
@@ -25182,7 +25278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unctx@npm:^2.3.1":
+"unctx@npm:^2.3.1, unctx@npm:^2.4.1":
   version: 2.4.1
   resolution: "unctx@npm:2.4.1"
   dependencies:
@@ -25381,6 +25477,16 @@ __metadata:
     acorn: "npm:^8.14.0"
     webpack-virtual-modules: "npm:^0.6.2"
   checksum: 10/b01041839c25ff5b0997677e00ffe8d98aa532443833968d652c0165eab3159702c3c3d1237afa58db35af5ccf25dd0a05782d78b7c22000742797e382362bcd
+  languageName: node
+  linkType: hard
+
+"unplugin@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "unplugin@npm:2.1.2"
+  dependencies:
+    acorn: "npm:^8.14.0"
+    webpack-virtual-modules: "npm:^0.6.2"
+  checksum: 10/4f269e720a649a9327c6ae59c3813b114a6b956c69e3cfaeeb7829d9315c0b4933e9dd06b1ecec89539514224b2346794e017b42f13af67c6f12287e200849e3
   languageName: node
   linkType: hard
 
@@ -25824,7 +25930,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0 || ^6.0.0":
+"vite@npm:^5.0.0 || ^6.0.0, vite@npm:^6.0.11":
   version: 6.0.11
   resolution: "vite@npm:6.0.11"
   dependencies:

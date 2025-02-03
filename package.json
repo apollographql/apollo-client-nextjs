@@ -30,8 +30,6 @@
     "@apollo/client": "3.12.6",
     "graphql": "17.0.0-alpha.2",
     "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
-    "@tanstack/react-router": "https://pkg.pr.new/@tanstack/react-router@f82f00f50434f9d6867044c1d07711bcb234d271",
-    "@tanstack/start": "https://pkg.pr.new/@tanstack/start@f82f00f50434f9d6867044c1d07711bcb234d271",
     "@types/react": "19.0.2"
   },
   "devDependencies": {

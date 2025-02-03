@@ -51,8 +51,7 @@ export function createRouter() {
 }
 ```
 
-> [!IMPORTANT]
-> `ApolloClient` and `InMemoryCache` need to be imported from `@apollo/client-integration-tanstack-start`, not from `@apollo/client`.
+> [!IMPORTANT] > `ApolloClient` and `InMemoryCache` need to be imported from `@apollo/client-integration-tanstack-start`, not from `@apollo/client`.
 
 ## Usage
 
