@@ -4,6 +4,10 @@
   "private": true,
   "peerDependencies": {
     "@apollo/client": "*",
-    "graphql": "*"
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "graphql": "*",
+    "react": "*",
+    "react-dom": "*"
   }
 }

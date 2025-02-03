@@ -12,6 +12,7 @@
   "main": "package.json",
   "dependencies": {
     "@changesets/cli": "^2.27.10",
+    "@yarnpkg/types": "^4.0.0",
     "prettier": "^3.0.0",
     "semver": "^7.6.0"
   },
@@ -30,7 +31,9 @@
     "@apollo/client": "3.12.6",
     "graphql": "17.0.0-alpha.2",
     "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
-    "@types/react": "19.0.2"
+    "@types/react": "19.0.2",
+    "@tanstack/start": "1.99.2",
+    "@tanstack/start-router-manifest": "1.99.0"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.3",

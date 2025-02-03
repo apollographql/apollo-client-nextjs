@@ -70,13 +70,15 @@
     "@microsoft/api-extractor": "7.43.2",
     "@tsconfig/recommended": "1.0.6",
     "@types/node": "20.12.11",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "concurrently": "8.2.2",
     "esbuild": "0.24.2",
     "eslint": "8.57.0",
-    "graphql": "16.8.1",
+    "graphql": "^16.10.0",
     "publint": "0.2.7",
     "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
     "rimraf": "5.0.5",
     "tsup": "8.0.2",
@@ -89,6 +91,7 @@
   },
   "dependencies": {
     "@apollo/client-react-streaming": "0.11.8",
+    "@types/react-dom": "^19.0.0",
     "promiscade": "^0.0.2"
   }
 }
