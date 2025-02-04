@@ -27,11 +27,18 @@ export const delayLink = new ApolloLink((operation, forward) => {
   });
 });
 
-const link = delayLink.concat(
+const logLink = new ApolloLink((operation, forward) => {
+  console.log("operation starting:", operation, operation.getContext());
+  return forward(operation);
+});
+
+const link = ApolloLink.from([
+  logLink,
+  delayLink,
   typeof window === "undefined"
     ? new IncrementalSchemaLink({ schema })
-    : new HttpLink({ uri: "/api/graphql" })
-);
+    : new HttpLink({ uri: "/api/graphql" }),
+]);
 
 export function createRouter() {
   const apolloClient = new ApolloClient({
