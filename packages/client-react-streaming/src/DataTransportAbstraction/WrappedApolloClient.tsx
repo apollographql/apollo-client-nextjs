@@ -30,10 +30,14 @@ import type {
 import { bundle, sourceSymbol } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
 import { assertInstance } from "../assertInstance.js";
+import type { ReadableStreamLinkEvent } from "../ReadableStreamLink.js";
 import {
+  readFromReadableStream,
   ReadFromReadableStreamLink,
+  teeToReadableStream,
   TeeToReadableStreamLink,
 } from "../ReadableStreamLink.js";
+import { getInjectableEventStream } from "../transportedQueryRef.js";
 
 function getQueryManager(
   client: OrigApolloClient<unknown>
@@ -62,8 +66,8 @@ function getTrieConstructor(client: OrigApolloClient<unknown>) {
 }
 
 type SimulatedQueryInfo = {
-  resolve: (result: FetchResult) => void;
-  reject: (reason: any) => void;
+  stream: ReadableStream<ReadableStreamLinkEvent>;
+  controller: ReadableStreamDefaultController<ReadableStreamLinkEvent>;
   options: WatchQueryOptions<OperationVariables, any>;
 };
 
@@ -169,89 +173,51 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
 
   onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
     const hydratedOptions = deserializeOptions(options);
-    const { cacheKey, cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
     this.transportedQueryOptions.set(id, hydratedOptions);
 
+    const [controller, stream] = getInjectableEventStream();
+
     const queryManager = getQueryManager(this);
-
-    if (
-      !queryManager["inFlightLinkObservables"].peekArray(cacheKeyArr)
-        ?.observable
-    ) {
-      let simulatedStreamingQuery: SimulatedQueryInfo,
-        fetchCancelFn: (reason: unknown) => void;
-
-      const cleanup = () => {
-        if (queryManager["fetchCancelFns"].get(cacheKey) === fetchCancelFn)
-          queryManager["fetchCancelFns"].delete(cacheKey);
-
-        queryManager["inFlightLinkObservables"].removeArray(cacheKeyArr);
-
-        if (this.simulatedStreamingQueries.get(id) === simulatedStreamingQuery)
-          this.simulatedStreamingQueries.delete(id);
-      };
-
-      const promise = new Promise<FetchResult>((resolve, reject) => {
-        this.simulatedStreamingQueries.set(
-          id,
-          (simulatedStreamingQuery = {
-            resolve,
-            reject,
-            options: hydratedOptions,
+    const queryId = queryManager.generateQueryId();
+    console.log("deduplicating");
+    queryManager
+      .fetchQuery(queryId, {
+        ...hydratedOptions,
+        fetchPolicy: "network-only",
+        context: skipDataTransport(
+          readFromReadableStream(stream, {
+            ...hydratedOptions.context,
+            queryDeduplication: true,
           })
-        );
-      });
+        ),
+      })
+      .finally(() => queryManager.stopQuery(queryId));
 
-      promise.then(cleanup, cleanup);
-
-      const observable = new Observable<FetchResult>((observer) => {
-        promise
-          .then((result) => {
-            observer.next(result);
-            observer.complete();
-          })
-          .catch((err) => {
-            observer.error(err);
-          });
-      });
-
-      queryManager["inFlightLinkObservables"].lookupArray(
-        cacheKeyArr
-      ).observable = observable;
-
-      queryManager["fetchCancelFns"].set(
-        cacheKey,
-        (fetchCancelFn = (reason: unknown) => {
-          const { reject } = this.simulatedStreamingQueries.get(id) ?? {};
-          if (reject) {
-            reject(reason);
-          }
-          cleanup();
-        })
-      );
-    }
+    this.simulatedStreamingQueries.set(id, {
+      stream,
+      controller,
+      options: hydratedOptions,
+    });
   }
 
   onQueryProgress = (event: ProgressEvent) => {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
+    if (!queryInfo) return;
+
+    switch (event.type) {
+      case "data":
+        queryInfo.controller.enqueue({ type: "next", value: event.result });
+        break;
+      case "complete":
+        queryInfo.controller.enqueue({ type: "completed" });
+        break;
+      case "error":
+        queryInfo.controller.enqueue({ type: "error" });
+        break;
+    }
 
     if (event.type === "data") {
-      queryInfo?.resolve?.({
-        data: event.result.data,
-      });
-
-      // In order to avoid a scenario where the promise resolves without
-      // a query subscribing to the promise, we immediately call
-      // `cache.write` here.
-      // For more information, see: https://github.com/apollographql/apollo-client-nextjs/pull/38/files/388813a16e2ac5c62408923a1face9ae9417d92a#r1229870523
-      const options = this.transportedQueryOptions.get(event.id);
-      if (options) {
-        this.cache.writeQuery({
-          query: options.query,
-          data: event.result.data,
-          variables: options.variables,
-        });
-      }
+      queryInfo.controller.enqueue({ type: "next", value: event.result });
     } else if (event.type === "error") {
       /**
        * At this point we're not able to correctly serialize the error over the wire
@@ -273,11 +239,12 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
             "Query failed upstream, will fail it during SSR and rerun it in the browser:",
             queryInfo.options
           );
-          queryInfo?.reject?.(new Error("Query failed upstream."));
+          queryInfo.controller.enqueue({ type: "error" }); // TODO? new Error("Query failed upstream.")
         }
       }
       this.transportedQueryOptions.delete(event.id);
     } else if (event.type === "complete") {
+      queryInfo.controller.enqueue({ type: "completed" });
       this.transportedQueryOptions.delete(event.id);
     }
   };
@@ -309,8 +276,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
           queryDeduplication: false,
         },
       })
-      .finally(() => queryManager.stopQuery(queryId))
-      .then(queryInfo.resolve, queryInfo.reject);
+      .finally(() => queryManager.stopQuery(queryId));
   };
 }
 
@@ -373,38 +339,44 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
     ) {
       // don't transport the same query over twice
       this.forwardedQueries.lookupArray(cacheKeyArr);
-      const observableQuery = super.watchQuery(options);
+
+      const [__injectIntoStream, __eventStream] = getInjectableEventStream();
+
+      const observableQuery = super.watchQuery({
+        ...options,
+        context: teeToReadableStream(__injectIntoStream, {
+          ...options?.context,
+          // we want to do this even if the query is already running for another reason
+          queryDeduplication: false,
+        }),
+      });
       const queryInfo = observableQuery["queryInfo"] as QueryInfo;
       const id = queryInfo.queryId as TransportIdentifier;
 
       const streamObservable = new Observable<
         Exclude<QueryEvent, { type: "started" }>
       >((subscriber) => {
-        const { markResult, markError, markReady } = queryInfo;
-        queryInfo.markResult = function (result: FetchResult<any>) {
-          subscriber.next({
-            type: "data",
-            id,
-            result,
-          });
-          return markResult.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markError = function () {
-          subscriber.next({
-            type: "error",
-            id,
-          });
-          subscriber.complete();
-          return markError.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markReady = function () {
-          subscriber.next({
-            type: "complete",
-            id,
-          });
-          subscriber.complete();
-          return markReady.apply(queryInfo, arguments as any);
-        };
+        function consume(
+          event: ReadableStreamReadResult<ReadableStreamLinkEvent>
+        ) {
+          const value = event.value;
+          if (value) {
+            if (value.type === "next") {
+              subscriber.next({ type: "data", id, result: value.value });
+            } else if (value.type === "completed") {
+              subscriber.next({ type: "complete", id });
+            } else if (value.type === "error") {
+              subscriber.next({ type: "error", id });
+            }
+          }
+          if (event.done) {
+            subscriber.complete();
+          } else {
+            reader.read().then(consume);
+          }
+        }
+        const reader = __eventStream.getReader();
+        reader.read().then(consume);
       });
 
       this.watchQueryQueue.push({

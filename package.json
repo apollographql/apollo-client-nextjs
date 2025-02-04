@@ -28,7 +28,7 @@
   },
   "resolutions": {
     "@microsoft/api-documenter": "7.24.1",
-    "@apollo/client": "3.12.6",
+    "@apollo/client": "https://pkg.pr.new/@apollo/client@12338",
     "graphql": "17.0.0-alpha.2",
     "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
     "@tanstack/start": "1.99.6",

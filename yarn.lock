@@ -310,9 +310,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:3.12.6":
-  version: 3.12.6
-  resolution: "@apollo/client@npm:3.12.6"
+"@apollo/client@https://pkg.pr.new/@apollo/client@12338":
+  version: 3.12.9
+  resolution: "@apollo/client@https://pkg.pr.new/@apollo/client@12338"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -323,7 +323,6 @@ __metadata:
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
     rehackt: "npm:^0.1.0"
-    response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
     tslib: "npm:^2.3.0"
@@ -343,7 +342,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/f413c35acc7456e71eb0ae8e180aee36531a61de03aab7941fadc6df73ecb5418b510ec6ee8c856294b369f7f427a1c0599622b87147cef0bdc0d4da14d0be16
+  checksum: 10/dd9ba7ad78a4ded37f1d7c83344db1bb18ef576fa0baa7e618cd536341f6d0525b61c719eda027dd5659b0e03d7fb7382327e42ffcd5416548d135175ef38be8
   languageName: node
   linkType: hard
 
@@ -22620,13 +22619,6 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: 10/f345cd37f56a2c0275e3fe062517c650bb673815d885e7507566df589375d165bbbf4bdb6aa95600a9bc55f4744b81f452b5a63f95b9f10a72787dba3c90890a
-  languageName: node
-  linkType: hard
-
-"response-iterator@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "response-iterator@npm:0.2.6"
-  checksum: 10/ef7c74693ef3891461955a666e753585b298fe0de1baaf0d190e7a6818e4311e459d72f4a36f04aa8f49eda9b5f97124e5534be01e40d9e008795125d0bbb374
   languageName: node
   linkType: hard
 
