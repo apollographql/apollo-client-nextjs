@@ -61,8 +61,13 @@ function getTrieConstructor(client: OrigApolloClient<unknown>) {
     .constructor as typeof Trie;
 }
 
+type Cade<T> =
+  | (ReadableStreamReadValueResult<T> & { next: Promiscade<T> })
+  | ReadableStreamReadDoneResult<undefined>;
+type Promiscade<T> = Promise<Cade<T>>;
+
 type SimulatedQueryInfo = {
-  resolve: (result: FetchResult) => void;
+  resolve: (result: Cade<FetchResult>) => void;
   reject: (reason: any) => void;
   options: WatchQueryOptions<OperationVariables, any>;
 };
@@ -191,7 +196,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
           this.simulatedStreamingQueries.delete(id);
       };
 
-      const promise = new Promise<FetchResult>((resolve, reject) => {
+      const promise = new Promise<Cade<FetchResult>>((resolve, reject) => {
         this.simulatedStreamingQueries.set(
           id,
           (simulatedStreamingQuery = {
@@ -202,17 +207,22 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
         );
       });
 
-      promise.then(cleanup, cleanup);
-
       const observable = new Observable<FetchResult>((observer) => {
-        promise
-          .then((result) => {
-            observer.next(result);
+        function handleValue(result: Cade<FetchResult>) {
+          if (result.done) {
+            cleanup();
             observer.complete();
-          })
-          .catch((err) => {
-            observer.error(err);
-          });
+          } else {
+            observer.next(result.value);
+            result.next.then(handleValue, handleError);
+          }
+        }
+        function handleError(err: unknown) {
+          cleanup();
+          observer.error(err);
+        }
+
+        promise.then(handleValue, handleError);
       });
 
       queryManager["inFlightLinkObservables"].lookupArray(
@@ -236,9 +246,17 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
 
     if (event.type === "data") {
-      queryInfo?.resolve?.({
-        data: event.result.data,
-      });
+      if (queryInfo) {
+        const next = Promise.withResolvers<Cade<FetchResult>>();
+        const resolveCurrent = queryInfo.resolve;
+        queryInfo.resolve = next.resolve;
+        queryInfo.reject = next.reject;
+        resolveCurrent({
+          value: event.result,
+          next: next.promise,
+          done: false,
+        });
+      }
 
       // In order to avoid a scenario where the promise resolves without
       // a query subscribing to the promise, we immediately call
@@ -278,6 +296,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
       }
       this.transportedQueryOptions.delete(event.id);
     } else if (event.type === "complete") {
+      queryInfo?.resolve?.({ done: true });
       this.transportedQueryOptions.delete(event.id);
     }
   };
@@ -310,7 +329,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
         },
       })
       .finally(() => queryManager.stopQuery(queryId))
-      .then(queryInfo.resolve, queryInfo.reject);
+      .then(() => queryInfo.resolve({ done: true }), queryInfo.reject);
   };
 }
 
@@ -380,13 +399,20 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
       const streamObservable = new Observable<
         Exclude<QueryEvent, { type: "started" }>
       >((subscriber) => {
-        const { markResult, markError, markReady } = queryInfo;
+        const { markResult, markError } = queryInfo;
         queryInfo.markResult = function (result: FetchResult<any>) {
           subscriber.next({
             type: "data",
             id,
             result,
           });
+          if (!("hasNext" in result) || !result.hasNext) {
+            subscriber.next({
+              type: "complete",
+              id,
+            });
+            subscriber.complete();
+          }
           return markResult.apply(queryInfo, arguments as any);
         };
         queryInfo.markError = function () {
@@ -396,14 +422,6 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
           });
           subscriber.complete();
           return markError.apply(queryInfo, arguments as any);
-        };
-        queryInfo.markReady = function () {
-          subscriber.next({
-            type: "complete",
-            id,
-          });
-          subscriber.complete();
-          return markReady.apply(queryInfo, arguments as any);
         };
       });
 
