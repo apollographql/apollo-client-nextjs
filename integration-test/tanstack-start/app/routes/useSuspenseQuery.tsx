@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { QUERY } from "@integration-test/shared/queries";
-import { useSuspenseQuery } from "@apollo/client/index.js";
+import { DEFERRED_QUERY } from "@integration-test/shared/queries";
+import { useApolloClient, useSuspenseQuery } from "@apollo/client/index.js";
 import { useTransition } from "react";
 
 export const Route = createFileRoute("/useSuspenseQuery")({
@@ -9,19 +9,44 @@ export const Route = createFileRoute("/useSuspenseQuery")({
 
 function RouteComponent() {
   const [refetching, startTransition] = useTransition();
-  const { data, refetch } = useSuspenseQuery(QUERY);
+  const client = useApolloClient();
+  console.log("useSuspenseQuery");
+  const { data, refetch } = useSuspenseQuery(DEFERRED_QUERY, {
+    variables: { delayDeferred: 2500 },
+  });
 
   return (
     <>
       <ul>
-        {data.products.map(({ id, title }) => (
-          <li key={id}>{title}</li>
+        {data.products.map(({ id, title, rating }) => (
+          <li key={id}>
+            {title}
+            <br />
+            Rating:{" "}
+            <div style={{ display: "inline-block", verticalAlign: "text-top" }}>
+              {rating?.value || ""}
+              <br />
+              {rating ? `Queried in ${rating.env} environment` : "loading..."}
+            </div>
+          </li>
         ))}
       </ul>
       <p>Queried in {data.env} environment</p>
       <button
         disabled={refetching}
         onClick={() => {
+          client.cache.batch({
+            update(cache) {
+              for (const product of data.products) {
+                cache.modify({
+                  id: cache.identify(product),
+                  fields: {
+                    rating: () => null,
+                  },
+                });
+              }
+            },
+          });
           startTransition(() => {
             refetch();
           });
