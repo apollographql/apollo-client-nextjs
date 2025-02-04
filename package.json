@@ -12,6 +12,7 @@
   "main": "package.json",
   "dependencies": {
     "@changesets/cli": "^2.27.10",
+    "@yarnpkg/types": "^4.0.0",
     "prettier": "^3.0.0",
     "semver": "^7.6.0"
   },
@@ -32,7 +33,10 @@
     "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
     "@tanstack/react-router": "patch:@tanstack/react-router@npm%3A1.97.3#~/.yarn/patches/@tanstack-react-router-npm-1.97.3-ad16343f36.patch",
     "@tanstack/start": "patch:@tanstack/start@npm%3A1.97.3#~/.yarn/patches/@tanstack-start-npm-1.97.3-da273c2822.patch",
-    "@types/react": "19.0.2"
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.3",
@@ -40,6 +44,8 @@
     "@size-limit/webpack": "11.1.2",
     "@size-limit/webpack-why": "11.1.2",
     "@types/node": "^22.10.9",
+    "@yarnpkg/cli": "^4.6.0",
+    "@yarnpkg/core": "^4.2.0",
     "knip": "^5.43.1",
     "size-limit": "11.1.2",
     "typescript": "^5.7.3",
