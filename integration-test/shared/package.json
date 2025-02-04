@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "peerDependencies": {
-    "@apollo/client": "*",
+    "@apollo/client": "*"
+  },
+  "devDependencies": {
     "@types/react": "*",
     "@types/react-dom": "*",
     "graphql": "*",
