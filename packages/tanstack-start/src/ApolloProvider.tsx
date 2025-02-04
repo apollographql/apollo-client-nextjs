@@ -34,7 +34,6 @@ export const ApolloProvider = ({
               (router.options.context as { apolloClient: ApolloClient })
                 .apolloClient
             );
-            console.log(value);
           }
           return value;
         });
