@@ -33,7 +33,6 @@ export const ApolloProvider = ({
   );
 };
 
-const streamedInit = new WeakSet<AnyRouter>();
 const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
   (props) => {
     const router = props.router;
@@ -121,6 +120,7 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
 );
 WrappedApolloProvider.info = bundle;
 
+const streamedInit = new WeakSet<AnyRouter>();
 function ensureInitialized(router: AnyRouter) {
   const ssr = router.serverSsr;
   if (ssr && !streamedInit.has(router)) {
