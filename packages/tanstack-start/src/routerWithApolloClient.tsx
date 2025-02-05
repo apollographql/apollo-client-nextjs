@@ -49,7 +49,6 @@ export function routerWithApolloClient<TRouter extends AnyRouter>(
         return value;
       });
     }
-    return null;
   };
   const PreviousInnerWrap = router.options.InnerWrap || React.Fragment;
   // eslint-disable-next-line react/display-name
