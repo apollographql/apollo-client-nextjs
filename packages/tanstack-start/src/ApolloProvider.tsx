@@ -52,24 +52,25 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
               ensureInitialized(router);
 
               const id = crypto.randomUUID() as typeof event.id;
-              event.id = id;
-              const scriptValueOptions = {
-                isScriptContext: true,
-                wrap: true,
-                json: true,
-              };
-              ssr.injectScript(
-                () =>
-                  `__APOLLO_EVENTS__.push(${jsesc(event, scriptValueOptions)})`
-              );
 
+              function transportEvent(event: QueryEvent) {
+                event.id = id;
+                ssr.injectScript(
+                  () =>
+                    `__APOLLO_EVENTS__.push(${jsesc(event, {
+                      isScriptContext: true,
+                      wrap: true,
+                      json: true,
+                    })})`
+                );
+              }
+
+              // transport initial event
+              transportEvent(event);
               observable.subscribe({
                 next(event) {
-                  event.id = id;
-                  ssr.injectScript(
-                    () =>
-                      `__APOLLO_EVENTS__.push(${jsesc(event, scriptValueOptions)})`
-                  );
+                  // transport subsequent events
+                  transportEvent(event);
                 },
                 complete() {
                   resolve("");
