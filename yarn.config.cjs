@@ -49,6 +49,8 @@ module.exports = defineConfig({
       "react-dom",
       "@types/react",
       "@types/react-dom",
+      "@tanstack/start",
+      "@tanstack/react-router",
     ]);
 
     for (const [ident, peers] of Object.entries(packagesWithFixedPeers)) {
@@ -68,15 +70,13 @@ module.exports = defineConfig({
     }
     for (const ident of Array.from(shouldBeUnique.values())) {
       if (Object.keys(getCandidates(ident)).length > 1) {
-        console.log(getCandidates(ident));
-        Yarn.dependency({ ident }).workspace?.error(`
+                Yarn.workspace()?.error(`
                 The package ${ident} has multiple versions installed, which will cause problems. 
                 This could not be autofixed, so you need to manually fix it.
                 Run this command to see how these installations differ from each other and fix them:
     
                     yarn info -AR --dependents --virtuals ${ident}
             `);
-        process.exitCode = 1;
       }
     }
   },

@@ -1,12 +1,9 @@
 import {
   DataTransportContext,
   WrapApolloProvider,
-  isTransportedQueryRef,
-  reviveTransportedQueryRef,
 } from "@apollo/client-react-streaming";
 import { registerLateInitializingQueue } from "@apollo/client-react-streaming/manual-transport";
 import type { AnyRouter } from "@tanstack/react-router";
-import { useRouterState } from "@tanstack/react-router";
 import React, { useId, useMemo, useRef } from "react";
 import type { ApolloClient, QueryEvent } from "@apollo/client-react-streaming";
 import { bundle } from "./bundleInfo.js";
@@ -24,24 +21,6 @@ export const ApolloProvider = ({
   router,
   children,
 }: React.PropsWithChildren<{ router: AnyRouter }>) => {
-  useRouterState({
-    select(state) {
-      for (const match of state.matches) {
-        JSON.stringify(match.loaderData, (_, value) => {
-          if (isTransportedQueryRef(value)) {
-            reviveTransportedQueryRef(
-              value,
-              (router.options.context as { apolloClient: ApolloClient })
-                .apolloClient
-            );
-          }
-          return value;
-        });
-      }
-      return null;
-    },
-  });
-
   return (
     <WrappedApolloProvider
       router={router}

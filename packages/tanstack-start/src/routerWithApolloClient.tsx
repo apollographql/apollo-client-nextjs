@@ -1,3 +1,7 @@
+import {
+  isTransportedQueryRef,
+  reviveTransportedQueryRef,
+} from "@apollo/client-react-streaming";
 import type { ApolloClient } from "@apollo/client-react-streaming";
 import { createTransportedQueryPreloader } from "@apollo/client-react-streaming";
 import { ApolloProvider } from "./ApolloProvider.js";
@@ -28,6 +32,25 @@ export function routerWithApolloClient<TRouter extends AnyRouter>(
       ) as unknown as PreloadQueryFunction)
     : createQueryPreloader(apolloClient);
 
+  const originalHydrate = router.options.hydrate;
+  router.options.hydrate = (...args) => {
+    originalHydrate?.(...args);
+
+    for (const match of router.state.matches) {
+      // using JSON.stringify to recurse the object
+      JSON.stringify(match.loaderData, (_, value) => {
+        if (isTransportedQueryRef(value)) {
+          reviveTransportedQueryRef(
+            value,
+            (router.options.context as { apolloClient: ApolloClient })
+              .apolloClient
+          );
+        }
+        return value;
+      });
+    }
+    return null;
+  };
   const PreviousInnerWrap = router.options.InnerWrap || React.Fragment;
   // eslint-disable-next-line react/display-name
   router.options.InnerWrap = ({ children }) => (
