@@ -12,7 +12,7 @@ function RouteComponent() {
   const client = useApolloClient();
   console.log("useSuspenseQuery");
   const { data, refetch } = useSuspenseQuery(DEFERRED_QUERY, {
-    variables: { delayDeferred: 2500 },
+    variables: { delayDeferred: 1000 },
   });
 
   return (
