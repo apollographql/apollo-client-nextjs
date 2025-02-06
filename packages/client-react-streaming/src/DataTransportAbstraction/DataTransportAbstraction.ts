@@ -1,7 +1,8 @@
 import type React from "react";
-import type { FetchResult, Observable } from "@apollo/client/index.js";
+import type { Observable } from "@apollo/client/index.js";
 import { createContext } from "react";
 import type { TransportedOptions } from "./transportedOptions.js";
+import type { ReadableStreamLinkEvent } from "../ReadableStreamLink.ts";
 
 interface DataTransportAbstraction {
   /**
@@ -74,20 +75,8 @@ export type QueryEvent =
       options: TransportedOptions;
       id: TransportIdentifier;
     }
-  | {
-      type: "data";
+  | (ReadableStreamLinkEvent & {
       id: TransportIdentifier;
-      result: FetchResult;
-    }
-  | {
-      type: "error";
-      id: TransportIdentifier;
-      // for now we don't transport the error itself, as it might leak some sensitive information
-      // this is similar to how React handles errors during SSR
-    }
-  | {
-      type: "complete";
-      id: TransportIdentifier;
-    };
+    });
 
 export type ProgressEvent = Exclude<QueryEvent, { type: "started" }>;

@@ -203,20 +203,8 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
     if (!queryInfo) return;
 
-    switch (event.type) {
-      case "data":
-        queryInfo.controller.enqueue({ type: "next", value: event.result });
-        break;
-      case "complete":
-        queryInfo.controller.enqueue({ type: "completed" });
-        break;
-      case "error":
-        queryInfo.controller.enqueue({ type: "error" });
-        break;
-    }
-
-    if (event.type === "data") {
-      queryInfo.controller.enqueue({ type: "next", value: event.result });
+    if (event.type === "next") {
+      queryInfo.controller.enqueue(event);
     } else if (event.type === "error") {
       /**
        * At this point we're not able to correctly serialize the error over the wire
@@ -238,12 +226,12 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
             "Query failed upstream, will fail it during SSR and rerun it in the browser:",
             queryInfo.options
           );
-          queryInfo.controller.enqueue({ type: "error" }); // TODO? new Error("Query failed upstream.")
+          queryInfo.controller.enqueue(event); // TODO? new Error("Query failed upstream.")
         }
       }
       this.transportedQueryOptions.delete(event.id);
-    } else if (event.type === "complete") {
-      queryInfo.controller.enqueue({ type: "completed" });
+    } else if (event.type === "completed") {
+      queryInfo.controller.enqueue(event);
       this.transportedQueryOptions.delete(event.id);
     }
   };
@@ -360,13 +348,7 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
         ) {
           const value = event.value;
           if (value) {
-            if (value.type === "next") {
-              subscriber.next({ type: "data", id, result: value.value });
-            } else if (value.type === "completed") {
-              subscriber.next({ type: "complete", id });
-            } else if (value.type === "error") {
-              subscriber.next({ type: "error", id });
-            }
+            subscriber.next({ ...value, id });
           }
           if (event.done) {
             subscriber.complete();
