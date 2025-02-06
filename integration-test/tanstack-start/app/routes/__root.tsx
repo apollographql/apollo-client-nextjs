@@ -1,5 +1,5 @@
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { Link, Outlet, ScrollRestoration } from "@tanstack/react-router";
+import { Link, Outlet } from "@tanstack/react-router";
 import { Meta, Scripts } from "@tanstack/start";
 import type { ReactNode } from "react";
 
@@ -68,7 +68,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         </div>
         <hr />
         {children}
-        <ScrollRestoration />
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>

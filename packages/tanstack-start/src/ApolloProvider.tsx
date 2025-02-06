@@ -2,15 +2,20 @@ import {
   DataTransportContext,
   WrapApolloProvider,
 } from "@apollo/client-react-streaming";
+import { registerLateInitializingQueue } from "@apollo/client-react-streaming/manual-transport";
 import type { AnyRouter } from "@tanstack/react-router";
-import React, { useCallback, useEffect, useId, useMemo, useRef } from "react";
+import React, { useId, useMemo, useRef } from "react";
 import type { ApolloClient, QueryEvent } from "@apollo/client-react-streaming";
 import { bundle } from "./bundleInfo.js";
+import jsesc from "jsesc";
 
-const APOLLO_EVENT_PREFIX = "@@apollo.event/";
 const APOLLO_HOOK_PREFIX = "@@apollo.hook/";
 
-const handledEvents = new WeakSet<object>();
+declare global {
+  interface Window {
+    __APOLLO_EVENTS__?: Pick<QueryEvent[], "push">;
+  }
+}
 
 export const ApolloProvider = ({
   router,
@@ -33,72 +38,72 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
     const router = props.router;
 
     const { onQueryEvent } = props;
-    const consumeBackPressure = useCallback(() => {
-      for (const key of router.streamedKeys) {
-        if (key.startsWith(APOLLO_EVENT_PREFIX)) {
-          const streamedValue = router.getStreamedValue(key);
-          if (
-            streamedValue &&
-            typeof streamedValue === "object" &&
-            !handledEvents.has(streamedValue) &&
-            onQueryEvent
-          ) {
-            handledEvents.add(streamedValue);
-            onQueryEvent(streamedValue as QueryEvent);
-          }
-        }
-      }
-    }, [router, onQueryEvent]);
 
-    if (router.isServer) {
+    if (router.serverSsr) {
+      const ssr = router.serverSsr;
       props.registerDispatchRequestStarted!(({ event, observable }) => {
-        const id = crypto.randomUUID() as typeof event.id;
-        event.id = id;
-        router.streamValue(
-          `${APOLLO_EVENT_PREFIX}${event.id}/${event.type}`,
-          event satisfies QueryEvent
+        // based on TanStack Router's `injectObservable` implementation:
+        // https://github.com/TanStack/router/blob/1ecab1e78d58db208f3bbffe8708867603c179a5/packages/start-server/src/ssr-server.ts#L234-L280
+        // Inject a promise that resolves when the stream is done
+        // We do this to keep the stream open until we're done
+        ssr.injectHtml(
+          () =>
+            new Promise<string>((resolve) => {
+              ensureInitialized(router);
+
+              const id = crypto.randomUUID() as typeof event.id;
+
+              function transportEvent(event: QueryEvent) {
+                event.id = id;
+                ssr.injectScript(
+                  () =>
+                    `__APOLLO_EVENTS__.push(${jsesc(event, {
+                      isScriptContext: true,
+                      wrap: true,
+                      json: true,
+                    })})`
+                );
+              }
+
+              // transport initial event
+              transportEvent(event);
+              observable.subscribe({
+                next(event) {
+                  // transport subsequent events
+                  transportEvent(event);
+                },
+                complete() {
+                  resolve("");
+                },
+                error() {
+                  resolve("");
+                },
+              });
+            })
         );
-        observable.subscribe({
-          next(event) {
-            event.id = id;
-            router.streamValue(
-              `${APOLLO_EVENT_PREFIX}${event.id}/${event.type}`,
-              event satisfies QueryEvent
-            );
-          },
-        });
       });
     } else {
-      // this needs to happen synchronously before the render continues
-      // so "loading" is kicked off before the respecitve component is rendered
-      consumeBackPressure();
+      if (onQueryEvent) {
+        registerLateInitializingQueue("__APOLLO_EVENTS__", onQueryEvent);
+      }
     }
-
-    useEffect(() => {
-      consumeBackPressure();
-      return router.subscribe("onStreamedValue", ({ key }) => {
-        if (!key.startsWith(APOLLO_EVENT_PREFIX)) return;
-        const streamedValue = router.getStreamedValue(key);
-        if (streamedValue && onQueryEvent) {
-          handledEvents.add(streamedValue);
-          onQueryEvent(streamedValue as QueryEvent);
-        }
-      });
-    }, [consumeBackPressure, router, onQueryEvent]);
 
     const dataTransport = useMemo(
       () => ({
         useStaticValueRef<T>(value: T) {
           const key = APOLLO_HOOK_PREFIX + useId();
+          const streamedValue = router.clientSsr?.getStreamedValue(key) as
+            | T
+            | undefined;
           const dataValue =
-            !router.isServer && router.streamedKeys.has(key)
-              ? (router.getStreamedValue(key) as T)
+            router.clientSsr && streamedValue !== undefined
+              ? streamedValue
               : value;
           const dataRef = useRef(dataValue);
 
-          if (router.isServer) {
-            if (!router.streamedKeys.has(key)) {
-              router.streamValue(key, value);
+          if (router.serverSsr) {
+            if (!router.serverSsr.streamedKeys.has(key)) {
+              router.serverSsr.streamValue(key, value);
             }
           }
           return dataRef;
@@ -115,3 +120,12 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
   }
 );
 WrappedApolloProvider.info = bundle;
+
+const streamedInit = new WeakSet<AnyRouter>();
+function ensureInitialized(router: AnyRouter) {
+  const ssr = router.serverSsr;
+  if (ssr && !streamedInit.has(router)) {
+    streamedInit.add(router);
+    ssr.injectScript(() => `window.__APOLLO_EVENTS__||=[]`);
+  }
+}

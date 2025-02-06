@@ -1,5 +1,5 @@
 export { buildManualDataTransport } from "./ManualDataTransport.js";
-
+export { registerLateInitializingQueue } from "./lateInitializingQueue.js";
 export type { HydrationContextOptions } from "./RehydrationContext.js";
 
 import {
