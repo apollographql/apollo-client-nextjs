@@ -3,7 +3,6 @@ import type {
   ApolloClientOptions,
   OperationVariables,
   WatchQueryOptions,
-  FetchResult,
   DocumentNode,
   NormalizedCacheObject,
 } from "@apollo/client/index.js";
@@ -179,7 +178,6 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
 
     const queryManager = getQueryManager(this);
     const queryId = queryManager.generateQueryId();
-    console.log("deduplicating");
     queryManager
       .fetchQuery(queryId, {
         ...hydratedOptions,
@@ -391,15 +389,6 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
       return observableQuery;
     }
     return super.watchQuery(options);
-  }
-
-  onQueryStarted(event: Extract<QueryEvent, { type: "started" }>) {
-    const hydratedOptions = deserializeOptions(event.options);
-    const { cacheKeyArr } = this.identifyUniqueQuery(hydratedOptions);
-    // this is a replay from another source and doesn't need to be transported
-    // to the browser, since it will be replayed there, too.
-    this.forwardedQueries.lookupArray(cacheKeyArr);
-    super.onQueryStarted(event);
   }
 }
 
