@@ -183,6 +183,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     queryManager
       .fetchQuery(queryId, {
         ...hydratedOptions,
+        query: queryManager.transform(hydratedOptions.query),
         fetchPolicy: "network-only",
         context: skipDataTransport(
           readFromReadableStream(stream, {
