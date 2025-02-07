@@ -128,14 +128,9 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     TransportIdentifier,
     SimulatedQueryInfo
   >();
-  private transportedQueryOptions = new Map<
-    TransportIdentifier,
-    WatchQueryOptions
-  >();
 
   onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
     const hydratedOptions = deserializeOptions(options);
-    this.transportedQueryOptions.set(id, hydratedOptions);
 
     const [controller, stream] = getInjectableEventStream();
 
@@ -166,9 +161,10 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     const queryInfo = this.simulatedStreamingQueries.get(event.id);
     if (!queryInfo) return;
 
-    if (event.type === "next") {
-      queryInfo.controller.enqueue(event);
-    } else if (event.type === "error") {
+    if (
+      event.type === "error" ||
+      (event.type === "next" && event.value.errors)
+    ) {
       /**
        * At this point we're not able to correctly serialize the error over the wire
        * so we do the next-best thing: restart the query in the browser as soon as it
@@ -176,26 +172,25 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
        * This matches up with what React will be doing (abort hydration and rerender)
        * See https://github.com/apollographql/apollo-client-nextjs/issues/52
        */
-      if (queryInfo) {
-        this.simulatedStreamingQueries.delete(event.id);
-        if (process.env.REACT_ENV === "browser") {
-          invariant.debug(
-            "Query failed on server, rerunning in browser:",
-            queryInfo.options
-          );
-          this.rerunSimulatedQuery(queryInfo);
-        } else if (process.env.REACT_ENV === "ssr") {
-          invariant.debug(
-            "Query failed upstream, will fail it during SSR and rerun it in the browser:",
-            queryInfo.options
-          );
-          queryInfo.controller.enqueue(event); // TODO? new Error("Query failed upstream.")
-        }
+      this.simulatedStreamingQueries.delete(event.id);
+      if (process.env.REACT_ENV === "browser") {
+        invariant.debug(
+          "Query failed on server, rerunning in browser:",
+          queryInfo.options
+        );
+        this.rerunSimulatedQuery(queryInfo);
+      } else if (process.env.REACT_ENV === "ssr") {
+        invariant.debug(
+          "Query failed upstream, will fail it during SSR and rerun it in the browser:",
+          queryInfo.options
+        );
+        queryInfo.controller.error(new Error("Query failed upstream."));
       }
-      this.transportedQueryOptions.delete(event.id);
     } else if (event.type === "completed") {
+      this.simulatedStreamingQueries.delete(event.id);
       queryInfo.controller.enqueue(event);
-      this.transportedQueryOptions.delete(event.id);
+    } else if (event.type === "next") {
+      queryInfo.controller.enqueue(event);
     }
   };
 
