@@ -123,7 +123,7 @@ export function createTransportedQueryPreloader(
         query,
         ...options,
         // ensure that this query makes it to the network
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
         context: skipDataTransport(
           teeToReadableStream(() => controller, {
             ...options?.context,
