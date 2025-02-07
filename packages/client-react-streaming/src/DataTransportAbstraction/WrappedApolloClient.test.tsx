@@ -315,6 +315,7 @@ describe(
         appendToBody`<div hidden id="S:1"><div id="user">User</div></div>`;
         $RS("S:1", "P:1");
 
+        await new Promise((resolve) => setTimeout(resolve, 10));
         // meanwhile, in the browser, the cache is modified
         client.cache.writeQuery({
           query: QUERY_ME,
