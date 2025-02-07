@@ -42,24 +42,6 @@ function getQueryManager(
   return client["queryManager"];
 }
 
-declare class Trie<Data> {
-  constructor(weakness?: boolean, makeData?: (array: any[]) => Data);
-  lookup<T extends any[]>(...array: T): Data;
-  lookupArray<T extends IArguments | any[]>(array: T): Data;
-  peek<T extends any[]>(...array: T): Data | undefined;
-  peekArray<T extends IArguments | any[]>(array: T): Data | undefined;
-  remove(...array: any[]): Data | undefined;
-  removeArray<T extends IArguments | any[]>(array: T): Data | undefined;
-}
-
-/**
- * Returns the `Trie` constructor without adding a direct dependency on `@wry/trie`.
- */
-function getTrieConstructor(client: OrigApolloClient<unknown>) {
-  return getQueryManager(client)["inFlightLinkObservables"]
-    .constructor as typeof Trie;
-}
-
 type SimulatedQueryInfo = {
   stream: ReadableStream<ReadableStreamLinkEvent>;
   controller: ReadableStreamDefaultController<ReadableStreamLinkEvent>;
@@ -128,6 +110,18 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     this.onQueryStarted = this.onQueryStarted.bind(this);
 
     getQueryManager(this)[wrappers] = hookWrappers;
+    this.setLink(this.link);
+  }
+
+  setLink(newLink: ApolloLink) {
+    super.setLink.call(
+      this,
+      ApolloLink.from([
+        new ReadFromReadableStreamLink(),
+        new TeeToReadableStreamLink(),
+        newLink,
+      ])
+    );
   }
 
   private simulatedStreamingQueries = new Map<
@@ -226,11 +220,14 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     queryManager
       .fetchQuery(queryId, {
         ...queryInfo.options,
+        fetchPolicy: "no-cache",
         query: queryManager.transform(queryInfo.options.query),
-        context: {
-          ...queryInfo.options.context,
-          queryDeduplication: false,
-        },
+        context: skipDataTransport(
+          teeToReadableStream(() => queryInfo.controller, {
+            ...queryInfo.options.context,
+            queryDeduplication: false,
+          })
+        ),
       })
       .finally(() => queryManager.stopQuery(queryId));
   };
@@ -256,24 +253,6 @@ export function skipDataTransport<T extends Record<string, any>>(
 }
 
 class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
-  private forwardedQueries = new (getTrieConstructor(this))();
-
-  constructor(options: WrappedApolloClientOptions) {
-    super(options);
-    this.setLink(this.link);
-  }
-
-  setLink(newLink: ApolloLink) {
-    super.setLink.call(
-      this,
-      ApolloLink.from([
-        new ReadFromReadableStreamLink(),
-        new TeeToReadableStreamLink(),
-        newLink,
-      ])
-    );
-  }
-
   watchQueryQueue = createBackpressuredCallback<{
     event: Extract<QueryEvent, { type: "started" }>;
     observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
@@ -336,27 +315,9 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   }
 }
 
-export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {
-  constructor(options: WrappedApolloClientOptions) {
-    super(options);
-    this.setLink(this.link);
-  }
+export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {}
 
-  setLink(newLink: ApolloLink) {
-    super.setLink.call(this, new ReadFromReadableStreamLink().concat(newLink));
-  }
-}
-
-class ApolloClientRSCImpl extends ApolloClientBase {
-  constructor(options: WrappedApolloClientOptions) {
-    super(options);
-    this.setLink(this.link);
-  }
-
-  setLink(newLink: ApolloLink) {
-    super.setLink.call(this, new TeeToReadableStreamLink().concat(newLink));
-  }
-}
+class ApolloClientRSCImpl extends ApolloClientBase {}
 
 const ApolloClientImplementation =
   /*#__PURE__*/ process.env.REACT_ENV === "ssr"
