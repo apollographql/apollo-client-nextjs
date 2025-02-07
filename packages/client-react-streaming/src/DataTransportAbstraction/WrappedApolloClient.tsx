@@ -101,15 +101,7 @@ class ApolloClientBase extends OrigApolloClient<NormalizedCacheObject> {
       info,
       "InMemoryCache"
     );
-  }
-}
 
-class ApolloClientClientBaseImpl extends ApolloClientBase {
-  constructor(options: WrappedApolloClientOptions) {
-    super(options);
-    this.onQueryStarted = this.onQueryStarted.bind(this);
-
-    getQueryManager(this)[wrappers] = hookWrappers;
     this.setLink(this.link);
   }
 
@@ -122,6 +114,15 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
         newLink,
       ])
     );
+  }
+}
+
+class ApolloClientClientBaseImpl extends ApolloClientBase {
+  constructor(options: WrappedApolloClientOptions) {
+    super(options);
+    this.onQueryStarted = this.onQueryStarted.bind(this);
+
+    getQueryManager(this)[wrappers] = hookWrappers;
   }
 
   private simulatedStreamingQueries = new Map<
