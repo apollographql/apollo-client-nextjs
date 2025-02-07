@@ -25,10 +25,7 @@ import type {
 import { bundle, sourceSymbol } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
 import { assertInstance } from "../assertInstance.js";
-import type {
-  OnLinkHitFunction,
-  ReadableStreamLinkEvent,
-} from "../ReadableStreamLink.js";
+import type { ReadableStreamLinkEvent } from "../ReadableStreamLink.js";
 import {
   readFromReadableStream,
   ReadFromReadableStreamLink,
@@ -284,7 +281,7 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
 
   pushEventStream(
     options: WatchQueryOptions<any, any>
-  ): ReturnType<OnLinkHitFunction> {
+  ): ReadableStreamDefaultController<ReadableStreamLinkEvent> {
     const id = crypto.randomUUID() as TransportIdentifier;
 
     const [controller, eventStream] = getInjectableEventStream();
