@@ -27,13 +27,7 @@ export const delayLink = new ApolloLink((operation, forward) => {
   });
 });
 
-const logLink = new ApolloLink((operation, forward) => {
-  console.log("operation starting:", operation, operation.getContext());
-  return forward(operation);
-});
-
 const link = ApolloLink.from([
-  logLink,
   delayLink,
   typeof window === "undefined"
     ? new IncrementalSchemaLink({ schema })

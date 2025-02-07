@@ -10,7 +10,6 @@ export const Route = createFileRoute("/useSuspenseQuery")({
 function RouteComponent() {
   const [refetching, startTransition] = useTransition();
   const client = useApolloClient();
-  console.log("useSuspenseQuery");
   const { data, refetch } = useSuspenseQuery(DEFERRED_QUERY, {
     variables: { delayDeferred: 1000 },
   });
