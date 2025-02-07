@@ -3,7 +3,6 @@ import type {
   ApolloClientOptions,
   OperationVariables,
   WatchQueryOptions,
-  DocumentNode,
   NormalizedCacheObject,
 } from "@apollo/client/index.js";
 
@@ -13,14 +12,11 @@ import {
   Observable,
 } from "@apollo/client/index.js";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
-import { print } from "@apollo/client/utilities/index.js";
-import { canonicalStringify } from "@apollo/client/cache/index.js";
 import { invariant } from "ts-invariant";
 import { createBackpressuredCallback } from "./backpressuredCallback.js";
 import type { InMemoryCache } from "./WrappedInMemoryCache.js";
 import { hookWrappers } from "./hooks.js";
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
-import type { QueryInfo } from "@apollo/client/core/QueryInfo.js";
 import type {
   ProgressEvent,
   QueryEvent,
@@ -29,7 +25,10 @@ import type {
 import { bundle, sourceSymbol } from "../bundleInfo.js";
 import { serializeOptions, deserializeOptions } from "./transportedOptions.js";
 import { assertInstance } from "../assertInstance.js";
-import type { ReadableStreamLinkEvent } from "../ReadableStreamLink.js";
+import type {
+  OnLinkHitFunction,
+  ReadableStreamLinkEvent,
+} from "../ReadableStreamLink.js";
 import {
   readFromReadableStream,
   ReadFromReadableStreamLink,
@@ -142,33 +141,6 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
     TransportIdentifier,
     WatchQueryOptions
   >();
-
-  protected identifyUniqueQuery(options: {
-    query: DocumentNode;
-    variables?: unknown;
-  }) {
-    const transformedDocument = this.documentTransform.transformDocument(
-      options.query
-    );
-    const queryManager = getQueryManager(this);
-    // Calling `transformDocument` will add __typename but won't remove client
-    // directives, so we need to get the `serverQuery`.
-    const { serverQuery } = queryManager.getDocumentInfo(transformedDocument);
-
-    if (!serverQuery) {
-      throw new Error("could not identify unique query");
-    }
-
-    const canonicalVariables = canonicalStringify(options.variables || {});
-
-    const cacheKeyArr = [print(serverQuery), canonicalVariables];
-    const cacheKey = JSON.stringify(cacheKeyArr);
-
-    return {
-      cacheKey,
-      cacheKeyArr,
-    };
-  }
 
   onQueryStarted({ options, id }: Extract<QueryEvent, { type: "started" }>) {
     const hydratedOptions = deserializeOptions(options);
@@ -310,65 +282,58 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
     observable: Observable<Exclude<QueryEvent, { type: "started" }>>;
   }>();
 
+  pushEventStream(
+    options: WatchQueryOptions<any, any>
+  ): ReturnType<OnLinkHitFunction> {
+    const id = crypto.randomUUID() as TransportIdentifier;
+
+    const [controller, eventStream] = getInjectableEventStream();
+
+    const streamObservable = new Observable<
+      Exclude<QueryEvent, { type: "started" }>
+    >((subscriber) => {
+      function consume(
+        event: ReadableStreamReadResult<ReadableStreamLinkEvent>
+      ) {
+        const value = event.value;
+        if (value) {
+          subscriber.next({ ...value, id });
+        }
+        if (event.done) {
+          subscriber.complete();
+        } else {
+          reader.read().then(consume);
+        }
+      }
+      const reader = eventStream.getReader();
+      reader.read().then(consume);
+    });
+
+    this.watchQueryQueue.push({
+      event: {
+        type: "started",
+        options: serializeOptions(options),
+        id,
+      },
+      observable: streamObservable,
+    });
+
+    return controller;
+  }
+
   watchQuery<
     T = any,
     TVariables extends OperationVariables = OperationVariables,
   >(options: WatchQueryOptions<TVariables, T>) {
-    const { cacheKeyArr } = this.identifyUniqueQuery(options);
-
     if (
-      options.fetchPolicy !== "cache-only" &&
-      options.fetchPolicy !== "standby" &&
-      !(options.context as InternalContext | undefined)?.[
-        skipDataTransportKey
-      ] &&
-      !this.forwardedQueries.peekArray(cacheKeyArr)
+      !(options.context as InternalContext | undefined)?.[skipDataTransportKey]
     ) {
-      // don't transport the same query over twice
-      this.forwardedQueries.lookupArray(cacheKeyArr);
-
-      const [__injectIntoStream, __eventStream] = getInjectableEventStream();
-
-      const observableQuery = super.watchQuery({
+      return super.watchQuery({
         ...options,
-        context: teeToReadableStream(__injectIntoStream, {
+        context: teeToReadableStream(() => this.pushEventStream(options), {
           ...options?.context,
-          // we want to do this even if the query is already running for another reason
-          queryDeduplication: false,
         }),
       });
-      const queryInfo = observableQuery["queryInfo"] as QueryInfo;
-      const id = queryInfo.queryId as TransportIdentifier;
-
-      const streamObservable = new Observable<
-        Exclude<QueryEvent, { type: "started" }>
-      >((subscriber) => {
-        function consume(
-          event: ReadableStreamReadResult<ReadableStreamLinkEvent>
-        ) {
-          const value = event.value;
-          if (value) {
-            subscriber.next({ ...value, id });
-          }
-          if (event.done) {
-            subscriber.complete();
-          } else {
-            reader.read().then(consume);
-          }
-        }
-        const reader = __eventStream.getReader();
-        reader.read().then(consume);
-      });
-
-      this.watchQueryQueue.push({
-        event: {
-          type: "started",
-          options: serializeOptions(options),
-          id,
-        },
-        observable: streamObservable,
-      });
-      return observableQuery;
     }
     return super.watchQuery(options);
   }

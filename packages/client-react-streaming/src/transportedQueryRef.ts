@@ -93,15 +93,15 @@ export interface PreloadTransportedQueryFunction {
 }
 
 export function getInjectableEventStream() {
-  let __injectIntoStream:
+  let controller:
     | ReadableStreamDefaultController<ReadableStreamLinkEvent>
     | undefined;
-  const __eventStream = new ReadableStream<ReadableStreamLinkEvent>({
-    start(controller) {
-      __injectIntoStream = controller;
+  const stream = new ReadableStream<ReadableStreamLinkEvent>({
+    start(c) {
+      controller = c;
     },
   });
-  return [__injectIntoStream!, __eventStream] as const;
+  return [controller!, stream] as const;
 }
 
 export function createTransportedQueryPreloader(
@@ -114,7 +114,7 @@ export function createTransportedQueryPreloader(
     delete options.nextFetchPolicy;
     delete options.pollInterval;
 
-    const [__injectIntoStream, __eventStream] = getInjectableEventStream();
+    const [controller, stream] = getInjectableEventStream();
 
     // Instead of creating the queryRef, we kick off a query that will feed the network response
     // into our custom event stream.
@@ -125,7 +125,7 @@ export function createTransportedQueryPreloader(
         // ensure that this query makes it to the network
         fetchPolicy: "network-only",
         context: skipDataTransport(
-          teeToReadableStream(__injectIntoStream, {
+          teeToReadableStream(() => controller, {
             ...options?.context,
             // we want to do this even if the query is already running for another reason
             queryDeduplication: false,
@@ -140,7 +140,7 @@ export function createTransportedQueryPreloader(
       query,
       options,
       crypto.randomUUID(),
-      __eventStream
+      stream
     );
   };
 }
