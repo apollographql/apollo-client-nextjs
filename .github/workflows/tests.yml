@@ -116,6 +116,12 @@ jobs:
       - name: "Next.js: Test"
         run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
 
+      - name: "TanStack Start: Build"
+        run: yarn workspace @integration-test/tanstack-start run build
+
+      - name: "Next.js: Test"
+        run: yarn workspace @integration-test/tanstack-start run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+
       - name: "Vite Streaming: Build"
         run: yarn workspace @integration-test/vite-streaming run build
       - name: "Vite Streaming: Test"
