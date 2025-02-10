@@ -86,6 +86,7 @@
     "wait-on": "8.0.2"
   },
   "peerDependencies": {
+    "@apollo/client": ">=3.13.0-rc.0",
     "react": "^19",
     "react-router": "^7.0.2"
   },
