@@ -309,7 +309,7 @@ class ApolloClientSSRImpl extends ApolloClientClientBaseImpl {
   }
 }
 
-export class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {}
+class ApolloClientBrowserImpl extends ApolloClientClientBaseImpl {}
 
 class ApolloClientRSCImpl extends ApolloClientBase {}
 
@@ -333,16 +333,16 @@ export class ApolloClient<
     Ignored = NormalizedCacheObject,
   >
   extends (ApolloClientImplementation as typeof ApolloClientBase)
-  implements Partial<ApolloClientBrowserImpl>, Partial<ApolloClientSSRImpl>
+  implements Partial<ApolloClientSSRImpl>
 {
   /** @internal */
-  declare onQueryStarted?: ApolloClientBrowserImpl["onQueryStarted"];
+  declare onQueryStarted?: ApolloClientSSRImpl["onQueryStarted"];
   /** @internal */
-  declare onQueryProgress?: ApolloClientBrowserImpl["onQueryProgress"];
+  declare onQueryProgress?: ApolloClientSSRImpl["onQueryProgress"];
   /** @internal */
-  declare rerunSimulatedQueries?: ApolloClientBrowserImpl["rerunSimulatedQueries"];
+  declare rerunSimulatedQueries?: ApolloClientSSRImpl["rerunSimulatedQueries"];
   /** @internal */
-  declare rerunSimulatedQuery?: ApolloClientBrowserImpl["rerunSimulatedQuery"];
+  declare rerunSimulatedQuery?: ApolloClientSSRImpl["rerunSimulatedQuery"];
   /** @internal */
   declare watchQueryQueue?: ApolloClientSSRImpl["watchQueryQueue"];
 }
