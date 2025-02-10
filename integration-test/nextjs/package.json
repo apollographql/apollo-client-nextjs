@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "build-and-test": "yarn build && yarn test",
-    "test": "yarn playwright test"
+    "test": "yarn test:nextjs"
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "yarn playwright test"
+    "test": "yarn playwright test",
+    "test:nextjs": "TEST_PROJECT_DIR=../nextjs yarn playwright test --grep nextjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
