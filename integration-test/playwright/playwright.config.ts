@@ -1,5 +1,22 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 import { resolve } from "node:path";
+import { parseArgs } from "node:util";
+
+if (!process.env.GREP) {
+  const {
+    values: { grep },
+  } = parseArgs({
+    options: {
+      grep: {
+        type: "string",
+        default: "",
+      },
+    },
+    allowPositionals: true,
+    strict: false,
+  });
+  process.env.GREP = JSON.stringify(grep);
+}
 
 export default defineConfig({
   webServer: process.env.BASE_URL
@@ -14,7 +31,14 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
       },
   timeout: 15 * 1000,
+  projects: [
+    {
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+    },
+  ],
   use: {
+    // "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
     headless: true,
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,

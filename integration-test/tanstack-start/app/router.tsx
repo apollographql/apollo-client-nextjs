@@ -13,22 +13,17 @@ import {
 
 import { IncrementalSchemaLink } from "@integration-test/shared/IncrementalSchemaLink";
 import { schema } from "@integration-test/shared/schema";
-import { HttpLink, ApolloLink, Observable } from "@apollo/client/index.js";
+import { errorLink } from "@integration-test/shared/errorLink";
+import { delayLink } from "@integration-test/shared/delayLink";
+import { HttpLink, ApolloLink, setLogVerbosity } from "@apollo/client/index.js";
 
+setLogVerbosity("debug");
 loadDevMessages();
 loadErrorMessages();
 
-export const delayLink = new ApolloLink((operation, forward) => {
-  return new Observable((observer) => {
-    const timeout = setTimeout(() => {
-      forward(operation).subscribe(observer);
-    }, operation.getContext().delay ?? 500);
-    return () => clearTimeout(timeout);
-  });
-});
-
 const link = ApolloLink.from([
   delayLink,
+  errorLink,
   typeof window === "undefined"
     ? new IncrementalSchemaLink({ schema })
     : new HttpLink({ uri: "/api/graphql" }),

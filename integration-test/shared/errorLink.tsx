@@ -1,4 +1,4 @@
-import { ApolloLink, Observable } from "@apollo/client";
+import { ApolloLink, Observable } from "@apollo/client/index.js";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import * as entryPoint from "@apollo/client-react-streaming";
 

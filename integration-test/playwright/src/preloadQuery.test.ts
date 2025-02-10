@@ -1,8 +1,12 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixture";
+import { matchesTag } from "./helpers";
 
 const reactErr419 = /(Minified React error #419|Switched to client rendering)/;
 
+const base = matchesTag("@nextjs")
+  ? "/rsc/dynamic/PreloadQuery"
+  : "/preloadQuery";
 test.describe(
   "PreloadQuery",
   {
@@ -15,12 +19,9 @@ test.describe(
     ] as const) {
       test.describe(description, () => {
         test("query resolves on the server", async ({ page, blockRequest }) => {
-          await page.goto(
-            `/rsc/dynamic/PreloadQuery/${path}?errorIn=ssr,browser`,
-            {
-              waitUntil: "commit",
-            }
-          );
+          await page.goto(`${base}/${path}?errorIn=ssr,browser`, {
+            waitUntil: "commit",
+          });
 
           await expect(page).toBeInitiallyLoading(true);
           await expect(page.getByText("loading")).not.toBeVisible();
@@ -34,12 +35,9 @@ test.describe(
           page,
         }) => {
           page.allowErrors?.();
-          await page.goto(
-            `/rsc/dynamic/PreloadQuery/${path}?errorIn=rsc,network_error`,
-            {
-              waitUntil: "commit",
-            }
-          );
+          await page.goto(`${base}/${path}?errorIn=rsc,network_error`, {
+            waitUntil: "commit",
+          });
 
           await expect(page).toBeInitiallyLoading(true);
 
@@ -62,7 +60,7 @@ test.describe(
             page,
           }) => {
             page.allowErrors?.();
-            await page.goto(`/rsc/dynamic/PreloadQuery/${path}?errorIn=rsc`, {
+            await page.goto(`${base}/${path}?errorIn=rsc`, {
               waitUntil: "commit",
             });
 
@@ -93,7 +91,7 @@ test.describe(
             page,
           }) => {
             page.allowErrors?.();
-            await page.goto(`/rsc/dynamic/PreloadQuery/${path}?errorIn=rsc`, {
+            await page.goto(`${base}/${path}?errorIn=rsc`, {
               waitUntil: "commit",
             });
 
@@ -116,7 +114,7 @@ test.describe(
     }
 
     test("queryRef works with useQueryRefHandlers", async ({ page }) => {
-      await page.goto(`/rsc/dynamic/PreloadQuery/queryRef-useReadQuery`, {
+      await page.goto(`${base}/queryRef-useReadQuery`, {
         waitUntil: "commit",
       });
 
@@ -134,7 +132,7 @@ test.describe(
     test.skip("queryRef: assumptions about referential equality", async ({
       page,
     }) => {
-      await page.goto(`/rsc/dynamic/PreloadQuery/queryRef-refTest`, {
+      await page.goto(`${base}/queryRef-refTest`, {
         waitUntil: "commit",
       });
 

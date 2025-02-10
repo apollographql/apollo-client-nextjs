@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "test": "yarn playwright test",
-    "test:nextjs": "TEST_PROJECT_DIR=../nextjs yarn playwright test --grep nextjs"
+    "test:nextjs": "TEST_PROJECT_DIR=../nextjs yarn playwright test --grep=@nextjs",
+    "test:tanstack": "TEST_PROJECT_DIR=../tanstack-start yarn playwright test --grep=@tanstack"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",

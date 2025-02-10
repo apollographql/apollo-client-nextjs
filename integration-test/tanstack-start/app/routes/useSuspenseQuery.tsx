@@ -1,30 +1,21 @@
-"use client";
-
-import type { TypedDocumentNode } from "@apollo/client";
-import { useSuspenseQuery, gql } from "@apollo/client";
+import { createFileRoute } from "@tanstack/react-router";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+
+import { QUERY } from "@integration-test/shared/queries";
+import { useSuspenseQuery } from "@apollo/client/index.js";
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 
-const QUERY: TypedDocumentNode<{
-  products: {
-    id: string;
-    title: string;
-  }[];
-}> = gql`
-  query dynamicProducts {
-    products {
-      id
-      title
-    }
-  }
-`;
+export const Route = createFileRoute("/useSuspenseQuery")({
+  component: RouteComponent,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      errorLevel: search.errorLevel as "ssr" | "always" | undefined,
+    };
+  },
+});
 
-export const dynamic = "force-dynamic";
-
-export default function Page() {
-  const searchParams = useSearchParams();
-  const errorLevel = searchParams.get("errorLevel") as "ssr" | "always" | null;
+function RouteComponent() {
+  const { errorLevel } = Route.useSearch();
   return (
     <Suspense fallback={"loading"}>
       <ErrorBoundary FallbackComponent={FallbackComponent}>
@@ -42,7 +33,11 @@ function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
   );
 }
 
-function Component({ errorLevel }: { errorLevel: "ssr" | "always" | null }) {
+function Component({
+  errorLevel,
+}: {
+  errorLevel: "ssr" | "always" | undefined;
+}) {
   const { data } = useSuspenseQuery(QUERY, {
     context: { delay: 1000, ...(errorLevel ? { error: errorLevel } : {}) },
   });

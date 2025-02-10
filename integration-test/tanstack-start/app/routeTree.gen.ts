@@ -11,15 +11,51 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UseSuspenseQueryDeferImport } from './routes/useSuspenseQuery-defer'
 import { Route as UseSuspenseQueryImport } from './routes/useSuspenseQuery'
+import { Route as UseQueryWithCacheImport } from './routes/useQueryWithCache'
+import { Route as UseQueryImport } from './routes/useQuery'
+import { Route as UseBackgroundQueryWithoutSsrReadQueryImport } from './routes/useBackgroundQueryWithoutSsrReadQuery'
+import { Route as UseBackgroundQueryImport } from './routes/useBackgroundQuery'
 import { Route as LoaderDeferImport } from './routes/loader-defer'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
+const UseSuspenseQueryDeferRoute = UseSuspenseQueryDeferImport.update({
+  id: '/useSuspenseQuery-defer',
+  path: '/useSuspenseQuery-defer',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const UseSuspenseQueryRoute = UseSuspenseQueryImport.update({
   id: '/useSuspenseQuery',
   path: '/useSuspenseQuery',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UseQueryWithCacheRoute = UseQueryWithCacheImport.update({
+  id: '/useQueryWithCache',
+  path: '/useQueryWithCache',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UseQueryRoute = UseQueryImport.update({
+  id: '/useQuery',
+  path: '/useQuery',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UseBackgroundQueryWithoutSsrReadQueryRoute =
+  UseBackgroundQueryWithoutSsrReadQueryImport.update({
+    id: '/useBackgroundQueryWithoutSsrReadQuery',
+    path: '/useBackgroundQueryWithoutSsrReadQuery',
+    getParentRoute: () => rootRoute,
+  } as any)
+
+const UseBackgroundQueryRoute = UseBackgroundQueryImport.update({
+  id: '/useBackgroundQuery',
+  path: '/useBackgroundQuery',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,11 +89,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoaderDeferImport
       parentRoute: typeof rootRoute
     }
+    '/useBackgroundQuery': {
+      id: '/useBackgroundQuery'
+      path: '/useBackgroundQuery'
+      fullPath: '/useBackgroundQuery'
+      preLoaderRoute: typeof UseBackgroundQueryImport
+      parentRoute: typeof rootRoute
+    }
+    '/useBackgroundQueryWithoutSsrReadQuery': {
+      id: '/useBackgroundQueryWithoutSsrReadQuery'
+      path: '/useBackgroundQueryWithoutSsrReadQuery'
+      fullPath: '/useBackgroundQueryWithoutSsrReadQuery'
+      preLoaderRoute: typeof UseBackgroundQueryWithoutSsrReadQueryImport
+      parentRoute: typeof rootRoute
+    }
+    '/useQuery': {
+      id: '/useQuery'
+      path: '/useQuery'
+      fullPath: '/useQuery'
+      preLoaderRoute: typeof UseQueryImport
+      parentRoute: typeof rootRoute
+    }
+    '/useQueryWithCache': {
+      id: '/useQueryWithCache'
+      path: '/useQueryWithCache'
+      fullPath: '/useQueryWithCache'
+      preLoaderRoute: typeof UseQueryWithCacheImport
+      parentRoute: typeof rootRoute
+    }
     '/useSuspenseQuery': {
       id: '/useSuspenseQuery'
       path: '/useSuspenseQuery'
       fullPath: '/useSuspenseQuery'
       preLoaderRoute: typeof UseSuspenseQueryImport
+      parentRoute: typeof rootRoute
+    }
+    '/useSuspenseQuery-defer': {
+      id: '/useSuspenseQuery-defer'
+      path: '/useSuspenseQuery-defer'
+      fullPath: '/useSuspenseQuery-defer'
+      preLoaderRoute: typeof UseSuspenseQueryDeferImport
       parentRoute: typeof rootRoute
     }
   }
@@ -68,41 +139,92 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/loader-defer': typeof LoaderDeferRoute
+  '/useBackgroundQuery': typeof UseBackgroundQueryRoute
+  '/useBackgroundQueryWithoutSsrReadQuery': typeof UseBackgroundQueryWithoutSsrReadQueryRoute
+  '/useQuery': typeof UseQueryRoute
+  '/useQueryWithCache': typeof UseQueryWithCacheRoute
   '/useSuspenseQuery': typeof UseSuspenseQueryRoute
+  '/useSuspenseQuery-defer': typeof UseSuspenseQueryDeferRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/loader-defer': typeof LoaderDeferRoute
+  '/useBackgroundQuery': typeof UseBackgroundQueryRoute
+  '/useBackgroundQueryWithoutSsrReadQuery': typeof UseBackgroundQueryWithoutSsrReadQueryRoute
+  '/useQuery': typeof UseQueryRoute
+  '/useQueryWithCache': typeof UseQueryWithCacheRoute
   '/useSuspenseQuery': typeof UseSuspenseQueryRoute
+  '/useSuspenseQuery-defer': typeof UseSuspenseQueryDeferRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/loader-defer': typeof LoaderDeferRoute
+  '/useBackgroundQuery': typeof UseBackgroundQueryRoute
+  '/useBackgroundQueryWithoutSsrReadQuery': typeof UseBackgroundQueryWithoutSsrReadQueryRoute
+  '/useQuery': typeof UseQueryRoute
+  '/useQueryWithCache': typeof UseQueryWithCacheRoute
   '/useSuspenseQuery': typeof UseSuspenseQueryRoute
+  '/useSuspenseQuery-defer': typeof UseSuspenseQueryDeferRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/loader-defer' | '/useSuspenseQuery'
+  fullPaths:
+    | '/'
+    | '/loader-defer'
+    | '/useBackgroundQuery'
+    | '/useBackgroundQueryWithoutSsrReadQuery'
+    | '/useQuery'
+    | '/useQueryWithCache'
+    | '/useSuspenseQuery'
+    | '/useSuspenseQuery-defer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/loader-defer' | '/useSuspenseQuery'
-  id: '__root__' | '/' | '/loader-defer' | '/useSuspenseQuery'
+  to:
+    | '/'
+    | '/loader-defer'
+    | '/useBackgroundQuery'
+    | '/useBackgroundQueryWithoutSsrReadQuery'
+    | '/useQuery'
+    | '/useQueryWithCache'
+    | '/useSuspenseQuery'
+    | '/useSuspenseQuery-defer'
+  id:
+    | '__root__'
+    | '/'
+    | '/loader-defer'
+    | '/useBackgroundQuery'
+    | '/useBackgroundQueryWithoutSsrReadQuery'
+    | '/useQuery'
+    | '/useQueryWithCache'
+    | '/useSuspenseQuery'
+    | '/useSuspenseQuery-defer'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoaderDeferRoute: typeof LoaderDeferRoute
+  UseBackgroundQueryRoute: typeof UseBackgroundQueryRoute
+  UseBackgroundQueryWithoutSsrReadQueryRoute: typeof UseBackgroundQueryWithoutSsrReadQueryRoute
+  UseQueryRoute: typeof UseQueryRoute
+  UseQueryWithCacheRoute: typeof UseQueryWithCacheRoute
   UseSuspenseQueryRoute: typeof UseSuspenseQueryRoute
+  UseSuspenseQueryDeferRoute: typeof UseSuspenseQueryDeferRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoaderDeferRoute: LoaderDeferRoute,
+  UseBackgroundQueryRoute: UseBackgroundQueryRoute,
+  UseBackgroundQueryWithoutSsrReadQueryRoute:
+    UseBackgroundQueryWithoutSsrReadQueryRoute,
+  UseQueryRoute: UseQueryRoute,
+  UseQueryWithCacheRoute: UseQueryWithCacheRoute,
   UseSuspenseQueryRoute: UseSuspenseQueryRoute,
+  UseSuspenseQueryDeferRoute: UseSuspenseQueryDeferRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +239,12 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/loader-defer",
-        "/useSuspenseQuery"
+        "/useBackgroundQuery",
+        "/useBackgroundQueryWithoutSsrReadQuery",
+        "/useQuery",
+        "/useQueryWithCache",
+        "/useSuspenseQuery",
+        "/useSuspenseQuery-defer"
       ]
     },
     "/": {
@@ -126,8 +253,23 @@ export const routeTree = rootRoute
     "/loader-defer": {
       "filePath": "loader-defer.tsx"
     },
+    "/useBackgroundQuery": {
+      "filePath": "useBackgroundQuery.tsx"
+    },
+    "/useBackgroundQueryWithoutSsrReadQuery": {
+      "filePath": "useBackgroundQueryWithoutSsrReadQuery.tsx"
+    },
+    "/useQuery": {
+      "filePath": "useQuery.tsx"
+    },
+    "/useQueryWithCache": {
+      "filePath": "useQueryWithCache.tsx"
+    },
     "/useSuspenseQuery": {
       "filePath": "useSuspenseQuery.tsx"
+    },
+    "/useSuspenseQuery-defer": {
+      "filePath": "useSuspenseQuery-defer.tsx"
     }
   }
 }

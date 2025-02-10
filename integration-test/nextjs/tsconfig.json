@@ -35,7 +35,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "../shared/*.ts",
-    "../playwright/fixture.ts"
   ],
   "exclude": [
     "node_modules"

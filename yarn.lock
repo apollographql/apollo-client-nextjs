@@ -6615,6 +6615,7 @@ __metadata:
     graphql: "npm:^16.10.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
+    react-error-boundary: "npm:^5.0.0"
     typescript: "npm:^5.7.2"
     vinxi: "npm:^0.5.1"
   languageName: unknown
