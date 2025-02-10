@@ -33,6 +33,9 @@ export const hookWrappers: HookWrappers = {
       return orig_useQueryRefHandlers(useWrapTransportedQueryRef(queryRef));
     }, []);
   },
+  useSuspenseFragment(orig_useSuspenseFragment) {
+    return wrap(orig_useSuspenseFragment, ["data"]);
+  },
 };
 
 function wrap<T extends (...args: any[]) => any>(
