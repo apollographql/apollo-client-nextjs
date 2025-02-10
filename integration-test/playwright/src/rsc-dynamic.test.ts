@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { test } from "../../../../fixture";
+import { test } from "../fixture";
 
 test.describe("RSC dynamic", () => {
   test("query (one query)", async ({ page, blockRequest }) => {

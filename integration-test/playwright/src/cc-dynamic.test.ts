@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { test } from "../../../../fixture";
+import { test } from "../fixture";
 
 const regex_connection_closed_early =
   /streaming connection closed before server query could be fully transported, rerunning/i;

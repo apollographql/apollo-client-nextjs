@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { test } from "../../../../../fixture";
+import { test } from "../fixture";
 
 const reactErr419 = /(Minified React error #419|Switched to client rendering)/;
 

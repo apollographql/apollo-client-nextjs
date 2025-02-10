@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { test } from "../../../../fixture";
+import { test } from "../fixture";
 
 test.describe("CC static", () => {
   test.describe("useSuspenseQuery", () => {

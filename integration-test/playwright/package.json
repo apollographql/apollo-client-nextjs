@@ -1,0 +1,12 @@
+{
+  "name": "@integration-test/playwright",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "yarn playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "typescript": "5.1.3"
+  }
+}
