@@ -43,7 +43,6 @@ function getQueryManager(
 }
 
 type SimulatedQueryInfo = {
-  stream: ReadableStream<ReadableStreamLinkEvent>;
   controller: ReadableStreamDefaultController<ReadableStreamLinkEvent>;
   options: WatchQueryOptions<OperationVariables, any>;
 };
@@ -152,7 +151,6 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
       .finally(() => queryManager.stopQuery(queryId));
 
     this.simulatedStreamingQueries.set(id, {
-      stream,
       controller,
       options: hydratedOptions,
     });
