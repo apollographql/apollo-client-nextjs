@@ -6,7 +6,9 @@ export default defineConfig({
     ? undefined
     : {
         command: "yarn start",
-        cwd: resolve(__dirname, process.env.TEST_PROJECT_DIR),
+        cwd: process.env.TEST_PROJECT_DIR
+          ? resolve(__dirname, process.env.TEST_PROJECT_DIR)
+          : undefined,
         port: 3000,
         timeout: 15 * 1000,
         reuseExistingServer: !process.env.CI,
