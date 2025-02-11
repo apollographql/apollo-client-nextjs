@@ -4,10 +4,14 @@ import {
   useApolloClient,
   useQueryRefHandlers,
   useReadQuery,
+  useSuspenseFragment,
 } from "@apollo/client";
-import { DeferredDynamicProductResult } from "@integration-test/shared/queries";
+import {
+  DeferredDynamicProductResult,
+  RATING_FRAGMENT,
+} from "@integration-test/shared/queries";
 import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
-import { useTransition } from "react";
+import { Suspense, useTransition } from "react";
 
 export function ClientChild({
   queryRef,
@@ -17,21 +21,18 @@ export function ClientChild({
   const { refetch } = useQueryRefHandlers(queryRef);
   const [refetching, startTransition] = useTransition();
   const { data } = useReadQuery(queryRef);
-  const client = useApolloClient();
 
   return (
     <>
       <ul>
-        {data.products.map(({ id, title, rating }) => (
-          <li key={id}>
-            {title}
+        {data.products.map((product) => (
+          <li key={product.id}>
+            {product.title}
             <br />
             Rating:{" "}
-            <div style={{ display: "inline-block", verticalAlign: "text-top" }}>
-              {rating?.value || ""}
-              <br />
-              {rating ? `Queried in ${rating.env} environment` : "loading..."}
-            </div>
+            <Suspense fallback="Loading rating...">
+              <Rating product={product} delayDeferred={1000} />
+            </Suspense>
           </li>
         ))}
       </ul>
@@ -39,18 +40,6 @@ export function ClientChild({
       <button
         disabled={refetching}
         onClick={() => {
-          client.cache.batch({
-            update(cache) {
-              for (const product of data.products) {
-                cache.modify({
-                  id: cache.identify(product),
-                  fields: {
-                    rating: () => null,
-                  },
-                });
-              }
-            },
-          });
           startTransition(() => {
             refetch();
           });
@@ -59,5 +48,30 @@ export function ClientChild({
         {refetching ? "refetching..." : "refetch"}
       </button>
     </>
+  );
+}
+
+interface RatingProps {
+  product: { __typename: "Product"; id: string };
+  delayDeferred: number;
+}
+
+function Rating({ product, delayDeferred }: RatingProps) {
+  const { data } = useSuspenseFragment({
+    fragment: RATING_FRAGMENT,
+    from: product,
+    variables: {
+      delayDeferred,
+    },
+  });
+
+  const { rating } = data;
+
+  return (
+    <div style={{ display: "inline-block", verticalAlign: "text-top" }}>
+      {rating.value || ""}
+      <br />
+      Queried in {rating.env} environment
+    </div>
   );
 }
