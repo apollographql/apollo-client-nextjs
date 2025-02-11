@@ -2,14 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
 import { QUERY } from "@integration-test/shared/queries";
-import { useSuspenseQuery } from "@apollo/client/index.js";
+import { DefaultContext, useSuspenseQuery } from "@apollo/client/index.js";
 import { Suspense } from "react";
 
 export const Route = createFileRoute("/useSuspenseQuery")({
   component: RouteComponent,
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      errorLevel: search.errorLevel as "ssr" | "always" | undefined,
+      errorLevel: search.errorLevel as DefaultContext["error"],
     };
   },
 });
@@ -33,11 +33,7 @@ function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
   );
 }
 
-function Component({
-  errorLevel,
-}: {
-  errorLevel: "ssr" | "always" | undefined;
-}) {
+function Component({ errorLevel }: { errorLevel: DefaultContext["error"] }) {
   const { data } = useSuspenseQuery(QUERY, {
     context: { delay: 1000, ...(errorLevel ? { error: errorLevel } : {}) },
   });

@@ -1,8 +1,0 @@
-.invalid {
-  border: 1px solid red;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}

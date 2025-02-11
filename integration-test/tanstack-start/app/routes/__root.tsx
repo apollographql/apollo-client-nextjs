@@ -63,6 +63,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             activeProps={{
               className: "font-bold",
             }}
+            search={{ errorLevel: undefined }}
           >
             useSuspenseQuery
           </Link>{" "}

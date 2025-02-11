@@ -151,6 +151,9 @@ test.describe("CC dynamic", () => {
       }
     );
   });
+
+  test.fixme("useSuspenseQuery with @defer", { tag: ["@tanstack"] }, () => {});
+
   test.describe("useSuspenseQuery with a nonce", () => {
     test(
       "invalid: logs an error",

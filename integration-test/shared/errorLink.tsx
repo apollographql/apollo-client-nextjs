@@ -40,6 +40,7 @@ export const errorLink = new ApolloLink((operation, forward) => {
             } satisfies GraphQLFormattedError as GraphQLError,
           ],
         });
+        subscriber.complete();
       }
     });
   }
