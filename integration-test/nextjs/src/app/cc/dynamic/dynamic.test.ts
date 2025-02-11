@@ -5,6 +5,7 @@ const regex_connection_closed_early =
   /streaming connection closed before server query could be fully transported, rerunning/i;
 const regex_query_error_restart =
   /query failed on server, rerunning in browser/i;
+const reactErr419 = /(Minified React error #419|Switched to client rendering)/;
 
 test.describe("CC dynamic", () => {
   test.describe("useSuspenseQuery", () => {
@@ -40,7 +41,7 @@ test.describe("CC dynamic", () => {
         return regex_query_error_restart.test(message.text());
       });
       await page.waitForEvent("pageerror", (error) => {
-        return error.message.includes("Minified React error #419");
+        return reactErr419.test(error.message);
       });
 
       await hydrationFinished;

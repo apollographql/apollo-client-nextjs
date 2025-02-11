@@ -1,6 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "../../../../../fixture";
 
+const reactErr419 = /(Minified React error #419|Switched to client rendering)/;
+
 test.describe("PreloadQuery", () => {
   for (const [description, path] of [
     ["with useSuspenseQuery", "useSuspenseQuery"],
@@ -37,10 +39,7 @@ test.describe("PreloadQuery", () => {
         await expect(page).toBeInitiallyLoading(true);
 
         await page.waitForEvent("pageerror", (error) => {
-          return (
-            /* prod */ error.message.includes("Minified React error #419") ||
-            /* dev */ error.message.includes("Query failed upstream.")
-          );
+          return reactErr419.test(error.message);
         });
 
         await expect(page.getByText("loading")).not.toBeVisible();
@@ -94,10 +93,7 @@ test.describe("PreloadQuery", () => {
           await expect(page).toBeInitiallyLoading(true);
 
           await page.waitForEvent("pageerror", (error) => {
-            return (
-              /* prod */ error.message.includes("Minified React error #419") ||
-              /* dev */ error.message.includes("Query failed upstream.")
-            );
+            return reactErr419.test(error.message);
           });
 
           await expect(page.getByText("loading")).not.toBeVisible();

@@ -6,8 +6,21 @@ export type ReadableStreamLinkEvent =
   | { type: "completed" }
   | { type: "error" };
 
+/**
+ * Called when the link is hit, before the request is forwarded.
+ *
+ * Should return the controller for the readable stream.
+ *
+ * This is useful because when starting a query, it's not always
+ * clear if the query will hit the network or will be served from
+ * cache, deduplicated etc.
+ * This allows to inject the "start event" into the stream only
+ * when we know that more chunks will actually follow.
+ */
+type OnLinkHitFunction =
+  () => ReadableStreamDefaultController<ReadableStreamLinkEvent>;
 interface InternalContext {
-  [teeToReadableStreamKey]?: ReadableStreamDefaultController<ReadableStreamLinkEvent>;
+  [teeToReadableStreamKey]?: OnLinkHitFunction;
   [readFromReadableStreamKey]?: ReadableStream<ReadableStreamLinkEvent>;
 }
 
@@ -18,24 +31,18 @@ const readFromReadableStreamKey = Symbol.for("apollo.read.readableStream");
 
 /**
  * Apply to a context that will be passed to a link chain containing `TeeToReadableStreamLink`.
- * @param controller
- * @param context
- * @returns
  */
 export function teeToReadableStream<T extends Record<string, any>>(
-  controller: ReadableStreamDefaultController<ReadableStreamLinkEvent>,
+  onLinkHit: OnLinkHitFunction,
   context: T
 ): T & InternalContext {
   return Object.assign(context, {
-    [teeToReadableStreamKey]: controller,
+    [teeToReadableStreamKey]: onLinkHit,
   });
 }
 
 /**
  * Apply to a context that will be passed to a link chain containing `ReadFromReadableStreamLink`.
- * @param readableStream
- * @param context
- * @returns
  */
 export function readFromReadableStream<T extends Record<string, any>>(
   readableStream: ReadableStream<ReadableStreamLinkEvent>,
@@ -55,9 +62,11 @@ export class TeeToReadableStreamLink extends ApolloLink {
     super((operation, forward) => {
       const context = operation.getContext() as InternalContext;
 
-      const controller = context[teeToReadableStreamKey];
+      const onLinkHit = context[teeToReadableStreamKey];
 
-      if (controller) {
+      if (onLinkHit) {
+        const controller = onLinkHit();
+
         const tryClose = () => {
           try {
             controller.close();

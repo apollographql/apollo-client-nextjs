@@ -11,7 +11,7 @@ export const Route = createFileRoute("/loader-defer")({
   component: LoaderDeferPage,
   loader: async ({ context: { preloadQuery } }) => {
     const queryRef = preloadQuery(DEFERRED_QUERY, {
-      variables: { delayDeferred: 500 },
+      variables: { delayDeferred: 1000 },
     });
     return {
       queryRef,
