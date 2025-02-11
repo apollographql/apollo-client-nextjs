@@ -14,7 +14,7 @@ const otherEnvs = matchesTag("@nextjs") ? "ssr,browser" : "browser";
 test.describe("PreloadQuery", () => {
   for (const [description, path] of [
     ["with useSuspenseQuery", "useSuspenseQuery"],
-    // ["with queryRef and useReadQuery", "queryRef-useReadQuery"],
+    ["with queryRef and useReadQuery", "queryRef-useReadQuery"],
   ] as const) {
     test.describe(description, () => {
       test(
@@ -71,7 +71,10 @@ test.describe("PreloadQuery", () => {
         test(
           "graphqlError on the server, transported to the browser, can be restarted",
           {
-            tag: ["@nextjs"],
+            tag: [
+              "@nextjs",
+              // TODO:  "@tanstack" causes a non-recoverable hydration mismatch
+            ],
           },
           async ({ page }) => {
             page.allowErrors?.();
