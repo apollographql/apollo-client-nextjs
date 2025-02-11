@@ -11,7 +11,7 @@ import { useTransition } from "react";
 
 export const loader = apolloLoader<Route.LoaderArgs>()(({ preloadQuery }) => {
   const queryRef = preloadQuery(DEFERRED_QUERY, {
-    variables: { delayDeferred: 500 },
+    variables: { delayDeferred: 1000 },
   });
   return {
     queryRef,

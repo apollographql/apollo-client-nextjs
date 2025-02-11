@@ -45,8 +45,7 @@ export type PreloadTransportedQueryOptions<TVariables, TData> = Omit<
 > &
   RestrictedPreloadOptions;
 
-type TransportedQueryRefOptions = TransportedOptions &
-  RestrictedPreloadOptions;
+type TransportedQueryRefOptions = TransportedOptions & RestrictedPreloadOptions;
 
 /**
  * A `TransportedQueryRef` is an opaque object accessible via renderProp within `PreloadQuery`.
@@ -93,6 +92,18 @@ export interface PreloadTransportedQueryFunction {
   ): TransportedQueryRef<TData, TVariables>;
 }
 
+export function getInjectableEventStream() {
+  let controller:
+    | ReadableStreamDefaultController<ReadableStreamLinkEvent>
+    | undefined;
+  const stream = new ReadableStream<ReadableStreamLinkEvent>({
+    start(c) {
+      controller = c;
+    },
+  });
+  return [controller!, stream] as const;
+}
+
 export function createTransportedQueryPreloader(
   client: ApolloClient<any>
 ): PreloadTransportedQueryFunction {
@@ -103,14 +114,7 @@ export function createTransportedQueryPreloader(
     delete options.nextFetchPolicy;
     delete options.pollInterval;
 
-    let __injectIntoStream:
-      | ReadableStreamDefaultController<ReadableStreamLinkEvent>
-      | undefined;
-    const __eventStream = new ReadableStream({
-      start(controller) {
-        __injectIntoStream = controller;
-      },
-    });
+    const [controller, stream] = getInjectableEventStream();
 
     // Instead of creating the queryRef, we kick off a query that will feed the network response
     // into our custom event stream.
@@ -119,9 +123,9 @@ export function createTransportedQueryPreloader(
         query,
         ...options,
         // ensure that this query makes it to the network
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
         context: skipDataTransport(
-          teeToReadableStream(__injectIntoStream!, {
+          teeToReadableStream(() => controller, {
             ...options?.context,
             // we want to do this even if the query is already running for another reason
             queryDeduplication: false,
@@ -136,7 +140,7 @@ export function createTransportedQueryPreloader(
       query,
       options,
       crypto.randomUUID(),
-      __eventStream
+      stream
     );
   };
 }

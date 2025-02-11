@@ -50,19 +50,13 @@ const WrappedApolloProvider = WrapApolloProvider<{ router: AnyRouter }>(
           () =>
             new Promise<string>((resolve) => {
               ensureInitialized(router);
-
-              const id = crypto.randomUUID() as typeof event.id;
-
               function transportEvent(event: QueryEvent) {
-                event.id = id;
-                ssr.injectScript(
-                  () =>
-                    `__APOLLO_EVENTS__.push(${jsesc(event, {
-                      isScriptContext: true,
-                      wrap: true,
-                      json: true,
-                    })})`
-                );
+                const script = `__APOLLO_EVENTS__.push(${jsesc(event, {
+                  isScriptContext: true,
+                  wrap: true,
+                  json: true,
+                })})`;
+                ssr.injectScript(() => script);
               }
 
               // transport initial event
