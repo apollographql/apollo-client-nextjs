@@ -3,11 +3,10 @@ import {
   QueryRef,
   useQueryRefHandlers,
   useReadQuery,
-  useSuspenseQuery,
   type DefaultContext,
 } from "@apollo/client/index.js";
 import "@integration-test/shared/errorLink";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, ErrorComponentProps } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 export const Route = createFileRoute("/preloadQuery/queryRef-useReadQuery")({
@@ -26,6 +25,7 @@ export const Route = createFileRoute("/preloadQuery/queryRef-useReadQuery")({
       queryRef,
     };
   },
+  errorComponent: ErrorComponent,
 });
 
 function RouteComponent() {
@@ -48,7 +48,19 @@ function Child({ queryRef }: { queryRef: QueryRef<DynamicProductResult> }) {
         ))}
       </ul>
       <p>Queried in {data.env} environment</p>
-      <button onClick={() => refetch()}>refetch</button>
+      <button type="button" onClick={() => refetch()}>
+        refetch
+      </button>
+    </>
+  );
+}
+
+export function ErrorComponent({ error, reset }: ErrorComponentProps) {
+  return (
+    <>
+      <h2>Encountered an error:</h2>
+      <pre>{error.message}</pre>
+      <button onClick={() => reset()}>Try again</button>
     </>
   );
 }

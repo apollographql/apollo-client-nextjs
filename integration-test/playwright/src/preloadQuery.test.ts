@@ -73,7 +73,13 @@ test.describe("PreloadQuery", () => {
           {
             tag: [
               "@nextjs",
-              // TODO:  "@tanstack" causes a non-recoverable hydration mismatch
+              // This actually doesn't work in TanStack Query because of the `autoDisposeTimeout`
+              // that keeps the errored `queryRef` around.
+              // (if you wait long enough, it will work).
+              // We might need to revisit this conceptually as right now we have no very good way
+              // of restarting a query in this situation.
+              // I'm honestly a bit irritated this works as it does in Next.js
+              // "@tanstack"
             ],
           },
           async ({ page }) => {
