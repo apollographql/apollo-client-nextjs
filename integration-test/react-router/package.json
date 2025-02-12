@@ -1,5 +1,5 @@
 {
-  "name": "react-router",
+  "name": "@integration-test/react-router",
   "private": true,
   "type": "module",
   "scripts": {

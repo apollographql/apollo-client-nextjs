@@ -6760,6 +6760,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@integration-test/react-router@workspace:integration-test/react-router":
+  version: 0.0.0-use.local
+  resolution: "@integration-test/react-router@workspace:integration-test/react-router"
+  dependencies:
+    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client-integration-react-router": "workspace:^"
+    "@integration-test/shared": "workspace:^"
+    "@react-router/dev": "npm:^7.1.5"
+    "@react-router/fs-routes": "npm:^7.1.5"
+    "@react-router/node": "npm:^7.1.5"
+    "@react-router/serve": "npm:^7.1.5"
+    "@tailwindcss/vite": "npm:^4.0.0"
+    "@types/node": "npm:^20"
+    "@types/react": "npm:^19.0.1"
+    "@types/react-dom": "npm:^19.0.1"
+    "@vercel/react-router": "npm:^1.0.2"
+    graphql: "npm:*"
+    isbot: "npm:^5.1.17"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
+    react-router: "npm:^7.1.5"
+    react-router-devtools: "npm:^1.1.0"
+    tailwindcss: "npm:^4.0.0"
+    typescript: "npm:^5.7.2"
+    vite: "npm:^5.4.11"
+    vite-tsconfig-paths: "npm:^5.1.4"
+  languageName: unknown
+  linkType: soft
+
 "@integration-test/shared@workspace:^, @integration-test/shared@workspace:integration-test/shared":
   version: 0.0.0-use.local
   resolution: "@integration-test/shared@workspace:integration-test/shared"
@@ -23546,35 +23575,6 @@ __metadata:
   checksum: 10/31fee5bef4b9615693a689c3be8a09c6de7adc80b14f823c5dbb27f77839d505bcfefe1ab2f03c07093f934c4cd0806272afd138f5f3569ebc01de2941274651
   languageName: node
   linkType: hard
-
-"react-router@workspace:integration-test/react-router":
-  version: 0.0.0-use.local
-  resolution: "react-router@workspace:integration-test/react-router"
-  dependencies:
-    "@apollo/client": "npm:^3.11.10"
-    "@apollo/client-integration-react-router": "workspace:^"
-    "@integration-test/shared": "workspace:^"
-    "@react-router/dev": "npm:^7.1.5"
-    "@react-router/fs-routes": "npm:^7.1.5"
-    "@react-router/node": "npm:^7.1.5"
-    "@react-router/serve": "npm:^7.1.5"
-    "@tailwindcss/vite": "npm:^4.0.0"
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^19.0.1"
-    "@types/react-dom": "npm:^19.0.1"
-    "@vercel/react-router": "npm:^1.0.2"
-    graphql: "npm:*"
-    isbot: "npm:^5.1.17"
-    react: "npm:^19.0.0"
-    react-dom: "npm:^19.0.0"
-    react-router: "npm:^7.1.5"
-    react-router-devtools: "npm:^1.1.0"
-    tailwindcss: "npm:^4.0.0"
-    typescript: "npm:^5.7.2"
-    vite: "npm:^5.4.11"
-    vite-tsconfig-paths: "npm:^5.1.4"
-  languageName: unknown
-  linkType: soft
 
 "react-server-dom-webpack@npm:^19.0.0":
   version: 19.0.0
