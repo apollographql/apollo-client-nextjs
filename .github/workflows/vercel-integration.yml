@@ -54,3 +54,9 @@ jobs:
         run: yarn workspace @integration-test/tanstack-start run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
+
+      - name: "Run Playwright tests against Vercel deployment - React Router"
+        if: github.event.deployment_status.environment == 'Preview – apoll__client-integration-react-router'
+        run: yarn workspace @integration-test/react-router run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+        env:
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}

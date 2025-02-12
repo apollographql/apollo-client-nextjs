@@ -79,7 +79,8 @@ test.describe("PreloadQuery", () => {
               // We might need to revisit this conceptually as right now we have no very good way
               // of restarting a query in this situation.
               // I'm honestly a bit irritated this works as it does in Next.js
-              // "@tanstack"
+              // "@tanstack",
+              // "@react-router",
             ],
           },
           async ({ page }) => {
@@ -118,7 +119,7 @@ test.describe("PreloadQuery", () => {
         test(
           "graphqlError on the server, restarts in the browser",
           {
-            tag: ["@nextjs", "@tanstack"],
+            tag: ["@nextjs", "@tanstack", "@react-router"],
           },
           async ({ page }) => {
             page.allowErrors?.();
@@ -151,7 +152,7 @@ test.describe("PreloadQuery", () => {
   test(
     "queryRef works with useQueryRefHandlers",
     {
-      tag: ["@nextjs", "@tanstack"],
+      tag: ["@nextjs", "@tanstack", "@react-router"],
     },
     async ({ page }) => {
       await page.goto(`${base}/queryRef-useReadQuery`, {
