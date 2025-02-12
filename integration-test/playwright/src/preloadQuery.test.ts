@@ -151,7 +151,7 @@ test.describe("PreloadQuery", () => {
   test(
     "queryRef works with useQueryRefHandlers",
     {
-      tag: ["@nextjs"],
+      tag: ["@nextjs", "@tanstack"],
     },
     async ({ page }) => {
       await page.goto(`${base}/queryRef-useReadQuery`, {
@@ -161,7 +161,9 @@ test.describe("PreloadQuery", () => {
       await expect(page).toBeInitiallyLoading(true);
       await expect(page.getByText("loading")).not.toBeVisible();
       await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
-      await expect(page.getByText("Queried in RSC environment")).toBeVisible();
+      await expect(
+        page.getByText(`Queried in ${originatesIn} environment`)
+      ).toBeVisible();
 
       await page.getByRole("button", { name: "refetch" }).click();
       await expect(
