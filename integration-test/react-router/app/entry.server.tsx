@@ -9,7 +9,7 @@ import { renderToPipeableStream } from "react-dom/server";
 import { makeClient } from "./apollo";
 import { ApolloProvider } from "@apollo/client/index.js";
 
-const ABORT_DELAY = 5_000;
+export const streamTimeout = 5_000;
 
 export default function handleRequest(
   request: Request,
@@ -32,11 +32,7 @@ export default function handleRequest(
     const client = makeClient(request);
     const { pipe, abort } = renderToPipeableStream(
       <ApolloProvider client={client}>
-        <ServerRouter
-          context={routerContext}
-          url={request.url}
-          abortDelay={ABORT_DELAY}
-        />
+        <ServerRouter context={routerContext} url={request.url} />
       </ApolloProvider>,
       {
         [readyOption]() {
@@ -70,6 +66,8 @@ export default function handleRequest(
       }
     );
 
-    setTimeout(abort, ABORT_DELAY);
+    // Abort the rendering stream after the `streamTimeout` so it has time to
+    // flush down the rejected boundaries
+    setTimeout(abort, streamTimeout + 1000);
   });
 }

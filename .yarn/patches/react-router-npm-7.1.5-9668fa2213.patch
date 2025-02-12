@@ -1,0 +1,112 @@
+diff --git a/dist/development/lib/types/route-module.d.mts b/dist/development/lib/types/route-module.d.mts
+index 65548f5090c95d9a8a34f916306d3b9d6bff4250..bf88cb4f4f1fa1c9576913efc3c9d230a5315de0 100644
+--- a/dist/development/lib/types/route-module.d.mts
++++ b/dist/development/lib/types/route-module.d.mts
+@@ -1,7 +1,9 @@
+ import { ay as LinkDescriptor, av as MetaDescriptor, aM as ServerDataFrom, aN as ClientDataFrom, aO as Func, aP as Equal, aQ as Pretty } from '../../route-data-Cq_b5feC.mjs';
+ import { A as AppLoadContext } from '../../data-CQbyyGzl.mjs';
+ import 'react';
+-
++export type SerializesTo<T> = {
++    $__RR_SerializesTo?: [T];
++};
+ type IsDefined<T> = Equal<T, undefined> extends true ? false : true;
+ type RouteModule = {
+     meta?: Func;
+diff --git a/dist/development/lib/types/route-module.d.ts b/dist/development/lib/types/route-module.d.ts
+index a8b932c982cbf7935cdf5402cb844c118a2b9e79..5f9d3fbb1f79c680b3f3ba5f06caee2268ee34fd 100644
+--- a/dist/development/lib/types/route-module.d.ts
++++ b/dist/development/lib/types/route-module.d.ts
+@@ -1,7 +1,9 @@
+ import { ay as LinkDescriptor, av as MetaDescriptor, aM as ServerDataFrom, aN as ClientDataFrom, aO as Func, aP as Equal, aQ as Pretty } from '../../route-data-Cq_b5feC.js';
+ import { A as AppLoadContext } from '../../data-CQbyyGzl.js';
+ import 'react';
+-
++export type SerializesTo<T> = {
++    $__RR_SerializesTo?: [T];
++};
+ type IsDefined<T> = Equal<T, undefined> extends true ? false : true;
+ type RouteModule = {
+     meta?: Func;
+diff --git a/dist/development/route-data-Cq_b5feC.d.mts b/dist/development/route-data-Cq_b5feC.d.mts
+index a44077c379d51d720dc5539ef006d105657d673c..e5a646b097b82714a739fec8510d13bf09207699 100644
+--- a/dist/development/route-data-Cq_b5feC.d.mts
++++ b/dist/development/route-data-Cq_b5feC.d.mts
+@@ -1564,7 +1564,7 @@ type Pretty<T> = {
+     [K in keyof T]: T[K];
+ } & {};
+ 
+-type Serialize<T> = T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
++type Serialize<T> = T extends import('./lib/types/route-module.mjs').SerializesTo<infer To> ? To : T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
+     [K in keyof T]: Serialize<T[K]>;
+ } : undefined;
+ type VoidToUndefined<T> = Equal<T, void> extends true ? undefined : T;
+diff --git a/dist/development/route-data-Cq_b5feC.d.ts b/dist/development/route-data-Cq_b5feC.d.ts
+index a44077c379d51d720dc5539ef006d105657d673c..ac555685ba76cc74c6052517fa03ca632e03ba75 100644
+--- a/dist/development/route-data-Cq_b5feC.d.ts
++++ b/dist/development/route-data-Cq_b5feC.d.ts
+@@ -1564,7 +1564,7 @@ type Pretty<T> = {
+     [K in keyof T]: T[K];
+ } & {};
+ 
+-type Serialize<T> = T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
++type Serialize<T> = T extends import('./lib/types/route-module.js').SerializesTo<infer To> ? To : T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
+     [K in keyof T]: Serialize<T[K]>;
+ } : undefined;
+ type VoidToUndefined<T> = Equal<T, void> extends true ? undefined : T;
+diff --git a/dist/production/lib/types/route-module.d.mts b/dist/production/lib/types/route-module.d.mts
+index 65548f5090c95d9a8a34f916306d3b9d6bff4250..bf88cb4f4f1fa1c9576913efc3c9d230a5315de0 100644
+--- a/dist/production/lib/types/route-module.d.mts
++++ b/dist/production/lib/types/route-module.d.mts
+@@ -1,7 +1,9 @@
+ import { ay as LinkDescriptor, av as MetaDescriptor, aM as ServerDataFrom, aN as ClientDataFrom, aO as Func, aP as Equal, aQ as Pretty } from '../../route-data-Cq_b5feC.mjs';
+ import { A as AppLoadContext } from '../../data-CQbyyGzl.mjs';
+ import 'react';
+-
++export type SerializesTo<T> = {
++    $__RR_SerializesTo?: [T];
++};
+ type IsDefined<T> = Equal<T, undefined> extends true ? false : true;
+ type RouteModule = {
+     meta?: Func;
+diff --git a/dist/production/lib/types/route-module.d.ts b/dist/production/lib/types/route-module.d.ts
+index a8b932c982cbf7935cdf5402cb844c118a2b9e79..5f9d3fbb1f79c680b3f3ba5f06caee2268ee34fd 100644
+--- a/dist/production/lib/types/route-module.d.ts
++++ b/dist/production/lib/types/route-module.d.ts
+@@ -1,7 +1,9 @@
+ import { ay as LinkDescriptor, av as MetaDescriptor, aM as ServerDataFrom, aN as ClientDataFrom, aO as Func, aP as Equal, aQ as Pretty } from '../../route-data-Cq_b5feC.js';
+ import { A as AppLoadContext } from '../../data-CQbyyGzl.js';
+ import 'react';
+-
++export type SerializesTo<T> = {
++    $__RR_SerializesTo?: [T];
++};
+ type IsDefined<T> = Equal<T, undefined> extends true ? false : true;
+ type RouteModule = {
+     meta?: Func;
+diff --git a/dist/production/route-data-Cq_b5feC.d.mts b/dist/production/route-data-Cq_b5feC.d.mts
+index a44077c379d51d720dc5539ef006d105657d673c..e5a646b097b82714a739fec8510d13bf09207699 100644
+--- a/dist/production/route-data-Cq_b5feC.d.mts
++++ b/dist/production/route-data-Cq_b5feC.d.mts
+@@ -1564,7 +1564,7 @@ type Pretty<T> = {
+     [K in keyof T]: T[K];
+ } & {};
+ 
+-type Serialize<T> = T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
++type Serialize<T> = T extends import('./lib/types/route-module.mjs').SerializesTo<infer To> ? To : T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
+     [K in keyof T]: Serialize<T[K]>;
+ } : undefined;
+ type VoidToUndefined<T> = Equal<T, void> extends true ? undefined : T;
+diff --git a/dist/production/route-data-Cq_b5feC.d.ts b/dist/production/route-data-Cq_b5feC.d.ts
+index a44077c379d51d720dc5539ef006d105657d673c..ac555685ba76cc74c6052517fa03ca632e03ba75 100644
+--- a/dist/production/route-data-Cq_b5feC.d.ts
++++ b/dist/production/route-data-Cq_b5feC.d.ts
+@@ -1564,7 +1564,7 @@ type Pretty<T> = {
+     [K in keyof T]: T[K];
+ } & {};
+ 
+-type Serialize<T> = T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
++type Serialize<T> = T extends import('./lib/types/route-module.js').SerializesTo<infer To> ? To : T extends Serializable ? T : T extends (...args: any[]) => unknown ? undefined : T extends Promise<infer U> ? Promise<Serialize<U>> : T extends Map<infer K, infer V> ? Map<Serialize<K>, Serialize<V>> : T extends Set<infer U> ? Set<Serialize<U>> : T extends [] ? [] : T extends readonly [infer F, ...infer R] ? [Serialize<F>, ...Serialize<R>] : T extends Array<infer U> ? Array<Serialize<U>> : T extends readonly unknown[] ? readonly Serialize<T[number]>[] : T extends Record<any, any> ? {
+     [K in keyof T]: Serialize<T[K]>;
+ } : undefined;
+ type VoidToUndefined<T> = Equal<T, void> extends true ? undefined : T;
