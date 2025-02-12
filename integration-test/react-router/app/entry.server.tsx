@@ -4,19 +4,28 @@ import type { AppLoadContext, EntryContext } from "react-router";
 import { createReadableStreamFromReadable } from "@react-router/node";
 import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
-import type { RenderToPipeableStreamOptions } from "react-dom/server";
+import type {
+  RenderToPipeableStreamOptions,
+  RenderToReadableStreamOptions,
+} from "react-dom/server";
 import { renderToPipeableStream } from "react-dom/server";
 import { makeClient } from "./apollo";
 import { ApolloProvider } from "@apollo/client/index.js";
 
 export const streamTimeout = 5_000;
+export type RenderOptions = {
+  [K in keyof RenderToReadableStreamOptions &
+    keyof RenderToPipeableStreamOptions]?: RenderToReadableStreamOptions[K];
+};
 
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   routerContext: EntryContext,
-  loadContext: AppLoadContext
+  loadContext: AppLoadContext,
+  // vercel-specific options, originating from `@vercel/react-router/entry.server.js`
+  options?: RenderOptions
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
@@ -32,9 +41,14 @@ export default function handleRequest(
     const client = makeClient(request);
     const { pipe, abort } = renderToPipeableStream(
       <ApolloProvider client={client}>
-        <ServerRouter context={routerContext} url={request.url} />
+        <ServerRouter
+          context={routerContext}
+          url={request.url}
+          nonce={options?.nonce}
+        />
       </ApolloProvider>,
       {
+        ...options,
         [readyOption]() {
           shellRendered = true;
           const body = new PassThrough();
