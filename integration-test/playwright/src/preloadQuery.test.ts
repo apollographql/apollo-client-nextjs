@@ -20,7 +20,7 @@ test.describe("PreloadQuery", () => {
       test(
         "query resolves on the server",
         {
-          tag: ["@nextjs", "@tanstack"],
+          tag: ["@nextjs", "@tanstack", "@react-router"],
         },
         async ({ page, blockRequest }) => {
           await page.goto(`${base}/${path}?errorIn=${otherEnvs}`, {
@@ -39,7 +39,7 @@ test.describe("PreloadQuery", () => {
       test(
         "link chain errors on the server, restarts in the browser",
         {
-          tag: ["@nextjs", "@tanstack"],
+          tag: ["@nextjs", "@tanstack", "@react-router"],
         },
         async ({ page }) => {
           page.allowErrors?.();

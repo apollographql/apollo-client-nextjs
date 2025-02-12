@@ -30,7 +30,7 @@ function RouteComponent() {
   );
 }
 
-export function Child() {
+function Child() {
   const { errorIn } = Route.useSearch();
   const { data } = useSuspenseQuery(QUERY, {
     context: { delay: 1000, ...(errorIn ? { error: errorIn } : {}) },

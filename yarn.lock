@@ -8557,6 +8557,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-router/fs-routes@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "@react-router/fs-routes@npm:7.1.5"
+  dependencies:
+    minimatch: "npm:^9.0.0"
+  peerDependencies:
+    "@react-router/dev": ^7.1.5
+    typescript: ^5.1.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/35f4b42741346941ae32e4a1de9f2304d5a35b685db864e49a8b8f000d54f6b2b20fb4bfb34b5ce7c385b3fc6d6aa709b0baca40b6852ae4d44e89668fd661a9
+  languageName: node
+  linkType: hard
+
 "@react-router/node@npm:7.1.5, @react-router/node@npm:^7.1.5":
   version: 7.1.5
   resolution: "@react-router/node@npm:7.1.5"
@@ -21110,7 +21125,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^9.0.4":
+"minimatch@npm:^9.0.0, minimatch@npm:^9.0.4":
   version: 9.0.5
   resolution: "minimatch@npm:9.0.5"
   dependencies:
@@ -23540,6 +23555,7 @@ __metadata:
     "@apollo/client-integration-react-router": "workspace:^"
     "@integration-test/shared": "workspace:^"
     "@react-router/dev": "npm:^7.1.5"
+    "@react-router/fs-routes": "npm:^7.1.5"
     "@react-router/node": "npm:^7.1.5"
     "@react-router/serve": "npm:^7.1.5"
     "@tailwindcss/vite": "npm:^4.0.0"

@@ -4,14 +4,16 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
+    "dev": "react-router dev --port 3000",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "test": "yarn test:react-router"
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
     "@apollo/client-integration-react-router": "workspace:^",
     "@integration-test/shared": "workspace:^",
+    "@react-router/fs-routes": "^7.1.5",
     "@react-router/node": "^7.1.5",
     "@react-router/serve": "^7.1.5",
     "@vercel/react-router": "^1.0.2",
