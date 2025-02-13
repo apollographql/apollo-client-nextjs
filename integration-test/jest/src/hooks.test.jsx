@@ -6,7 +6,7 @@ import {
   ApolloNextAppProvider,
   ApolloClient,
   resetApolloClientSingletons,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 import { Suspense } from "react";
 import { useQuery } from "@apollo/client";
 

@@ -14,7 +14,7 @@ export default defineConfig((options) => {
     external: [
       "@apollo/client-react-streaming",
       "@apollo/client-react-streaming/manual-transport",
-      "@apollo/experimental-nextjs-app-support",
+      "@apollo/client-integration-nextjs",
       "react",
       "rehackt",
     ],

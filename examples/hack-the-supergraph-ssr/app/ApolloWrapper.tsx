@@ -7,7 +7,7 @@ import {
   InMemoryCache,
   ApolloClient,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
@@ -44,7 +44,7 @@ export function ApolloWrapper({
       const delay =
         typeof window === "undefined"
           ? delayProp
-          : clientCookies.get("apollo-x-custom-delay") ?? delayProp;
+          : (clientCookies.get("apollo-x-custom-delay") ?? delayProp);
       operation.setContext(({ headers = {} }) => {
         return {
           headers: {

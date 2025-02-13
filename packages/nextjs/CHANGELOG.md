@@ -1,4 +1,4 @@
-# @apollo/experimental-nextjs-app-support
+# @apollo/client-integration-nextjs
 
 ## 0.12.0-alpha.0
 

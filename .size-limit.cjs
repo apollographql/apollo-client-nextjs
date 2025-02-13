@@ -1,7 +1,7 @@
 /** @type {import('size-limit').SizeLimitConfig} */
 const checks = [
   {
-    name: "{ ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support' (Browser ESM)",
+    name: "{ ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/client-integration-nextjs' (Browser ESM)",
     path: "packages/experimental-nextjs-app-support/dist/index.browser.js",
     import: "{ ApolloNextAppProvider, ApolloClient, InMemoryCache }",
   },
@@ -36,19 +36,19 @@ const checks = [
     path: "packages/client-react-streaming/dist/manual-transport.ssr.cjs",
   },
   {
-    name: "@apollo/experimental-nextjs-app-support (Browser ESM)",
+    name: "@apollo/client-integration-nextjs (Browser ESM)",
     path: "packages/experimental-nextjs-app-support/dist/index.browser.js",
   },
   {
-    name: "@apollo/experimental-nextjs-app-support (SSR ESM)",
+    name: "@apollo/client-integration-nextjs (SSR ESM)",
     path: "packages/experimental-nextjs-app-support/dist/index.ssr.js",
   },
   {
-    name: "@apollo/experimental-nextjs-app-support (RSC ESM)",
+    name: "@apollo/client-integration-nextjs (RSC ESM)",
     path: "packages/experimental-nextjs-app-support/dist/index.rsc.js",
   },
   {
-    name: "@apollo/experimental-nextjs-app-support/rsc (RSC ESM)",
+    name: "@apollo/client-integration-nextjs/rsc (RSC ESM)",
     path: "packages/experimental-nextjs-app-support/dist/rsc/index.js",
   },
 ];

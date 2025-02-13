@@ -8,7 +8,7 @@ import {
   unwrapQueryRef,
 } from "@apollo/client/react/internal";
 
-import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
+import { TransportedQueryRef } from "@apollo/client-integration-nextjs";
 
 declare global {
   interface Window {

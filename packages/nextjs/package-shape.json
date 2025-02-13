@@ -1,5 +1,5 @@
 {
-  "@apollo/experimental-nextjs-app-support": {
+  "@apollo/client-integration-nextjs": {
     "react-server": [
       "registerApolloClient",
       "DebounceMultipartResponsesLink",
@@ -40,7 +40,7 @@
       "built_for_ssr"
     ]
   },
-  "@apollo/experimental-nextjs-app-support/ssr": {
+  "@apollo/client-integration-nextjs/ssr": {
     "react-server": [
       "DebounceMultipartResponsesLink",
       "RemoveMultipartDirectivesLink",
@@ -93,7 +93,7 @@
       "built_for_ssr"
     ]
   },
-  "@apollo/experimental-nextjs-app-support/rsc": {
+  "@apollo/client-integration-nextjs/rsc": {
     "react-server": ["registerApolloClient", "built_for_rsc"],
     "browser": ["built_for_other"],
     "node": ["built_for_other"],

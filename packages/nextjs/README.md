@@ -36,7 +36,7 @@ This package provides the tools necessary to execute your GraphQL queries on the
 This package has a peer dependency on the latest `@apollo/client`, so you can install both this package and that Apollo Client version via
 
 ```sh
-npm install @apollo/client@latest @apollo/experimental-nextjs-app-support
+npm install @apollo/client@latest @apollo/client-integration-nextjs
 ```
 
 ## Usage
@@ -55,7 +55,7 @@ import {
   registerApolloClient,
   ApolloClient,
   InMemoryCache,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
@@ -96,7 +96,7 @@ import {
   ApolloNextAppProvider,
   ApolloClient,
   InMemoryCache,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 
 // have a function to create a client for you
 function makeClient() {
@@ -112,9 +112,9 @@ function makeClient() {
     // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
   });
 
-  // use the `ApolloClient` from "@apollo/experimental-nextjs-app-support"
+  // use the `ApolloClient` from "@apollo/client-integration-nextjs"
   return new ApolloClient({
-    // use the `InMemoryCache` from "@apollo/experimental-nextjs-app-support"
+    // use the `InMemoryCache` from "@apollo/client-integration-nextjs"
     cache: new InMemoryCache(),
     link: httpLink,
   });
@@ -249,7 +249,7 @@ This package uses some singleton instances on the Browser side - if you are writ
 For that, you can use the `resetApolloClientSingletons` helper:
 
 ```ts
-import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
+import { resetApolloClientSingletons } from "@apollo/client-integration-nextjs";
 
 afterEach(resetApolloClientSingletons);
 ```

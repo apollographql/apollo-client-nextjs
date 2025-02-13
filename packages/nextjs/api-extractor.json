@@ -5,9 +5,9 @@
   "bundledPackages": [
     "@apollo/client-react-streaming",
     "@apollo/client-react-streaming/manual-transport",
-    "@apollo/experimental-nextjs-app-support",
-    "@apollo/experimental-nextjs-app-support/ssr",
-    "@apollo/experimental-nextjs-app-support/rsc"
+    "@apollo/client-integration-nextjs",
+    "@apollo/client-integration-nextjs/ssr",
+    "@apollo/client-integration-nextjs/rsc"
   ],
   "compiler": {
     "tsconfigFilePath": "./tsconfig.json",

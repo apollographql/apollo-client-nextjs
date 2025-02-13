@@ -7,7 +7,7 @@ import {
   RemoveMultipartDirectivesLink as _RemoveMultipartDirectivesLink,
   ApolloNextAppProvider as _ApolloNextAppProvider,
   type TransportedQueryRef as _TransportedQueryRef,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 import {
   useBackgroundQuery as _useBackgroundQuery,
   useFragment as _useFragment,
@@ -19,81 +19,81 @@ import {
 
 /**
  * @deprecated
- * This import has been renamed to `InMemoryCache` and moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has been renamed to `InMemoryCache` and moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { InMemoryCache } from "@apollo/experimental-nextjs-app-support";
+ * import { InMemoryCache } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const NextSSRInMemoryCache = InMemoryCache;
 /**
  * @deprecated
- * This import has been renamed to `ApolloClient` and moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has been renamed to `ApolloClient` and moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { ApolloClient } from "@apollo/experimental-nextjs-app-support";
+ * import { ApolloClient } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const NextSSRApolloClient = ApolloClient;
 /**
  * @deprecated
- * This import has been renamed to `resetApolloClientSingletons` and moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has been renamed to `resetApolloClientSingletons` and moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
+ * import { resetApolloClientSingletons } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const resetNextSSRApolloSingletons = resetApolloClientSingletons;
 /**
  * @deprecated
- * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { SSRMultipartLink } from "@apollo/experimental-nextjs-app-support";
+ * import { SSRMultipartLink } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const SSRMultipartLink = _SSRMultipartLink;
 /**
  * @deprecated
- * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { DebounceMultipartResponsesLink } from "@apollo/experimental-nextjs-app-support";
+ * import { DebounceMultipartResponsesLink } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const DebounceMultipartResponsesLink = _DebounceMultipartResponsesLink;
 /**
  * @deprecated
- * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { RemoveMultipartDirectivesLink } from "@apollo/experimental-nextjs-app-support";
+ * import { RemoveMultipartDirectivesLink } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const RemoveMultipartDirectivesLink = _RemoveMultipartDirectivesLink;
 /**
  * @deprecated
- * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import { ApolloNextAppProvider } from "@apollo/experimental-nextjs-app-support";
+ * import { ApolloNextAppProvider } from "@apollo/client-integration-nextjs";
  * ```
  */
 export const ApolloNextAppProvider = _ApolloNextAppProvider;
 /**
  * @deprecated
- * This import has moved to `"@apollo/experimental-nextjs-app-support"`.
+ * This import has moved to `"@apollo/client-integration-nextjs"`.
  *
  * Please update your import to
  * ```ts
- * import type { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
+ * import type { TransportedQueryRef } from "@apollo/client-integration-nextjs";
  * ```
  */
 export type TransportedQueryRef<

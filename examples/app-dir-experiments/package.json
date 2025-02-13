@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "yarn workspace @apollo/experimental-nextjs-app-support run build",
+    "prebuild": "yarn workspace @apollo/client-integration-nextjs run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.12.6",
-    "@apollo/experimental-nextjs-app-support": "workspace:^",
+    "@apollo/client-integration-nextjs": "workspace:^",
     "@apollo/server": "^4.9.5",
     "@as-integrations/next": "^3.0.0",
     "@types/node": "20.12.11",
