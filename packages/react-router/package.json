@@ -79,7 +79,7 @@
     "publint": "0.2.7",
     "react": "^19.0.0",
     "react-dom": "*",
-    "react-router": "patch:react-router@npm%3A7.0.2#~/.yarn/patches/react-router-npm-7.0.2-b96f2bd13c.patch",
+    "react-router": "^7.3.0",
     "rimraf": "5.0.5",
     "tsup": "8.0.2",
     "typescript": "5.4.5",
@@ -88,7 +88,7 @@
   "peerDependencies": {
     "@apollo/client": ">=3.13.0-rc.0",
     "react": "^19",
-    "react-router": "^7.0.2"
+    "react-router": "^7.3.0"
   },
   "dependencies": {
     "@apollo/client-react-streaming": "0.12.0-alpha.0",

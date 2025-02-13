@@ -13,12 +13,12 @@
     "@apollo/client": "^3.11.10",
     "@apollo/client-integration-react-router": "workspace:^",
     "@integration-test/shared": "workspace:^",
-    "@react-router/node": "^7.0.1",
-    "@react-router/serve": "^7.0.1",
+    "@react-router/node": "^7.3.0",
+    "@react-router/serve": "^7.3.0",
     "isbot": "^5.1.17",
     "react": "^19",
     "react-dom": "^19",
-    "react-router": "7.0.2"
+    "react-router": "^7.3.0"
   },
   "devDependencies": {
     "@react-router/dev": "^7.0.1",

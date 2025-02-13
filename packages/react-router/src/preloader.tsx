@@ -13,13 +13,12 @@ import {
 } from "@apollo/client-react-streaming";
 import type { Promiscade } from "promiscade";
 import { promiscadeToReadableStream, streamToPromiscade } from "promiscade";
-// still requires a patch, waiting for https://github.com/remix-run/react-router/pull/12264
-import type { SerializesTo } from "react-router/route-module";
+import type { unstable_SerializesTo } from "react-router";
 import type { JsonString } from "@apollo/client-react-streaming/stream-utils";
 
 type MarkedForSerialization<T> =
   T extends TransportedQueryRef<infer Data, infer Variables>
-    ? SerializesTo<QueryRef<Data, Variables>>
+    ? unstable_SerializesTo<QueryRef<Data, Variables>>
     : { [K in keyof T]: MarkedForSerialization<T[K]> };
 
 type ApolloLoader = <LoaderArgs extends CreateServerLoaderArgs<any>>() => <
