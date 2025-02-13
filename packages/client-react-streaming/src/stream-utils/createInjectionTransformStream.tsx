@@ -72,7 +72,9 @@ export function createInjectionTransformStream(): {
 
   let headInserted = false;
   let currentlyStreaming = false;
+  let tailOfLastChunk = "";
   const textDecoder = new TextDecoder();
+  const textEncoder = new TextEncoder();
 
   const transformStream = new TransformStream({
     async transform(chunk, controller) {
@@ -83,25 +85,26 @@ export function createInjectionTransformStream(): {
       }
 
       if (!headInserted) {
-        const content = textDecoder.decode(chunk, { stream: true });
+        const content = tailOfLastChunk + textDecoder.decode(chunk, { stream: true });
         const index = content.indexOf("</head>");
         if (index !== -1) {
           const insertedHeadContent =
             content.slice(0, index) +
             (await renderInjectedHtml()) +
             content.slice(index);
-          controller.enqueue(new TextEncoder().encode(insertedHeadContent));
+          controller.enqueue(textEncoder.encode(insertedHeadContent));
           currentlyStreaming = true;
           setImmediate(() => {
             currentlyStreaming = false;
           });
           headInserted = true;
         } else {
-          controller.enqueue(chunk);
+          tailOfLastChunk = content.slice(-"</head>".length);
+          controller.enqueue(textEncoder.encode(content.slice(0, -"</head>".length)));
         }
       } else {
         controller.enqueue(
-          new TextEncoder().encode(await renderInjectedHtml())
+          textEncoder.encode(await renderInjectedHtml())
         );
         controller.enqueue(chunk);
         currentlyStreaming = true;
