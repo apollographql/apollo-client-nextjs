@@ -162,7 +162,7 @@ const UNINITIALIZED = {};
  *
  * @example
  * For usage examples, see the implementation of the `@apollo/client-integration-nextjs`
- * [`ApolloNextAppProvider`](https://github.com/apollographql/apollo-client-nextjs/blob/c0715a05cf8ca29a3cbb9ce294cdcbc5ce251b2e/packages/experimental-nextjs-app-support/src/ApolloNextAppProvider.ts)
+ * [`ApolloNextAppProvider`](https://github.com/apollographql/apollo-client-nextjs/blob/c0715a05cf8ca29a3cbb9ce294cdcbc5ce251b2e/packages/nextjs/src/ApolloNextAppProvider.ts)
  *
  * ```tsx
  * export const ApolloNextAppProvider = WrapApolloProvider(

@@ -2,7 +2,7 @@
 const checks = [
   {
     name: "{ ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/client-integration-nextjs' (Browser ESM)",
-    path: "packages/experimental-nextjs-app-support/dist/index.browser.js",
+    path: "packages/nextjs/dist/index.browser.js",
     import: "{ ApolloNextAppProvider, ApolloClient, InMemoryCache }",
   },
   {
@@ -37,19 +37,19 @@ const checks = [
   },
   {
     name: "@apollo/client-integration-nextjs (Browser ESM)",
-    path: "packages/experimental-nextjs-app-support/dist/index.browser.js",
+    path: "packages/nextjs/dist/index.browser.js",
   },
   {
     name: "@apollo/client-integration-nextjs (SSR ESM)",
-    path: "packages/experimental-nextjs-app-support/dist/index.ssr.js",
+    path: "packages/nextjs/dist/index.ssr.js",
   },
   {
     name: "@apollo/client-integration-nextjs (RSC ESM)",
-    path: "packages/experimental-nextjs-app-support/dist/index.rsc.js",
+    path: "packages/nextjs/dist/index.rsc.js",
   },
   {
     name: "@apollo/client-integration-nextjs/rsc (RSC ESM)",
-    path: "packages/experimental-nextjs-app-support/dist/rsc/index.js",
+    path: "packages/nextjs/dist/rsc/index.js",
   },
 ];
 

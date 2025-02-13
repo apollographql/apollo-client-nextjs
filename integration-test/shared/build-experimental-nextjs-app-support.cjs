@@ -14,10 +14,7 @@ $.stdio = "inherit";
 
 (async function run() {
   const monorepoRoot = join(process.env.PROJECT_CWD, "..");
-  const archive = join(
-    monorepoRoot,
-    "packages/experimental-nextjs-app-support/archive.tgz"
-  );
+  const archive = join(monorepoRoot, "packages/nextjs/archive.tgz");
 
   // give the main build script a chance to kick in
   await sleep(1000);
