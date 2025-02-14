@@ -230,7 +230,7 @@ __metadata:
     typescript: "npm:^5.7.3"
     wait-on: "npm:8.0.2"
   peerDependencies:
-    "@apollo/client": ">=3.13.0-rc.0"
+    "@apollo/client": ^3.13.0
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
   languageName: unknown
