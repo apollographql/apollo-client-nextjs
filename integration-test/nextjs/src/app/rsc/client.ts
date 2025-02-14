@@ -6,8 +6,8 @@ import {
 
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { setVerbosity } from "ts-invariant";
-import { delayLink } from "@/shared/delayLink";
-import { errorLink } from "@/shared/errorLink";
+import { delayLink } from "@integration-test/shared/delayLink";
+import { errorLink } from "@integration-test/shared/errorLink";
 
 import { schema } from "@integration-test/shared/schema";
 import { IncrementalSchemaLink } from "@integration-test/shared/IncrementalSchemaLink";

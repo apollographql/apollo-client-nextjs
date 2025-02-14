@@ -1,0 +1,15 @@
+{
+  "name": "@integration-test/playwright",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "yarn playwright test",
+    "test:nextjs": "TEST_PROJECT_DIR=../nextjs yarn playwright test --grep=@nextjs",
+    "test:tanstack": "TEST_PROJECT_DIR=../tanstack-start yarn playwright test --grep=@tanstack",
+    "test:react-router": "TEST_PROJECT_DIR=../react-router yarn playwright test --grep=@react-router"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "typescript": "5.1.3"
+  }
+}
