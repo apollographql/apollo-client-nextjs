@@ -1,5 +1,11 @@
 # @apollo/client-react-streaming
 
+## 0.11.9
+
+### Patch Changes
+
+- aaf041c: `createInjectionTransformStream`: fix handling if `</head>` is chopped up into multiple chunks
+
 ## 0.11.8
 
 ### Patch Changes
