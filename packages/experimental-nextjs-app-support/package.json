@@ -1,0 +1,103 @@
+{
+  "name": "@apollo/experimental-nextjs-app-support",
+  "version": "0.12.0-alpha.0",
+  "repository": {
+    "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
+  },
+  "keywords": [
+    "apollo",
+    "nextjs",
+    "apollo-client",
+    "graphql",
+    "ssr",
+    "rsc",
+    "app-router",
+    "app"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./redirect/index.d.cts",
+        "default": "./redirect/index.cjs"
+      },
+      "import": {
+        "types": "./redirect/index.d.ts",
+        "default": "./redirect/index.js"
+      }
+    },
+    "./rsc": {
+      "require": {
+        "types": "./redirect/index.d.cts",
+        "react-server": "./redirect/index.cjs",
+        "default": "./redirect/empty.cjs"
+      },
+      "import": {
+        "types": "./redirect/index.d.ts",
+        "react-server": "./redirect/index.js",
+        "default": "./redirect/empty.js"
+      }
+    },
+    "./ssr": {
+      "require": {
+        "types": "./redirect/index.d.cts",
+        "default": "./redirect/index.cjs"
+      },
+      "import": {
+        "types": "./redirect/index.d.ts",
+        "default": "./redirect/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "ssr": [
+        "./redirect/index.d.ts"
+      ],
+      "rsc": [
+        "./redirect/index.d.ts"
+      ]
+    }
+  },
+  "typings": "./redirect/index.d.ts",
+  "author": "packages@apollographql.com",
+  "license": "MIT",
+  "files": [
+    "redirect/",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "true",
+    "test": "true",
+    "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
+    "test-bundle:attw": "attw --pack .",
+    "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
+    "test-bundle:publint": "publint --strict",
+    "test-bundle:shape": "yarn workspace monorepo verify-package-shape $PWD/package-shape.json",
+    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.12.6",
+    "@arethetypeswrong/cli": "0.15.3",
+    "@tsconfig/recommended": "1.0.6",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "eslint": "8.57.0",
+    "graphql": "*",
+    "publint": "0.2.7",
+    "react": "*",
+    "react-dom": "*",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "@apollo/client": ">=3.13.0-rc.0",
+    "next": "^13.4.1 || ^14.0.0 || ^15.0.0-rc.0",
+    "react": "^18 || >=19.0.0-rc"
+  },
+  "dependencies": {
+    "@apollo/client-integration-nextjs": "0.12.0-alpha.0"
+  }
+}

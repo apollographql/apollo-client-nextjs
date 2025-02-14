@@ -1,0 +1,98 @@
+{
+  "@apollo/experimental-nextjs-app-support": {
+    "react-server": [
+      "registerApolloClient",
+      "DebounceMultipartResponsesLink",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "built_for_rsc"
+    ],
+    "browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_browser"
+    ],
+    "node": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_ssr"
+    ],
+    "edge-light,worker,browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_ssr"
+    ]
+  },
+  "@apollo/experimental-nextjs-app-support/ssr": {
+    "react-server": [
+      "registerApolloClient",
+      "DebounceMultipartResponsesLink",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "built_for_rsc"
+    ],
+    "browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_browser"
+    ],
+    "node": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_ssr"
+    ],
+    "edge-light,worker,browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_ssr"
+    ]
+  },
+  "@apollo/experimental-nextjs-app-support/rsc": {
+    "react-server": [
+      "registerApolloClient",
+      "DebounceMultipartResponsesLink",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "built_for_rsc"
+    ],
+    "browser": ["built_for_other"],
+    "node": ["built_for_other"],
+    "edge-light,worker,browser": ["built_for_other"]
+  }
+}

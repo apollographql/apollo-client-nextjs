@@ -1,0 +1,22 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "esnext",
+    "rootDir": "src",
+    "outDir": "dist",
+    "declaration": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "declarationMap": true,
+    "types": [
+      "react/canary",
+      "node"
+    ],
+    "esModuleInterop": true,
+  },
+  "include": [
+    "redirect"
+  ]
+}
