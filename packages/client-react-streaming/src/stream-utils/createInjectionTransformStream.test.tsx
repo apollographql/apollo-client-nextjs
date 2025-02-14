@@ -1,5 +1,4 @@
 import { test } from "node:test";
-import { createInjectionTransformStream } from "./createInjectionTransformStream.js";
 import {
   ReadableStream,
   type TransformStream,
@@ -9,6 +8,13 @@ import * as assert from "node:assert";
 import { text } from "node:stream/consumers";
 import React from "react";
 import { scheduler } from "node:timers/promises";
+import { runInConditions } from "@internal/test-utils/runInConditions.js";
+
+runInConditions("node");
+
+const { createInjectionTransformStream } = await import(
+  "./createInjectionTransformStream.js"
+);
 
 function html(strings: TemplateStringsArray) {
   return strings[0]
