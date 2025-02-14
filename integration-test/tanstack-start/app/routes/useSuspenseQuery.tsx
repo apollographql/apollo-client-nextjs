@@ -1,58 +1,49 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DEFERRED_QUERY } from "@integration-test/shared/queries";
-import { useApolloClient, useSuspenseQuery } from "@apollo/client/index.js";
-import { useTransition } from "react";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+
+import { QUERY } from "@integration-test/shared/queries";
+import { DefaultContext, useSuspenseQuery } from "@apollo/client/index.js";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/useSuspenseQuery")({
   component: RouteComponent,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      errorLevel: search.errorLevel as DefaultContext["error"],
+    };
+  },
 });
 
 function RouteComponent() {
-  const [refetching, startTransition] = useTransition();
-  const client = useApolloClient();
-  const { data, refetch } = useSuspenseQuery(DEFERRED_QUERY, {
-    variables: { delayDeferred: 1000 },
-  });
+  const { errorLevel } = Route.useSearch();
+  return (
+    <Suspense fallback={"loading"}>
+      <ErrorBoundary FallbackComponent={FallbackComponent}>
+        <Component errorLevel={errorLevel} />
+      </ErrorBoundary>
+    </Suspense>
+  );
+}
 
+function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <>
-      <ul>
-        {data.products.map(({ id, title, rating }) => (
-          <li key={id}>
-            {title}
-            <br />
-            Rating:{" "}
-            <div style={{ display: "inline-block", verticalAlign: "text-top" }}>
-              {rating?.value || ""}
-              <br />
-              {rating ? `Queried in ${rating.env} environment` : "loading..."}
-            </div>
-          </li>
-        ))}
-      </ul>
-      <p>Queried in {data.env} environment</p>
-      <button
-        disabled={refetching}
-        onClick={() => {
-          client.cache.batch({
-            update(cache) {
-              for (const product of data.products) {
-                cache.modify({
-                  id: cache.identify(product),
-                  fields: {
-                    rating: () => null,
-                  },
-                });
-              }
-            },
-          });
-          startTransition(() => {
-            refetch();
-          });
-        }}
-      >
-        {refetching ? "refetching..." : "refetch"}
-      </button>
+      <p>{error.message}</p>
     </>
+  );
+}
+
+function Component({ errorLevel }: { errorLevel: DefaultContext["error"] }) {
+  const { data } = useSuspenseQuery(QUERY, {
+    context: { delay: 1000, ...(errorLevel ? { error: errorLevel } : {}) },
+  });
+  globalThis.hydrationFinished?.();
+
+  return (
+    <ul>
+      {data.products.map(({ id, title }) => (
+        <li key={id}>{title}</li>
+      ))}
+    </ul>
   );
 }

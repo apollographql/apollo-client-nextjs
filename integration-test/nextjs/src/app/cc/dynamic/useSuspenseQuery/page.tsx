@@ -2,6 +2,9 @@
 
 import type { TypedDocumentNode } from "@apollo/client";
 import { useSuspenseQuery, gql } from "@apollo/client";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 const QUERY: TypedDocumentNode<{
   products: {
@@ -20,8 +23,28 @@ const QUERY: TypedDocumentNode<{
 export const dynamic = "force-dynamic";
 
 export default function Page() {
+  const searchParams = useSearchParams();
+  const errorLevel = searchParams.get("errorLevel") as "ssr" | "always" | null;
+  return (
+    <Suspense fallback={"loading"}>
+      <ErrorBoundary FallbackComponent={FallbackComponent}>
+        <Component errorLevel={errorLevel} />
+      </ErrorBoundary>
+    </Suspense>
+  );
+}
+
+function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
+  return (
+    <>
+      <p>{error.message}</p>
+    </>
+  );
+}
+
+function Component({ errorLevel }: { errorLevel: "ssr" | "always" | null }) {
   const { data } = useSuspenseQuery(QUERY, {
-    context: { delay: 1000 },
+    context: { delay: 1000, ...(errorLevel ? { error: errorLevel } : {}) },
   });
   globalThis.hydrationFinished?.();
 

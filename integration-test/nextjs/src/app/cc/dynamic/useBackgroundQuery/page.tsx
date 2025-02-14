@@ -5,7 +5,7 @@ import {
   useBackgroundQuery,
   useReadQuery,
   gql,
-  QueryReference,
+  QueryRef,
 } from "@apollo/client";
 import { Suspense } from "react";
 
@@ -38,7 +38,7 @@ export default function Page() {
   );
 }
 
-function DisplayData({ queryRef }: { queryRef: QueryReference<Data> }) {
+function DisplayData({ queryRef }: { queryRef: QueryRef<Data> }) {
   const { data } = useReadQuery(queryRef);
   globalThis.hydrationFinished?.();
   return (

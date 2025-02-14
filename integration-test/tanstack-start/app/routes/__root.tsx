@@ -1,7 +1,7 @@
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Link, Outlet } from "@tanstack/react-router";
 import { Meta, Scripts } from "@tanstack/start";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import { type ApolloClientRouterContext } from "@apollo/client-integration-tanstack-start";
 import { createRootRouteWithContext } from "@tanstack/react-router";
@@ -33,6 +33,7 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const [devToolsOpen, setDevToolsOpen] = useState(false);
   return (
     <html>
       <head>
@@ -62,13 +63,17 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             activeProps={{
               className: "font-bold",
             }}
+            search={{ errorLevel: undefined }}
           >
             useSuspenseQuery
           </Link>{" "}
+          <button onClick={() => setDevToolsOpen((open) => !open)}>
+            Toggle DevTools
+          </button>
         </div>
         <hr />
         {children}
-        <TanStackRouterDevtools position="bottom-right" />
+        {devToolsOpen && <TanStackRouterDevtools position="bottom-right" />}
         <Scripts />
       </body>
     </html>

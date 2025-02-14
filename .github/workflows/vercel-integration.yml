@@ -10,9 +10,14 @@ jobs:
         run: echo 'Deployment status is ${{ toJSON(github.event.deployment_status) }}'
 
   run-next-e2e:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – apollo__experimental-nextjs-app-support'
+    if: |
+      github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && (
+        github.event.deployment_status.environment == 'Preview – apollo__experimental-nextjs-app-support' ||
+        github.event.deployment_status.environment == 'Preview – apollo__client-integration-react-router' ||
+        github.event.deployment_status.environment == 'Preview – apollo__client-integration-tanstack-start'
+      )
     runs-on: ubuntu-latest
-    name: Run Playwright tests against Vercel deployment
+    name: Run Playwright tests against Vercel deployment ${{ github.event.deployment_status.environment }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v4
@@ -39,7 +44,20 @@ jobs:
       - run: npx playwright install-deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
-      - name: "Run Playwright tests against Vercel deployment"
+      - name: "Run Playwright tests against Vercel deployment - Next.js"
+        if: github.event.deployment_status.environment == 'Preview – apollo__experimental-nextjs-app-support'
         run: yarn workspace @integration-test/nextjs run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+        env:
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
+
+      - name: "Run Playwright tests against Vercel deployment - TanStack Start"
+        if: github.event.deployment_status.environment == 'Preview – apollo__client-integration-tanstack-start'
+        run: yarn workspace @integration-test/tanstack-start run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+        env:
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
+
+      - name: "Run Playwright tests against Vercel deployment - React Router"
+        if: github.event.deployment_status.environment == 'Preview – apollo__client-integration-react-router'
+        run: yarn workspace @integration-test/react-router run test | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}

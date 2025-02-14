@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi dev",
     "build": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "test": "yarn test:tanstack"
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
@@ -17,6 +18,7 @@
     "graphql": "^16.10.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-error-boundary": "^5.0.0",
     "vinxi": "^0.5.1"
   },
   "devDependencies": {
