@@ -102,6 +102,3 @@ function RouteComponent() {
   return <div> do something with `data` here </div>;
 }
 ```
-
-> [!WARNING]
-> This approach only works if you are not using `@defer` in your queries - if you use `@defer`, you need to use the `loader` approach described above.

@@ -262,7 +262,7 @@ __metadata:
     typescript: "npm:5.4.5"
     wait-on: "npm:8.0.2"
   peerDependencies:
-    "@apollo/client": ">=3.13.0-rc.0"
+    "@apollo/client": ^3.13.0
     react: ^19
     react-router: ^7.0.2
   languageName: unknown
@@ -298,7 +298,7 @@ __metadata:
     typescript: "npm:5.4.5"
     wait-on: "npm:8.0.2"
   peerDependencies:
-    "@apollo/client": ">=3.13.0-rc.0"
+    "@apollo/client": ^3.13.0
     "@tanstack/react-router": ^1.99.6
     "@tanstack/start": ^1.99.4
     graphql: ^16 || >=17.0.0-alpha.2
@@ -340,16 +340,16 @@ __metadata:
     typescript: "npm:^5.7.3"
     zen-observable-ts: "npm:1.1.0"
   peerDependencies:
-    "@apollo/client": ">=3.13.0-rc.0"
+    "@apollo/client": ^3.13.0
     graphql: ^16 || >=17.0.0-alpha.2
     react: ^18 || >=19.0.0-rc
     react-dom: ^18 || >=19.0.0-rc
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:3.13.0-rc.0":
-  version: 3.13.0-rc.0
-  resolution: "@apollo/client@npm:3.13.0-rc.0"
+"@apollo/client@npm:^3.11.10, @apollo/client@npm:^3.12.4, @apollo/client@npm:^3.12.6":
+  version: 3.13.0
+  resolution: "@apollo/client@npm:3.13.0"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -379,7 +379,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/7ad17426c27f18cb0baf8de856c8d989c43f154287bf94ec306e394106eb1e36745878b9bef96715dcfa51c0a9180789bb910b8eea9d404dd8899e04a876dd4c
+  checksum: 10/396715aae8b7d07f7b32443e6442e2a6c7c6ac4ab3682b8820c4544c96ba2e07bc9502e41d5b5dcf9d24c255556a1abb2baa7029b88a656819b139a2b1eea355
   languageName: node
   linkType: hard
 
@@ -399,7 +399,7 @@ __metadata:
     react-dom: "npm:*"
     typescript: "npm:^5.7.3"
   peerDependencies:
-    "@apollo/client": ">=3.13.0-rc.0"
+    "@apollo/client": ^3.13.0
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
     react: ^18 || >=19.0.0-rc
   languageName: unknown
