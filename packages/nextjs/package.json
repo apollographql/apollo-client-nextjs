@@ -48,45 +48,7 @@
         "node": "./dist/index.ssr.js"
       }
     },
-    "./rsc": {
-      "require": {
-        "types": "./dist/rsc/index.d.cts",
-        "react-server": "./dist/rsc/index.cjs",
-        "default": "./dist/empty.cjs"
-      },
-      "import": {
-        "types": "./dist/rsc/index.d.ts",
-        "react-server": "./dist/rsc/index.js",
-        "default": "./dist/empty.js"
-      }
-    },
-    "./ssr": {
-      "require": {
-        "types": "./dist/ssr/index.ssr.d.cts",
-        "react-server": "./dist/ssr/index.rsc.cjs",
-        "edge-light": "./dist/ssr/index.ssr.cjs",
-        "browser": "./dist/ssr/index.browser.cjs",
-        "node": "./dist/ssr/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/ssr/index.ssr.d.ts",
-        "react-server": "./dist/ssr/index.rsc.js",
-        "edge-light": "./dist/ssr/index.ssr.js",
-        "browser": "./dist/ssr/index.browser.js",
-        "node": "./dist/ssr/index.ssr.js"
-      }
-    },
     "./package.json": "./package.json"
-  },
-  "typesVersions": {
-    "*": {
-      "ssr": [
-        "./dist/ssr/index.ssr.d.ts"
-      ],
-      "rsc": [
-        "./dist/rsc/index.d.ts"
-      ]
-    }
   },
   "typings": "./dist/combined.d.ts",
   "author": "packages@apollographql.com",
