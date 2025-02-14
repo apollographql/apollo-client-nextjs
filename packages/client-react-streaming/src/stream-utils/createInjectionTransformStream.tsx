@@ -75,6 +75,11 @@ export function createInjectionTransformStream(): {
   let tailOfLastChunk = "";
   const textDecoder = new TextDecoder();
   const textEncoder = new TextEncoder();
+  const HEAD_END = "</head>";
+  // while the head has not fully been inserted, always move the last few
+  // bytes of a chunk into the next chunk, so we can ensure that `</head>`
+  // is not chopped into e.g. `</he` and `ad>`.
+  const KEEP_BYTES = HEAD_END.length;
 
   const transformStream = new TransformStream({
     async transform(chunk, controller) {
@@ -85,8 +90,9 @@ export function createInjectionTransformStream(): {
       }
 
       if (!headInserted) {
-        const content = tailOfLastChunk + textDecoder.decode(chunk, { stream: true });
-        const index = content.indexOf("</head>");
+        const content =
+          tailOfLastChunk + textDecoder.decode(chunk, { stream: true });
+        const index = content.indexOf(HEAD_END);
         if (index !== -1) {
           const insertedHeadContent =
             content.slice(0, index) +
@@ -99,13 +105,11 @@ export function createInjectionTransformStream(): {
           });
           headInserted = true;
         } else {
-          tailOfLastChunk = content.slice(-"</head>".length);
-          controller.enqueue(textEncoder.encode(content.slice(0, -"</head>".length)));
+          tailOfLastChunk = content.slice(-KEEP_BYTES);
+          controller.enqueue(textEncoder.encode(content.slice(0, -KEEP_BYTES)));
         }
       } else {
-        controller.enqueue(
-          textEncoder.encode(await renderInjectedHtml())
-        );
+        controller.enqueue(textEncoder.encode(await renderInjectedHtml()));
         controller.enqueue(chunk);
         currentlyStreaming = true;
         setImmediate(() => {
