@@ -268,7 +268,9 @@ __metadata:
     "@apollo/client": ">=3.13.0-rc.0"
     "@tanstack/react-router": ^1.99.6
     "@tanstack/start": ^1.99.4
+    graphql: ^16 || >=17.0.0-alpha.2
     react: ^19
+    react-dom: ^19
   languageName: unknown
   linkType: soft
 
