@@ -66,7 +66,7 @@ jobs:
           cache: "yarn"
       - run: yarn install --immutable --mode=skip-build
       - run: yarn workspaces foreach --all --include "@apollo/*" add -D -P @apollo/client@${{ matrix.version }}
-      - run: yarn workspaces foreach --all --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
+      - run: yarn workspaces foreach --all -t --include "@apollo/*" run test-bundle | tee $GITHUB_STEP_SUMMARY; exit ${PIPESTATUS[0]}
   tests_playwright:
     name: Integration Tests
     needs: matrix
