@@ -28,24 +28,24 @@
     },
     "./rsc": {
       "require": {
-        "types": "./redirect/index.d.cts",
-        "react-server": "./redirect/index.cjs",
+        "types": "./redirect/rsc.d.cts",
+        "react-server": "./redirect/rsc.cjs",
         "default": "./redirect/empty.cjs"
       },
       "import": {
-        "types": "./redirect/index.d.ts",
-        "react-server": "./redirect/index.js",
+        "types": "./redirect/rsc.d.ts",
+        "react-server": "./redirect/rsc.js",
         "default": "./redirect/empty.js"
       }
     },
     "./ssr": {
       "require": {
-        "types": "./redirect/index.d.cts",
-        "default": "./redirect/index.cjs"
+        "types": "./redirect/ssr.d.cts",
+        "default": "./redirect/ssr.cjs"
       },
       "import": {
-        "types": "./redirect/index.d.ts",
-        "default": "./redirect/index.js"
+        "types": "./redirect/ssr.d.ts",
+        "default": "./redirect/ssr.js"
       }
     },
     "./package.json": "./package.json"
