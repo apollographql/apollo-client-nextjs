@@ -53,10 +53,10 @@
   "typesVersions": {
     "*": {
       "ssr": [
-        "./redirect/index.d.ts"
+        "./redirect/ssr.d.ts"
       ],
       "rsc": [
-        "./redirect/index.d.ts"
+        "./redirect/rsc.d.ts"
       ]
     }
   },
