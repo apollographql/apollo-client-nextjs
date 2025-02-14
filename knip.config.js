@@ -19,6 +19,9 @@ const config = {
       project: ["**/*.{ts,tsx}"],
       ignoreDependencies: ["tsx"],
     },
+    "packages/experimental-nextjs-app-support": {
+      ignoreDependencies: ["graphql", "react-dom"],
+    },
   },
   ignore: [
     "examples/**",

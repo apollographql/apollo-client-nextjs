@@ -85,7 +85,6 @@
     "@tsconfig/recommended": "1.0.6",
     "@types/react": "*",
     "@types/react-dom": "*",
-    "eslint": "8.57.0",
     "graphql": "*",
     "publint": "0.2.7",
     "react": "*",

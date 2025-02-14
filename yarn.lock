@@ -393,7 +393,6 @@ __metadata:
     "@tsconfig/recommended": "npm:1.0.6"
     "@types/react": "npm:*"
     "@types/react-dom": "npm:*"
-    eslint: "npm:8.57.0"
     graphql: "npm:*"
     publint: "npm:0.2.7"
     react: "npm:*"
