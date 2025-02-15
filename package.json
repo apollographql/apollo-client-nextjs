@@ -23,7 +23,7 @@
     "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build && cd integration-test && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install"
   },
   "resolutions": {
-    "@microsoft/api-documenter": "7.24.1"
+    "@microsoft/api-documenter": "7.26.8"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "7.24.3",
