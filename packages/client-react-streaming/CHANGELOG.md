@@ -12,6 +12,12 @@
 - 9a8c872: Start an alpha branch
 - 563db9b: add support for `useSuspenseFragment`
 
+## 0.11.9
+
+### Patch Changes
+
+- aaf041c: `createInjectionTransformStream`: fix handling if `</head>` is chopped up into multiple chunks
+
 ## 0.11.8
 
 ### Patch Changes

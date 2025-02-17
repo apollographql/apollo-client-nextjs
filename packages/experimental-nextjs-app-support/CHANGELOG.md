@@ -10,6 +10,13 @@
 - Updated dependencies [563db9b]
   - @apollo/client-react-streaming@0.12.0-alpha.0
 
+## 0.11.9
+
+### Patch Changes
+
+- Updated dependencies [aaf041c]
+  - @apollo/client-react-streaming@0.11.9
+
 ## 0.11.8
 
 ### Patch Changes

@@ -6,6 +6,8 @@ jobs:
   log:
     runs-on: ubuntu-latest
     steps:
+      - name: Log the deployment
+        run: echo 'Deployment is ${{ toJSON(github.event.deployment) }}'
       - name: Log the deployment status
         run: echo 'Deployment status is ${{ toJSON(github.event.deployment_status) }}'
 
@@ -19,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Run Playwright tests against Vercel deployment ${{ github.event.deployment_status.environment }}
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
