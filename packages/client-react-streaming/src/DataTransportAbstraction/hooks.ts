@@ -1,6 +1,7 @@
 import type { HookWrappers } from "@apollo/client/react/internal/index.js";
 import { useTransportValue } from "./useTransportValue.js";
 import { useWrapTransportedQueryRef } from "../transportedQueryRef.js";
+import { useMemo } from "react";
 
 export const hookWrappers: HookWrappers = {
   useFragment(orig_useFragment) {
@@ -44,10 +45,18 @@ function wrap<T extends (...args: any[]) => any>(
     if (transportKeys.length == 0) {
       return result;
     }
-    const transported: Partial<typeof result> = {};
-    for (const key of transportKeys) {
-      transported[key] = result[key];
-    }
-    return { ...result, ...useTransportValue(transported) };
+    const forTransport = useMemo<Partial<typeof result>>(() => {
+      const transport: Partial<typeof result> = {};
+      for (const key of transportKeys) {
+        transport[key] = result[key];
+      }
+      return transport;
+    }, [result]);
+    const transported = useTransportValue(forTransport);
+
+    return useMemo(
+      () => ({ ...result, ...transported }),
+      [result, transported]
+    );
   }) as T;
 }
