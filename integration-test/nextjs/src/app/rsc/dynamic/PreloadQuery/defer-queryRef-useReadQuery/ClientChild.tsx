@@ -10,7 +10,7 @@ import {
   DeferredDynamicProductResult,
   RATING_FRAGMENT,
 } from "@integration-test/shared/queries";
-import { TransportedQueryRef } from "@apollo/experimental-nextjs-app-support";
+import { TransportedQueryRef } from "@apollo/client-integration-nextjs";
 import { Suspense, useTransition } from "react";
 
 export function ClientChild({

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
 import App from "./App";
-import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
+import { resetApolloClientSingletons } from "@apollo/client-integration-nextjs";
 
 afterEach(resetApolloClientSingletons);
 

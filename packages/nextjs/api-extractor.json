@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "extends": "../../api-extractor.json",
+  "mainEntryPointFilePath": "./api-extractor.d.ts",
+  "bundledPackages": [
+    "@apollo/client-react-streaming",
+    "@apollo/client-react-streaming/manual-transport",
+    "@apollo/client-integration-nextjs",
+    "@apollo/client-integration-nextjs/ssr",
+    "@apollo/client-integration-nextjs/rsc"
+  ],
+  "compiler": {
+    "tsconfigFilePath": "./tsconfig.json",
+    "skipLibCheck": true
+  }
+}

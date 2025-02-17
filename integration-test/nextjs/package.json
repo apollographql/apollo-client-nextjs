@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "build-and-test": "yarn build && yarn test",
-    "test": "yarn playwright test"
+    "test": "yarn test:nextjs"
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
-    "@apollo/experimental-nextjs-app-support": "workspace:^",
+    "@apollo/client-integration-nextjs": "workspace:^",
     "@apollo/server": "^4.11.2",
     "@as-integrations/next": "^3.2.0",
     "@graphql-tools/schema": "^10.0.0",
@@ -30,7 +30,6 @@
     "typescript": "5.1.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
     "webpack-stats-plugin": "^1.1.3"
   }
 }
