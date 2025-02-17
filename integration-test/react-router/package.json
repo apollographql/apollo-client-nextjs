@@ -25,7 +25,7 @@
     "react-router": "^7.2.0-pre.3"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.1.5",
+    "@react-router/dev": "^7.2.0-pre.3",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^20",
     "@types/react": "^19.0.1",
