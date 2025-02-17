@@ -14,18 +14,18 @@
     "@apollo/client": "^3.11.10",
     "@apollo/client-integration-react-router": "workspace:^",
     "@integration-test/shared": "workspace:^",
-    "@react-router/fs-routes": "^7.1.5",
-    "@react-router/node": "^7.1.5",
-    "@react-router/serve": "^7.1.5",
+    "@react-router/fs-routes": "^7.2.0-pre.3",
+    "@react-router/node": "^7.2.0-pre.3",
+    "@react-router/serve": "^7.2.0-pre.3",
     "@vercel/react-router": "^1.0.2",
     "graphql": "*",
     "isbot": "^5.1.17",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.1.5"
+    "react-router": "^7.2.0-pre.3"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.1.5",
+    "@react-router/dev": "^7.2.0-pre.3",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^20",
     "@types/react": "^19.0.1",
