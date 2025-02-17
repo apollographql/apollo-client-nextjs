@@ -16,7 +16,7 @@ test("Error message when `WrappedApolloClient` is instantiated with wrong `InMem
       }),
     {
       message:
-        'When using `InMemoryCache` in streaming SSR, you must use the `InMemoryCache` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+        'When using `InMemoryCache` in streaming SSR, you must use the `InMemoryCache` export provided by `"@apollo/client-integration-nextjs"`.',
     }
   );
 });
@@ -49,7 +49,7 @@ test(
           ),
         {
           message:
-            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-nextjs"`.',
         }
       );
     });
@@ -72,7 +72,7 @@ test(
           ),
         {
           message:
-            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+            'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-nextjs"`.',
         }
       );
     });
@@ -128,7 +128,7 @@ test(
       });
       await assert.rejects(promise, {
         message:
-          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-nextjs"`.',
       });
     });
     await test("@apollo/client-react-streaming should error", async () => {
@@ -153,7 +153,7 @@ test(
       });
       await assert.rejects(promise, {
         message:
-          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/experimental-nextjs-app-support"`.',
+          'When using `ApolloClient` in streaming SSR, you must use the `ApolloClient` export provided by `"@apollo/client-integration-nextjs"`.',
       });
     });
     await test("this package should work", async () => {

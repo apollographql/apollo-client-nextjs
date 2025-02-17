@@ -13,7 +13,7 @@ import { bundle } from "./bundleInfo.js";
  * but requires a `makeClient` prop instead.
  *
  * Use this component together with `ApolloClient` and `InMemoryCache`
- * from the `"@apollo/experimental-nextjs-app-support"` package
+ * from the `"@apollo/client-integration-nextjs"` package
  * to make an ApolloClient instance available to your Client Component hooks in the
  * Next.js App Router.
  *
@@ -21,7 +21,7 @@ import { bundle } from "./bundleInfo.js";
  * `app/ApolloWrapper.jsx`
  * ```tsx
  * import { HttpLink } from "@apollo/client";
- * import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from "@apollo/experimental-nextjs-app-support";
+ * import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
  *
  * function makeClient() {
  *   const httpLink = new HttpLink({

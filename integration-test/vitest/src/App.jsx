@@ -3,7 +3,7 @@ import {
   ApolloNextAppProvider,
   ApolloClient,
   InMemoryCache,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
 import {
   useSuspenseQuery,

@@ -161,7 +161,7 @@ const UNINITIALIZED = {};
  * We provide an [example with a patched React version](https://github.com/apollographql/apollo-client-nextjs/blob/main/integration-test/experimental-react) to showcase how that could look.
  *
  * @example
- * For usage examples, see the implementation of the `@apollo/experimental-nextjs-app-support`
+ * For usage examples, see the implementation of the `@apollo/client-integration-nextjs`
  * [`ApolloNextAppProvider`](https://github.com/apollographql/apollo-client-nextjs/blob/c0715a05cf8ca29a3cbb9ce294cdcbc5ce251b2e/packages/experimental-nextjs-app-support/src/ApolloNextAppProvider.ts)
  *
  * ```tsx

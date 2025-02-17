@@ -1,5 +1,5 @@
 export const bundle = {
-  pkg: "@apollo/experimental-nextjs-app-support",
+  pkg: "@apollo/client-integration-nextjs",
   client: "ApolloClient",
   cache: "InMemoryCache",
 };

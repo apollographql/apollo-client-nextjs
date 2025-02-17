@@ -15,65 +15,37 @@
     "app"
   ],
   "type": "module",
-  "imports": {
-    "#bundled": {
-      "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
-      },
-      "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
-      }
-    }
-  },
   "exports": {
     ".": {
       "require": {
-        "types": "./dist/combined.d.cts",
-        "react-server": "./dist/index.rsc.cjs",
-        "edge-light": "./dist/index.ssr.cjs",
-        "browser": "./dist/index.browser.cjs",
-        "node": "./dist/index.ssr.cjs"
+        "types": "./redirect/index.d.cts",
+        "default": "./redirect/index.cjs"
       },
       "import": {
-        "types": "./dist/combined.d.ts",
-        "react-server": "./dist/index.rsc.js",
-        "edge-light": "./dist/index.ssr.js",
-        "browser": "./dist/index.browser.js",
-        "node": "./dist/index.ssr.js"
+        "types": "./redirect/index.d.ts",
+        "default": "./redirect/index.js"
       }
     },
     "./rsc": {
       "require": {
-        "types": "./dist/rsc/index.d.cts",
-        "react-server": "./dist/rsc/index.cjs",
-        "default": "./dist/empty.cjs"
+        "types": "./redirect/rsc.d.cts",
+        "react-server": "./redirect/rsc.cjs",
+        "default": "./redirect/empty.cjs"
       },
       "import": {
-        "types": "./dist/rsc/index.d.ts",
-        "react-server": "./dist/rsc/index.js",
-        "default": "./dist/empty.js"
+        "types": "./redirect/rsc.d.ts",
+        "react-server": "./redirect/rsc.js",
+        "default": "./redirect/empty.js"
       }
     },
     "./ssr": {
       "require": {
-        "types": "./dist/ssr/index.ssr.d.cts",
-        "react-server": "./dist/ssr/index.rsc.cjs",
-        "edge-light": "./dist/ssr/index.ssr.cjs",
-        "browser": "./dist/ssr/index.browser.cjs",
-        "node": "./dist/ssr/index.ssr.cjs"
+        "types": "./redirect/ssr.d.cts",
+        "default": "./redirect/ssr.cjs"
       },
       "import": {
-        "types": "./dist/ssr/index.ssr.d.ts",
-        "react-server": "./dist/ssr/index.rsc.js",
-        "edge-light": "./dist/ssr/index.ssr.js",
-        "browser": "./dist/ssr/index.browser.js",
-        "node": "./dist/ssr/index.ssr.js"
+        "types": "./redirect/ssr.d.ts",
+        "default": "./redirect/ssr.js"
       }
     },
     "./package.json": "./package.json"
@@ -81,62 +53,43 @@
   "typesVersions": {
     "*": {
       "ssr": [
-        "./dist/ssr/index.ssr.d.ts"
+        "./redirect/ssr.d.ts"
       ],
       "rsc": [
-        "./dist/rsc/index.d.ts"
+        "./redirect/rsc.d.ts"
       ]
     }
   },
-  "typings": "./dist/combined.d.ts",
+  "typings": "./redirect/index.d.ts",
   "author": "packages@apollographql.com",
   "license": "MIT",
   "files": [
-    "dist/",
+    "redirect/",
     "package.json",
     "LICENSE.md",
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf dist; tsup",
-    "test": "concurrently -c auto \"yarn:test:*(!base) $@\"",
-    "test:base": "TSX_TSCONFIG_PATH=./tsconfig.tests.json node --import tsx/esm --no-warnings --test \"$@\" src/**/*.test.(ts|tsx)",
-    "test:ssr": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=node\" yarn run test:base",
-    "test:browser": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=browser\" yarn run test:base",
-    "test:rsc": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --conditions=react-server\" yarn run test:base",
-    "prepack": "yarn build",
-    "prepublishOnly": "wait-on ../client-react-streaming/.built --delay 3000 --timeout 60000 && yarn pack -o attw.tgz && attw attw.tgz && rm attw.tgz && yarn run test",
+    "build": "true",
+    "test": "true",
     "test-bundle": "yarn test-bundle:attw && yarn test-bundle:package && yarn test-bundle:publint && yarn test-bundle:shape",
     "test-bundle:attw": "attw --pack .",
     "test-bundle:package": "yarn workspace monorepo verify-package-json $PWD/package.json",
     "test-bundle:publint": "publint --strict",
     "test-bundle:shape": "yarn workspace monorepo verify-package-shape $PWD/package-shape.json",
-    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'",
-    "lint": "eslint --ext .ts,.tsx ."
+    "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
   },
   "devDependencies": {
     "@apollo/client": "^3.12.6",
-    "@apollo/client-react-streaming": "workspace:*",
     "@arethetypeswrong/cli": "0.15.3",
-    "@internal/test-utils": "workspace:^",
-    "@microsoft/api-extractor": "7.43.2",
     "@tsconfig/recommended": "1.0.6",
-    "@types/node": "20.12.11",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "concurrently": "8.2.2",
-    "esbuild": "^0.24.2",
-    "eslint": "8.57.0",
-    "graphql": "^16.10.0",
-    "next": "^15.0.0",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "graphql": "*",
     "publint": "0.2.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-error-boundary": "^5.0.0",
-    "rimraf": "5.0.5",
-    "tsup": "8.0.2",
-    "typescript": "^5.7.3",
-    "wait-on": "8.0.2"
+    "react": "*",
+    "react-dom": "*",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@apollo/client": "^3.13.0",
@@ -144,6 +97,6 @@
     "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
-    "@apollo/client-react-streaming": "0.12.0-alpha.0"
+    "@apollo/client-integration-nextjs": "0.12.0-alpha.0"
   }
 }

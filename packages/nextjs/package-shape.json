@@ -1,0 +1,43 @@
+{
+  "@apollo/client-integration-nextjs": {
+    "react-server": [
+      "registerApolloClient",
+      "DebounceMultipartResponsesLink",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "built_for_rsc"
+    ],
+    "browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_browser"
+    ],
+    "node": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_ssr"
+    ],
+    "edge-light,worker,browser": [
+      "ApolloNextAppProvider",
+      "DebounceMultipartResponsesLink",
+      "ApolloClient",
+      "InMemoryCache",
+      "RemoveMultipartDirectivesLink",
+      "SSRMultipartLink",
+      "resetApolloClientSingletons",
+      "built_for_ssr"
+    ]
+  }
+}

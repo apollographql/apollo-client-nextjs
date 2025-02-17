@@ -203,6 +203,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/client-integration-nextjs@npm:0.12.0-alpha.0, @apollo/client-integration-nextjs@workspace:^, @apollo/client-integration-nextjs@workspace:packages/nextjs":
+  version: 0.0.0-use.local
+  resolution: "@apollo/client-integration-nextjs@workspace:packages/nextjs"
+  dependencies:
+    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client-react-streaming": "workspace:*"
+    "@arethetypeswrong/cli": "npm:0.15.3"
+    "@internal/test-utils": "workspace:^"
+    "@microsoft/api-extractor": "npm:7.43.2"
+    "@tsconfig/recommended": "npm:1.0.6"
+    "@types/node": "npm:20.12.11"
+    "@types/react": "npm:^19.0.8"
+    "@types/react-dom": "npm:^19.0.3"
+    concurrently: "npm:8.2.2"
+    esbuild: "npm:^0.24.2"
+    eslint: "npm:8.57.0"
+    graphql: "npm:^16.10.0"
+    next: "npm:^15.0.0"
+    publint: "npm:0.2.7"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
+    react-error-boundary: "npm:^5.0.0"
+    rimraf: "npm:5.0.5"
+    tsup: "npm:8.0.2"
+    typescript: "npm:^5.7.3"
+    wait-on: "npm:8.0.2"
+  peerDependencies:
+    "@apollo/client": ^3.13.0
+    next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
+    react: ^18 || >=19.0.0-rc
+  languageName: unknown
+  linkType: soft
+
 "@apollo/client-integration-react-router@workspace:^, @apollo/client-integration-react-router@workspace:packages/react-router":
   version: 0.0.0-use.local
   resolution: "@apollo/client-integration-react-router@workspace:packages/react-router"
@@ -350,32 +383,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@workspace:^, @apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support":
+"@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support":
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
     "@apollo/client": "npm:^3.12.6"
-    "@apollo/client-react-streaming": "workspace:*"
+    "@apollo/client-integration-nextjs": "npm:0.12.0-alpha.0"
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@internal/test-utils": "workspace:^"
-    "@microsoft/api-extractor": "npm:7.43.2"
     "@tsconfig/recommended": "npm:1.0.6"
-    "@types/node": "npm:20.12.11"
-    "@types/react": "npm:^19.0.8"
-    "@types/react-dom": "npm:^19.0.3"
-    concurrently: "npm:8.2.2"
-    esbuild: "npm:^0.24.2"
-    eslint: "npm:8.57.0"
-    graphql: "npm:^16.10.0"
-    next: "npm:^15.0.0"
+    "@types/react": "npm:*"
+    "@types/react-dom": "npm:*"
+    graphql: "npm:*"
     publint: "npm:0.2.7"
-    react: "npm:^19.0.0"
-    react-dom: "npm:^19.0.0"
-    react-error-boundary: "npm:^5.0.0"
-    rimraf: "npm:5.0.5"
-    tsup: "npm:8.0.2"
+    react: "npm:*"
+    react-dom: "npm:*"
     typescript: "npm:^5.7.3"
-    wait-on: "npm:8.0.2"
   peerDependencies:
     "@apollo/client": ^3.13.0
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
@@ -6705,8 +6727,8 @@ __metadata:
   resolution: "@integration-test/jest@workspace:integration-test/jest"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
+    "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/client-react-streaming": "workspace:^"
-    "@apollo/experimental-nextjs-app-support": "workspace:^"
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
     "@babel/preset-react": "npm:^7.23.3"
@@ -6732,7 +6754,7 @@ __metadata:
   resolution: "@integration-test/nextjs@workspace:integration-test/nextjs"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/experimental-nextjs-app-support": "workspace:^"
+    "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/server": "npm:^4.11.2"
     "@as-integrations/next": "npm:^3.2.0"
     "@graphql-tools/schema": "npm:^10.0.0"
@@ -6855,7 +6877,7 @@ __metadata:
   resolution: "@integration-test/vitest@workspace:integration-test/vitest"
   dependencies:
     "@apollo/client": "npm:^3.11.10"
-    "@apollo/experimental-nextjs-app-support": "workspace:^"
+    "@apollo/client-integration-nextjs": "workspace:^"
     "@graphql-tools/schema": "npm:^10.0.3"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^16.1.0"
@@ -12364,7 +12386,7 @@ __metadata:
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
     "@apollo/client": "npm:^3.12.6"
-    "@apollo/experimental-nextjs-app-support": "workspace:^"
+    "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@graphql-codegen/cli": "npm:3.3.1"
     "@graphql-codegen/client-preset": "npm:3.0.1"
@@ -12397,7 +12419,7 @@ __metadata:
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
     "@apollo/client": "npm:^3.12.6"
-    "@apollo/experimental-nextjs-app-support": "workspace:^"
+    "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@types/node": "npm:20.12.11"
@@ -18084,7 +18106,7 @@ __metadata:
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
     "@apollo/client": "npm:^3.12.6"
-    "@apollo/experimental-nextjs-app-support": "workspace:^"
+    "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:2.4.2"
     "@chakra-ui/react": "npm:^2.5.5"

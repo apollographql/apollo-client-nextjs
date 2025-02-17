@@ -15,8 +15,13 @@
       "node"
     ],
     "esModuleInterop": true,
+    "paths": {
+      "@apollo/client-integration-nextjs": [
+        "./src/combined.ts"
+      ]
+    }
   },
   "include": [
-    "redirect"
+    "src"
   ]
 }
