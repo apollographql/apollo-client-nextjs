@@ -1,5 +1,12 @@
 # @apollo/client-integration-react-router
 
+## 0.12.0-alpha.1
+
+### Patch Changes
+
+- 2f4890a: Set minimal version of React Router to 7.2.0-pre.3, removes need for patching.
+  - @apollo/client-react-streaming@0.12.0-alpha.1
+
 ## 0.12.0-alpha.0
 
 ### Minor Changes

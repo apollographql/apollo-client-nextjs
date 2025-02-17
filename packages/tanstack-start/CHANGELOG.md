@@ -1,5 +1,17 @@
 # @apollo/client-integration-tanstack-start
 
+## 0.12.0-alpha.1
+
+### Patch Changes
+
+- 7589163: Fix peer dependencies
+
+  pr: #435
+  author: CarsonF
+  commit: 472e82b8682897cc7630a48715150685d917bdf2
+
+  - @apollo/client-react-streaming@0.12.0-alpha.1
+
 ## 0.12.0-alpha.0
 
 ### Patch Changes

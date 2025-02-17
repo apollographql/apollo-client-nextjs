@@ -1,5 +1,15 @@
 # @apollo/experimental-nextjs-app-support
 
+## 0.12.0-alpha.1
+
+### Minor Changes
+
+- dec635c: This package has now been renamed to `"@apollo/client-integration-nextjs"`, please adjust your imports accordingly.
+
+### Patch Changes
+
+- @apollo/client-integration-nextjs@0.12.0-alpha.1
+
 ## 0.12.0-alpha.0
 
 ### Patch Changes
