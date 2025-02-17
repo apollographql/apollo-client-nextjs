@@ -3,6 +3,12 @@ import { useContext, useSyncExternalStore } from "react";
 import { DataTransportContext } from "./DataTransportAbstraction.js";
 import { equal } from "@wry/equality";
 
+const CLEAN = {};
+const enum WhichResult {
+  client,
+  server,
+}
+
 /**
  * A hook that mostly acts as an identity function.
  * It will only behave differently during
@@ -18,22 +24,22 @@ export function useTransportValue<T>(value: T): T {
     throw new Error(
       "useTransportValue must be used within a streaming-specific ApolloProvider"
     );
-  const valueRef = dataTransport.useStaticValueRef(value);
+  const valueRef = dataTransport.useStaticValueRef<T | typeof CLEAN>(value);
 
-  const retVal = useSyncExternalStore(
+  const whichResult = useSyncExternalStore(
     () => () => {},
-    () => value,
-    // if the server value does not differ from the client value, we directly return the
-    // client value to avoid a reexecution of the render function when the results of
-    // `getSnapshot` and `getServerSnapshot` are referentially compared by React.
-    () => (equal(value, valueRef.current) ? value : valueRef.current)
+    () => WhichResult.client,
+    () =>
+      valueRef.current === CLEAN
+        ? WhichResult.client
+        : equal(value, valueRef.current)
+          ? WhichResult.client
+          : WhichResult.server
   );
 
-  if (retVal === value) {
-    // @ts-expect-error this value will never be used again
-    // so we can safely delete it
-    valueRef.current = undefined;
+  if (whichResult === WhichResult.client) {
+    valueRef.current = CLEAN;
   }
 
-  return retVal;
+  return whichResult === WhichResult.server ? (valueRef.current as T) : value;
 }
