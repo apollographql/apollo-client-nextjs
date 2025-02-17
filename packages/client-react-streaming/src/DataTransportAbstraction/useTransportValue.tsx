@@ -38,6 +38,8 @@ export function useTransportValue<T>(value: T): T {
   );
 
   if (whichResult === WhichResult.client) {
+    // this value will never be used again
+    // so we can safely delete it to save memory
     valueRef.current = CLEAN;
   }
 
