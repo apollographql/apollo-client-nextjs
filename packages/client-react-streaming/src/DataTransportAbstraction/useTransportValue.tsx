@@ -1,6 +1,7 @@
 "use client";
 import { useContext, useSyncExternalStore } from "react";
 import { DataTransportContext } from "./DataTransportAbstraction.js";
+import { equal } from "@wry/equality";
 
 /**
  * A hook that mostly acts as an identity function.
@@ -22,7 +23,10 @@ export function useTransportValue<T>(value: T): T {
   const retVal = useSyncExternalStore(
     () => () => {},
     () => value,
-    () => valueRef.current
+    // if the server value does not differ from the client value, we directly return the
+    // client value to avoid a reexecution of the render function when the results of
+    // `getSnapshot` and `getServerSnapshot` are referentially compared by React.
+    () => (equal(value, valueRef.current) ? value : valueRef.current)
   );
 
   if (retVal === value) {
