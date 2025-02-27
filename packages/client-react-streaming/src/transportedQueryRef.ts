@@ -39,10 +39,8 @@ export interface TransportedQueryRef<TData = unknown, TVariables = unknown>
   toPromise?: undefined;
 }
 
-export interface InternalTransportedQueryRef<
-  TData = unknown,
-  TVariables = unknown,
-> extends TransportedQueryRef<TData, TVariables> {
+interface InternalTransportedQueryRef<TData = unknown, TVariables = unknown>
+  extends TransportedQueryRef<TData, TVariables> {
   __transportedQueryRef: true | QueryRef<any, any>;
   options: TransportedQueryRefOptions;
   queryKey: string;
@@ -72,7 +70,7 @@ export function createTransportedQueryRef<TData, TVariables>(
   return ref;
 }
 
-export function reviveTransportedQueryRef(
+function reviveTransportedQueryRef(
   queryRef: InternalTransportedQueryRef,
   client: ApolloClient<any>
 ): [QueryRef<any, any>, CacheKey] {

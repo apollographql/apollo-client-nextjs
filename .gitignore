@@ -16,3 +16,4 @@ yalc.lock
 .next/
 test-results/
 temp/
+.built
