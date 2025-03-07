@@ -4,7 +4,7 @@ import {
   skipToken,
   useApolloClient,
   useBackgroundQuery,
-} from "@apollo/client/index.js";
+} from "@apollo/client/react/index.js";
 import type { ApolloClient as WrappedApolloClient } from "./DataTransportAbstraction/WrappedApolloClient.js";
 import type {
   ProgressEvent,

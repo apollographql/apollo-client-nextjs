@@ -6,11 +6,8 @@ import {
   assertWrappedQueryRef,
 } from "@apollo/client/react/internal/index.js";
 
-import {
-  useApolloClient,
-  type ApolloClient,
-  type QueryRef,
-} from "@apollo/client/index.js";
+import { type ApolloClient } from "@apollo/client/index.js";
+import { useApolloClient, type QueryRef } from "@apollo/client/react/index.js";
 import {
   deserializeOptions,
   type TransportedOptions,

@@ -14,7 +14,7 @@ import {
   useQuery as _useQuery,
   useReadQuery as _useReadQuery,
   useSuspenseQuery as _useSuspenseQuery,
-} from "@apollo/client/index.js";
+} from "@apollo/client/react/index.js";
 
 /**
  * @deprecated
