@@ -1,5 +1,11 @@
 # @apollo/client-react-streaming
 
+## 0.11.10
+
+### Patch Changes
+
+- 37941aa: Adjust imports to use the `@apollo/client/react` entrypoint for React-specific imports.
+
 ## 0.11.9
 
 ### Patch Changes
