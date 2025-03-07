@@ -23,16 +23,16 @@
     "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build && cd integration-test && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install"
   },
   "resolutions": {
-    "@microsoft/api-documenter": "7.24.1"
+    "@microsoft/api-documenter": "7.26.13"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "7.24.3",
-    "@size-limit/file": "11.1.2",
-    "@size-limit/webpack": "11.1.2",
-    "@size-limit/webpack-why": "11.1.2",
+    "@microsoft/api-documenter": "7.26.13",
+    "@size-limit/file": "11.2.0",
+    "@size-limit/webpack": "11.2.0",
+    "@size-limit/webpack-why": "11.2.0",
     "@types/node": "^22.10.9",
-    "knip": "^5.43.1",
-    "size-limit": "11.1.2",
-    "typescript": "^5.7.3"
+    "knip": "5.43.1",
+    "size-limit": "11.2.0",
+    "typescript": "5.7.3"
   }
 }
