@@ -22,6 +22,7 @@
     "@integration-test/playwright": "0.0.0"
   },
   "changesets": [
+    "curvy-carrots-refuse",
     "lovely-ears-kick",
     "moody-gifts-breathe",
     "old-squids-deny",
