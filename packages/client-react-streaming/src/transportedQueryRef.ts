@@ -10,11 +10,11 @@ import {
 } from "./ReadableStreamLink.js";
 import { skipDataTransport } from "./DataTransportAbstraction/index.js";
 import type { ReadableStreamLinkEvent } from "./ReadableStreamLink.js";
-import { useApolloClient } from "@apollo/client/index.js";
+import type { QueryRef } from "@apollo/client/react/index.js";
+import { useApolloClient } from "@apollo/client/react/index.js";
 import type {
   DocumentNode,
   ApolloClient,
-  QueryRef,
   QueryOptions,
   OperationVariables,
   TypedDocumentNode,

@@ -1,5 +1,13 @@
 # @apollo/experimental-nextjs-app-support
 
+## 0.11.10
+
+### Patch Changes
+
+- 37941aa: Adjust imports to use the `@apollo/client/react` entrypoint for React-specific imports.
+- Updated dependencies [37941aa]
+  - @apollo/client-react-streaming@0.11.10
+
 ## 0.12.0-alpha.1
 
 ### Minor Changes

@@ -7,8 +7,8 @@ import type { NormalizedCacheObject } from "@apollo/client/index.js";
 import {
   ApolloLink,
   ApolloClient as _ApolloClient,
-  useApolloClient,
 } from "@apollo/client/index.js";
+import { useApolloClient } from "@apollo/client/react/index.js";
 import type { HookWrappers } from "@apollo/client/react/internal";
 import { hydrateIfNecessary } from "./preloader.js";
 
