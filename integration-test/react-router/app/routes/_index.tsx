@@ -4,7 +4,7 @@ import {
   useApolloClient,
   useQueryRefHandlers,
   useReadQuery,
-} from "@apollo/client/index.js";
+} from "@apollo/client/react/index.js";
 import { apolloLoader } from "~/apollo";
 import { DEFERRED_QUERY } from "@integration-test/shared/queries";
 import { useTransition } from "react";

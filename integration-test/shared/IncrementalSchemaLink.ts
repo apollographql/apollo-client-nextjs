@@ -1,8 +1,8 @@
 import {
   ApolloLink,
-  FetchResult,
+  type FetchResult,
   Observable,
-  Operation,
+  type Operation,
 } from "@apollo/client/index.js";
 import type { SchemaLink } from "@apollo/client/link/schema";
 import { experimentalExecuteIncrementally, validate } from "graphql";
