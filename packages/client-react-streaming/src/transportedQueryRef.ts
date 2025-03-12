@@ -81,8 +81,6 @@ export interface TransportedQueryRef<
      */
     queryKey: string;
   };
-  /** @private */
-  _hydrated?: CacheKey;
 }
 
 export interface PreloadTransportedQueryFunction {
@@ -163,28 +161,26 @@ function createTransportedQueryRef<
   };
 }
 
+const hydrationCache = new WeakMap<
+  TransportedQueryRef,
+  { cacheKey: CacheKey; wrapped: ReturnType<typeof wrapQueryRef<any, any>> }
+>();
+
 export function reviveTransportedQueryRef(
   queryRef: TransportedQueryRef,
   client: ApolloClient<any>
 ): asserts queryRef is TransportedQueryRef &
-  ReturnType<typeof wrapQueryRef<any, any>> & { _hydrated: CacheKey } {
+  ReturnType<typeof wrapQueryRef<any, any>> {
   const {
     $__apollo_queryRef: { options, stream, queryKey },
   } = queryRef;
-  const hydratedOptions = deserializeOptions(options);
-  const cacheKey: CacheKey = [
-    hydratedOptions.query,
-    canonicalStringify(hydratedOptions.variables),
-    queryKey,
-  ];
-  if (!queryRef._hydrated) {
-    // TanStack query has a timing where this is potentially transported over the wire if it
-    // is consumed in a component during SSR (it will be revived there) unless we make it non-enumerable
-    Object.defineProperty(queryRef, "_hydrated", {
-      value: cacheKey,
-      enumerable: false,
-      configurable: true,
-    });
+  if (!hydrationCache.has(queryRef)) {
+    const hydratedOptions = deserializeOptions(options);
+    const cacheKey: CacheKey = [
+      hydratedOptions.query,
+      canonicalStringify(hydratedOptions.variables),
+      queryKey,
+    ];
     const internalQueryRef = getSuspenseCache(client).getQueryRef(
       cacheKey,
       () =>
@@ -199,7 +195,9 @@ export function reviveTransportedQueryRef(
           ),
         })
     );
-    Object.assign(queryRef, wrapQueryRef(internalQueryRef));
+    const wrapped = wrapQueryRef(internalQueryRef);
+    hydrationCache.set(queryRef, { cacheKey, wrapped });
+    Object.assign(queryRef, wrapped);
   }
 }
 
@@ -217,7 +215,7 @@ export function useWrapTransportedQueryRef<TData, TVariables>(
   let isTransported: boolean;
   if ((isTransported = isTransportedQueryRef(queryRef))) {
     reviveTransportedQueryRef(queryRef, client);
-    cacheKey = queryRef._hydrated;
+    cacheKey = hydrationCache.get(queryRef)?.cacheKey;
   }
   const unwrapped = unwrapQueryRef<any>(queryRef)!;
 
