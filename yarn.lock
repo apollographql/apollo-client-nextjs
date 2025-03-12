@@ -207,7 +207,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-integration-nextjs@workspace:packages/nextjs"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
@@ -240,7 +240,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-integration-react-router@workspace:packages/react-router"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@microsoft/api-extractor": "npm:7.43.2"
@@ -272,7 +272,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-integration-tanstack-start@workspace:packages/tanstack-start"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-react-streaming": "workspace:*"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
@@ -311,7 +311,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/client-react-streaming@workspace:packages/client-react-streaming"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@internal/test-utils": "workspace:^"
     "@microsoft/api-extractor": "npm:7.43.2"
@@ -347,9 +347,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@apollo/client@npm:^3.11.10, @apollo/client@npm:^3.12.4, @apollo/client@npm:^3.12.6":
-  version: 3.13.0
-  resolution: "@apollo/client@npm:3.13.0"
+"@apollo/client@npm:^3.13.4":
+  version: 3.13.4
+  resolution: "@apollo/client@npm:3.13.4"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -379,7 +379,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/396715aae8b7d07f7b32443e6442e2a6c7c6ac4ab3682b8820c4544c96ba2e07bc9502e41d5b5dcf9d24c255556a1abb2baa7029b88a656819b139a2b1eea355
+  checksum: 10/35ddc4bc66c5fdd5f1561e5a3c36759f1ddba10de020441f7594d63ea72300ff75813878f17677b4e06a30749ce255f7f66c25a0af718d407ff1a51abf7205fd
   languageName: node
   linkType: hard
 
@@ -387,7 +387,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@apollo/experimental-nextjs-app-support@workspace:packages/experimental-nextjs-app-support"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "npm:0.12.0-alpha.2"
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@tsconfig/recommended": "npm:1.0.6"
@@ -6726,7 +6726,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/jest@workspace:integration-test/jest"
   dependencies:
-    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/client-react-streaming": "workspace:^"
     "@babel/core": "npm:^7.24.0"
@@ -6753,7 +6753,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/nextjs@workspace:integration-test/nextjs"
   dependencies:
-    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/server": "npm:^4.11.2"
     "@as-integrations/next": "npm:^3.2.0"
@@ -6788,7 +6788,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/react-router@workspace:integration-test/react-router"
   dependencies:
-    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-react-router": "workspace:^"
     "@integration-test/shared": "workspace:^"
     "@react-router/dev": "npm:^7.2.0-pre.3"
@@ -6831,7 +6831,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/tanstack-start@workspace:integration-test/tanstack-start"
   dependencies:
-    "@apollo/client": "npm:^3.12.4"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-tanstack-start": "workspace:^"
     "@integration-test/shared": "workspace:^"
     "@tanstack/router-devtools": "npm:^1.99.0"
@@ -6852,7 +6852,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/vite-streaming@workspace:integration-test/vite-streaming"
   dependencies:
-    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-react-streaming": "workspace:^"
     "@playwright/test": "npm:^1.49.1"
     "@tsconfig/vite-react": "npm:^3.0.0"
@@ -6876,7 +6876,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@integration-test/vitest@workspace:integration-test/vitest"
   dependencies:
-    "@apollo/client": "npm:^3.11.10"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "workspace:^"
     "@graphql-tools/schema": "npm:^10.0.3"
     "@testing-library/jest-dom": "npm:^6.4.2"
@@ -12385,7 +12385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-next-13-demo@workspace:examples/polls-demo"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@graphql-codegen/cli": "npm:3.3.1"
@@ -12418,7 +12418,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app-dir@workspace:examples/app-dir-experiments"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/server": "npm:^4.9.5"
     "@as-integrations/next": "npm:^3.0.0"
@@ -18105,7 +18105,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hack-the-supergraph-ssr@workspace:examples/hack-the-supergraph-ssr"
   dependencies:
-    "@apollo/client": "npm:^3.12.6"
+    "@apollo/client": "npm:^3.13.4"
     "@apollo/client-integration-nextjs": "workspace:^"
     "@apollo/space-kit": "npm:^9.11.0"
     "@chakra-ui/next-js": "npm:2.4.2"
