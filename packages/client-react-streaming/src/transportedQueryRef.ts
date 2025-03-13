@@ -163,7 +163,7 @@ function createTransportedQueryRef<
 
 const hydrationCache = new WeakMap<
   TransportedQueryRef,
-  { cacheKey: CacheKey; wrapped: ReturnType<typeof wrapQueryRef<any, any>> }
+  { cacheKey: CacheKey }
 >();
 
 export function reviveTransportedQueryRef(
@@ -181,6 +181,7 @@ export function reviveTransportedQueryRef(
       canonicalStringify(hydratedOptions.variables),
       queryKey,
     ];
+    hydrationCache.set(queryRef, { cacheKey });
     const internalQueryRef = getSuspenseCache(client).getQueryRef(
       cacheKey,
       () =>
@@ -195,9 +196,7 @@ export function reviveTransportedQueryRef(
           ),
         })
     );
-    const wrapped = wrapQueryRef(internalQueryRef);
-    hydrationCache.set(queryRef, { cacheKey, wrapped });
-    Object.assign(queryRef, wrapped);
+    Object.assign(queryRef, wrapQueryRef(internalQueryRef));
   }
 }
 
