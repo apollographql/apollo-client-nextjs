@@ -62,6 +62,7 @@ __metadata:
     "@types/react": "npm:^19.0.0"
     "@typescript-eslint/eslint-plugin": "npm:7.5.0"
     "@typescript-eslint/parser": "npm:7.5.0"
+    "@wry/equality": "npm:^0.5.6"
     concurrently: "npm:8.2.2"
     esbuild: "npm:^0.24.2"
     eslint: "npm:8.57.0"
