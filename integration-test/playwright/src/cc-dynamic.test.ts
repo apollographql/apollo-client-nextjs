@@ -187,7 +187,7 @@ test.describe("CC dynamic", () => {
     );
   });
 
-  test.only("async loader", { tag: ["@react-router"] }, async ({ page }) => {
+  test("async loader", { tag: ["@react-router"] }, async ({ page }) => {
     await page.goto(`${base}/asyncLoader`, {
       waitUntil: "commit",
     });
