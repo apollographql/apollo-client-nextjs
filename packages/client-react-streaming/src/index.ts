@@ -8,3 +8,4 @@ export {
   WrappedApolloProvider,
   skipDataTransport,
 } from "./DataTransportAbstraction/index.js";
+export { useWrapTransportedQueryRef } from "./transportedQueryRef.js";

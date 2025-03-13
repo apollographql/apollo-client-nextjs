@@ -14,7 +14,6 @@ export {
   createTransportedQueryPreloader,
   isTransportedQueryRef,
   reviveTransportedQueryRef,
-  useWrapTransportedQueryRef,
 } from "./transportedQueryRef.js";
 export {
   ReadFromReadableStreamLink,

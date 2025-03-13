@@ -33,6 +33,7 @@
       "createTransportedQueryPreloader",
       "isTransportedQueryRef",
       "reviveTransportedQueryRef",
+      "useWrapTransportedQueryRef",
       "built_for_browser"
     ],
     "node": [
@@ -52,6 +53,7 @@
       "createTransportedQueryPreloader",
       "isTransportedQueryRef",
       "reviveTransportedQueryRef",
+      "useWrapTransportedQueryRef",
       "built_for_ssr"
     ],
     "edge-light,worker,browser": [
@@ -71,6 +73,7 @@
       "createTransportedQueryPreloader",
       "isTransportedQueryRef",
       "reviveTransportedQueryRef",
+      "useWrapTransportedQueryRef",
       "built_for_ssr"
     ]
   },
