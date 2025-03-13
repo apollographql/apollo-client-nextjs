@@ -9,11 +9,8 @@ import type {
 
 import type { TypedDocumentNode } from "@apollo/client/index.js";
 import { MockSubscriptionLink } from "@apollo/client/testing/core/mocking/mockSubscriptionLink.js";
-import {
-  useSuspenseQuery,
-  gql,
-  DocumentTransform,
-} from "@apollo/client/index.js";
+import { gql, DocumentTransform } from "@apollo/client/index.js";
+import { useSuspenseQuery } from "@apollo/client/react/index.js";
 import { visit, Kind, print, isDefinitionNode } from "graphql";
 import { serializeOptions } from "./transportedOptions.js";
 
