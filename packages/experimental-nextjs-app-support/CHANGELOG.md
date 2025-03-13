@@ -1,5 +1,12 @@
 # @apollo/experimental-nextjs-app-support
 
+## 0.11.11
+
+### Patch Changes
+
+- Updated dependencies [372cf0c]
+  - @apollo/client-react-streaming@0.11.11
+
 ## 0.11.10
 
 ### Patch Changes
