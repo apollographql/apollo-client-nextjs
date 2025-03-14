@@ -1,5 +1,11 @@
 # @apollo/client-react-streaming
 
+## 0.12.0-alpha.3
+
+### Patch Changes
+
+- c1e2415: Remove `_hydrated` property on transported queryRefs, use `WeakMap` instead.
+
 ## 0.11.11
 
 ### Patch Changes
