@@ -1,5 +1,11 @@
 # @apollo/client-react-streaming
 
+## 0.11.11
+
+### Patch Changes
+
+- 372cf0c: Add an optimiziation to minimize reexecution of React components during hydration.
+
 ## 0.12.0-alpha.2
 
 ### Patch Changes

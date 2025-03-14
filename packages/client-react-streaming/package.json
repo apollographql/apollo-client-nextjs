@@ -167,6 +167,7 @@
   },
   "dependencies": {
     "@types/react-dom": "^19.0.0",
+    "@wry/equality": "^0.5.6",
     "ts-invariant": "^0.10.3"
   }
 }
