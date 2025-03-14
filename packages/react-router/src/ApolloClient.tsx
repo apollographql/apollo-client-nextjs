@@ -1,6 +1,7 @@
 import {
   ReadFromReadableStreamLink,
   TeeToReadableStreamLink,
+  useWrapTransportedQueryRef,
 } from "@apollo/client-react-streaming";
 import type { QueryManager } from "@apollo/client/core/QueryManager.js";
 import type { NormalizedCacheObject } from "@apollo/client/index.js";
@@ -30,13 +31,21 @@ export class ApolloClient extends _ApolloClient<any> {
       useReadQuery(originalHook) {
         return function useReadQuery(queryRef) {
           const client = useApolloClient();
-          return originalHook(hydrateIfNecessary(queryRef, client) as any);
+          return originalHook(
+            useWrapTransportedQueryRef(
+              hydrateIfNecessary(queryRef, client) as any
+            )
+          );
         };
       },
       useQueryRefHandlers(originalHook) {
         return function useQueryRefHandlers(queryRef) {
           const client = useApolloClient();
-          return originalHook(hydrateIfNecessary(queryRef, client) as any);
+          return originalHook(
+            useWrapTransportedQueryRef(
+              hydrateIfNecessary(queryRef, client) as any
+            )
+          );
         };
       },
     };

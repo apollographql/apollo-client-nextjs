@@ -80,7 +80,7 @@
     "bundle-info": "yarn test-bundle --format json | jq '.analysis.entrypoints|to_entries|map({key:.key,value:.value.resolutions|to_entries|map({key:.key,value:.value.resolution.fileName })|from_entries})|from_entries'"
   },
   "devDependencies": {
-    "@apollo/client": "^3.12.6",
+    "@apollo/client": "^3.13.4",
     "@arethetypeswrong/cli": "0.15.3",
     "@tsconfig/recommended": "1.0.6",
     "@types/react": "*",

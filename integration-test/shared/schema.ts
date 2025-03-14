@@ -79,7 +79,7 @@ const resolvers = {
   Product: {
     rating: (source, args, context) => {
       return new Promise((resolve) =>
-        setTimeout(resolve, Math.random() * 2 * args.delay, {
+        setTimeout(resolve, args.delay / 2 + Math.random() * args.delay, {
           value: products.find((p) => p.id === source.id)?.rating,
           env: getEnv(context),
         })

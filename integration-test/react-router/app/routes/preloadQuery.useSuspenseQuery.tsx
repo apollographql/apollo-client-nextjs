@@ -1,17 +1,9 @@
-import { useLoaderData, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import type { Route } from "./+types/preloadQuery.useSuspenseQuery";
-import {
-  useQueryRefHandlers,
-  useReadQuery,
-  type QueryRef,
-  type DefaultContext,
-  useSuspenseQuery,
-} from "@apollo/client/index.js";
+import { type DefaultContext } from "@apollo/client/index.js";
+import { useSuspenseQuery } from "@apollo/client/react/index.js";
 import { apolloLoader } from "~/apollo";
-import {
-  QUERY,
-  type DynamicProductResult,
-} from "@integration-test/shared/queries";
+import { QUERY } from "@integration-test/shared/queries";
 import { Suspense } from "react";
 
 export const loader = apolloLoader<Route.LoaderArgs>()(({

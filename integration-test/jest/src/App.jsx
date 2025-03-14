@@ -5,12 +5,8 @@ import {
   InMemoryCache,
 } from "@apollo/client-integration-nextjs";
 import { SchemaLink } from "@apollo/client/link/schema/index.js";
-import {
-  useSuspenseQuery,
-  gql,
-  ApolloLink,
-  Observable,
-} from "@apollo/client/index.js";
+import { gql, ApolloLink, Observable } from "@apollo/client/index.js";
+import { useSuspenseQuery } from "@apollo/client/react/index.js";
 import { schema } from "./schema";
 
 const delayLink = new ApolloLink((operation, forward) => {

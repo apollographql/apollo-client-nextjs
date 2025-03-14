@@ -1,21 +1,33 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { DEFERRED_QUERY } from "@integration-test/shared/queries";
+import { useLoaderData } from "react-router";
+import type { Route } from "./+types/home";
 import {
   useApolloClient,
-  useSuspenseQuery,
+  useQueryRefHandlers,
+  useReadQuery,
 } from "@apollo/client/react/index.js";
+import { apolloLoader } from "~/apollo";
+import { DEFERRED_QUERY } from "@integration-test/shared/queries";
 import { useTransition } from "react";
 
-export const Route = createFileRoute("/useSuspenseQuery-defer")({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
-  const [refetching, startTransition] = useTransition();
-  const client = useApolloClient();
-  const { data, refetch } = useSuspenseQuery(DEFERRED_QUERY, {
+export const loader = apolloLoader<Route.LoaderArgs>()(async ({
+  preloadQuery,
+}) => {
+  const queryRef = preloadQuery(DEFERRED_QUERY, {
     variables: { delayDeferred: 1000 },
   });
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  return {
+    queryRef,
+  };
+});
+
+export default function Home() {
+  const { queryRef } = useLoaderData<typeof loader>();
+
+  const { refetch } = useQueryRefHandlers(queryRef);
+  const [refetching, startTransition] = useTransition();
+  const { data } = useReadQuery(queryRef);
+  const client = useApolloClient();
 
   return (
     <>

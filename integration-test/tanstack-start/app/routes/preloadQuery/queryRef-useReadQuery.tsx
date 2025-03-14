@@ -3,8 +3,8 @@ import {
   QueryRef,
   useQueryRefHandlers,
   useReadQuery,
-  type DefaultContext,
-} from "@apollo/client/index.js";
+} from "@apollo/client/react/index.js";
+import { type DefaultContext } from "@apollo/client/index.js";
 import "@integration-test/shared/errorLink";
 import { createFileRoute, ErrorComponentProps } from "@tanstack/react-router";
 import { Suspense } from "react";

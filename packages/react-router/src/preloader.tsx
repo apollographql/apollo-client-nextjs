@@ -36,18 +36,14 @@ export function createApolloLoaderHandler(
 ): ApolloLoader {
   return () => (loader) => (args) => {
     const client = makeClient(args.request);
-    const preloadQuery = createTransportedQueryPreloader(client);
+    const preloader = createTransportedQueryPreloader(client);
+    const preloadQuery: typeof preloader = (...args) =>
+      replaceStreamWithPromiscade(preloader(...args));
     const loaded = loader({
       ...args,
       preloadQuery,
     });
-    JSON.stringify(loaded, (_key, value) => {
-      if (isTransportedQueryRef(value)) {
-        replaceStreamWithPromiscade(value);
-      }
-      return value;
-    });
-    return loaded as any;
+    return loaded as MarkedForSerialization<typeof loaded>;
   };
 }
 
@@ -77,15 +73,18 @@ function isPromiscaded(
 /**
  * This function is used to convert a stream ref to a promiscaded ref
  *
- * **modifies the object in place**
+ * **modifies the object in place and returns it**
  */
-function replaceStreamWithPromiscade(queryRef: TransportedQueryRef) {
+function replaceStreamWithPromiscade<T extends TransportedQueryRef>(
+  queryRef: T
+) {
   const typed = queryRef as unknown as PromiscadedRef;
   // the stream will be tee'd so it can be used in the same environment,
   // but also transported over the wire in the form of a promiscade
   const stream = queryRef.$__apollo_queryRef.stream;
   typed.$__apollo_queryRef.promiscade = streamToPromiscade(stream);
   delete typed.$__apollo_queryRef.stream;
+  return queryRef;
 }
 
 /**
