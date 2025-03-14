@@ -1,5 +1,13 @@
 # @apollo/client-integration-react-router
 
+## 0.12.0-alpha.3
+
+### Patch Changes
+
+- c1e2415: Fix handling of asynchronous loaders.
+- Updated dependencies [c1e2415]
+  - @apollo/client-react-streaming@0.12.0-alpha.3
+
 ## 0.12.0-alpha.2
 
 ### Patch Changes

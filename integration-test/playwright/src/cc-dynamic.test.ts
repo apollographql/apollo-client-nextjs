@@ -215,6 +215,8 @@ test.describe("CC dynamic", () => {
     expect(await page.getByText("loading...").count()).toBe(6);
     // deferred chunk came in
     await expect(page.getByText("cuteness overload")).toBeVisible();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     expect(await page.getByText("Queried in SSR environment").count()).toBe(7);
     expect(await page.getByText("loading...").count()).toBe(0);
   });
