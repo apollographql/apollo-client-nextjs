@@ -13,21 +13,24 @@ import {
 } from "@apollo/client-react-streaming";
 import type { Promiscade } from "promiscade";
 import { promiscadeToReadableStream, streamToPromiscade } from "promiscade";
-import type { unstable_SerializesTo } from "react-router";
+import { unstable_createContext, type unstable_MiddlewareFunction, type unstable_SerializesTo } from "react-router";
 import type { JsonString } from "@apollo/client-react-streaming/stream-utils";
 
 type MarkedForSerialization<T> =
   T extends TransportedQueryRef<infer Data, infer Variables>
-    ? unstable_SerializesTo<QueryRef<Data, Variables>>
-    : { [K in keyof T]: MarkedForSerialization<T[K]> };
+  ? unstable_SerializesTo<QueryRef<Data, Variables>>
+  : { [K in keyof T]: MarkedForSerialization<T[K]> };
+
+export type ApolloContext = {
+  preloadQuery: PreloadTransportedQueryFunction;
+};
+
 
 type ApolloLoader = <LoaderArgs extends CreateServerLoaderArgs<any>>() => <
   ReturnValue,
 >(
   loader: (
-    args: LoaderArgs & {
-      preloadQuery: PreloadTransportedQueryFunction;
-    }
+    args: LoaderArgs & ApolloContext
   ) => ReturnValue
 ) => (args: LoaderArgs) => MarkedForSerialization<ReturnValue>;
 
@@ -44,6 +47,24 @@ export function createApolloLoaderHandler(
       preloadQuery,
     });
     return loaded as MarkedForSerialization<typeof loaded>;
+  };
+}
+
+
+export const apolloContext = unstable_createContext<ApolloContext>();
+
+export function createApolloMiddleware(
+  makeClient: (request: Request) => ApolloClient
+): unstable_MiddlewareFunction {
+  return async ({ request, context }) => {
+    const client = makeClient(request);
+    const preloader = createTransportedQueryPreloader(client);
+    const preloadQuery: typeof preloader = (...args) =>
+      replaceStreamWithPromiscade(preloader(...args));
+
+    context.set(apolloContext, {
+      preloadQuery,
+    });
   };
 }
 

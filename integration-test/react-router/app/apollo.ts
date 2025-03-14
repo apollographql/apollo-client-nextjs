@@ -1,6 +1,7 @@
 import { ApolloLink, HttpLink, InMemoryCache } from "@apollo/client/index.js";
 import {
   createApolloLoaderHandler,
+  createApolloMiddleware,
   ApolloClient,
 } from "@apollo/client-integration-react-router";
 import { IncrementalSchemaLink } from "@integration-test/shared/IncrementalSchemaLink";
@@ -22,4 +23,6 @@ export const makeClient = (request?: Request) => {
     link,
   });
 };
+
 export const apolloLoader = createApolloLoaderHandler(makeClient);
+export const apolloMiddleware = createApolloMiddleware(makeClient);
