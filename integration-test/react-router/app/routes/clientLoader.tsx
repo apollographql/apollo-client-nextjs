@@ -1,19 +1,17 @@
-import type { Route } from "./+types/middleware";
+import type { Route } from "./+types/clientLoader";
 import {
   useApolloClient,
   useQueryRefHandlers,
   useReadQuery,
 } from "@apollo/client/react/index.js";
-import { apolloMiddleware } from "~/apollo";
+import {} from "~/apollo";
 import { DEFERRED_QUERY } from "@integration-test/shared/queries";
 import { useTransition } from "react";
 import { apolloContext } from "@apollo/client-integration-react-router";
 
-export const unstable_middleware = [apolloMiddleware]
-
-export async function loader({ context }: Route.LoaderArgs) {
-  const apollo = context.get(apolloContext)
-  const queryRef = apollo.preloadQuery(DEFERRED_QUERY, {
+export async function clientLoader({ context }: Route.LoaderArgs) {
+  const { preloadQuery } = context.get(apolloContext);
+  const queryRef = preloadQuery(DEFERRED_QUERY, {
     variables: { delayDeferred: 1000 },
   });
 
@@ -24,8 +22,8 @@ export async function loader({ context }: Route.LoaderArgs) {
   };
 }
 
-export default function Middleware({ loaderData }: Route.ComponentProps) {
-  const { queryRef } = loaderData
+export default function WithClientLoader({ loaderData }: Route.ComponentProps) {
+  const { queryRef } = loaderData;
 
   const { refetch } = useQueryRefHandlers(queryRef);
   const [refetching, startTransition] = useTransition();

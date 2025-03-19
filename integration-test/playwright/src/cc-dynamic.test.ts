@@ -203,21 +203,25 @@ test.describe("CC dynamic", () => {
     expect(await page.getByText("loading...").count()).toBe(0);
   });
 
-  test("middleware", { tag: ["@react-router"] }, async ({ page }) => {
-    await page.goto(`${base}/middleware`, {
+  test("client loader", { tag: ["@react-router"] }, async ({ page }) => {
+    await page.goto(`${base}/clientLoader`, {
       waitUntil: "commit",
     });
 
     // main data already there
     await expect(page.getByText("Soft Warm Apollo Beanie")).toBeVisible();
-    expect(await page.getByText("Queried in SSR environment").count()).toBe(1);
+    expect(await page.getByText("Queried in browser environment").count()).toBe(
+      1
+    );
     // deferred chunks still loading
     expect(await page.getByText("loading...").count()).toBe(6);
     // deferred chunk came in
     await expect(page.getByText("cuteness overload")).toBeVisible();
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    expect(await page.getByText("Queried in SSR environment").count()).toBe(7);
+    expect(await page.getByText("Queried in browser environment").count()).toBe(
+      7
+    );
     expect(await page.getByText("loading...").count()).toBe(0);
   });
 });

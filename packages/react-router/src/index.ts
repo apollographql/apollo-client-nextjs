@@ -3,5 +3,5 @@ export { ApolloHydrationHelper } from "./ApolloHydrationHelper.js";
 export {
   apolloContext,
   createApolloLoaderHandler,
-  createApolloMiddleware,
+  initializeApolloContext,
 } from "./preloader.js";

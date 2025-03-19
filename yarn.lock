@@ -11109,8 +11109,8 @@ __metadata:
   linkType: hard
 
 "@vercel/react-router@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@vercel/react-router@npm:1.0.2"
+  version: 1.1.0
+  resolution: "@vercel/react-router@npm:1.1.0"
   dependencies:
     "@vercel/static-config": "npm:3.0.0"
     ts-morph: "npm:12.0.0"
@@ -11120,7 +11120,7 @@ __metadata:
     isbot: 5
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/5f7e60adb6f84473603d37e61572f24395490bce19ff0fe2fb240fa97a8be77c9e4da27ad9f45bc053d9c87f63d2068ca93027fc2014f0ac6ee0659c2e111628
+  checksum: 10/d04ff10f34595b3c47f467585fc39ce233a4ec58d64f8f56dc6242cefe222d6a7ea91ad414bf70998d2b7de6ce0bd3019fde5c6dd05612e0aa9e2bc5b5329aae
   languageName: node
   linkType: hard
 
