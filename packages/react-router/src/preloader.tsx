@@ -13,22 +13,31 @@ import {
 } from "@apollo/client-react-streaming";
 import type { Promiscade } from "promiscade";
 import { promiscadeToReadableStream, streamToPromiscade } from "promiscade";
-import type { unstable_SerializesTo } from "react-router";
+import {
+  unstable_createContext,
+  type unstable_InitialContext,
+  type unstable_SerializesTo,
+} from "react-router";
 import type { JsonString } from "@apollo/client-react-streaming/stream-utils";
+
+import {
+  createQueryPreloader,
+  type PreloadQueryFunction,
+} from "@apollo/client/react/index.js";
 
 type MarkedForSerialization<T> =
   T extends TransportedQueryRef<infer Data, infer Variables>
     ? unstable_SerializesTo<QueryRef<Data, Variables>>
     : { [K in keyof T]: MarkedForSerialization<T[K]> };
 
+export type ApolloContext = {
+  preloadQuery: PreloadTransportedQueryFunction;
+};
+
 type ApolloLoader = <LoaderArgs extends CreateServerLoaderArgs<any>>() => <
   ReturnValue,
 >(
-  loader: (
-    args: LoaderArgs & {
-      preloadQuery: PreloadTransportedQueryFunction;
-    }
-  ) => ReturnValue
+  loader: (args: LoaderArgs & ApolloContext) => ReturnValue
 ) => (args: LoaderArgs) => MarkedForSerialization<ReturnValue>;
 
 export function createApolloLoaderHandler(
@@ -45,6 +54,20 @@ export function createApolloLoaderHandler(
     });
     return loaded as MarkedForSerialization<typeof loaded>;
   };
+}
+
+export const apolloContext = unstable_createContext<{
+  client: ApolloClient;
+  preloadQuery: PreloadQueryFunction;
+}>();
+
+export function initializeApolloContext(
+  client: ApolloClient,
+  contextMap: unstable_InitialContext = new Map()
+) {
+  const preloader = createQueryPreloader(client);
+  contextMap.set(apolloContext, { client, preloadQuery: preloader });
+  return contextMap;
 }
 
 // currently, `turbo-stream` cannot stream a `ReadableStream`.

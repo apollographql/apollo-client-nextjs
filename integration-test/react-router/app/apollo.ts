@@ -22,4 +22,5 @@ export const makeClient = (request?: Request) => {
     link,
   });
 };
+
 export const apolloLoader = createApolloLoaderHandler(makeClient);
