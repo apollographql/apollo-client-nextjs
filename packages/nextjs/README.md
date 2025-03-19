@@ -281,8 +281,8 @@ Without further handling, your component will now render with partial data - but
 To handle this, you can apply one of three different strategies:
 
 - use `PreloadQuery` with `useReadyQuery` - `PreloadQuery` will allow for `@defer`red data to fully be transported over
-- remove `@defer` fragments from your query
-- wait for deferred data to be received
+- remove `@defer` fragments from your query. This will allow you to prerender something in SSR, but the query will restart again in the browser.
+- wait for deferred data to be received, either using `AccumulateMultipartResponsesLink` or `useSuspenseFragment`, specifically waiting for deferred fragments.
 
 For this, we ship the two links `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`, as well as the `SSRMultipartLink`, which combines both of them into a more convenient-to-use Link.
 
