@@ -4,11 +4,6 @@
 
 # Apollo Client support for the Next.js App Router
 
-> ❗️ This package is experimental.<br/>
-> Generally it should work well, you might run into race conditions when your Client Component is still rendering in SSR, and already making overlapping queries on the browser.\
-> This cannot be addressed from our side, but would need API changes in Next.js or React itself.\
-> If you do not use suspense in your application, this will not be a problem to you.
-
 | ☑️ Apollo Client User Survey                                                                                                                                                                                                                                                                                                                                                             |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | What do you like best about Apollo Client? What needs to be improved? Please tell us by taking a [one-minute survey](https://docs.google.com/forms/d/e/1FAIpQLSczNDXfJne3ZUOXjk9Ursm9JYvhTh1_nFTDfdq3XBAFWCzplQ/viewform?usp=pp_url&entry.1170701325=Apollo+Client&entry.204965213=Readme). Your responses will help us understand Apollo Client usage and allow us to serve you better. |
@@ -63,9 +58,11 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
     link: new HttpLink({
       // this needs to be an absolute url, as relative urls cannot be used in SSR
       uri: "http://example.com/api/graphql",
-      // you can disable result caching here if you want to
-      // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
-      // fetchOptions: { cache: "no-store" },
+      fetchOptions: {
+        // you can pass additional options that should be passed to `fetch` here,
+        // e.g. Next.js-related `fetch` options regarding caching and revalidation
+        // see https://nextjs.org/docs/app/api-reference/functions/fetch#fetchurl-options
+      },
     }),
   });
 });
@@ -77,6 +74,21 @@ You can then use that `getClient` function in your server components:
 const { data } = await getClient().query({ query: userQuery });
 // `query` is a shortcut for `getClient().query`
 const { data } = await query({ query: userQuery });
+```
+
+If you want to override Next.js-specific `fetch` options, you can use `context.fetchOptions`:
+
+```js
+const { data } = await getClient().query({
+  query: userQuery,
+  context: {
+    fetchOptions: {
+      // you can pass additional options that should be passed to `fetch` here,
+      // e.g. Next.js-related `fetch` options regarding caching and revalidation
+      // see https://nextjs.org/docs/app/api-reference/functions/fetch#fetchurl-options
+    },
+  },
+});
 ```
 
 For a description of `PreloadQuery`, see [Preloading data in RSC for usage in Client Components](#preloading-data-in-rsc-for-usage-in-client-components)
@@ -105,11 +117,15 @@ function makeClient() {
     uri: "https://example.com/api/graphql",
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
-    fetchOptions: { cache: "no-store" },
+    fetchOptions: {
+      // you can pass additional options that should be passed to `fetch` here,
+      // e.g. Next.js-related `fetch` options regarding caching and revalidation
+      // see https://nextjs.org/docs/app/api-reference/functions/fetch#fetchurl-options
+    },
     // you can override the default `fetchOptions` on a per query basis
     // via the `context` property on the options passed as a second argument
     // to an Apollo Client data fetching hook, e.g.:
-    // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
+    // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { ... }}});
   });
 
   // use the `ApolloClient` from "@apollo/client-integration-nextjs"
@@ -201,6 +217,9 @@ That way, if you repeat the query in your Client Component using `useSuspenseQue
 > [!IMPORTANT]
 > Keep in mind that we don't recommend mixing data between Client Components and Server Components. Data fetched this way should be considered client data and never be referenced in your Server Components. `PreloadQuery` prevents mixing server data and client data by creating a separate `ApolloClient` instance using the `makeClient` function passed into `registerApolloClient`.
 
+> [!TIP]
+> If you are using `@defer`: `<PreloadQuery>` allows your deferred data to be streamed in chunk-by-chunk without any cutoff, just as if you would have made that same query in the browser.
+
 #### Usage with `useReadQuery`
 
 Just like using `useBackgroundQuery` with `useReadQuery` in place of `useSuspenseQuery` [to avoid request waterfalls](https://www.apollographql.com/docs/react/data/suspense#avoiding-request-waterfalls), you can also use `PreloadQuery` in combination with `useReadQuery` in Client Components to achieve a similar result. Use the render prop notation to get a `QueryRef` that you can pass to your Client Component:
@@ -259,8 +278,9 @@ afterEach(resetApolloClientSingletons);
 Generally, `useSuspenseQuery` will only suspend until the initial response is received.
 In most cases, you get a full response, but if you use multipart response features like the `@defer` directive, you will only get a partial response.\
 Without further handling, your component will now render with partial data - but the request will still keep running in the background. This is a worst-case scenario because your server will have to bear the load of that request, but the client will not get the complete data anyways.<br/>
-To handle this, you can apply one of two different strategies:
+To handle this, you can apply one of three different strategies:
 
+- use `PreloadQuery` with `useReadyQuery` - `PreloadQuery` will allow for `@defer`red data to fully be transported over
 - remove `@defer` fragments from your query
 - wait for deferred data to be received
 
