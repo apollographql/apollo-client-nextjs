@@ -1,6 +1,6 @@
 {
   "name": "@apollo/client-react-streaming",
-  "version": "0.11.9",
+  "version": "0.11.11",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
   },
@@ -169,6 +169,7 @@
     "react-dom": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
+    "@wry/equality": "^0.5.6",
     "ts-invariant": "^0.10.3"
   }
 }

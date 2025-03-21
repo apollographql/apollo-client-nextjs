@@ -32,9 +32,10 @@ __metadata:
   linkType: hard
 
 "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.9
+  version: 0.11.11
   resolution: "@apollo/client-react-streaming@exec:./shared/build-client-react-streaming.cjs#./shared/build-client-react-streaming.cjs::hash=4f1b75&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
+    "@wry/equality": "npm:^0.5.6"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.10.4
@@ -83,10 +84,10 @@ __metadata:
   linkType: hard
 
 "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs::locator=%40integration-test%2Froot%40workspace%3A.":
-  version: 0.11.9
+  version: 0.11.11
   resolution: "@apollo/experimental-nextjs-app-support@exec:./shared/build-experimental-nextjs-app-support.cjs#./shared/build-experimental-nextjs-app-support.cjs::hash=db9e8a&locator=%40integration-test%2Froot%40workspace%3A."
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.11.9"
+    "@apollo/client-react-streaming": "npm:0.11.11"
   peerDependencies:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
