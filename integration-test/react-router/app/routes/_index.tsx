@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router";
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/_index";
 import {
   useApolloClient,
   useQueryRefHandlers,
