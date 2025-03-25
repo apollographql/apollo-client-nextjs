@@ -7,7 +7,7 @@
     "build": "react-router build",
     "dev": "react-router dev --port 3000",
     "start": "yarn build && wrangler dev",
-    "typecheck": "react-router typegen && tsc",
+    "typecheck": "yarn gen && tsc",
     "test": "yarn test:react-router",
     "gen": "wrangler types && react-router typegen && react-router routes"
   },
