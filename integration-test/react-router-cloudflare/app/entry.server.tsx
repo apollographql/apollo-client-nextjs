@@ -24,6 +24,7 @@ export default async function handleRequest(
   // vercel-specific options, originating from `@vercel/react-router/entry.server.js`
   options?: RenderOptions
 ) {
+  let shellRendered = false;
   const userAgent = request.headers.get("user-agent");
   const client = makeClient(request);
 
@@ -47,10 +48,14 @@ export default async function handleRequest(
       signal: abortController.signal,
       onError(error: unknown) {
         responseStatusCode = 500;
-        console.error(error);
+
+        if (shellRendered) {
+          console.error(error);
+        }
       },
     }
   );
+  shellRendered = true;
 
   // BUG: I tried to port this over /integration-test/react-router/app/entry.server.tsx
   // But it breaks with a hydration error if I manually set shouldWaitForAllContent = true.
