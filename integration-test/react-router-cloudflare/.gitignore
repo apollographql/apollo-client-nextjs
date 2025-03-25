@@ -6,3 +6,4 @@
 /build/
 
 worker-configuration.d.ts
+.wrangler
