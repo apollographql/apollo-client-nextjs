@@ -2,7 +2,7 @@ import type { CreateServerLoaderArgs } from "react-router/route-module";
 import type { ApolloClient } from "./ApolloClient.js";
 import type { QueryRef } from "@apollo/client/react/index.js";
 import type {
-  PreloadTransportedQueryFunction,
+  PreloadTransportedQueryOptions,
   ReadableStreamLinkEvent,
   TransportedQueryRef,
 } from "@apollo/client-react-streaming";
@@ -15,35 +15,47 @@ import type { Promiscade } from "promiscade";
 import { promiscadeToReadableStream, streamToPromiscade } from "promiscade";
 import type { unstable_SerializesTo } from "react-router";
 import type { JsonString } from "@apollo/client-react-streaming/stream-utils";
+import type {
+  DocumentNode,
+  OperationVariables,
+  TypedDocumentNode,
+} from "@apollo/client";
 
-type MarkedForSerialization<T> =
-  T extends TransportedQueryRef<infer Data, infer Variables>
-    ? unstable_SerializesTo<QueryRef<Data, Variables>>
-    : { [K in keyof T]: MarkedForSerialization<T[K]> };
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export declare namespace createApolloLoaderHandler {
+  export interface PreloadQueryFn {
+    <
+      TData = unknown,
+      TVariables extends OperationVariables = OperationVariables,
+    >(
+      query: DocumentNode | TypedDocumentNode<TData, TVariables>,
+      options?: PreloadTransportedQueryOptions<NoInfer<TVariables>, TData>
+    ): unstable_SerializesTo<QueryRef<TData, TVariables>>;
+  }
 
-type ApolloLoader = <LoaderArgs extends CreateServerLoaderArgs<any>>() => <
-  ReturnValue,
->(
-  loader: (
-    args: LoaderArgs & {
-      preloadQuery: PreloadTransportedQueryFunction;
-    }
-  ) => ReturnValue
-) => (args: LoaderArgs) => MarkedForSerialization<ReturnValue>;
+  export type ApolloLoader = <
+    LoaderArgs extends CreateServerLoaderArgs<any>,
+  >() => <ReturnValue>(
+    loader: (
+      args: LoaderArgs & {
+        preloadQuery: PreloadQueryFn;
+      }
+    ) => ReturnValue
+  ) => (args: LoaderArgs) => ReturnValue;
+}
 
 export function createApolloLoaderHandler(
   makeClient: (request: Request) => ApolloClient
-): ApolloLoader {
+): createApolloLoaderHandler.ApolloLoader {
   return () => (loader) => (args) => {
     const client = makeClient(args.request);
     const preloader = createTransportedQueryPreloader(client);
-    const preloadQuery: typeof preloader = (...args) =>
+    const preloadQuery: createApolloLoaderHandler.PreloadQueryFn = (...args) =>
       replaceStreamWithPromiscade(preloader(...args));
-    const loaded = loader({
+    return loader({
       ...args,
       preloadQuery,
     });
-    return loaded as MarkedForSerialization<typeof loaded>;
   };
 }
 
@@ -75,16 +87,19 @@ function isPromiscaded(
  *
  * **modifies the object in place and returns it**
  */
-function replaceStreamWithPromiscade<T extends TransportedQueryRef>(
-  queryRef: T
-) {
+function replaceStreamWithPromiscade<
+  TData,
+  TVariables extends OperationVariables,
+>(
+  queryRef: TransportedQueryRef<TData, TVariables>
+): unstable_SerializesTo<QueryRef<TData, TVariables>> {
   const typed = queryRef as unknown as PromiscadedRef;
   // the stream will be tee'd so it can be used in the same environment,
   // but also transported over the wire in the form of a promiscade
   const stream = queryRef.$__apollo_queryRef.stream;
   typed.$__apollo_queryRef.promiscade = streamToPromiscade(stream);
   delete typed.$__apollo_queryRef.stream;
-  return queryRef;
+  return queryRef as any;
 }
 
 /**
