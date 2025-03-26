@@ -1,5 +1,13 @@
 # @apollo/client-integration-react-router
 
+## 0.12.0-alpha.4
+
+### Patch Changes
+
+- 7836098: fix up types for async loaders
+- Updated dependencies [3b6eca6]
+  - @apollo/client-react-streaming@0.12.0-alpha.4
+
 ## 0.12.0-alpha.3
 
 ### Patch Changes
