@@ -13,6 +13,8 @@ const seenClients = WeakSet
   ? new WeakSet<ApolloClient<any> | Promise<ApolloClient<any>>>()
   : undefined;
 
+const checkForStableCache = cache(() => ({}));
+
 /**
  * > This export is only available in React Server Components
  *
@@ -89,7 +91,24 @@ export function registerApolloClient<
   const PreloadQuery = makePreloadQuery(getPreloadClient);
   return {
     getClient,
-    query: async (...args) => (await getClient()).query(...args),
+    query: async (...args) => {
+      if (checkForStableCache() !== checkForStableCache()) {
+        console.warn(
+          `
+The \`query\` shortcut returned from \`registerApolloClient\` 
+should not be used in Server Action or Middleware environments.
+
+Calling it multiple times in those environments would 
+create multiple independent \`ApolloClient\` instances.
+
+Please create a single \`ApolloClient\` instance by calling 
+\`getClient()\` at the beginning of your Server Action or Middleware 
+function and then call \`client.query\` multiple times instead.
+          `.trim()
+        );
+      }
+      return (await getClient()).query(...args);
+    },
     PreloadQuery,
   };
 }
