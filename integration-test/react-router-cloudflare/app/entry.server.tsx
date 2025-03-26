@@ -15,6 +15,7 @@ export type RenderOptions = {
   keyof RenderToPipeableStreamOptions]?: RenderToReadableStreamOptions[K];
 };
 
+// Based on this template https://github.com/cloudflare/templates/blob/staging/react-router-starter-template/app/entry.server.tsx
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -57,13 +58,11 @@ export default async function handleRequest(
   );
   shellRendered = true;
 
-  // BUG: I tried to port this over /integration-test/react-router/app/entry.server.tsx
-  // But it breaks with a hydration error if I manually set shouldWaitForAllContent = true.
   // Ensure requests from bots and SPA Mode renders wait for all content to load before responding
-  // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
-  const shouldWaitForAllContent = (userAgent && isbot(userAgent)) || routerContext.isSpaMode;
+  // https://react.dev/reference/react-dom/server/renderToReadableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
+  const isCrawler = (userAgent && isbot(userAgent)) || routerContext.isSpaMode;
 
-  if (shouldWaitForAllContent) {
+  if (isCrawler) {
     await stream.allReady;
   }
 
