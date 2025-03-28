@@ -22,8 +22,10 @@
     "@integration-test/playwright": "0.0.0"
   },
   "changesets": [
+    "bright-eels-kiss",
     "curvy-carrots-refuse",
     "funny-moose-press",
+    "lemon-taxis-perform",
     "lovely-ears-kick",
     "moody-gifts-breathe",
     "old-squids-deny",

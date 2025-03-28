@@ -1,5 +1,12 @@
 # @apollo/client-react-streaming
 
+## 0.12.0-alpha.4
+
+### Patch Changes
+
+- 3b6eca6: Added a warning when calling the `query` shortcut of `registerApolloClient` outside of a RSC (e.g. in Server Actions or Middleware).
+  This could cause situations where users would accidentally create multiple Apollo Client instances.
+
 ## 0.12.0-alpha.3
 
 ### Patch Changes
