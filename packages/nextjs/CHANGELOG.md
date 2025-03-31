@@ -1,5 +1,19 @@
 # @apollo/client-integration-nextjs
 
+## 0.12.0
+
+### Patch Changes
+
+- dd2c972: Adjust imports to use the `@apollo/client/react` entrypoint for React-specific imports.
+- Updated dependencies [dd2c972]
+- Updated dependencies [c1e2415]
+- Updated dependencies [3b6eca6]
+- Updated dependencies [8209093]
+- Updated dependencies [20ce0c8]
+- Updated dependencies [9a8c872]
+- Updated dependencies [563db9b]
+  - @apollo/client-react-streaming@0.12.0
+
 ## 0.12.0-alpha.4
 
 ### Patch Changes
