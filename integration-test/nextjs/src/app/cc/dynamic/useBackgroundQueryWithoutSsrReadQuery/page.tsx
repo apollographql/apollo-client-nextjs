@@ -2,7 +2,7 @@
 
 import { useBackgroundQuery, useReadQuery } from "@apollo/client";
 import type { TypedDocumentNode } from "@apollo/client";
-import { gql, QueryReference } from "@apollo/client";
+import { gql, QueryRef } from "@apollo/client";
 import { Suspense, useState, useEffect } from "react";
 
 interface Data {
@@ -37,7 +37,7 @@ export default function Page() {
   );
 }
 
-function DisplayData({ queryRef }: { queryRef: QueryReference<Data> }) {
+function DisplayData({ queryRef }: { queryRef: QueryRef<Data> }) {
   const { data } = useReadQuery(queryRef);
   globalThis.hydrationFinished?.();
 

@@ -1,3 +1,15 @@
 {
-  "name": "@integration-test/shared"
+  "name": "@integration-test/shared",
+  "version": "0.0.0",
+  "private": true,
+  "peerDependencies": {
+    "@apollo/client": "*"
+  },
+  "devDependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "graphql": "*",
+    "react": "*",
+    "react-dom": "*"
+  }
 }

@@ -5,7 +5,7 @@ import {
   useBackgroundQuery,
   useReadQuery,
   gql,
-  QueryReference,
+  QueryRef,
 } from "@apollo/client";
 import { Suspense, useState, useEffect } from "react";
 
@@ -26,7 +26,9 @@ const QUERY: TypedDocumentNode<Data> = gql`
 `;
 
 export default function Page() {
-  const [queryRef] = useBackgroundQuery(QUERY, { context: { delay: 2000 } });
+  const [queryRef] = useBackgroundQuery(QUERY, {
+    context: { delay: 2000 },
+  });
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
   return (
@@ -39,7 +41,7 @@ export default function Page() {
   );
 }
 
-function DisplayData({ queryRef }: { queryRef: QueryReference<Data> }) {
+function DisplayData({ queryRef }: { queryRef: QueryRef<Data> }) {
   const { data } = useReadQuery(queryRef);
   globalThis.hydrationFinished?.();
 

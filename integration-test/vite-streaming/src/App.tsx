@@ -7,8 +7,8 @@ import {
   ApolloLink,
   Observable,
   TypedDocumentNode,
-  useSuspenseQuery,
 } from "@apollo/client/index.js";
+import { useSuspenseQuery } from "@apollo/client/react/index.js";
 import { schema } from "./schema";
 import { WrappedApolloProvider } from "./Transport";
 

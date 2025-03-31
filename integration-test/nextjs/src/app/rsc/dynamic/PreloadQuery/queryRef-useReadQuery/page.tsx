@@ -1,19 +1,19 @@
 import { ApolloWrapper } from "@/app/cc/ApolloWrapper";
 import { ClientChild } from "./ClientChild";
-import { QUERY } from "../shared";
+import { QUERY } from "@integration-test/shared/queries";
 
 export const dynamic = "force-dynamic";
 import { PreloadQuery } from "../../../client";
 import { Suspense } from "react";
 
-export default function Page({ searchParams }: { searchParams?: any }) {
+export default async function Page({ searchParams }: { searchParams?: any }) {
   return (
     <ApolloWrapper>
       <PreloadQuery
         query={QUERY}
         context={{
           delay: 1000,
-          error: searchParams?.errorIn || undefined,
+          error: (await searchParams)?.errorIn || undefined,
         }}
       >
         {(queryRef) => (

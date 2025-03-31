@@ -1,0 +1,16 @@
+{
+  "@apollo/client-integration-tanstack-start": {
+    "browser": [
+      "ApolloClient",
+      "InMemoryCache",
+      "routerWithApolloClient",
+      "built_for_browser"
+    ],
+    "node": [
+      "ApolloClient",
+      "InMemoryCache",
+      "routerWithApolloClient",
+      "built_for_browser"
+    ]
+  }
+}

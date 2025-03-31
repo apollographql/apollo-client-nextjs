@@ -19,15 +19,30 @@ export async function browserEnv() {
      * @param {import('react-dom/client').RootOptions} [rootOptions]
      * @returns
      */
-    render(container, reactNode, rootOptions) {
+    async render(container, reactNode, rootOptions) {
       if (lastRoot) lastRoot.unmount();
       lastRoot = createRoot(container, rootOptions);
-      act(() => lastRoot.render(reactNode));
+      await act(async () => lastRoot.render(reactNode));
       return lastRoot;
     },
     [Symbol.dispose]: () => {
       if (lastRoot) lastRoot.unmount();
       globalThis.IS_REACT_ACT_ENVIRONMENT = origActEnv;
+      cleanupJSDOM();
+    },
+  };
+}
+
+export async function renderStreamEnv() {
+  const jsdom = await import("global-jsdom");
+  const cleanupJSDOM = jsdom.default();
+  const { createRenderStream } = await import(
+    "@testing-library/react-render-stream/pure"
+  );
+
+  return {
+    createRenderStream,
+    [Symbol.dispose]: () => {
       cleanupJSDOM();
     },
   };

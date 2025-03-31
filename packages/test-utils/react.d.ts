@@ -9,6 +9,10 @@ export function browserEnv(): Promise<{
      * @param {import('react-dom/client').RootOptions} [rootOptions]
      * @returns
      */
-    render(container: import('react-dom/client').Container, reactNode: import('react').ReactNode, rootOptions?: import('react-dom/client').RootOptions): import("react-dom/client").Root;
+    render(container: import('react-dom/client').Container, reactNode: import('react').ReactNode, rootOptions?: import('react-dom/client').RootOptions): Promise<import("react-dom/client").Root>;
+    [Symbol.dispose]: () => void;
+}>;
+export function renderStreamEnv(): Promise<{
+    createRenderStream: typeof import("@testing-library/react-render-stream").createRenderStream;
     [Symbol.dispose]: () => void;
 }>;

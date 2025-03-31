@@ -1,5 +1,5 @@
 import type { ApolloClient, OperationVariables } from "@apollo/client/index.js";
-import type React from "react";
+import React from "react";
 import { cache } from "react";
 import type { ReactNode } from "react";
 import type { PreloadQueryOptions } from "./PreloadQuery.js";
@@ -12,6 +12,8 @@ const seenWrappers = WeakSet
 const seenClients = WeakSet
   ? new WeakSet<ApolloClient<any> | Promise<ApolloClient<any>>>()
   : undefined;
+
+const checkForStableCache = cache(() => ({}));
 
 /**
  * > This export is only available in React Server Components
@@ -89,7 +91,24 @@ export function registerApolloClient<
   const PreloadQuery = makePreloadQuery(getPreloadClient);
   return {
     getClient,
-    query: async (...args) => (await getClient()).query(...args),
+    query: async (...args) => {
+      if (checkForStableCache() !== checkForStableCache()) {
+        console.warn(
+          `
+The \`query\` shortcut returned from \`registerApolloClient\` 
+should not be used in Server Action or Middleware environments.
+
+Calling it multiple times in those environments would 
+create multiple independent \`ApolloClient\` instances.
+
+Please create a single \`ApolloClient\` instance by calling 
+\`getClient()\` at the beginning of your Server Action or Middleware 
+function and then call \`client.query\` multiple times instead.
+          `.trim()
+        );
+      }
+      return (await getClient()).query(...args);
+    },
     PreloadQuery,
   };
 }
@@ -149,7 +168,7 @@ return a new instance every time \`makeClient\` is called.
  * @see {@link PreloadQueryComponent}
  * @public
  */
-export interface PreloadQueryProps<TData, TVariables>
+export interface PreloadQueryProps<TData, TVariables extends OperationVariables>
   extends PreloadQueryOptions<TVariables, TData> {
   children:
     | ReactNode
@@ -208,7 +227,6 @@ function makePreloadQuery(
   return function PreloadQuery<TData, TVariables extends OperationVariables>(
     props: PreloadQueryProps<TData, TVariables>
   ): React.ReactElement {
-    // we directly execute the bound component instead of returning JSX to keep the tree a bit tidier
-    return UnboundPreloadQuery({ ...props, getClient });
+    return <UnboundPreloadQuery getClient={getClient} {...props} />;
   };
 }

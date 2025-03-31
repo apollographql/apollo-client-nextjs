@@ -3,6 +3,7 @@ import { it } from "node:test";
 import assert from "node:assert";
 import { runInConditions } from "@internal/test-utils/runInConditions.js";
 import { Writable } from "node:stream";
+import { ApolloLink, gql } from "@apollo/client/index.js";
 
 runInConditions("react-server");
 
@@ -52,6 +53,7 @@ function drain(stream: ReturnType<typeof renderToPipeableStream>) {
 
 function makeClient() {
   return new ApolloClient({
+    link: ApolloLink.empty(),
     cache: new InMemoryCache(),
   });
 }
@@ -188,6 +190,72 @@ it("warns if `makeClient` calls that should return different `ApolloClient` inst
         String(warnArgs![0])
       )
     );
+  } finally {
+    console.warn = warn;
+  }
+});
+
+it("warns if calling `query` outside of a React tree, e.g. in a Server Action or Middleware", async () => {
+  const warn = console.warn;
+  try {
+    let warnArgs: unknown[] | undefined = undefined;
+    console.warn = (...args) => (warnArgs = args);
+
+    const { query } = registerApolloClient(makeClient);
+    await query({
+      query: gql`
+        query {
+          hello
+        }
+      `,
+    }).catch();
+    assert.equal(
+      warnArgs,
+      `The \`query\` shortcut returned from \`registerApolloClient\` 
+should not be used in Server Action or Middleware environments.
+
+Calling it multiple times in those environments would 
+create multiple independent \`ApolloClient\` instances.
+
+Please create a single \`ApolloClient\` instance by calling 
+\`getClient()\` at the beginning of your Server Action or Middleware 
+function and then call \`client.query\` multiple times instead.`
+    );
+  } finally {
+    console.warn = warn;
+  }
+});
+
+it("does not warn about using `query` (even multiple times) inside of a React tree", async () => {
+  const warn = console.warn;
+  try {
+    let warnArgs: unknown[] | undefined = undefined;
+    console.warn = (...args) => (warnArgs = args);
+    const queryDocument = gql`
+      query {
+        hello
+      }
+    `;
+    const { query, getClient } = registerApolloClient(makeClient);
+    getClient().cache.writeQuery({
+      query: queryDocument,
+      data: { hello: "world" },
+    });
+
+    async function App() {
+      await query({
+        query: queryDocument,
+      });
+      await query({
+        query: queryDocument,
+      });
+      return <div></div>;
+    }
+
+    const stream = renderToPipeableStream(React.createElement(App), {});
+    await drain(stream);
+
+    assert.equal(warnArgs, undefined);
   } finally {
     console.warn = warn;
   }

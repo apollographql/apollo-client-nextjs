@@ -1,0 +1,30 @@
+{
+  "name": "@integration-test/tanstack-start",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi dev",
+    "build": "rm -rvf node_modules/.vinxi node_modules/.cache node_modules/.tanstack-start .output .vinxi && vinxi build",
+    "start": "vinxi start",
+    "test": "yarn test:tanstack"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.4",
+    "@apollo/client-integration-tanstack-start": "workspace:^",
+    "@integration-test/shared": "workspace:^",
+    "@tanstack/router-devtools": "^1.99.0",
+    "@tanstack/start": "^1.99.3",
+    "graphql": "^16.10.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-error-boundary": "^5.0.0",
+    "vinxi": "^0.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2"
+  }
+}

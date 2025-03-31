@@ -20,9 +20,6 @@ jobs:
       )
     runs-on: ubuntu-latest
     name: Run Playwright tests against Vercel deployment ${{ github.event.deployment_status.environment }}
-    defaults:
-      run:
-        working-directory: ./integration-test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,12 +28,7 @@ jobs:
           cache: "yarn"
       - name: Install Packages (Root)
         run: yarn install --immutable --mode=skip-build
-        working-directory: ./
-      - name: Install Packages (Integration Test)
-        run: |
-          yarn install
-        env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+      - run: yarn build:libs
 
       - name: Get installed Playwright version
         id: playwright-version

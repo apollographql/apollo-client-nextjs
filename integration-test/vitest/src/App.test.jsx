@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import App from "./App";
-import { resetApolloClientSingletons } from "@apollo/experimental-nextjs-app-support";
+import { resetApolloClientSingletons } from "@apollo/client-integration-nextjs";
 
 afterEach(resetApolloClientSingletons);
 

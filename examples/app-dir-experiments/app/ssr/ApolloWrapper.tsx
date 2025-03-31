@@ -6,7 +6,7 @@ import {
   InMemoryCache,
   ApolloClient,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support";
+} from "@apollo/client-integration-nextjs";
 import { setVerbosity } from "ts-invariant";
 
 setVerbosity("debug");

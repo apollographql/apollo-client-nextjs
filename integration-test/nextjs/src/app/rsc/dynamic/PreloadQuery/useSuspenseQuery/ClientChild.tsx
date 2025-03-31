@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuspenseQuery } from "@apollo/client";
-import { QUERY } from "../shared";
+import { QUERY } from "@integration-test/shared/queries";
 
 export function ClientChild() {
   const { data } = useSuspenseQuery(QUERY);

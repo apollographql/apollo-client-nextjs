@@ -1,6 +1,6 @@
 {
   "name": "@apollo/client-react-streaming",
-  "version": "0.11.11",
+  "version": "0.12.0-alpha.4",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-nextjs.git"
   },
@@ -78,18 +78,18 @@
     },
     "./stream-utils": {
       "require": {
-        "types": "./dist/stream-utils.node.d.cts",
-        "edge-light": "./dist/stream-utils.node.cjs",
-        "react-server": "./dist/empty.cjs",
-        "browser": "./dist/empty.cjs",
-        "node": "./dist/stream-utils.node.cjs"
+        "types": "./dist/stream-utils.combined.d.cts",
+        "react-server": "./dist/stream-utils.cjs",
+        "edge-light": "./dist/stream-utils.ssr.cjs",
+        "browser": "./dist/stream-utils.cjs",
+        "node": "./dist/stream-utils.ssr.cjs"
       },
       "import": {
-        "types": "./dist/stream-utils.node.d.ts",
-        "edge-light": "./dist/stream-utils.node.js",
-        "react-server": "./dist/empty.js",
-        "browser": "./dist/empty.js",
-        "node": "./dist/stream-utils.node.js"
+        "types": "./dist/stream-utils.combined.d.ts",
+        "react-server": "./dist/stream-utils.js",
+        "edge-light": "./dist/stream-utils.ssr.js",
+        "browser": "./dist/stream-utils.js",
+        "node": "./dist/stream-utils.ssr.js"
       }
     },
     "./package.json": "./package.json"
@@ -100,7 +100,7 @@
         "./dist/manual-transport.ssr.d.ts"
       ],
       "stream-utils": [
-        "./dist/stream-utils.node.d.ts"
+        "./dist/stream-utils.combined.d.ts"
       ]
     }
   },
@@ -131,7 +131,7 @@
     "lint": "eslint --ext .ts,.tsx src"
   },
   "devDependencies": {
-    "@apollo/client": "^3.10.4",
+    "@apollo/client": "^3.13.4",
     "@arethetypeswrong/cli": "0.15.3",
     "@internal/test-utils": "workspace:^",
     "@microsoft/api-extractor": "7.43.2",
@@ -139,21 +139,18 @@
     "@testing-library/react": "^16.1.0",
     "@total-typescript/shoehorn": "0.1.2",
     "@tsconfig/recommended": "1.0.6",
-    "@types/eslint": "^9.6.1",
     "@types/node": "20.12.11",
     "@types/react": "^19.0.0",
-    "@typescript-eslint/eslint-plugin": "7.5.0",
-    "@typescript-eslint/parser": "7.5.0",
+    "@types/react-dom": "*",
     "concurrently": "8.2.2",
     "esbuild": "^0.24.2",
     "eslint": "8.57.0",
-    "eslint-plugin-react": "7.34.1",
-    "eslint-plugin-react-hooks": "4.6.0",
     "global-jsdom": "24.0.0",
-    "graphql": "16.8.1",
+    "graphql": "^16.10.0",
     "jsdom": "24.0.0",
     "publint": "0.2.7",
     "react": "^19.0.0",
+    "react-dom": "*",
     "react-error-boundary": "4.0.13",
     "react-server-dom-webpack": "^19.0.0",
     "rimraf": "5.0.5",
@@ -163,12 +160,13 @@
     "zen-observable-ts": "1.1.0"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.10.4",
+    "@apollo/client": "^3.13.0",
     "graphql": "^16 || >=17.0.0-alpha.2",
     "react": "^18 || >=19.0.0-rc",
     "react-dom": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
+    "@types/react-dom": "^19.0.0",
     "@wry/equality": "^0.5.6",
     "ts-invariant": "^0.10.3"
   }

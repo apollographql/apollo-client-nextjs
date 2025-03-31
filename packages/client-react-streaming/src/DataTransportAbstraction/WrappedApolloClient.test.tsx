@@ -52,12 +52,12 @@ describe(
     };
     const FIRST_RESULT = { me: "User" };
     const EVENT_DATA: QueryEvent = {
-      type: "data",
+      type: "next",
       id: "1" as any,
-      result: { data: FIRST_RESULT },
+      value: { data: FIRST_RESULT },
     };
     const EVENT_COMPLETE: QueryEvent = {
-      type: "complete",
+      type: "completed",
       id: "1" as any,
     };
     const FIRST_HOOK_RESULT = {
@@ -124,7 +124,9 @@ describe(
           )
         );
 
-        assert.deepStrictEqual(events, [EVENT_STARTED]);
+        // these are an uuid, not just an incremental number, so we need to fix our EVENT_* constants with the real random uuid
+        const id = events[0].id;
+        assert.deepStrictEqual(events, [{ ...EVENT_STARTED, id }]);
         assert.deepStrictEqual(staticData, []);
 
         await act(async () =>
@@ -134,9 +136,9 @@ describe(
         await findByText("User");
 
         assert.deepStrictEqual(events, [
-          EVENT_STARTED,
-          EVENT_DATA,
-          EVENT_COMPLETE,
+          { ...EVENT_STARTED, id },
+          { ...EVENT_DATA, id },
+          { ...EVENT_COMPLETE, id },
         ]);
         assert.deepStrictEqual(
           staticData,
@@ -310,6 +312,7 @@ describe(
         appendToBody`<div hidden id="S:1"><div id="user">User</div></div>`;
         $RS("S:1", "P:1");
 
+        await new Promise((resolve) => setTimeout(resolve, 10));
         // meanwhile, in the browser, the cache is modified
         client.cache.writeQuery({
           query: QUERY_ME,

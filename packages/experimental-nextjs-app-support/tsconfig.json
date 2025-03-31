@@ -10,11 +10,13 @@
     "sourceMap": true,
     "jsx": "react",
     "declarationMap": true,
-    "types": ["react/canary", "node"],
+    "types": [
+      "react/canary",
+      "node"
+    ],
     "esModuleInterop": true,
-    "paths": {
-      "@apollo/experimental-nextjs-app-support": ["./src/combined.ts"]
-    }
   },
-  "include": ["src"]
+  "include": [
+    "redirect"
+  ]
 }
