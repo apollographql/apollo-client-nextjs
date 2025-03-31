@@ -12,6 +12,8 @@
     "hack-the-supergraph-ssr",
     "apollo-next-13-demo",
     "packages-shared",
-    "@integration-test/**"
+    "@integration-test/**",
+    "@apollo/client-integration-react-router",
+    "@apollo/client-integration-tanstack-start"
   ]
 }
