@@ -47,10 +47,6 @@ const checks = [
     name: "@apollo/client-integration-nextjs (RSC ESM)",
     path: "packages/nextjs/dist/index.rsc.js",
   },
-  {
-    name: "@apollo/client-integration-nextjs/rsc (RSC ESM)",
-    path: "packages/nextjs/dist/rsc/index.js",
-  },
 ];
 
 module.exports = checks.map(
