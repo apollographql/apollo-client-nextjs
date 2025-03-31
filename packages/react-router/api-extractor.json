@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
   "extends": "../../api-extractor.json",
-  "mainEntryPointFilePath": "./src/index.ts",
+  "mainEntryPointFilePath": "./dist/index.d.ts",
   "bundledPackages": [
     "@apollo/client-react-streaming",
     "@apollo/client-integration-react-router"
