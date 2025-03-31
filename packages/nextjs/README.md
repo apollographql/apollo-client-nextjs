@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/apollographql/apollo-client-nextjs/main/banner.jpg" width="500" alt="Apollo Client + Next.js App Router" />
+<img src="https://raw.githubusercontent.com/apollographql/apollo-client-integrations/main/banner.jpg" width="500" alt="Apollo Client + Next.js App Router" />
 </div>
 
 # Apollo Client support for the Next.js App Router
@@ -10,7 +10,7 @@
 
 ## Detailed technical breakdown
 
-You can find a detailed technical breakdown of what this package does and why it needs to do so [in the discussion around the accompanying RFC](https://github.com/apollographql/apollo-client-nextjs/pull/9).
+You can find a detailed technical breakdown of what this package does and why it needs to do so [in the discussion around the accompanying RFC](https://github.com/apollographql/apollo-client-integrations/pull/9).
 
 ## Why do you need this?
 

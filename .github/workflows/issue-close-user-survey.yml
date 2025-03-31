@@ -9,7 +9,7 @@ jobs:
     permissions:
       issues: write
     runs-on: ubuntu-latest
-    if: github.repository == 'apollographql/apollo-client-nextjs'
+    if: github.repository == 'apollographql/apollo-client-integrations'
     steps:
       - run: |
           gh issue comment "$NUMBER" --body "$BODY"

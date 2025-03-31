@@ -169,7 +169,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
        * so we do the next-best thing: restart the query in the browser as soon as it
        * failed on the server.
        * This matches up with what React will be doing (abort hydration and rerender)
-       * See https://github.com/apollographql/apollo-client-nextjs/issues/52
+       * See https://github.com/apollographql/apollo-client-integrations/issues/52
        */
       this.simulatedStreamingQueries.delete(event.id);
       if (process.env.REACT_ENV === "browser") {

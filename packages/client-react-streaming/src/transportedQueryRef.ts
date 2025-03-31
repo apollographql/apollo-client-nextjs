@@ -59,7 +59,7 @@ export interface TransportedQueryRef<
   TVariables extends OperationVariables = OperationVariables,
 > extends QueryRef<TData, TVariables> {
   /**
-   * Temporarily disabled - see https://github.com/apollographql/apollo-client-nextjs/issues/332
+   * Temporarily disabled - see https://github.com/apollographql/apollo-client-integrations/issues/332
    *
    * Will now be be `undefined` both in React Server Components and Client Components until we can find a better resolution.
    */

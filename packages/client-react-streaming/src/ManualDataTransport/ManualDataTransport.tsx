@@ -155,14 +155,14 @@ const UNINITIALIZED = {};
  *   - This delayed behaviour is the case with the Next.js `ServerInsertedHTMLContext` and in the example Vite implementation.
  *   - In this, case, older data from the server might overwrite newer data in the browser. This is minimized by simulating ongoing queries in the browser once the information of a started query is transported over.
  *     If the browser would try to trigger the exact same query, query deduplication would make the browser wait for the server query to resolve instead.
- * - For more timing-related details, see https://github.com/apollographql/apollo-client-nextjs/pull/9
+ * - For more timing-related details, see https://github.com/apollographql/apollo-client-integrations/pull/9
  *
  * To fully work around these drawbacks, React needs to add "data injection into the stream" to it's public API, which is not the case today.
- * We provide an [example with a patched React version](https://github.com/apollographql/apollo-client-nextjs/blob/main/integration-test/experimental-react) to showcase how that could look.
+ * We provide an [example with a patched React version](https://github.com/apollographql/apollo-client-integrations/blob/main/integration-test/experimental-react) to showcase how that could look.
  *
  * @example
  * For usage examples, see the implementation of the `@apollo/client-integration-nextjs`
- * [`ApolloNextAppProvider`](https://github.com/apollographql/apollo-client-nextjs/blob/c0715a05cf8ca29a3cbb9ce294cdcbc5ce251b2e/packages/experimental-nextjs-app-support/src/ApolloNextAppProvider.ts)
+ * [`ApolloNextAppProvider`](https://github.com/apollographql/apollo-client-integrations/blob/c0715a05cf8ca29a3cbb9ce294cdcbc5ce251b2e/packages/experimental-nextjs-app-support/src/ApolloNextAppProvider.ts)
  *
  * ```tsx
  * export const ApolloNextAppProvider = WrapApolloProvider(
@@ -181,7 +181,7 @@ const UNINITIALIZED = {};
  * ```
  *
  * @example
- * Another usage example is our integration example with Vite and streaming SSR, which you can find at https://github.com/apollographql/apollo-client-nextjs/tree/main/integration-test/vite-streaming
+ * Another usage example is our integration example with Vite and streaming SSR, which you can find at https://github.com/apollographql/apollo-client-integrations/tree/main/integration-test/vite-streaming
  *
  * @public
  */

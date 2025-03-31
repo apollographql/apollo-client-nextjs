@@ -20,7 +20,7 @@ interface DataTransportAbstraction {
  * `DataTransportContext.Provider` and provide the `DataTransportAbstraction` to it.
  *
  * See for example
- * https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+ * https://github.com/apollographql/apollo-client-integrations/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
  *
  * @public
  */
@@ -34,7 +34,7 @@ export const DataTransportContext =
  * This component needs to provide a `DataTransportContext` to it's children.
  *
  * See for example
- * https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+ * https://github.com/apollographql/apollo-client-integrations/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
  *
  * @public
  */
