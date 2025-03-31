@@ -1,5 +1,21 @@
 # @apollo/client-react-streaming
 
+## 0.12.0
+
+### Minor Changes
+
+- 8209093: Implement multipart streaming support with `@defer` for `PreloadQuery`
+- 20ce0c8: add `TeeToReadableStreamLink` and `ReadFromReadableStreamLink`
+
+### Patch Changes
+
+- dd2c972: Adjust imports to use the `@apollo/client/react` entrypoint for React-specific imports.
+- c1e2415: Remove `_hydrated` property on transported queryRefs, use `WeakMap` instead.
+- 3b6eca6: Added a warning when calling the `query` shortcut of `registerApolloClient` outside of a RSC (e.g. in Server Actions or Middleware).
+  This could cause situations where users would accidentally create multiple Apollo Client instances.
+- 9a8c872: Start an alpha branch
+- 563db9b: add support for `useSuspenseFragment`
+
 ## 0.12.0-alpha.4
 
 ### Patch Changes
