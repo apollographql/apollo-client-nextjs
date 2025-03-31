@@ -1,6 +1,6 @@
 {
   "name": "@apollo/experimental-nextjs-app-support",
-  "version": "0.12.0-alpha.4",
+  "version": "0.12.0",
   "repository": {
     "url": "git+https://github.com/apollographql/apollo-client-integrations.git"
   },
@@ -97,6 +97,6 @@
     "react": "^18 || >=19.0.0-rc"
   },
   "dependencies": {
-    "@apollo/client-integration-nextjs": "0.12.0-alpha.4"
+    "@apollo/client-integration-nextjs": "0.12.0"
   }
 }
