@@ -12,11 +12,13 @@ import {
 import { type AnyRouter } from "@tanstack/react-router";
 import React from "react";
 
+/** @alpha */
 export interface ApolloClientRouterContext {
   apolloClient: ApolloClient;
   preloadQuery: PreloadQueryFunction;
 }
 
+/** @alpha */
 export function routerWithApolloClient<TRouter extends AnyRouter>(
   router: TRouter["options"]["context"] extends ApolloClientRouterContext
     ? TRouter

@@ -3,6 +3,7 @@ import * as React from "react";
 import { useMatches } from "react-router";
 import { hydrateIfNecessary } from "./preloader.js";
 
+/** @alpha */
 export function ApolloHydrationHelper(props: { children: React.ReactNode }) {
   const [hydrated] = React.useState(new WeakSet());
   const client = useApolloClient();

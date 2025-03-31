@@ -30,6 +30,14 @@
       "ae-forgotten-export": {
         "addToApiReportFile": false,
         "logLevel": "none"
+      },
+      "ae-internal-missing-underscore": {
+        "addToApiReportFile": false,
+        "logLevel": "none"
+      },
+      "ae-incompatible-release-tags": {
+        "addToApiReportFile": false,
+        "logLevel": "none"
       }
     },
     "tsdocMessageReporting": {

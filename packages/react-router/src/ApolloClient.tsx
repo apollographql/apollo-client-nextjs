@@ -22,6 +22,7 @@ function getQueryManager(
   return client["queryManager"];
 }
 
+/** @public */
 export class ApolloClient extends _ApolloClient<any> {
   constructor(options: ConstructorParameters<typeof _ApolloClient>[0]) {
     super(options);

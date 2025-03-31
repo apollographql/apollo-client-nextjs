@@ -1,6 +1,9 @@
 import { ApolloLink, Observable } from "@apollo/client/index.js";
 import type { FetchResult } from "@apollo/client/index.js";
 
+/**
+ * @internal
+ */
 export type ReadableStreamLinkEvent =
   | { type: "next"; value: FetchResult }
   | { type: "completed" }
@@ -31,6 +34,7 @@ const readFromReadableStreamKey = Symbol.for("apollo.read.readableStream");
 
 /**
  * Apply to a context that will be passed to a link chain containing `TeeToReadableStreamLink`.
+ * @public
  */
 export function teeToReadableStream<T extends Record<string, any>>(
   onLinkHit: OnLinkHitFunction,
@@ -43,6 +47,7 @@ export function teeToReadableStream<T extends Record<string, any>>(
 
 /**
  * Apply to a context that will be passed to a link chain containing `ReadFromReadableStreamLink`.
+ * @public
  */
 export function readFromReadableStream<T extends Record<string, any>>(
   readableStream: ReadableStream<ReadableStreamLinkEvent>,
@@ -56,6 +61,7 @@ export function readFromReadableStream<T extends Record<string, any>>(
 /**
  * A link that allows the request to be cloned into a readable stream, e.g. for
  * transport of multipart responses from RSC or a server loader to the browser.
+ * @public
  */
 export class TeeToReadableStreamLink extends ApolloLink {
   constructor() {
@@ -107,8 +113,8 @@ export class TeeToReadableStreamLink extends ApolloLink {
 /**
  * A link that allows the response to be read from a readable stream, e.g. for
  * hydration of a multipart response from RSC or a server loader in the browser.
+ * @public
  */
-
 export class ReadFromReadableStreamLink extends ApolloLink {
   constructor() {
     super((operation, forward) => {

@@ -39,6 +39,7 @@ type RestrictedPreloadOptions = {
   pollInterval?: undefined;
 };
 
+/** @public */
 export type PreloadTransportedQueryOptions<TVariables, TData> = Omit<
   QueryOptions<TVariables, TData>,
   "query"
@@ -64,7 +65,7 @@ export interface TransportedQueryRef<
    * Will now be be `undefined` both in React Server Components and Client Components until we can find a better resolution.
    */
   toPromise?: undefined;
-  /** @private */
+  /** @internal */
   $__apollo_queryRef: {
     options: TransportedQueryRefOptions;
     stream: ReadableStream<JsonString<ReadableStreamLinkEvent>>;
@@ -83,6 +84,7 @@ export interface TransportedQueryRef<
   };
 }
 
+/** @public */
 export interface PreloadTransportedQueryFunction {
   <TData = unknown, TVariables extends OperationVariables = OperationVariables>(
     query: DocumentNode | TypedDocumentNode<TData, TVariables>,
@@ -90,6 +92,7 @@ export interface PreloadTransportedQueryFunction {
   ): TransportedQueryRef<TData, TVariables>;
 }
 
+/** @internal */
 export function getInjectableEventStream() {
   let controller:
     | ReadableStreamDefaultController<ReadableStreamLinkEvent>
@@ -102,6 +105,7 @@ export function getInjectableEventStream() {
   return [controller!, stream] as const;
 }
 
+/** @public */
 export function createTransportedQueryPreloader(
   client: ApolloClient<any>
 ): PreloadTransportedQueryFunction {
@@ -166,6 +170,7 @@ const hydrationCache = new WeakMap<
   { cacheKey: CacheKey }
 >();
 
+/** @public */
 export function reviveTransportedQueryRef(
   queryRef: TransportedQueryRef,
   client: ApolloClient<any>
@@ -200,12 +205,14 @@ export function reviveTransportedQueryRef(
   }
 }
 
+/** @public */
 export function isTransportedQueryRef(
   queryRef: any
 ): queryRef is TransportedQueryRef {
   return !!(queryRef && queryRef.$__apollo_queryRef);
 }
 
+/** @public */
 export function useWrapTransportedQueryRef<TData, TVariables>(
   queryRef: QueryRef<TData, TVariables> | TransportedQueryRef
 ): QueryRef<TData, TVariables> {

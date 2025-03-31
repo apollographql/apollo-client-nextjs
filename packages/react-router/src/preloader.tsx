@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import type { CreateServerLoaderArgs } from "react-router/route-module";
 import type { ApolloClient } from "./ApolloClient.js";
 import type { QueryRef } from "@apollo/client/react/index.js";
@@ -21,7 +22,7 @@ import type {
   TypedDocumentNode,
 } from "@apollo/client";
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
+/** @alpha */
 export declare namespace createApolloLoaderHandler {
   export interface PreloadQueryFn {
     <
@@ -44,6 +45,7 @@ export declare namespace createApolloLoaderHandler {
   ) => (args: LoaderArgs) => ReturnValue;
 }
 
+/** @alpha */
 export function createApolloLoaderHandler(
   makeClient: (request: Request) => ApolloClient
 ): createApolloLoaderHandler.ApolloLoader {

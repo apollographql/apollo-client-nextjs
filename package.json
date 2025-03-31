@@ -22,7 +22,7 @@
     "matrix": "node ./scripts/test-matrix.js",
     "docs": "api-documenter markdown --input-folder temp --output-folder docs",
     "build:libs": "yarn workspaces foreach --all -t --include \"@apollo/*\" run build",
-    "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" exec api-extractor run",
+    "build:docmodel": "yarn workspaces foreach --all --include \"@apollo/*\" --exclude @apollo/experimental-nextjs-app-support exec api-extractor run",
     "changeset-publish": "yarn build:libs && changeset publish",
     "changeset-version": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode=skip-build"
   },

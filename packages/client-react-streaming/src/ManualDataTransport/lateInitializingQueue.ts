@@ -11,6 +11,8 @@ type ValidQueueKeys = {
  * Before calling this function, `window[key]` can just be handled as an array of data.
  * When calling this funcation, all accumulated data will be passed to the callback.
  * After calling this function, `window[key]` will be an object with a `push` method that will call the callback with the data.
+ *
+ * @public
  */
 export function registerLateInitializingQueue<K extends ValidQueueKeys>(
   key: K,

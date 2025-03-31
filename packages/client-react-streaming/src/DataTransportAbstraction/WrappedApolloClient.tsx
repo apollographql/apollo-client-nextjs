@@ -234,9 +234,7 @@ interface InternalContext {
 
 /**
  * Apply to a context to prevent this operation from being transported over the SSR data transport mechanism.
- * @param readableStream
- * @param context
- * @returns
+ * @public
  */
 export function skipDataTransport<T extends Record<string, any>>(
   context: T
