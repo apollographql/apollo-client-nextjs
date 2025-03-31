@@ -40,24 +40,6 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[$\_\_apollo\_queryRef](./client-integration-nextjs.transportedqueryref.___apollo_queryref.md)
-
-
-</td><td>
-
-
-</td><td>
-
-{ options: TransportedQueryRefOptions; stream: ReadableStream&lt;JsonString&lt;ReadableStreamLinkEvent&gt;&gt;; queryKey: string; }
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [toPromise?](./client-integration-nextjs.transportedqueryref.topromise.md)
 
 

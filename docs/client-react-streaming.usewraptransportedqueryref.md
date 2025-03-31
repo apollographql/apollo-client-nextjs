@@ -4,6 +4,7 @@
 
 ## useWrapTransportedQueryRef() function
 
+
 **Signature:**
 
 ```typescript

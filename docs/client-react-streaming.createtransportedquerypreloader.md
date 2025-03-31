@@ -4,6 +4,7 @@
 
 ## createTransportedQueryPreloader() function
 
+
 **Signature:**
 
 ```typescript

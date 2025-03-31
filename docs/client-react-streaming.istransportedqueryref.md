@@ -4,6 +4,7 @@
 
 ## isTransportedQueryRef() function
 
+
 **Signature:**
 
 ```typescript

@@ -17,5 +17,3 @@ type QueryEvent = {
     id: TransportIdentifier;
 });
 ```
-**References:** [ReadableStreamLinkEvent](./client-react-streaming.readablestreamlinkevent.md)
-

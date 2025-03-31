@@ -40,24 +40,6 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[$\_\_apollo\_queryRef](./client-react-streaming.transportedqueryref.___apollo_queryref.md)
-
-
-</td><td>
-
-
-</td><td>
-
-{ options: TransportedQueryRefOptions; stream: ReadableStream&lt;JsonString&lt;[ReadableStreamLinkEvent](./client-react-streaming.readablestreamlinkevent.md)<!-- -->&gt;&gt;; queryKey: string; }
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
 [toPromise?](./client-react-streaming.transportedqueryref.topromise.md)
 
 

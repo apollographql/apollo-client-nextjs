@@ -4,6 +4,7 @@
 
 ## PreloadTransportedQueryFunction interface
 
+
 **Signature:**
 
 ```typescript

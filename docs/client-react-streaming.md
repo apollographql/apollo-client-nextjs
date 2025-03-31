@@ -159,6 +159,7 @@ Creates a "manual" Data Transport, to be used with `WrapApolloProvider`<!-- -->.
 </td><td>
 
 
+
 </td></tr>
 <tr><td>
 
@@ -166,6 +167,7 @@ Creates a "manual" Data Transport, to be used with `WrapApolloProvider`<!-- -->.
 
 
 </td><td>
+
 
 
 </td></tr>
@@ -250,6 +252,7 @@ afterEach(resetManualSSRApolloSingletons);
 </td><td>
 
 
+
 </td></tr>
 <tr><td>
 
@@ -279,6 +282,7 @@ Apply to a context that will be passed to a link chain containing `TeeToReadable
 
 
 </td><td>
+
 
 
 </td></tr>
@@ -381,6 +385,7 @@ Props for `PreloadQueryComponent`
 </td><td>
 
 
+
 </td></tr>
 <tr><td>
 
@@ -476,6 +481,7 @@ See for example https://github.com/apollographql/apollo-client-integrations/blob
 </td><td>
 
 
+
 </td></tr>
 <tr><td>
 
@@ -485,15 +491,6 @@ See for example https://github.com/apollographql/apollo-client-integrations/blob
 </td><td>
 
 Events that will be emitted by a wrapped ApolloClient instance during SSR on `DataTransportProviderImplementation.registerDispatchRequestStarted`<!-- -->, to be transported to the browser and replayed there using `DataTransportProviderImplementation.onQueryEvent`<!-- -->.
-
-
-</td></tr>
-<tr><td>
-
-[ReadableStreamLinkEvent](./client-react-streaming.readablestreamlinkevent.md)
-
-
-</td><td>
 
 
 </td></tr>

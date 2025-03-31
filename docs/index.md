@@ -58,14 +58,4 @@ It can also be used to use Apollo Client with a custom streaming SSR setup, e.g.
 
 
 </td></tr>
-<tr><td>
-
-[@apollo/experimental-nextjs-app-support](./experimental-nextjs-app-support.md)
-
-
-</td><td>
-
-
-
-</td></tr>
 </tbody></table>

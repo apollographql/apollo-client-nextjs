@@ -4,6 +4,7 @@
 
 ## PreloadTransportedQueryOptions type
 
+
 **Signature:**
 
 ```typescript

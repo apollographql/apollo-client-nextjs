@@ -37,7 +37,7 @@ readableStream
 
 </td><td>
 
-ReadableStream&lt;[ReadableStreamLinkEvent](./client-react-streaming.readablestreamlinkevent.md)<!-- -->&gt;
+ReadableStream&lt;ReadableStreamLinkEvent&gt;
 
 
 </td><td>

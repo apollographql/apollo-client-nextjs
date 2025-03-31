@@ -4,6 +4,7 @@
 
 ## reviveTransportedQueryRef() function
 
+
 **Signature:**
 
 ```typescript

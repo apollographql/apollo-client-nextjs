@@ -4,6 +4,7 @@
 
 ## ApolloClient class
 
+
 **Signature:**
 
 ```typescript
