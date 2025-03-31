@@ -4,9 +4,9 @@
 
 ## client-react-streaming package
 
-This package provides building blocks to create framework-level integration of Apollo Client with React's streaming SSR. See the \[@<!-- -->apollo/experimental-nextjs-app-support\](https://github.com/apollographql/apollo-client-nextjs/tree/main/packages/experimental-nextjs-app-support) package as an example.
+This package provides building blocks to create framework-level integration of Apollo Client with React's streaming SSR. See the \[@<!-- -->apollo/client-integration-nextjs\](https://github.com/apollographql/apollo-client-integrations/tree/main/packages/nextjs) package as an example.
 
-It can also be used to use Apollo Client with a custom streaming SSR setup, e.g. with Vite. See the \[vite streaming integration test\](https://github.com/apollographql/apollo-client-nextjs/tree/main/integration-test/vite-streaming) as an example.
+It can also be used to use Apollo Client with a custom streaming SSR setup, e.g. with Vite. See the \[vite streaming integration test\](https://github.com/apollographql/apollo-client-integrations/tree/main/integration-test/vite-streaming) as an example.
 
 ## Classes
 
@@ -64,6 +64,17 @@ For more documentation, please see [the Apollo Client API documentation](https:/
 </td></tr>
 <tr><td>
 
+[ReadFromReadableStreamLink](./client-react-streaming.readfromreadablestreamlink.md)
+
+
+</td><td>
+
+A link that allows the response to be read from a readable stream, e.g. for hydration of a multipart response from RSC or a server loader in the browser.
+
+
+</td></tr>
+<tr><td>
+
 [RemoveMultipartDirectivesLink](./client-react-streaming.removemultipartdirectiveslink.md)
 
 
@@ -101,6 +112,17 @@ A convenient combination of `RemoveMultipartDirectivesLink` and `AccumulateMulti
 
 
 </td></tr>
+<tr><td>
+
+[TeeToReadableStreamLink](./client-react-streaming.teetoreadablestreamlink.md)
+
+
+</td><td>
+
+A link that allows the request to be cloned into a readable stream, e.g. for transport of multipart responses from RSC or a server loader to the browser.
+
+
+</td></tr>
 </tbody></table>
 
 ## Functions
@@ -131,6 +153,35 @@ Creates a "manual" Data Transport, to be used with `WrapApolloProvider`<!-- -->.
 </td></tr>
 <tr><td>
 
+[createTransportedQueryPreloader(client)](./client-react-streaming.createtransportedquerypreloader.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isTransportedQueryRef(queryRef)](./client-react-streaming.istransportedqueryref.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[readFromReadableStream(readableStream, context)](./client-react-streaming.readfromreadablestream.md)
+
+
+</td><td>
+
+Apply to a context that will be passed to a link chain containing `ReadFromReadableStreamLink`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
 [registerApolloClient(makeClient)](./client-react-streaming.registerapolloclient.md)
 
 
@@ -139,6 +190,17 @@ Creates a "manual" Data Transport, to be used with `WrapApolloProvider`<!-- -->.
 &gt; This export is only available in React Server Components
 
 Ensures that you can always access the same instance of ApolloClient during RSC for an ongoing request, while always returning a new instance for different requests.
+
+
+</td></tr>
+<tr><td>
+
+[registerLateInitializingQueue(key, callback)](./client-react-streaming.registerlateinitializingqueue.md)
+
+
+</td><td>
+
+Registers a queue that can be filled with data before it has actually been initialized with this function. Before calling this function, `window[key]` can just be handled as an array of data. When calling this funcation, all accumulated data will be passed to the callback. After calling this function, `window[key]` will be an object with a `push` method that will call the callback with the data.
 
 
 </td></tr>
@@ -177,6 +239,46 @@ To be used in testing only, like
 ```ts
 afterEach(resetManualSSRApolloSingletons);
 ```
+
+
+</td></tr>
+<tr><td>
+
+[reviveTransportedQueryRef(queryRef, client)](./client-react-streaming.revivetransportedqueryref.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[skipDataTransport(context)](./client-react-streaming.skipdatatransport.md)
+
+
+</td><td>
+
+Apply to a context to prevent this operation from being transported over the SSR data transport mechanism.
+
+
+</td></tr>
+<tr><td>
+
+[teeToReadableStream(onLinkHit, context)](./client-react-streaming.teetoreadablestream.md)
+
+
+</td><td>
+
+Apply to a context that will be passed to a link chain containing `TeeToReadableStreamLink`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[useWrapTransportedQueryRef(queryRef)](./client-react-streaming.usewraptransportedqueryref.md)
+
+
+</td><td>
 
 
 </td></tr>
@@ -273,6 +375,15 @@ Props for `PreloadQueryComponent`
 </td></tr>
 <tr><td>
 
+[PreloadTransportedQueryFunction](./client-react-streaming.preloadtransportedqueryfunction.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [TransportedQueryRef](./client-react-streaming.transportedqueryref.md)
 
 
@@ -323,7 +434,7 @@ Description
 
 If you create a custom data transport, you need to wrap the child tree in a `DataTransportContext.Provider` and provide the `DataTransportAbstraction` to it.
 
-See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+See for example https://github.com/apollographql/apollo-client-integrations/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
 
 
 </td></tr>
@@ -353,7 +464,16 @@ Interface to be implemented by a custom data transport component, for usage with
 
 This component needs to provide a `DataTransportContext` to it's children.
 
-See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+See for example https://github.com/apollographql/apollo-client-integrations/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+
+
+</td></tr>
+<tr><td>
+
+[PreloadTransportedQueryOptions](./client-react-streaming.preloadtransportedqueryoptions.md)
+
+
+</td><td>
 
 
 </td></tr>
@@ -365,6 +485,15 @@ See for example https://github.com/apollographql/apollo-client-nextjs/blob/37fee
 </td><td>
 
 Events that will be emitted by a wrapped ApolloClient instance during SSR on `DataTransportProviderImplementation.registerDispatchRequestStarted`<!-- -->, to be transported to the browser and replayed there using `DataTransportProviderImplementation.onQueryEvent`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[ReadableStreamLinkEvent](./client-react-streaming.readablestreamlinkevent.md)
+
+
+</td><td>
 
 
 </td></tr>

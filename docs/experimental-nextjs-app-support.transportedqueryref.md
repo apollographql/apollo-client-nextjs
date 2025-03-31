@@ -48,14 +48,14 @@ Description
 
 </td><td>
 
-undefined
+() =&gt; Promise&lt;[TransportedQueryRef](./experimental-nextjs-app-support.transportedqueryref.md)<!-- -->&gt;
 
 
 </td><td>
 
-_(Optional)_ Temporarily disabled - see https://github.com/apollographql/apollo-client-nextjs/issues/332
+_(Optional)_ Only available in React Server Components. Will be `undefined` after being passed to Client Components.
 
-Will now be be `undefined` both in React Server Components and Client Components until we can find a better resolution.
+Returns a promise that resolves back to the `TransportedQueryRef` that can be awaited in RSC to suspend a subtree until the originating query has been loaded.
 
 
 </td></tr>

@@ -13,15 +13,9 @@ type QueryEvent = {
     type: "started";
     options: TransportedOptions;
     id: TransportIdentifier;
-} | {
-    type: "data";
+} | (ReadableStreamLinkEvent & {
     id: TransportIdentifier;
-    result: FetchResult;
-} | {
-    type: "error";
-    id: TransportIdentifier;
-} | {
-    type: "complete";
-    id: TransportIdentifier;
-};
+});
 ```
+**References:** [ReadableStreamLinkEvent](./client-react-streaming.readablestreamlinkevent.md)
+

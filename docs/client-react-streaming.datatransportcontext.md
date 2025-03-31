@@ -8,7 +8,7 @@
 
 If you create a custom data transport, you need to wrap the child tree in a `DataTransportContext.Provider` and provide the `DataTransportAbstraction` to it.
 
-See for example https://github.com/apollographql/apollo-client-nextjs/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
+See for example https://github.com/apollographql/apollo-client-integrations/blob/37feeaa9aea69b90a974eb9cd0fbd636b62d841a/integration-test/experimental-react/src/WrappedApolloProvider.tsx
 
 **Signature:**
 
