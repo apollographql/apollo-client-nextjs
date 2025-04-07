@@ -162,8 +162,8 @@
   "peerDependencies": {
     "@apollo/client": "^3.13.0",
     "graphql": "^16 || >=17.0.0-alpha.2",
-    "react": "^18 || >=19.0.0-rc",
-    "react-dom": "^18 || >=19.0.0-rc"
+    "react": "^19",
+    "react-dom": "^19"
   },
   "dependencies": {
     "@types/react-dom": "^19.0.0",
