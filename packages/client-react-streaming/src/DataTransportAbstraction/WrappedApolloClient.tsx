@@ -148,7 +148,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
           })
         ),
       })
-      .finally(() => queryManager.stopQuery(queryId));
+      .finally(() => queryManager.removeQuery(queryId));
 
     this.simulatedStreamingQueries.set(id, {
       controller,
@@ -223,7 +223,7 @@ class ApolloClientClientBaseImpl extends ApolloClientBase {
           })
         ),
       })
-      .finally(() => queryManager.stopQuery(queryId));
+      .finally(() => queryManager.removeQuery(queryId));
   };
 }
 
