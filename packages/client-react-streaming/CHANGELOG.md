@@ -1,5 +1,11 @@
 # @apollo/client-react-streaming
 
+## 0.12.2
+
+### Patch Changes
+
+- c1db3fd: Call `removeQuery` instead of `stopQuery` to be more compatible with Apollo Client 4.0.
+
 ## 0.12.1
 
 ### Patch Changes
