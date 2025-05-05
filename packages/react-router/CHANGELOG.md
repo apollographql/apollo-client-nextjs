@@ -1,5 +1,11 @@
 # @apollo/client-integration-react-router
 
+## 0.12.3-alpha.5
+
+### Patch Changes
+
+- @apollo/client-react-streaming@0.12.3-alpha.5
+
 ## 0.12.0-alpha.4
 
 ### Patch Changes
