@@ -286,7 +286,7 @@ To handle this, you can apply one of three different strategies:
 
 For this, we ship the two links `RemoveMultipartDirectivesLink` and `AccumulateMultipartResponsesLink`, as well as the `SSRMultipartLink`, which combines both of them into a more convenient-to-use Link.
 
-You can also check out the [Hack The Supergraph example](./examples/hack-the-supergraph-ssr), which shows this in use and allows you to adjust the speed deferred interfaces resolve in.
+You can also check out the [Hack The Supergraph example](/examples/hack-the-supergraph-ssr), which shows this in use and allows you to adjust the speed deferred interfaces resolve in.
 
 ### Removing `@defer` fragments from your query with `RemoveMultipartDirectivesLink`
 

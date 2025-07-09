@@ -1,5 +1,18 @@
 # @apollo/experimental-nextjs-app-support
 
+## 0.12.2
+
+### Patch Changes
+
+- @apollo/client-integration-nextjs@0.12.2
+
+## 0.12.1
+
+### Patch Changes
+
+- Updated dependencies [1957588]
+  - @apollo/client-integration-nextjs@0.12.1
+
 ## 0.12.0
 
 ### Minor Changes
